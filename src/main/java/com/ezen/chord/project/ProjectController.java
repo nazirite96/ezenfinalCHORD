@@ -8,12 +8,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/pro")
 public class ProjectController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 	
-	@RequestMapping("/list")
+	@RequestMapping("/proList.do")
 	public ModelAndView getProList() {
 		
 		
