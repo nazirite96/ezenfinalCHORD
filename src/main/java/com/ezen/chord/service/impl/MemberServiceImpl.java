@@ -26,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
 	
 	// db에서 데이터 가져오기
 	@Override
-	public List<Member> getMember() throws Exception {
+	public List<Member> getMember() {
 		// db와의 접속을 통해 데이터를 가공하는 것이기 때문에 daoService의 메소드를 호출한다.
 		
 		//memberDAO.sember(); // 없는 메소드를 명시해도,그자리에서 바로 추가 가능

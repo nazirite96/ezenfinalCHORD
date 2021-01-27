@@ -15,12 +15,12 @@ import com.ezen.chord.dto.Member;
 public class MemberDAOImpl implements MemberDAO {
 	
 	@Autowired
-	SqlSession sqlSession;
+	SqlSession sqlSessionTemplate;
 	
 	@Override
-	public List<Member> getMember() throws Exception {
+	public List<Member> getMember(){
 		List<Member> result = new ArrayList<Member>();
-		result = sqlSession.selectList("memberMapper.selectMember");
+		result = sqlSessionTemplate.selectList("memberMapper.selectMember");
 		return result;
 	}
 

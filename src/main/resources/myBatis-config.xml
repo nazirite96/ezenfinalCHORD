@@ -4,5 +4,4 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
   <!-- mapper 관련 설정 파일 -->
  <configuration>
-
  </configuration>

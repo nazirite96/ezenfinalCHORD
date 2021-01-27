@@ -19,5 +19,11 @@
  <div>성탁</div>
  <div>일화</div>
  <div>충연</div>
+ <c:forEach var="dto" items="${memberlist }">
+ 	<div>번호 : ${dto.idx }</div>
+ 	<div>아이디 : ${dto.id }</div>
+ </c:forEach>
+ 
+ 
 </body>
 </html>

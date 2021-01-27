@@ -14,5 +14,5 @@ public interface MemberDAO {
 	
 	// memberservice의 명세서 대로 작성 -> db접속 하는 것들만
 	// 전체멤버 가져오기.
-	public List<Member> getMember() throws Exception;
+	public List<Member> getMember();
 }

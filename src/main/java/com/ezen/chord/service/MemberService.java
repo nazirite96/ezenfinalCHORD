@@ -15,7 +15,7 @@ public interface MemberService {
 //1. 명세서 작성
 	
 	// db 멤버 가져오기.
-	public List<Member> getMember() throws Exception;
+	public List<Member> getMember();
 	
 	//db 에 없는 멤버 가져오기
 	public List<String> getNotDBMember() throws Exception;
