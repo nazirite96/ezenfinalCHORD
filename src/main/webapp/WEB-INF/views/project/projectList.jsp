@@ -37,9 +37,6 @@
     
     <!-- Custom styles for this template -->
     <link href="/chord/resources/css/dashboard.css" rel="stylesheet">
-    <%
-    System.out.println(request.getContextPath());
-    %>
   </head>
   <body>
     
@@ -133,8 +130,54 @@
           </button>
         </div>
       </div>
-
-      <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+		
+      <div id="addProject">
+		<form action="insertPro.do" method="post">
+    			<h1>프로젝트 만들기</h1>
+		
+			<!-- pop con -->
+	   		<section class="border-box">
+	   		
+	   			<!-- 프로젝트 명 -->
+   				<div class="dis-block">
+		   			<h3>프로젝트명</h3>
+		   			<input type="text" name="pro_name" placeholder="프로젝트명 입력(최대 50자)" required="required">
+	   			</div>
+	   			
+	   			<!-- 프로젝트 분류 -->
+   				<div class="dis-block martop-20">
+		   			<h3>프로젝트 분류</h3>
+		   			<div class="pro-kind-box">
+						<!-- 분류 종료 List -->
+		   					<label class="maright-15">
+			   					<input type="radio" name="kind_no" value="1">
+			   					1
+			   				</label>
+			   				<label class="maright-15">
+			   					<input type="radio" name="kind_no" value="2">
+			   					2
+			   				</label>
+			   				<label class="maright-15">
+			   					<input type="radio" name="kind_no" value="3">
+			   					3
+			   				</label>
+		   			</div>
+	   			</div>
+	   			<!-- 프로젝트 개요 -->
+   				<div class="dis-block martop-20">
+		   			<h3>프로젝트 개요</h3>
+		   			<textarea name="pro_cont" rows="" cols="" placeholder="프로젝트 목표 및 개요 입력"></textarea>
+	   			</div>
+			</section>
+			
+			<!-- pop footer -->
+			<footer class="pop-footer border-box">
+				<input type="button" class="pop-btn default-btn btn-close" value="취소">
+				<input type="submit" class="pop-btn submit-btn marleft-5 back-color-pupple-l" value="만들기">
+			</footer>
+		</form>
+	</div>
+      
 
       <h2>Section title</h2>
       <div class="table-responsive">

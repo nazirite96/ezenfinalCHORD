@@ -19,7 +19,7 @@
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-   <!-- SQLSessionFactory -->
+<!-- SQLSessionFactory -->
    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
       <property name="dataSource" ref="dataSource" />
       <!-- mapper -->
@@ -27,7 +27,7 @@
       <property name="mapperLocations" value="classpath:/sql/*SQL.xml" />
    </bean>
 
-   <!-- SQLSession inject to service. -->
+<!-- SQLSession inject to service. -->
    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
       <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean" />
    </bean>
