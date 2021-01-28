@@ -6,5 +6,6 @@
  <configuration>
  	<typeAliases>
  		<typeAlias type="com.ezen.chord.dto.Member" alias="memberDTO"/>
+ 		<typeAlias type="com.ezen.chord.task.dto.TaskDTO" alias="taskDTO"/>
  	</typeAliases>
  </configuration>
