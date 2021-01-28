@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="projectMapper">
+    	<insert id="insertPro" parameterType="projectDTO">
+    		insert into project values(project_seq.nextval,'기본 프로젝트','관리자가 첨 들어오면 생기는 프로젝트',sysdate,1,2)
+    	</insert>
+    	<select id="selectProByMemNo">
+    	</select>
+    	<select id="getProjectSeq">
+    		SELECT project_seq.nextval
+		  FROM dual
+    	</select>
+    </mapper>
