@@ -14,8 +14,8 @@
 
 <P>  The time on the server is ${serverTime}. </P>
  <h1>chord프로젝트 시작</h1>
- <div><a href="/chord/proList.do">기웅</a></div>
- <div>제진</div>
+ <div><a href="proList.do">기웅</a></div>
+ <div><a href="taskTest.do">제진</a></div>
  <div>성탁</div>
  <div>일화</div>
  <div>충연</div>

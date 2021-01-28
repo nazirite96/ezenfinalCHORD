@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="taskMapper">
+
+	<!-- 업무 시퀀스 조회 -->
+	<select id="getTaskSeq" resultType="int">
+	select task_no.nextval from daul
+	</select>
+	
+	<!-- 업무 등록 -->
+   	<insert id="insertTask" parameterType="taskDTO">
+    insert into task values(
+    #{task_no},#{task_title},#{task_content},#{task_state},#{task_priority}
+    )
+	</insert>
+	
+	<!-- 업무 수정 -->
+	<update id="updateTask" parameterType="taskDTO">
+	update task set 
+	task_title = #{task_title},
+	task_content = #{task_content},
+	task_state = #{task_state},
+	task_priority = #{task_priority}
+	where task_no = #{task_no}
+	</update>
+	
+	<!-- 업무 삭제 -->
+	<delete id="deleteTask" parameterType="taskDTO">
+	delete from task where task_no = #{task_no}
+	</delete>
+	
+	
+</mapper>
