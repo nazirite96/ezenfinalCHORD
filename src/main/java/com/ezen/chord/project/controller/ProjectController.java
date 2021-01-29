@@ -34,9 +34,11 @@ public class ProjectController {
 	@RequestMapping("/proList.do")
 	public ModelAndView getProList(int mem_no) {
 		
-		mem_no=2;
+		
 		ModelAndView mav = new ModelAndView();
 		List<ProjectDTO> proList = proService.getProAllList(mem_no);
+		
+		
 		mav.addObject("proList", proList);
 		mav.setViewName("project/projectList");
 		
@@ -44,7 +46,11 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("/insertPro.do")
-	public String insertPro(ProjectDTO proDTO,ProjectUserDTO proUserDTO) {
+	public String insertPro(ProjectDTO proDTO) {
+		proDTO.setMem_no(2);
+		java.sql.Date date = new java.sql.Date(12);
+		proDTO.setPro_date(date);
+		System.out.println(proDTO.toString());
 		proService.insertPro(proDTO);
 		return "project/projectList";
 	}

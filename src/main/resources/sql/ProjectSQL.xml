@@ -4,17 +4,15 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
     <mapper namespace="projectMapper">
-    	<insert id="insertPro" parameterType="projectDTO">
-    		insert into project values(project_seq.nextval,'기본 프로젝트','관리자가 첨 들어오면 생기는 프로젝트',sysdate,1,2)
-    	</insert>
-    	<select id="selectProByMemNo">
-    	</select>
-    	<select id="getProjectSeq">
+    
+    	<select id="getProSeq" resultType="int">
     		SELECT project_seq.nextval
 		  FROM dual
     	</select>
-    	<insert id="insertPro">
+    	
+    	<insert id="insertPro" parameterType="projectDTO">
     		insert into project
-    		values(#{pro_no},#{pro_name},#{pro_cout},sysdate,#{kind_no},#{mem_no})
+    		VALUES(#{pro_no},#{pro_name},#{pro_cont},sysdate,#{kind_no},#{mem_no})
     	</insert>
+    	
     </mapper>

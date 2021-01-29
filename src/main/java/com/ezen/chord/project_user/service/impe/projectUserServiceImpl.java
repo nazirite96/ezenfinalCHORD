@@ -2,6 +2,7 @@ package com.ezen.chord.project_user.service.impe;
 
 import org.springframework.stereotype.Service;
 
+import com.ezen.chord.project_user.dto.ProjectUserDTO;
 import com.ezen.chord.project_user.service.ProjectUserService;
 
 
@@ -9,6 +10,10 @@ import com.ezen.chord.project_user.service.ProjectUserService;
 public class projectUserServiceImpl implements ProjectUserService {
 
 	
-	
+	@Override
+	public int insertProUser(ProjectUserDTO proUserDTO) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

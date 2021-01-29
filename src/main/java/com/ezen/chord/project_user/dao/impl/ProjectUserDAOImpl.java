@@ -1,10 +1,12 @@
 package com.ezen.chord.project_user.dao.impl;
 
-import org.apache.ibatis.session.SqlSession;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ezen.chord.project.dto.ProjectDTO;
 import com.ezen.chord.project_user.dao.ProjectUserDAO;
 import com.ezen.chord.project_user.dto.ProjectUserDTO;
 
@@ -20,5 +22,13 @@ public class ProjectUserDAOImpl implements ProjectUserDAO {
 	public int insertProUser(ProjectUserDTO proUserDTO) {
 		// TODO Auto-generated method stub
 		return sqlMap.insert("insertProUser", proUserDTO);
+	}
+	
+	@Override
+	public List<ProjectDTO> getListByMemNo(int mem_no) {
+		// TODO Auto-generated method stub
+		List<ProjectDTO> list = sqlMap.selectList("getListByMemNo", mem_no);
+		System.out.println(list.get(0).getMem_no());
+		return list;
 	}
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -162,6 +163,7 @@
 			   					3
 			   				</label>
 		   			</div>
+		   			<input type="hidden" name="pro_no" value="2">
 	   			</div>
 	   			<!-- 프로젝트 개요 -->
    				<div class="dis-block martop-20">
@@ -177,6 +179,9 @@
 			</footer>
 		</form>
 	</div>
+	<c:forEach var="dto" items="${proList }">
+		<div><a href="timeLine.do?pro_no=${dto.pro_no }">${dto.pro_no } ${dto.pro_name } </a></div>
+	</c:forEach>
       
 
       <h2>Section title</h2>
