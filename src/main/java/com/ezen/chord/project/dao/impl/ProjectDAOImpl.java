@@ -21,7 +21,8 @@ public class ProjectDAOImpl implements ProjectDAO{
 	@Override
 	public int insertPro(ProjectDTO proDTO) {
 		// TODO Auto-generated method stub
-		return sqlMap.selectOne("insertPro");
+		System.out.println(proDTO.toString());
+		return sqlMap.insert("insertPro",proDTO);
 	}
 	
 }

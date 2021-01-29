@@ -49,6 +49,9 @@ public class ProjectDTO {
 		this.mem_no = mem_no;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return pro_no+" "+pro_name+" "+pro_cont+" "+pro_date+" "+kind_no+" "+mem_no;
+	}
 
 }
