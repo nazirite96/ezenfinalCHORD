@@ -6,6 +6,9 @@
  <configuration>
  	<typeAliases>
  		<typeAlias type="com.ezen.chord.dto.Member" alias="memberDTO"/>
+ 		<typeAlias type="com.ezen.chord.task.dto.TaskDTO" alias="taskDTO"/>
  		<typeAlias type="com.ezen.chord.project.dto.ProjectDTO" alias="projectDTO"/>
+ 		<typeAlias type="com.ezen.chord.project_user.dto.ProjectUserDTO" alias="projectUserDTO"/>
+ 		
  	</typeAliases>
  </configuration>

@@ -9,6 +9,7 @@ import com.ezen.chord.project.dao.ProjectDAO;
 import com.ezen.chord.project.dto.ProjectDTO;
 import com.ezen.chord.project.service.ProjectService;
 import com.ezen.chord.project_user.dao.ProjectUserDAO;
+import com.ezen.chord.project_user.dto.ProjectUserDTO;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -25,8 +26,16 @@ public class ProjectServiceImpl implements ProjectService {
 		int pro_no = projectDAO.getProSeq();
 		proDTO.setPro_no(pro_no);
 		
-		
+		//프로젝트 등록
 		int result = projectDAO.insertPro(proDTO);
+		//// 프로젝트 참여자 등록
+		if(result==1) {
+			ProjectUserDTO proUserDTO = new ProjectUserDTO();
+			proUserDTO.setPro_no(pro_no);
+			proUserDTO.setMem_no(proDTO.getMem_no());
+		}else {
+			return 0;
+		}
 		
 		
 		return 0;
