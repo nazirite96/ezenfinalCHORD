@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ezen.chord.project.dto.ProjectDTO;
 import com.ezen.chord.project.service.ProjectService;
+import com.ezen.chord.project_user.dto.ProjectUserDTO;
 import com.ezen.chord.project_user.service.ProjectUserService;
 
 @Controller
@@ -43,9 +44,8 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("/insertPro.do")
-	public String insertPro(ProjectDTO proDTO) {
+	public String insertPro(ProjectDTO proDTO,ProjectUserDTO proUserDTO) {
 		proService.insertPro(proDTO);
-		
 		return "project/projectList";
 	}
 	

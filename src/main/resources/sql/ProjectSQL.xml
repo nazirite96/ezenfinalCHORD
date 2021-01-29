@@ -13,4 +13,8 @@
     		SELECT project_seq.nextval
 		  FROM dual
     	</select>
+    	<insert id="insertPro">
+    		insert into project
+    		values(#{pro_no},#{pro_name},#{pro_cout},sysdate,#{kind_no},#{mem_no})
+    	</insert>
     </mapper>
