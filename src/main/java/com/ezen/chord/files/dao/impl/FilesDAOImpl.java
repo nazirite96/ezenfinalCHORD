@@ -5,10 +5,12 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.ezen.chord.files.dao.FilesDAO;
 import com.ezen.chord.files.dto.FilesDTO;
 
+@Repository
 public class FilesDAOImpl implements FilesDAO {
 	
 	@Autowired
@@ -17,7 +19,8 @@ public class FilesDAOImpl implements FilesDAO {
 	@Override
 	public int insertFile(FilesDTO filedto) {
 		// TODO Auto-generated method stub
-		return 0;
+		int result = sqlMap.insert("insertFile", filedto);
+		return result;
 	}
 
 	@Override
