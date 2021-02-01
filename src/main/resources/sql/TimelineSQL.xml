@@ -9,9 +9,10 @@
     		insert into timeline
 			values (timeline_seq.nextval,#{cont_kind},#{cont_no},#{tim_cont},sysdate,#{pro_no},#{mem_no})
     	</insert>
+    	
     	<select id="getTimelinByProNo" parameterType="hashMap" resultType="timelineDTO">
 			select * from timeline
 			where pro_no = #{pro_no}
-			order by tim_no
+			order by tim_no desc
     	</select>
     </mapper>
