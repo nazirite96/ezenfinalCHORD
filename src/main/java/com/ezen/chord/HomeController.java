@@ -1,6 +1,7 @@
 package com.ezen.chord;
 
-import java.text.DateFormat;
+import java.text.DateFormat
+;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,20 +17,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.ezen.chord.dto.Member;
-import com.ezen.chord.service.MemberService;
+import com.ezen.chord.member.service.MemberService;
 
-/**
- * Handles requests for the application home page.
- */
+
 @Controller
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
 	
 	@Autowired
 	MemberService memService;
@@ -43,10 +38,15 @@ public class HomeController {
 		
 		String formattedDate = dateFormat.format(date); 
 		model.addAttribute("serverTime", formattedDate );
-		List<Member> list = memService.getMember();
-		model.addAttribute("memberlist", list);
+		//List<Member> list = memService.getMember();
+		//model.addAttribute("memberlist", list);
 		
 		return "home";
 	}
 	
+	
+	@RequestMapping("/index.do")
+	public String index() {
+		return "home";
+	}
 }

@@ -8,10 +8,10 @@
 	<title>Home</title>
 </head>
 <body>
+<jsp:include page="/WEB-INF/views/header.jsp"/>
 <h1>
 	Hello world!  
 </h1>
-<jsp:include page="/WEB-INF/views/header.jsp"/>
 <P>  The time on the server is ${serverTime}. </P>
  <h1>chord프로젝트 시작</h1>
  <div><a href="proList.do?mem_no=2">기웅</a></div>
