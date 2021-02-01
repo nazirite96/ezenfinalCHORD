@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chord.company">
+	<select id="comNoChkSQL" parameterType="Integer" resultType="Integer">
+		select * from company
+		where com_no=#{com_no}
+	</select>
+	<select id="comPwdChkSQL" resultType="Integer">
+		select count(*) from company
+		where com_no=#{com_no} and com_pwd=#{com_pwd}
+	</select>
+	<update id="comNoUpdateSQL">
+		update member
+		set com_no=#{com_no} where
+		mem_email=#{mem_email}
+	</update>
+	<insert id="comInsertSQL" parameterType="CompanyDTO">
+  		insert into company values
+  		(company_seq.nextval,
+  		#{com_name},
+  		#{com_pwd},
+  		#{com_sector})
+  	</insert>
+  	<select id="findComNoSQL" parameterType="String" resultType="Integer">
+  		select com_no from company where com_name=#{com_name}
+  	</select>
+  	<insert id="newPositionInsertSQL" parameterType="Integer">
+  		insert into grade values
+  		(grade_seq.nextval,
+  		'company',
+  		#{kind_no},
+  		#{mem_no})
+  	</insert>
+  	<select id="findMemNoSQL" parameterType="String" resultType="Integer">
+  		select mem_no from member where mem_email=#{mem_emai}
+  	</select>
+  	<select id="autoLogin_getName" parameterType="string" resultType="String">
+  		select mem_name from member 
+  			where mem_email=#{mem_email}
+  	</select>
+</mapper>

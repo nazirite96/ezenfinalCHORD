@@ -9,10 +9,13 @@
 </head>
 <body>
 <h3>header</h3>
+<h4><a href="index.do">index로 가기</a></h4>
 <br>
+<c:set var="sessionMemNo" value="${sessionScope.memNo}"></c:set>
 <c:set var="sessionName" value="${sessionScope.name}"></c:set>
 <c:set var="sessionEmail" value="${sessionScope.email }"></c:set>
 <c:set var="sessionGrade" value="${sessionScope.grade }"></c:set>
+<c:set var="sessionComNo" value="${sessionScope.comNo }"></c:set>
 <c:choose> 
 <c:when test="${sessionName!=null}">
 	
@@ -31,7 +34,10 @@
 			<div>
 				${sessionName}님이 로그인 했습니다. 
 				|
-				<a href="#">관리자설정(회사)</a> 
+				<c:url var="comContentsUrl" value="adminCompanyForm.do">
+					<c:param name="com_no">${sessionComNo}</c:param>
+				</c:url>
+				<a href="${comContentsUrl}">관리자설정(회사)</a> 
 				|
 				<a href="logout.do">로그아웃</a>
 			</div>

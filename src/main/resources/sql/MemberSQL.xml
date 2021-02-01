@@ -2,9 +2,44 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    
-<mapper namespace="memberMapper">
-   <select id="selectMember" resultType="memberDTO">
-      SELECT * FROM jsp_member
+<mapper namespace="chord.member">
+	<select id="join_mailChk" parameterType="String"
+		resultType="Integer">
+		select count(*) from member
+		where mem_email=#{mem_email}
 	</select>
+	<insert id="join_function">
+		insert into member values(
+		member_seq.nextval,
+		#{mem_email},
+		#{mem_name},
+		#{mem_pwd},
+		0,
+		sysdate)
+	</insert>
+	<select id="login_mailChk" parameterType="string"
+		resultType="Integer">
+		select count(mem_no) from member
+		where mem_email=#{mem_email}
+	</select>
+	<select id="login_pwdChk" resultType="Integer">
+		select count(*) from member
+		where mem_email=#{mem_email} and mem_pwd=#{mem_pwd}
+	</select>
+	<select id="login_getUserInfo" parameterType="String"
+		resultType="MemberDTO">
+		select * from member
+		where mem_email=#{mem_email}
+	</select>
+	<select id="login_getGrade" resultType="String">
+		select gra_kind from
+		(select * from member, grade where member.mem_no = grade.mem_no)a
+		where mem_email=#{mem_email}
+	</select>
+	<insert id="login_userLogInCount" parameterType="Integer">
+		insert into log_data values(
+		log_data_seq.nextval,
+		#{mem_no},
+		sysdate)
+	</insert>
 </mapper>
