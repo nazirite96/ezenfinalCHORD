@@ -29,45 +29,59 @@ public class FilesController {
 	 * */
 	@RequestMapping("/files.do")
 	public ModelAndView filesForm(@RequestParam(value = "foldername", defaultValue = "")String foldername,
+			@RequestParam(value = "del", defaultValue = "")String del,
 			HttpServletRequest request) {
-		
+		File f = new File(fileSerImp.PATH+File.separator+fileSerImp.CRPATH);
 		
 		if(!foldername.equals("")) {
-			fileSerImp.CRPATH+=File.separator+foldername;
+			f = new File(fileSerImp.PATH+File.separator+fileSerImp.CRPATH+File.separator+foldername);
+			if(f.exists()) {
+				fileSerImp.CRPATH+=File.separator+foldername;
+			}
+		}else {
+			fileSerImp.CRPATH=fileSerImp.CRPATH;
 		}
-		String fullpath=fileSerImp.PATH+File.separator+fileSerImp.CRPATH;
-		int fullindex=fullpath.lastIndexOf("\\");
-		String lastpath=fullpath.substring(0,fullindex);// 마지막 결로를 누르면 이자식이 저장되면됨
-		System.out.println("이건 마지막경로 자른거인가?  "+lastpath);
-		System.out.println(foldername);
-//		HttpSession session=request.getSession();
-//		session.setAttribute("mem_no", 2);// 이건 충연이가 올리면 삭제
-//		int mem_no = (Integer) session.getAttribute("mem_no");// 테스트 테스트
 		
-		ModelAndView mav = new ModelAndView();
+		if(!del.equals("")){
+			String fullpath=fileSerImp.PATH+File.separator+fileSerImp.CRPATH;
+			int fullindex=fullpath.lastIndexOf("\\");
+			String lastpath=fullpath.substring(0,fullindex);// 마지막 결로를 누르면 이자식이 저장되면됨
+			fileSerImp.CRPATH=lastpath;
+		}
 		
-		File f = new File(fileSerImp.PATH+File.separator+fileSerImp.CRPATH);
-		System.out.println(fileSerImp.PATH+File.separator+fileSerImp.CRPATH);
+		f = new File(fileSerImp.PATH+File.separator+fileSerImp.CRPATH);
 		File files[] = f.listFiles();
-		ArrayList<String> list= new ArrayList<String>();
-		ArrayList<String> folder= new ArrayList<String>();
-		for(int i=0;i<files.length;i++) {
-			if(files[i]==null) {
-				break;
+		ModelAndView mav = new ModelAndView();
+			ArrayList<String> list= new ArrayList<String>();
+			ArrayList<String> folder= new ArrayList<String>();
+			for(int i=0;i<files.length;i++) {
+				if(files[i]==null) {
+					break;
+				}
+				String name = files[i].getName();
+				if(!fileSerImp.fileExt(name).equals("")) {
+					list.add(name);
+				}else {
+					folder.add(name);
+				}
 			}
-			String name = files[i].getName();
-			if(!fileSerImp.fileExt(name).equals("")) {
-				list.add(name);
-			}else {
-				folder.add(name);
-			}
-		}
-		mav.addObject("list", list);
-		mav.addObject("folder", folder);
-		mav.setViewName("files/files");
+			mav.addObject("list", list);
+			mav.addObject("folder", folder);
+			mav.addObject("foldername",foldername);
+			mav.addObject("crpath", fileSerImp.CRPATH);
+			mav.setViewName("files/files");
 		return mav;
 	}
 	
+		@RequestMapping("/repath.do")
+	public String repath() {
+			
+		String fullpath=fileSerImp.PATH+File.separator+fileSerImp.CRPATH;
+		int fullindex=fullpath.lastIndexOf("\\");
+		String lastpath=fullpath.substring(0,fullindex);// 마지막 결로를 누르면 이자식이 저장되면됨
+		fileSerImp.CRPATH=lastpath;
+		return "files/files";
+	}
 	/**
 	 * 파일 업로드관련 해당위치레 파일 업로드 및 DB에 저장
 	 * */
@@ -88,7 +102,13 @@ public class FilesController {
 		mav.setViewName("files/insertFiles");
 		return mav;
 	}
-	
+//	String fullpath=fileSerImp.PATH+File.separator+fileSerImp.CRPATH;
+//	int fullindex=fullpath.lastIndexOf("\\");
+//	String lastpath=fullpath.substring(0,fullindex);// 마지막 결로를 누르면 이자식이 저장되면됨
+//	System.out.println("이건 마지막경로 자른거인가?  "+lastpath);
+//	HttpSession session=request.getSession();
+//	session.setAttribute("mem_no", 2);// 이건 충연이가 올리면 삭제
+//	int mem_no = (Integer) session.getAttribute("mem_no");// 테스트 테스트
 	/**
 	 * 업로드파일 화면단 (타임라인 쪽으로 이전 예정)
 	 * */
