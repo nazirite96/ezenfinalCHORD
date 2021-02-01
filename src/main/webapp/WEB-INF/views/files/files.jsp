@@ -91,7 +91,20 @@ var count = 1;
 	    	    }
 	    });
 	});
-	
+
+	function show(repath){
+		alert(repath)
+		$.ajax({
+	    	url:"files.do?del="+repath,
+	    	type:'GET',
+	    	dataType: "text",
+	    		success : function(data) {
+	    	    },
+	    	    error : function(xhr, status, error) {     
+	    	          alert("HTTP REQUEST ERROR");
+	    	    }
+	    });
+	}
 </script>
   </head>
   <body>
@@ -190,6 +203,8 @@ var count = 1;
           </button>
         </div>
       </div>
+      <c:set var="f" value="${foldername }"></c:set>
+       현재 경로 : ${crpath }${f } <a href="?del=good">뒤로가기</a>
 		<!-- 전체 리스트 뿌려줄거의 메인 -->
 		<form action="" method="POST">
 			<table>
@@ -203,8 +218,8 @@ var count = 1;
 					</tr>
 				</thead>
 				<tbody class="allList">
+				<c:if test="${!empty files}"> 등록되어있는 파일이 없습니다.</c:if>
 					<c:forEach var="files" items="${list }">
-						<c:if test="${empty files}"> 등록되어있는 파일이 없습니다.</c:if>
 							<tr>
 								<td>체크박스</td>
 								<td colspan="3"><a href="filedownload?filename=${files }">${files }</a></td>
@@ -217,6 +232,7 @@ var count = 1;
 								<td colspan="3"><a href="?foldername=${folder }">${folder }</a></td>
 							</tr>
 					</c:forEach>
+					
 				</tbody>
 			</table>
 		</form>
