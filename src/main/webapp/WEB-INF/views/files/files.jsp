@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,20 +38,60 @@
     <link href="/chord/resources/css/dashboard.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
-	$( document ).ready(function() {
+var foldername='${foldername}';
+var count = 1;
+/* 	$( document ).ready(function() {
 		$.ajax({
-	    	url:"getAllFiles.do",
+	    	url:"getAllFles.do",
 	    	type:'GET',
+	    	data: foldername,
 	    	dataType: "json",
 	    		success : function(data) {
-	    			var arr = data.files;
-	    			  alert(arr);
+	    			var arr = data.list;
+	    			var folderarr = data.folder;
+	    			  for(var i=0; i<arr.length; i++){
+	    				  filelist="<tr>"+
+		    			  "<td>체크</td>"+
+		    			  "<td colspan='3'><a href='filedownload?filename="+arr[i]+"'>"+arr[i]+"</a></td>"+
+		    			  "</tr>";
+		    			  $('.allList').append(filelist);
+	    			  }
+	    			  for(var i=0; i<folderarr.length; i++){
+	    				  folderlist='<tr>'+
+		    			  '<td>체크</td>'+
+		    			  '<td colspan="3"><a href="getAllFiles.do?foldername='+folderarr[i]+'">'+folderarr[i]+'</a></td>'+
+		    			  '</tr>';
+		    			  $('.allList').append(folderlist);
+		    			  count++;
+	    			  }
+	    	    },
+	    	    error : function(xhr, status, error) {     
+	    	          alert("HTTP REQUEST ERROR");
+	    	    }
+	    });
+	}); */
+	function show2(cnt){
+		var cnt1=cnt
+		alert(cnt1)
+	}
+	
+	$(document).on("click", "#creat01", function(){
+		var foldername= $('.foldername').val();
+		$.ajax({
+	    	url:"folderAdd.do",
+	    	data:foldername,
+	    	type:'GET',
+	    	dataType: "text",
+	    		success : function(data) {
+	    			alert(foldername+'을 생성하였음');
+	    			location.reload();
 	    	    },
 	    	    error : function(xhr, status, error) {     
 	    	          alert("HTTP REQUEST ERROR");
 	    	    }
 	    });
 	});
+	
 </script>
   </head>
   <body>
@@ -135,7 +176,12 @@
         <h1 class="h2">전체</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group mr-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+          
+           <!-- Button trigger modal -->
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+			   폴더 생성
+			</button>
+			
             <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
           </div>
           <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
@@ -145,26 +191,62 @@
         </div>
       </div>
 		<!-- 전체 리스트 뿌려줄거의 메인 -->
-		<table>
-			<thead>
-				<tr>
-					<th>체크박스</th>
-					<th>파일명</th>
-					<th>크기</th>
-					<th>등록자</th>
-					<th>최근 업로드</th>
-				</tr>
-			</thead>
-			<tbody>
-			
-			</tbody>
-		</table>
-
+		<form action="" method="POST">
+			<table>
+				<thead>
+					<tr>
+						<th>체크박스</th>
+						<th>파일명</th>
+						<th>크기</th>
+						<th>등록자</th>
+						<th>최근 업로드</th>
+					</tr>
+				</thead>
+				<tbody class="allList">
+					<c:forEach var="files" items="${list }">
+						<c:if test="${empty files}"> 등록되어있는 파일이 없습니다.</c:if>
+							<tr>
+								<td>체크박스</td>
+								<td colspan="3"><a href="filedownload?filename=${files }">${files }</a></td>
+							</tr>
+					</c:forEach>
+					<c:forEach var="folder" items="${folder }">
+						<c:if test="${empty f}"> </c:if>
+							<tr>
+								<td>체크박스</td>
+								<td colspan="3"><a href="?foldername=${folder }">${folder }</a></td>
+							</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</form>
 		<!-- 전체 리스트 뿌려줄거의 메인  -->
     </main>
   </div>
 </div>
 
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">폴더 만들기</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form name="fm">
+			      <div class="modal-body" style="text-align: center">
+			        폴더 이름 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" class="foldername">
+			      </div>
+		      	<div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-primary" id="creat01">만들기</button>
+		     	 </div>
+		       </form>
+		    </div>
+		  </div>
+		</div>
 
      <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
