@@ -10,5 +10,6 @@
  		<typeAlias type="com.ezen.chord.project.dto.ProjectDTO" alias="projectDTO"/>
  		<typeAlias type="com.ezen.chord.files.dto.FilesDTO" alias="filesDTO"/>
  		<typeAlias type="com.ezen.chord.project_user.dto.ProjectUserDTO" alias="projectUserDTO"/>
+ 		<typeAlias type="com.ezen.chord.timeline.dto.TimelineDTO" alias="timelineDTO"/>
  	</typeAliases>
  </configuration>
