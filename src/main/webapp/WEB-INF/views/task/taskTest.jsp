@@ -7,124 +7,128 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+		<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+ 		
+		<!-- font-awesome CSS -->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"> 
+		
+		<!-- bootstrap CSS -->
+		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/bootstrap.min.css">
+		
+		<!-- fileEx JS -->
+		<script src="<%=request.getContextPath() %>/resources/js/fileEx.js"></script>
+		
+		 
+ 		<!-- jQuery 3.3.1 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+		
+		<!-- jQuery UI JS 
+		<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
+		
+		<!-- jQuery UI CSS -->
+		<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+ 	
+ 		<!-- bootstrap-theme CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+		<!-- FLOWOLF CUSTOM JS -->
+		<script src="<%=request.getContextPath() %>/resources/js/flowolf_custom.js"></script>
+		
+		
+		<!-- datepicker CSS & JS 
+		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/datepicker.min.css">
+		<script src="<%=request.getContextPath() %>/resources/js/datepicker.min.js"></script>
+		<script src="<%=request.getContextPath() %>/resources/js/datepicker.en.js"></script>
+		<script src="<%=request.getContextPath() %>/resources/js/datepicker.ko.js"></script>
+		<script src="<%=request.getContextPath() %>/resources/js/datepicker.js"></script>
+-->
+		<!-- custom style -->
+		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/style.css">
+		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/common.css">
+		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/style_margin.css">
+		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/style_padding.css">
+		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/style_collection.css">
+		
+		<script	src="<%=request.getContextPath()%>/resources/js/jquery-3.1.1.min.js"></script>
+		<!-- 값 제어를 위해 jquery -->
+		<link href="<%=request.getContextPath()%>/resources/css/datepicker.min.css" rel="stylesheet" type="text/css" media="all">
+		<!-- Air datepicker css -->
+		<script src="<%=request.getContextPath()%>/resources/js/datepicker.js"></script>
+		<!-- Air datepicker js -->
+		<script src="<%=request.getContextPath()%>/resources/js/datepicker.ko.js"></script>
+		<!-- 달력 한글 추가를 위해 커스텀 -->
 <script>
-/*******************************************
-* Note : task add item box show
-* 설명 : '추가항목입력' 버튼 클릭시 추가항목 박스 보이기
-*******************************************/
-function fn_addItem(el){
-	var item = $(el);
-	var addItemBox = item.siblings('.add-item-box');
+	datePickerSet($("#datepicker1"), $("#datepicker2"), true);
+	$("#datepicker").datepicker({
+		language : 'ko'
+	});
 
-	item.fadeOut("fast");
-	addItemBox.fadeIn();
-}
-function fn_checkTaskState(el){
-	var item = $(el);
-	var stateList = item.parent('.task-state-list');
-	
-	stateList.find('label').removeClass('checked');
-	item.addClass('checked');
-}
+	function datePickerSet(sDate, eDate, flag) {
+
+		//시작 ~ 종료 2개 짜리 달력 datepicker	
+		if (!isValidStr(sDate) && !isValidStr(eDate) && sDate.length > 0
+				&& eDate.length > 0) {
+			var sDay = sDate.val();
+			var eDay = eDate.val();
+
+			if (flag && !isValidStr(sDay) && !isValidStr(eDay)) { //처음 입력 날짜 설정, update...			
+				var sdp = sDate.datepicker().data("datepicker");
+				sdp.selectDate(new Date(sDay.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+
+				var edp = eDate.datepicker().data("datepicker");
+				edp.selectDate(new Date(eDay.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+			}
+
+			//시작일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
+			if (!isValidStr(eDay)) {
+				sDate.datepicker({
+					maxDate : new Date(eDay.replace(/-/g, "/"))
+				});
+			}
+			sDate.datepicker({
+				language : 'ko',
+				autoClose : true,
+				onSelect : function() {
+					datePickerSet(sDate, eDate);
+				}
+			});
+
+			//종료일자 세팅하기 날짜가 없는경우엔 제한을 걸지 않음
+			if (!isValidStr(sDay)) {
+				eDate.datepicker({
+					minDate : new Date(sDay.replace(/-/g, "/"))
+				});
+			}
+			eDate.datepicker({
+				language : 'ko',
+				autoClose : true,
+				onSelect : function() {
+					datePickerSet(sDate, eDate);
+				}
+			});
+
+			//한개짜리 달력 datepicker
+		} else if (!isValidStr(sDate)) {
+			var sDay = sDate.val();
+			if (flag && !isValidStr(sDay)) { //처음 입력 날짜 설정, update...			
+				var sdp = sDate.datepicker().data("datepicker");
+				sdp.selectDate(new Date(sDay.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
+			}
+
+			sDate.datepicker({
+				language : 'ko',
+				autoClose : true
+			});
+		}
+
+		function isValidStr(str) {
+			if (str == null || str == undefined || str == "")
+				return true;
+			else
+				return false;
+		}
+	}
 </script>
-<style>
-/* tab con box */
-.tabs-box .tabs-container .tabs-content .tab-con-box {float:left;width:100%;padding:20px}
-.tabs-box .tabs-container .tabs-content .tab-con-box textarea {overflow-y:hidden;width:100%;height:120px;border:0}
-.tabs-box .tabs-container .tabs-content .tab-con-box .input-box {float:left;width:100%;min-height:40px;padding:0 5px 10px;border-bottom:1px solid #efefef}
-.tabs-box .tabs-container .tabs-content .tab-con-box .input-box dl {width:100%;min-height:30px;margin:0;color:#999} 
-.tabs-box .tabs-container .tabs-content .tab-con-box .input-box dl dt,
-.tabs-box .tabs-container .tabs-content .tab-con-box .input-box dl dd {float:left;min-height:30px;line-height:30px}
-.tabs-box .tabs-container .tabs-content .tab-con-box .input-box dl dt {width:20px}
-.tabs-box .tabs-container .tabs-content .tab-con-box .input-box dl dd {
-	width:-webkit-calc(100% - 40px);
-	width:-moz-calc(100% - 40px);
-	width:-o-calc(100% - 40px);
-	width:calc(100% - 40px);
-}
-.tabs-box .tabs-container .tabs-content .tab-con-box .input-box dl dd label {margin:0}
-.tabs-box .tabs-container .tabs-content .tab-con-box .input-box input {width:100%}
-.tabs-box .tabs-container .tabs-content .tab-con-box input {height:30px;line-height:30px;border:0}
-
-/* tab dn box */
-.tabs-box .tabs-container .tabs-content .tab-dn-box {float:left;width:100%;height:60px;padding:10px 20px;border-top:1px solid #ccc}
-.tabs-box .tabs-container .tabs-content .tab-dn-box label {height:40px;color:#999;line-height:40px;cursor:pointer}
-.tabs-box .tabs-container .tabs-content .tab-dn-box .article-submit-btn {float:right;width:100px;height:40px;line-height:40px;border-radius:5px}
-.martop-15 {margin-top:15px}
-.maright-20 {margin-right:20px}
-
-/* 추가 항목 입력 버튼 */
-.con-task button.add-item-btn {margin-top:15px;padding:5px 15px;color:#999;border:1px solid #999;border-radius:20px}
-.con-task button.add-item-btn:hover {color:#333;border-color:#333}
-
-/* 추가 항목 박스 */
-.add-item-box {display:none}
-.add-item-box input {width:40% !important}
-
-/* 시작일, 마감일 */
-.con-task i.icon-task {display:block;overflow:hidden;width:18px;height:20px;margin-top:5px;text-indent:-5000px}
-.con-task i.icon-task.icon-sDate {background-position:-200px -300px}
-.con-task i.icon-task.icon-fDate {background-position:-300px -300px}
-.con-task input#sdate,
-.con-task input#fdate {
-	width:-webkit-calc(100% - 80px);
-	width:-moz-calc(100% - 80px);
-	width:-o-calc(100% - 80px);
-	width:calc(100% - 80px);
-}
-
-/* 진척도 */
-.work-range {position:relative;width:200px;height:20px;margin-top:5px;background-color:#ccc;border-radius:10px;text-align:center}
-.work-range span.work-percent {position:absolute;top:0;left:0;right:0;z-index:2;height:20px;font-size:12px;line-height:20px}
-.work-range .pcnt-bar {position:absolute;top:0;left:0;bottom:0;z-index:1;background-color:#45aaf2;border-radius:10px}
-.work-range .pcnt-btn {position:absolute;width:20%;top:0;bottom:-10px;z-index:3;cursor:pointer}
-.work-range .pcnt-btn span {display:none}
-.work-range .pcnt-btn.pcnt-20 {left:0}
-.work-range .pcnt-btn.pcnt-40 {left:20%}
-.work-range .pcnt-btn.pcnt-60 {left:40%}
-.work-range .pcnt-btn.pcnt-80 {left:60%}
-.work-range .pcnt-btn.pcnt-100 {left:80%}
-
-/* 우선순위 */
-.task-rank {position:absolute;top:0;left:0px;z-index:99;height:30px;color:#333;background-color:#fff}
-.task-rank-list {
-	display:none;
-	position:absolute;
-	top:34px;
-	z-index:99;
-	width:150px;
-	background-color:#fff;
-	border:1px solid #ddd;
-	border-radius:5px;
-	box-shadow:0 2px 5px rgba(0, 0, 0, 0.15)
-}
-.task-rank-list li {width:100%;height:34px;padding:0 10px;color:#333;line-height:34px;cursor:pointer}
-.task-rank-list li:hover {background-color:#efefef}
-.task-rank i.rank-icon,
-.task-rank-list li i.rank-icon {overflow:hidden;display:inline-block;width:8px;height:14px;margin:10px 10px 0 0;text-indent:-5000px}
-.task-rank i.rank-icon.icon-low,
-.task-rank-list li i.rank-icon.icon-low {background-position:-100px -350px}
-.task-rank i.rank-icon.icon-basic,
-.task-rank-list li i.rank-icon.icon-basic {height:10px;background-position:-200px -350px}
-.task-rank i.rank-icon.icon-high,
-.task-rank-list li i.rank-icon.icon-high {background-position:-300px -350px}
-.task-rank i.rank-icon.icon-emer,
-.task-rank-list li i.rank-icon.icon-emer {background-position:-400px -350px}
-.task-rank i.rank-icon {margin-top:8px}
-
-
-/* 업무상태 */
-.con-task .task-state-list label {float:left;height:30px;padding:0 20px;border:1px solid #ccc;border-width:1px 1px 1px 0;cursor:pointer}
-.con-task .task-state-list label:first-child {border-left:1px solid #ccc;border-radius:5px 0 0 5px}
-.con-task .task-state-list label:last-child {border-radius:0 5px 5px 0}
-.con-task .task-state-list label.checked {color:#fff}
-.con-task .task-state-list label:first-child.checked {background-color:#45aaf2;border-color:#45aaf2}
-.con-task .task-state-list label:nth-child(2).checked {background-color:#26de81;border-color:#26de81}
-.con-task .task-state-list label:nth-child(3).checked {background-color:#e67e22;border-color:#e6722}
-.con-task .task-state-list label:nth-child(4).checked {background-color:#2b3991;border-color:#2b3991}
-.con-task .task-state-list label:nth-child(5).checked {background-color:#8d8e90;border-color:#8d8e90}
-</style>
 </head>
 <body>
 	<h1>제진공간</h1>
@@ -196,8 +200,8 @@ function fn_checkTaskState(el){
 					<i class="far fa-calendar-plus"></i>
 				</dt>
 				<dd class="posi-re">
-					<input type="text" name="time_kind" placeholder="시작일설정"
-						class="datepicker-here">
+					<input type="text" name="time_kind" placeholder="시작일설정"  id="datepicker1">
+					<i class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point" onclick="fn_dateReset(this)"></i>
 				</dd>
 			</dl>
 		</div>
@@ -210,8 +214,7 @@ function fn_checkTaskState(el){
 					<i class="far fa-calendar-minus"></i>
 				</dt>
 				<dd class="posi-re">
-					<input type="text" name="time_kind" placeholder="마감일설정"
-						class="datepicker-here">
+					<input type="text" name="time_kind" placeholder="마감일설정" id="datepicker2">
 				</dd>
 			</dl>
 		</div>
@@ -248,10 +251,7 @@ function fn_checkTaskState(el){
 		<!-- 우선순위 e -->
 
 		<!-- 추가 항목입력 버튼 -->
-		<button type="button" class="add-item-btn" onclick="fn_addItem(this)">
-			<i class="fas fa-angle-down maright-10"></i> 추가 항목 입력
-		</button>
-
+		<button type="button" class="add-item-btn" onclick="fn_addItem(this)"><i class="fas fa-angle-down maright-10"></i> 추가 항목 입력</button>
 		<!-- 글 -->
 		<textarea rows="5" cols="" name="task_content" class="martop-20"
 			placeholder="글을 작성하세요."></textarea>
