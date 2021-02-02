@@ -5,7 +5,7 @@ package com.ezen.chord.member.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.ezen.chord.company.dto.CompanyDTO;
 import com.ezen.chord.member.dao.MemberDAO;
 import com.ezen.chord.member.dto.MemberDTO;
 import com.ezen.chord.member.service.MemberService;
@@ -66,6 +66,13 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int login_userLogDataService(int mem_no) {
 		int result = mdao.login_userLogDataDAO(mem_no);
+		return result;
+	}
+	
+	/*로그인 후 회사 비밀번호 가져오기*/
+	@Override
+	public CompanyDTO login_getComPwdService(int com_no) {
+		CompanyDTO result = mdao.login_getComPwdDAO(com_no);
 		return result;
 	}
 

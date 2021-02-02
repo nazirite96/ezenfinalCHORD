@@ -1,6 +1,7 @@
 package com.ezen.chord.member.dao;
 
 
+import com.ezen.chord.company.dto.CompanyDTO;
 import com.ezen.chord.member.dto.MemberDTO;
 
 /**
@@ -21,5 +22,6 @@ public interface MemberDAO {
 	public MemberDTO login_GetUserInfoDAO(String email);
 	public String login_getGradeDAO(String email);
 	public int login_userLogDataDAO(int mem_no);
+	public CompanyDTO login_getComPwdDAO(int com_no);
 	
 }

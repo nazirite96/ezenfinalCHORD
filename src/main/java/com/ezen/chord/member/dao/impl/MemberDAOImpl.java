@@ -3,10 +3,12 @@ package com.ezen.chord.member.dao.impl;
 
 
 import org.apache.ibatis.session.SqlSession;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ezen.chord.company.dto.CompanyDTO;
 import com.ezen.chord.member.dao.MemberDAO;
 import com.ezen.chord.member.dto.MemberDTO;
 
@@ -39,21 +41,36 @@ public class MemberDAOImpl implements MemberDAO {
 	/*로그인 이메일 확인*/
 	@Override
 	public int login_EmailChkDAO(String email) {
-		int result = sqlMap.selectOne("login_mailChk",email);
+		Integer result = sqlMap.selectOne("login_mailChk",email);
+		if(result==0 || result.toString()==null || result.toString().equals("")) {
+			result = 0;
+		}
+		System.out.println("이메일 확인: "+result);
 		return result;
 	}
 	
 	/*로그인 비밀번호 확인*/
 	@Override
 	public int login_PwdChkDAO(MemberDTO dto) {
-		int result = sqlMap.selectOne("login_pwdChk",dto);
+		Integer result = sqlMap.selectOne("login_pwdChk",dto);
+		if(result==0 || result.toString()==null || result.toString().equals("")) {
+			result = 0;
+		}
+		System.out.println("비밀번호 확인: "+result);
 		return result;
 	}
 	
 	/*로그인 후 해당 사용자정보 가져오기*/
 	@Override
 	public MemberDTO login_GetUserInfoDAO(String email) {
-		MemberDTO result = sqlMap.selectOne("login_getUserInfo",email);
+		MemberDTO result = new MemberDTO();
+		try {
+			result = sqlMap.selectOne("login_getUserInfo",email);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getLocalizedMessage());
+		}
+		System.out.println(result);
 		return result;
 	}
 	
@@ -72,5 +89,12 @@ public class MemberDAOImpl implements MemberDAO {
 		return result;
 	}
 
+	/*로그인 후 회사 비밀번호 가져오기*/
+	@Override
+	public CompanyDTO login_getComPwdDAO(int com_no) {
+		CompanyDTO result = sqlMap.selectOne("chord.member.login_getComPwd",com_no);
+		if(result.toString()==null) {System.out.println("에럿");}
+		return result;
+	}
 
 }

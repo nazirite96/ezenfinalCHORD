@@ -33,4 +33,18 @@ public class TimelineDAOImpl implements TimelineDAO{
 		
 		return sqlmap.selectList("getTimelinByProNo", map);
 	}
+	
+	@Override
+	public int updateTim(TimelineDTO timDTO) {
+		// TODO Auto-generated method stub
+		return sqlmap.update("updateTim", timDTO);
+	}
+	
+	@Override
+	public int deleteTim(int tim_no) {
+		// TODO Auto-generated method stub
+		return sqlmap.delete("deleteTim", tim_no);
+	}
+	
+	
 }

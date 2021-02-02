@@ -2,6 +2,7 @@ package com.ezen.chord.member.service;
 
 
 
+import com.ezen.chord.company.dto.CompanyDTO;
 import com.ezen.chord.member.dto.MemberDTO;
 
 /**
@@ -23,6 +24,7 @@ public interface MemberService {
 	public MemberDTO login_GetUserInfoService(String email);
 	public String login_getGradeService(String email);
 	public int login_userLogDataService(int mem_no);
+	public CompanyDTO login_getComPwdService(int com_no);
 	
 	
 	

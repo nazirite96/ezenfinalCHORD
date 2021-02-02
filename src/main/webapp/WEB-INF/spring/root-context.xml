@@ -33,7 +33,7 @@
 		<property name="host" value="smtp.gmail.com"></property>
 		<property name="port" value="587"></property>
 		<property name="username" value="choongyeon0101@gmail.com"></property>
-		<property name="password" value="37cnddus38$"></property>
+		<property name="password" value="cnd$ehsqjfwk$"></property>
 		<property name="javaMailProperties">
 			<props>
 				<prop key="mail.smtp.auth">true</prop>
@@ -47,14 +47,16 @@
       <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean" />
    </bean>
    
-   <context:component-scan base-package="com.ezen.chord.member.service.impl" />
-   <context:component-scan base-package="com.ezen.chord.member.dao.impl" />
    <context:component-scan base-package="com.ezen.chord.helper" />
-   <context:component-scan base-package="com.ezen.chord.member"></context:component-scan>
-   <context:component-scan base-package="com.ezen.chord.company"></context:component-scan>
-   <context:component-scan base-package="com.ezen.chord.task"></context:component-scan>
+
    
    <!-- Autowried -->
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"></bean>
- 
+   <!-- mutltipartResolver -->
+   <bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+			<property name="maxUploadSize" value="104867600"></property>
+		</bean>
+   
+   
 </beans>

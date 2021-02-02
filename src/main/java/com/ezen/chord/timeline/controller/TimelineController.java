@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ezen.chord.timeline.dto.TimelineDTO;
@@ -44,5 +45,22 @@ public class TimelineController {
 		
 		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no();
 	}
+	
+	
+	@RequestMapping("/updateTim.do")
+	public String updateTim(TimelineDTO timDTO) {
+		int result = timService.updateTim(timDTO);
+		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no();
+	}
+	
+	@RequestMapping("/deleteTim.do")
+	public String deleteTim(TimelineDTO timDTO) {
+		int result = timService.deleteTim(timDTO);
+		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no();
+	}
+	
+	
+	
+	
 	
 }
