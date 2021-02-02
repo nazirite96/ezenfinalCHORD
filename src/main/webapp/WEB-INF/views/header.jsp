@@ -13,7 +13,6 @@
 <br>
 <c:set var="sessionMemNo" value="${sessionScope.memNo}"></c:set>
 <c:set var="sessionName" value="${sessionScope.name}"></c:set>
-<c:set var="sessionEmail" value="${sessionScope.email }"></c:set>
 <c:set var="sessionGrade" value="${sessionScope.grade }"></c:set>
 <c:set var="sessionComNo" value="${sessionScope.comNo }"></c:set>
 <c:choose> 

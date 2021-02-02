@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen.chord.company.dto.CompanyDTO;
 import com.ezen.chord.member.dto.MemberDTO;
 import com.ezen.chord.member.service.MemberService;
 
@@ -183,7 +184,7 @@ public class MemberController {
 	@RequestMapping("/login.do")
 	public ModelAndView login(MemberDTO mdto,HttpSession session,String ckbx,HttpServletResponse resp) {
 
-		ModelAndView mav = new ModelAndView();		
+		ModelAndView mav = new ModelAndView();
 		
 		int login_emailResult = msvc.login_EmailChkService(mdto.getMem_email()); //이메일이 있는지?
 		
@@ -205,19 +206,24 @@ public class MemberController {
 				}
 				
 				MemberDTO userInfo = msvc.login_GetUserInfoService(mdto.getMem_email()); // 해당 회원 정보 가져오기
+				System.out.println(userInfo.getMem_name());
 				String userName = userInfo.getMem_name();//이름가져오기
 				int userNo = userInfo.getMem_no();//멤버넘버가져오기
+				String userEmail = userInfo.getMem_email(); // 이메일가져오기
 				int userComNo = userInfo.getCom_no();//회사넘버가져오기
+				
+				CompanyDTO comInfo = msvc.login_getComPwdService(userComNo);//회사비밀번호가져오기
+				String comPwd = comInfo.getCom_pwd();
 				
 				msvc.login_userLogDataService(userNo);//로그인 기록 insert
 				
 				/*쿠키 생성*/
-				if(ckbx!=null) { 
-					Cookie ck = new Cookie("saveEmail",mdto.getMem_email());
+				if(ckbx!=null) { //체크됐다면
+					Cookie ck = new Cookie("saveEmail",userEmail);
 					ck.setMaxAge(60*60*24*7);
 					resp.addCookie(ck);
 				}else {
-					Cookie ck = new Cookie("saveEmail",mdto.getMem_email());
+					Cookie ck = new Cookie("saveEmail",userEmail);
 					ck.setMaxAge(0);
 					resp.addCookie(ck);
 				}
@@ -225,11 +231,11 @@ public class MemberController {
 				/*세션 생성*/
 				session.setAttribute("name", userName);
 				session.setAttribute("memNo", userNo);
-				session.setAttribute("email", mdto.getMem_email());
 				session.setAttribute("comNo", userComNo);
+				session.setAttribute("comPwd", comPwd);
 				
 				mav.addObject("msg","로그인 성공~");
-				mav.addObject("gopage","proList.do?mem_no="+userNo);
+				mav.addObject("gopage","index.do");
 				
 				
 			}else { // 이메일은 맞지만, 패스워드 틀림
