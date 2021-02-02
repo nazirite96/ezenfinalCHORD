@@ -9,7 +9,6 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -19,7 +18,8 @@
 <link rel="stylesheet" href="/chord/resources/css/style_margin.css">
 <!-- jQuery 3.3.1 -->
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	src="<%=request.getContextPath()%>/resources/js/jquery-3.1.1.min.js"></script>
+
 <!-- icon  -->
 <script src="https://kit.fontawesome.com/1a984316ef.js"
 	crossorigin="anonymous"></script>
@@ -173,7 +173,7 @@
 								<div class="pro-tit">
 									<i
 										class="fas fa-star size-20 color-yellow maright-15 cursor-point"
-										data-prono="${proVo.pro_no }"></i>
+										data-prono="22"></i>
 									<c:choose>
 										<c:when test="${proVo.imp_chk == 1 }">
 
@@ -181,7 +181,7 @@
 										<c:otherwise>
 											<i
 												class="fas fa-star size-20 color-gray-l maright-15 cursor-point"
-												data-prono="${proVo.pro_no }"></i>
+												data-prono="22"></i>
 										</c:otherwise>
 									</c:choose>
 									<span class="size-20 color-white">프로젝트 이름</span>
@@ -755,560 +755,603 @@
 							<div class="table-responsive"></div>
 							<c:forEach var="dto" items="${list }">
 								<div class="timeline-box martop-20">
-								
-								<!-- timeline header:s -->
-					<div class="timeline-header back-color-white">
-						<!-- article writer info -->
-						<div class="article-writer-info">
-							<dl>
-								<dt class="posi-re maright-15 cursor-point" onclick="fn_openPopup(this)" 
-								data-id="${timeLine.mem_id }" data-nick="${timeLine.mem_nick }" data-my="${memVo.mem_id }">
-									<i class="flow-icon icon-circle circle-s"></i>
-									
-									
-									
-								</dt>
-								<dd>
-									<strong class="dis-block size-18 color-black">작성자 : ${dto.mem_no }</strong>
-									<span class="dis-block size-14 color-gray-l">
-									작성시간 ${dto.tim_date }
-									</span>
-								</dd>
-							</dl>
-						</div>
-						
-						<!-- article icon : s -->
-						<ul class="article-top-icon">
-							
-							<c:if test="${proVo.mem_id == memVo.mem_id }">
-								<!-- article pick button -->
-								<li>
-									<a href="#fixCheck" class="pick-check-btn">
-										<c:choose>
-											<c:when test="${timeLine.fix_chk == 'y' }">
-												<i class="fas fa-map-pin size-24 cursor-point pick-active"></i>
-											</c:when>
-											<c:otherwise>
-												<i class="fas fa-map-pin size-24 cursor-point"></i>
-											</c:otherwise>
-										</c:choose>
-									</a>
-								</li>
-							</c:if>
-						
-							<!-- article edit : s 
+
+									<!-- timeline header:s -->
+									<div class="timeline-header back-color-white">
+										<!-- article writer info -->
+										<div class="article-writer-info">
+											<dl>
+												<dt class="posi-re maright-15 cursor-point"
+													onclick="fn_openPopup(this)" data-id="${timeLine.mem_id }"
+													data-nick="${timeLine.mem_nick }"
+													data-my="${memVo.mem_id }">
+													<i class="flow-icon icon-circle circle-s"></i>
+
+
+
+												</dt>
+												<dd>
+													<strong class="dis-block size-18 color-black">작성자
+														: ${dto.mem_no }</strong> <span
+														class="dis-block size-14 color-gray-l"> 작성시간
+														${dto.tim_date } </span>
+												</dd>
+											</dl>
+										</div>
+
+										<!-- article icon : s -->
+										<ul class="article-top-icon">
+
+											<c:if test="${proVo.mem_id == memVo.mem_id }">
+												<!-- article pick button -->
+												<li><a href="#fixCheck" class="pick-check-btn"> <c:choose>
+															<c:when test="${timeLine.fix_chk == 'y' }">
+																<i	
+																	class="fas fa-map-pin size-24 cursor-point pick-active"></i>
+															</c:when>
+															<c:otherwise>
+																<i class="fas fa-map-pin size-24 cursor-point"></i>
+															</c:otherwise>
+														</c:choose>
+												</a></li>
+											</c:if>
+
+											<!-- article edit : s 
 							<c:if test="${timeLine.mem_id == memVo.mem_id }">-->
-								<li class="posi-re float-left">
-									<button id="articleEdit" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										<i class="fas fa-ellipsis-v size-24 color-gray"></i>
-									</button>
-									<ul class="dropdown-menu" role="menu" aria-labelledby="articleEdit">
-										<li class="cursor-point" onclick="fn_editArticle(this)">글 수정</li>
-										<li class="cursor-point timeline-delete-btn">글 삭제</li>
-									</ul>
-								</li>
-							<!-- </c:if>
+											<li class="posi-re float-left">
+												<button id="articleEdit" type="button"
+													data-toggle="dropdown" aria-haspopup="true"
+													aria-expanded="false">
+													<i class="fas fa-ellipsis-v size-24 color-gray"></i>
+												</button>
+												<ul class="dropdown-menu" role="menu"
+													aria-labelledby="articleEdit">
+													<li class="cursor-point" onclick="fn_editArticle(this)">글
+														수정</li>
+													<li class="cursor-point timeline-delete-btn">글 삭제</li>
+												</ul>
+											</li>
+											<!-- </c:if>
 							 article edit : f -->
-						</ul>
-						<!-- article icon : f -->		
-			
-					</div>
-					<!-- timeline header:f -->
-								
-								
+										</ul>
+										<!-- article icon : f -->
+
+									</div>
+									<!-- timeline header:f -->
+
+
 									<div class="timeline-content">
-										
-											<div class="timeline-article con-article">
-												<!-- 내용:s -->
-												<div class="article-txt">
-													<pre>${dto.tim_cont}</pre>
-												</div>
-												<!-- 내용:f -->
 
-												<!-- 이미지:s -->
-												<div class="article-img martop-20">
-												
-													<div class="swiper-container-img">
-														<div class="swiper-wrapper">
-																<!-- <c:forEach items="${timeLine.filesList }" var="filesVo">
+										<div class="timeline-article con-article">
+											<!-- 내용:s -->
+											<div class="article-txt">
+												<pre>${dto.tim_cont}</pre>
+											</div>
+											<!-- 내용:f -->
+
+											<!-- 이미지:s -->
+											<div class="article-img martop-20">
+
+												<div class="swiper-container-img">
+													<div class="swiper-wrapper">
+														<!-- <c:forEach items="${timeLine.filesList }" var="filesVo">
 																<c:if test="${filesVo.files_kind == 'img' }">-->
-																	<div class="swiper-slide img-con"
-																		style="background-image:url('/files/view?files_no=${filesVo.files_no}')"></div>
-															<!-- 	</c:if>
+														<div class="swiper-slide img-con"
+															style="background-image:url('/files/view?files_no=${filesVo.files_no}')"></div>
+														<!-- 	</c:if>
 															</c:forEach>-->
-														</div>
-														Add Arrows
-														<div class="swiper-button-next"></div>
-														<div class="swiper-button-prev"></div>
 													</div>
-
+													Add Arrows
+													<div class="swiper-button-next"></div>
+													<div class="swiper-button-prev"></div>
 												</div>
-												<!-- 이미지:f -->
 
-												<!-- 파일리스트:s -->
-												<div class="article-file float-left" style="width: 100%;">
-													<!-- 
+											</div>
+											<!-- 이미지:f -->
+
+											<!-- 파일리스트:s -->
+											<div class="article-file float-left" style="width: 100%;">
+												<!-- 
 													<c:forEach items="${timeLine.filesList }" var="filesVo">
 														<c:if test="${filesVo.files_kind == 'fil' }">-->
-															<div class="upload-file-info float-left martop-20">
-																<dl>
-																	<dt>
-																		<i class="dis-inblock file-icon"
-																			data-name="${filesVo.files_name }"></i>
-																	</dt>
-																	<dd>
-																		<span class="dis-block size-18 color-black">${filesVo.files_name }</span>
-																		<span class="dis-block martop-5 size-14 color-gray">${filesVo.files_size }</span>
-																	</dd>
-																</dl>
-																<a href="/files/download?files_no=${filesVo.files_no }"
-																	class="file-down-btn"><i
-																	class="fas fa-download maright-10"></i> 다운로드</a>
-															</div>
-														<!-- </c:if>
+												<div class="upload-file-info float-left martop-20">
+													<dl>
+														<dt>
+															<i class="dis-inblock file-icon"
+																data-name="${filesVo.files_name }"></i>
+														</dt>
+														<dd>
+															<span class="dis-block size-18 color-black">${filesVo.files_name }</span>
+															<span class="dis-block martop-5 size-14 color-gray">${filesVo.files_size }</span>
+														</dd>
+													</dl>
+													<a href="/files/download?files_no=${filesVo.files_no }"
+														class="file-down-btn"><i
+														class="fas fa-download maright-10"></i> 다운로드</a>
+												</div>
+												<!-- </c:if>
 													</c:forEach>-->
 
-												</div>
-												<!-- 파일리스트:f -->
 											</div>
+											<!-- 파일리스트:f -->
+										</div>
 
 
-											<!-- 일반 게시글 수정:s -->
-											<form action="/flowolf/basic/update" method="post"
-												class="article-edit-form" enctype="multipart/form-data">
-												<input type="hidden" name="basic_no"
-													value="${dto.tim_no }">
+										<!-- 일반 게시글 수정:s -->
+										<form action="updateTim.do" method="post"
+											class="article-edit-form" enctype="multipart/form-data">
+											<input type="hidden" name="basic_no" value="${dto.tim_no }">
 
-												<!-- article edit box:s -->
-												<div class="article-edit-box">
-													<textarea rows="5" cols="50" placeholder="글을 작성하세요."
-														name="basic_cont" onkeyup="autoTextarea(this, 120, 500)"
-														required="required">${dto.tim_cont}</textarea>
+											<!-- article edit box:s -->
+											<div class="article-edit-box">
+												<textarea rows="5" cols="50" placeholder="글을 작성하세요."
+													name="basic_cont" onkeyup="autoTextarea(this, 120, 500)"
+													required="required">${dto.tim_cont}</textarea>
 
-													<!-- 이미지 목록이 나올부분 -->
-													<div class="upload-img-list">
-														<!-- <c:forEach items="${timeLine.filesList }" var="filesVo">
+												<!-- 이미지 목록이 나올부분 -->
+												<div class="upload-img-list">
+													<!-- <c:forEach items="${timeLine.filesList }" var="filesVo">
 															<c:if test="${filesVo.files_kind == 'img' }"> -->
-																<div class="upload-img-info martop-20"
-																	data-no="${filesVo.files_no }">
-																	<div class="upload-img"
-																		style="background-image:url('/files/view?files_no=${filesVo.files_no}')"></div>
-																	<i class="fas fa-times-circle img-close-btn"
-																		onclick="fileDelete(this)"></i>
-																</div>
-															<!--</c:if>
-														</c:forEach>-->
+													<div class="upload-img-info martop-20"
+														data-no="${filesVo.files_no }">
+														<div class="upload-img"
+															style="background-image:url('/files/view?files_no=${filesVo.files_no}')"></div>
+														<i class="fas fa-times-circle img-close-btn"
+															onclick="fileDelete(this)"></i>
 													</div>
+													<!--</c:if>
+														</c:forEach>-->
+												</div>
 
-													<!-- 첨부파일 목록이 나올부분  -->
-													<div class="upload-file-list">
-														<!-- <c:forEach items="${timeLine.filesList }" var="filesVo">
+												<!-- 첨부파일 목록이 나올부분  -->
+												<div class="upload-file-list">
+													<!-- <c:forEach items="${timeLine.filesList }" var="filesVo">
 															<c:if test="${filesVo.files_kind == 'fil' }"> -->
-																<div class="upload-file-info martop-20"
-																	data-no="${filesVo.files_no }">
-																	<dl>
-																		<dt>
-																			<i class="dis-inblock file-icon"
-																				data-name="${filesVo.files_name }"></i>
-																		</dt>
-																		<dd>
-																			<span class="dis-block size-18 color-black">파일이름</span>
-																			<span class="dis-block martop-5 size-14 color-gray">파일크기</span>
-																		</dd>
-																	</dl>
-																	<i class="far fa-times-circle file-close-btn"
-																		onclick="fileDelete(this)"></i>
-																</div>
-															<!--</c:if>
-														</c:forEach>-->
+													<div class="upload-file-info martop-20"
+														data-no="${filesVo.files_no }">
+														<dl>
+															<dt>
+																<i class="dis-inblock file-icon"
+																	data-name="${filesVo.files_name }"></i>
+															</dt>
+															<dd>
+																<span class="dis-block size-18 color-black">파일이름</span>
+																<span class="dis-block martop-5 size-14 color-gray">파일크기</span>
+															</dd>
+														</dl>
+														<i class="far fa-times-circle file-close-btn"
+															onclick="fileDelete(this)"></i>
 													</div>
-
+													<!--</c:if>
+														</c:forEach>-->
 												</div>
 
-												<!-- article edit box:f -->
-
-												<!-- article edit dn:s -->
-												<div class="article-edit-dn">
-													<!-- 파일첨부 -->
-													<label for="articleEditFile_b${dto.tim_no }"
-														class="float-left maright-20 marbtm-0 font-thin size-18">
-														<i class="fas fa-paperclip maright-10"></i>파일첨부
-													</label> <input type="file" name="articleFile"
-														id="articleEditFile_b${dto.tim_no }"
-														class="dis-none" onchange="fileUpload(this)">
-
-													<!-- 이미지첨부 -->
-													<label for="articleEditImg_b${dto.tim_no }"
-														class="float-left marbtm-0 font-thin size-18"> <i
-														class="fas fa-camera maright-10"></i>이미지첨부
-													</label> <input type="file" name="imageFile"
-														id="articleEditImg_b${dto.tim_no }"
-														class="dis-none" onchange="imgUpload(this)"
-														accept="image/*">
-
-													<!-- submit & cancel 버튼 -->
-													<input type="submit" value="수정하기"
-														class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
-													<input type="button" value="취소"
-														onclick="fn_editCancel(this)"
-														class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
-														style="border: 1px solid #ddd">
-												</div>
-												<!-- article edit dn:f -->
-											</form>
-											<!-- 일반 게시글 수정:f -->
 											</div>
-											<!-- timeline footer:s -->
-					<div class="timeline-footer">
-					
-						<!-- 좋아요 / 댓글 개수:s -->
-						<div class="article-etc-info">
-						
-							<!-- emoUserList에 회원이 등록한 이모티콘이 있는지 확인 -->
-							<c:set var="emo_user_chk" value="false" />
-							<c:set var="my_emo_no" value="" />
-							<c:set var="my_emo_name" value="" />
-							<c:set var="my_emo_user_no" value="" />
-							
-							<c:forEach items="${timeLine.emoUserList }" var="emoUserVo">
-								<c:if test="${not emo_user_chk }">
-									<c:if test="${emoUserVo.mem_id == memVo.mem_id }">
-										<c:set var="emo_user_chk" value="true" />
-										<c:set var="my_emo_no" value="${emoUserVo.emo_no }" />
-										<c:set var="my_emo_name" value="${emoUserVo.emo_name }" />
-										<c:set var="my_emo_user_no" value="${emoUserVo.emo_user_no }" />
-									</c:if>
-								</c:if>
-							</c:forEach>						
-						
-							<!-- 좋아요 선택 시 이모티콘 나올 부분 -->
-							<div class="like-result cursor-point" onclick="fn_emoUserPop(${start.index })">
-								<c:forEach items="${timeLine.emoUserList }" var="emoUserVo" end="2">
-									<img src="/emo/view?emo_no=${emoUserVo.emo_no }" data-no="${emoUserVo.emo_user_no }" width="20" class="maright-10">
-								</c:forEach>
-								<div class="like-mem dis-inblock" data-size="${timeLine.emoUserList.size() }">
-								<c:choose>
-									<c:when test="${emo_user_chk}">
-										<strong class="me">${memVo.mem_nick }</strong>	님
+
+											<!-- article edit box:f -->
+
+											<!-- article edit dn:s -->
+											<div class="article-edit-dn">
+												<!-- 파일첨부 -->
+												<label for="articleEditFile_b${dto.tim_no }"
+													class="float-left maright-20 marbtm-0 font-thin size-18">
+													<i class="fas fa-paperclip maright-10"></i>파일첨부
+												</label> <input type="file" name="articleFile"
+													id="articleEditFile_b${dto.tim_no }" class="dis-none"
+													onchange="fileUpload(this)">
+
+												<!-- 이미지첨부 -->
+												<label for="articleEditImg_b${dto.tim_no }"
+													class="float-left marbtm-0 font-thin size-18"> <i
+													class="fas fa-camera maright-10"></i>이미지첨부
+												</label> <input type="file" name="imageFile"
+													id="articleEditImg_b${dto.tim_no }" class="dis-none"
+													onchange="imgUpload(this)" accept="image/*">
+
+												<!-- submit & cancel 버튼 -->
+												<input type="submit" value="수정하기"
+													class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
+												<input type="button" value="취소"
+													onclick="fn_editCancel(this)"
+													class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
+													style="border: 1px solid #ddd">
+											</div>
+											<!-- article edit dn:f -->
+										</form>
+										<!-- 일반 게시글 수정:f -->
+									</div>
+									<!-- timeline footer:s -->
+									<div class="timeline-footer">
+
+										<!-- 좋아요 / 댓글 개수:s -->
+										<div class="article-etc-info">
+
+											
+
+											<!-- 좋아요 선택 시 이모티콘 나올 부분 -->
+											<div class="like-result cursor-point"
+												onclick="fn_emoUserPop(${start.index })">
+												<c:forEach items="${timeLine.emoUserList }" var="emoUserVo"
+													end="2">
+													<img src="/emo/view?emo_no=${emoUserVo.emo_no }"
+														data-no="${emoUserVo.emo_user_no }" width="20"
+														class="maright-10">
+												</c:forEach>
+												<div class="like-mem dis-inblock"
+													data-size="${timeLine.emoUserList.size() }">
+													<c:choose>
+														<c:when test="${emo_user_chk}">
+															<strong class="me">${memVo.mem_nick }</strong>	님
 										<c:if test="${timeLine.emoUserList.size()-1 != 0 }">
 											  외 ${timeLine.emoUserList.size()-1 }명
 										</c:if>
-									</c:when>
-									<c:otherwise>
-										<c:if test="${timeLine.emoUserList.size() != 0 }">
+														</c:when>
+														<c:otherwise>
+															<c:if test="${timeLine.emoUserList.size() != 0 }">
 											${timeLine.emoUserList.size() }명
 										</c:if>
-									</c:otherwise>									
-								</c:choose>
-								</div>
-							</div>
-							
-							<!-- 이모티콘 사용자 리스트 팝업:s -->
-							<div class="dim-layer">
-								<div class="dimBg"></div>
-							
-								<div id="emoUser_${start.index }" class="pop-layer">
-									<!-- pop header -->
-									<header class="pop-top border-box">
-										리액션 확인
-										<a href="#" class="posi-ab dis-block over-hidden icon-close btn-close">close</a>
-									</header>
-									
-									<!-- pop con -->
-									<section class="pop-con border-box">
-										<!-- 좋아요 개수 : s -->
-										<ul class="like-count-info">
-											<li>총 <span>${timeLine.emoUserList.size() }</span></li>
-										</ul>
-										<!-- 좋아요 개수 : f -->
-										
-										<!-- 좋아요 리스트 : s -->
-										<div class="like-count-list" data-simplebar>
-											<c:forEach items="${timeLine.emoUserList }" var="emoUserVo">
-												<dl data-id="${emoUserVo.mem_id }">
-													<dt	class="posi-re cursor-point" onclick="fn_openPopup(this)" 
-													data-id="${timeLine.mem_id }" data-nick="${timeLine.mem_nick }" data-my="${memVo.mem_id }">
-														<i class="icon-circle circle-s"></i>
-														
-													</dt>
-													<dd>
-														<div class="like-user-name">${emoUserVo.mem_nick }</div>
-														<div class="like-user-emoticon"><img src="/emo/view?emo_no=${emoUserVo.emo_no }" width="40"></div>
-													</dd>
-												</dl>
-											</c:forEach>
-										</div>
-										<!-- 좋아요 리스트 : f -->
-									</section>									
-								</div>
-							</div>
-							<!-- 이모티콘 사용자 리스트 팝업:f -->
-							
-							<!-- 댓글 개수 -->
-							<div class="comment-count back-color-gray-l color-white">
-								<i class="fas fa-comment maright-10"></i> ${timeLine.repList.size() }개
-							</div>
-							
-							<!-- 좋아요 / 댓글작성 / 담아두기 버튼 -->
-							<ul class="article-etc-menu martop-10 marbtm-0">
-								<li class="posi-re cursor-point">							
-									
-									<c:choose>
-										<c:when test="${emo_user_chk }">
-											<!-- like button : s -->
-											<div id="emoticonToggle" class="emoticon-btn cursor-point" 
-											data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:none">
-												<i class="fas fa-thumbs-up maright-10"></i>좋아요
+														</c:otherwise>
+													</c:choose>
+												</div>
 											</div>
-											<!-- like button : f -->
-											
-											<!-- Chagned like button : s -->
-											<div class="emoticon-after-btn cursor-point" data-emouser="${my_emo_user_no }" style="display:block">
-												<img src="/emo/view?emo_no=${my_emo_no }" width="20" class="maright-10">
-												<span class="size-14 default-color">${my_emo_name }</span>
-											</div>
-											<!-- Chagned like button : f -->
-										</c:when>
-										<c:otherwise>
-											<!-- like button : s -->
-											<div id="emoticonToggle" class="emoticon-btn cursor-point" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												<i class="fas fa-thumbs-up maright-10"></i>좋아요
-											</div>
-											<!-- like button : f -->
-											
-											<!-- Chagned like button : s -->
-											<div class="emoticon-after-btn cursor-point" data-emouser="">
-												<img src="" width="20" class="maright-10">
-												<span class="size-14 default-color"></span>
-											</div>
-											<!-- Chagned like button : f -->
-										</c:otherwise>
-									</c:choose>
-									<!-- Emoticon list box -->
-									<div class="dropdown-menu emoticon-box" aria-labelledby="emoticonToggle">
-										<ul>
-											<c:forEach items="${emoList }" var="emo">
-												<li class="posi-re" data-emono="${emo.emo_no }">
-													<img src="/emo/view?emo_no=${emo.emo_no }">
-													<span>${emo.emo_name }</span>
-												</li>
-											</c:forEach>											
-										</ul>
-									</div>
-								</li>
-								<li class="cursor-point" onclick="fn_commentFocus(this)"><i class="fas fa-comment-alt maright-10"></i> 댓글작성</li>
-								<c:choose>
-									<c:when test="${timeLine.coll_chk != 0 }">
-										<li class="cursor-point coll-btn default-color" data-collno="${timeLine.coll_chk }">
-											<i class="fas fa-bookmark maright-10"></i>
-											<span>담아두기 취소</span>
-										</li>
-									</c:when>
-									<c:otherwise>
-										<li class="cursor-point coll-btn" data-collno="${timeLine.coll_chk }">
-											<i class="fas fa-bookmark maright-10"></i>
-											<span>담아두기</span>
-										</li>
-									</c:otherwise>
-								</c:choose>
-								
-							</ul>
-						</div>
-						<!-- 좋아요 / 댓글 개수:f -->
-					
-						<!-- 댓글:s -->
-						<div class="timeline-comment-wrap">
-							<c:forEach items="${timeLine.repList }" var="repList" varStatus="status">
-								<!-- 댓글 리스트:s -->
-								<div class="comment-list-box" data-repno="${repList['repVo'].rep_no }">
-									<dl>
-										<dt class="posi-re cursor-point" onclick="fn_openPopup(this)" 
-										data-id="${timeLine.mem_id }" data-nick="${timeLine.mem_nick }" data-my="${memVo.mem_id }">
-											<i class="flow-icon icon-circle circle-s-re"></i>
-											
-										</dt>
-										<dd class="posi-re">
-										
-											<!-- 댓글 작성자 정보 -->
-											<div class="comment-user-info">
-												<div class="dis-inblock font-bold size-15 color-black maright-10">${repList['repVo'].mem_nick }</div>
-												<div class="dis-inblock size-15 color-gray maright-20"><fmt:formatDate value="${repList['repVo'].rep_time }" pattern="yyyy-MM-dd hh:mm"/> </div>
-<!-- 												<div class="dis-inblock size-15 color-gray cursor-point" onclick="fn_likeChange(this)"> -->
-<!-- 													<i class="fas fa-thumbs-up maright-10"></i><span>좋아요</span> -->
-<!-- 												</div> -->
-											</div>
-											
-											<!-- 댓글내용 -->
-											<div class="article-txt martop-5">
-												<pre class="font-thin size-16 color-gray">${repList['repVo'].rep_cont }</pre>
-											</div>
-											
-											<!-- 댓글 이미지 목록 : s -->
-											<div class="comment-img-list">
-												<c:forEach items="${repList['filesList'] }" var="filesVo">
-													<c:if test="${filesVo.files_kind == 'img' }">
-														<div class="upload-img-info martop-20">
-															<div class="upload-img" style="background-image:url('/files/view?files_no=${filesVo.files_no}')"></div>
+
+											<!-- 이모티콘 사용자 리스트 팝업:s -->
+											<div class="dim-layer">
+												<div class="dimBg"></div>
+
+												<div id="emoUser_${start.index }" class="pop-layer">
+													<!-- pop header -->
+													<header class="pop-top border-box">
+														리액션 확인 <a href="#"
+															class="posi-ab dis-block over-hidden icon-close btn-close">close</a>
+													</header>
+
+													<!-- pop con -->
+													<section class="pop-con border-box">
+														<!-- 좋아요 개수 : s -->
+														<ul class="like-count-info">
+															<li>총 <span>${timeLine.emoUserList.size() }</span></li>
+														</ul>
+														<!-- 좋아요 개수 : f -->
+
+														<!-- 좋아요 리스트 : s -->
+														<div class="like-count-list" data-simplebar>
+															<c:forEach items="${timeLine.emoUserList }"
+																var="emoUserVo">
+																<dl data-id="${emoUserVo.mem_id }">
+																	<dt class="posi-re cursor-point"
+																		onclick="fn_openPopup(this)"
+																		data-id="${timeLine.mem_id }"
+																		data-nick="${timeLine.mem_nick }"
+																		data-my="${memVo.mem_id }">
+																		<i class="icon-circle circle-s"></i>
+
+																	</dt>
+																	<dd>
+																		<div class="like-user-name">${emoUserVo.mem_nick }</div>
+																		<div class="like-user-emoticon">
+																			<img src="/emo/view?emo_no=${emoUserVo.emo_no }"
+																				width="40">
+																		</div>
+																	</dd>
+																</dl>
+															</c:forEach>
 														</div>
-													</c:if>
-												</c:forEach>
+														<!-- 좋아요 리스트 : f -->
+													</section>
+												</div>
 											</div>
-											<!-- 댓글 이미지 목록 : f -->
-											
-											<!-- 댓글 첨부파일 목록 : s -->
-											<div class="comment-file-list">
-												<c:forEach items="${repList['filesList'] }" var="filesVo">
-													<c:if test="${filesVo.files_kind == 'fil' }">
-														<div class="upload-file-info martop-10">
-															<dl>
-																<dt>
-																	<i class="dis-inblock file-icon-s" data-name="${filesVo.files_name }"></i>
-																</dt>
-																<dd>
-																	<div class="dis-block size-14 color-black" style="height:26px;line-height:26px;">
-																		${filesVo.files_name }<span class="marleft-10 color-blue-l">(${filesVo.files_size })</span>
+											<!-- 이모티콘 사용자 리스트 팝업:f -->
+
+											<!-- 댓글 개수 -->
+											<div class="comment-count back-color-gray-l color-white">
+												<i class="fas fa-comment maright-10"></i>
+												댓글 갯수
+											</div>
+
+											<!-- 좋아요 / 댓글작성 / 담아두기 버튼 -->
+											<ul class="article-etc-menu martop-10 marbtm-0">
+												<li class="posi-re cursor-point"><c:choose>
+														<c:when test="${emo_user_chk }">
+															<!-- like button : s -->
+															<div id="emoticonToggle"
+																class="emoticon-btn cursor-point" data-toggle="dropdown"
+																aria-haspopup="true" aria-expanded="false"
+																style="display: none">
+																<i class="fas fa-thumbs-up maright-10"></i>좋아요
+															</div>
+															<!-- like button : f -->
+
+															<!-- Chagned like button : s -->
+															<div class="emoticon-after-btn cursor-point"
+																data-emouser="${my_emo_user_no }" style="display: block">
+																<img src="/emo/view?emo_no=${my_emo_no }" width="20"
+																	class="maright-10"> <span
+																	class="size-14 default-color">${my_emo_name }</span>
+															</div>
+															<!-- Chagned like button : f -->
+														</c:when>
+														<c:otherwise>
+															<!-- like button : s -->
+															<div id="emoticonToggle"
+																class="emoticon-btn cursor-point" data-toggle="dropdown"
+																aria-haspopup="true" aria-expanded="false">
+																<i class="fas fa-thumbs-up maright-10"></i>좋아요
+															</div>
+															<!-- like button : f -->
+
+															<!-- Chagned like button : s -->
+															<div class="emoticon-after-btn cursor-point"
+																data-emouser="">
+																<img src="" width="20" class="maright-10"> <span
+																	class="size-14 default-color"></span>
+															</div>
+															<!-- Chagned like button : f -->
+														</c:otherwise>
+													</c:choose> <!-- Emoticon list box -->
+													<div class="dropdown-menu emoticon-box"
+														aria-labelledby="emoticonToggle">
+														<ul>
+															<c:forEach items="${emoList }" var="emo">
+																<li class="posi-re" data-emono="${emo.emo_no }"><img
+																	src="/emo/view?emo_no=${emo.emo_no }"> <span>${emo.emo_name }</span>
+																</li>
+															</c:forEach>
+														</ul>
+													</div></li>
+												<li class="cursor-point" onclick="fn_commentFocus(this)"><i
+													class="fas fa-comment-alt maright-10"></i> 댓글작성</li>
+												<c:choose>
+													<c:when test="${timeLine.coll_chk != 0 }">
+														<li class="cursor-point coll-btn default-color"
+															data-collno="${timeLine.coll_chk }"><i
+															class="fas fa-bookmark maright-10"></i> <span>담아두기
+																취소</span></li>
+													</c:when>
+													<c:otherwise>
+														<li class="cursor-point coll-btn"
+															data-collno="${timeLine.coll_chk }"><i
+															class="fas fa-bookmark maright-10"></i> <span>담아두기</span>
+														</li>
+													</c:otherwise>
+												</c:choose>
+
+											</ul>
+										</div>
+										<!-- 좋아요 / 댓글 개수:f -->
+
+										<!-- 댓글:s -->
+										<div class="timeline-comment-wrap">
+											<c:forEach items="${timeLine.repList }" var="repList"
+												varStatus="status">
+												<!-- 댓글 리스트:s -->
+												<div class="comment-list-box"
+													data-repno="${repList['repVo'].rep_no }">
+													<dl>
+														<dt class="posi-re cursor-point"
+															onclick="fn_openPopup(this)"
+															data-id="id"
+															data-nick="nick"
+															data-my="manager">
+															<i class="flow-icon icon-circle circle-s-re"></i>
+
+														</dt>
+														<dd class="posi-re">
+
+															<!-- 댓글 작성자 정보 -->
+															<div class="comment-user-info">
+																<div
+																	class="dis-inblock font-bold size-15 color-black maright-10">작성자</div>
+																<div class="dis-inblock size-15 color-gray maright-20">
+																</div>
+																<!-- 												<div class="dis-inblock size-15 color-gray cursor-point" onclick="fn_likeChange(this)"> -->
+																<!-- 													<i class="fas fa-thumbs-up maright-10"></i><span>좋아요</span> -->
+																<!-- 												</div> -->
+															</div>
+
+															<!-- 댓글내용 -->
+															<div class="article-txt martop-5">
+																<pre class="font-thin size-16 color-gray">댓글내용</pre>
+															</div>
+
+															<!-- 댓글 이미지 목록 : s -->
+															<div class="comment-img-list">
+																<c:forEach items="${repList['filesList'] }"
+																	var="filesVo">
+																	<c:if test="${filesVo.files_kind == 'img' }">
+																		<div class="upload-img-info martop-20">
+																			<div class="upload-img"
+																				style="background-image:url('resources/img/sample.png')"></div>
+																		</div>
+																	</c:if>
+																</c:forEach>
+															</div>
+															<!-- 댓글 이미지 목록 : f -->
+
+															<!-- 댓글 첨부파일 목록 : s -->
+															<div class="comment-file-list">
+																<c:forEach items="${repList['filesList'] }"
+																	var="filesVo">
+																	<c:if test="${filesVo.files_kind == 'fil' }">
+																		<div class="upload-file-info martop-10">
+																			<dl>
+																				<dt>
+																					<i class="dis-inblock file-icon-s"
+																						data-name="${filesVo.files_name }"></i>
+																				</dt>
+																				<dd>
+																					<div class="dis-block size-14 color-black"
+																						style="height: 26px; line-height: 26px;">
+																						${filesVo.files_name }<span
+																							class="marleft-10 color-blue-l">(${filesVo.files_size })</span>
+																					</div>
+																					<a
+																						href="/files/download?files_no=${filesVo.files_no }"
+																						class="comment-file-down">다운로드</a>
+																				</dd>
+																			</dl>
+																		</div>
+																	</c:if>
+																</c:forEach>
+															</div>
+															<!-- 댓글 첨부파일 목록 : f -->
+
+															<!-- 댓글 수정 박스 -->
+															<div class="comment-edit-box">
+																<form action="/flowolf/rep/update" method="post"
+																	class="comment-edit-form" enctype="multipart/form-data">
+																	<input type="hidden" name="rep_no"
+																		value="${repList['repVo'].rep_no }">
+																	<div class="comment-textarea">
+																		<textarea rows="5" cols="50" class="rep_cont"
+																			name="rep_cont" onkeyup="autoTextarea(this, 40, 300)"
+																			onkeydown="fn_keyDownEsc(event, this)" required>${repList['repVo'].rep_cont }</textarea>
 																	</div>
-																	<a href="/files/download?files_no=${filesVo.files_no }" class="comment-file-down">다운로드</a>
-																</dd>
-															</dl>
-														</div>
-													</c:if>
-												</c:forEach>
-											</div>
-											<!-- 댓글 첨부파일 목록 : f -->
-											
-											<!-- 댓글 수정 박스 -->
-											<div class="comment-edit-box">
-												<form action="/flowolf/rep/update" method="post" class="comment-edit-form" enctype="multipart/form-data">
-													<input type="hidden" name="rep_no" value="${repList['repVo'].rep_no }">
-													<div class="comment-textarea">
-														<textarea rows="5" cols="50" class="rep_cont" name="rep_cont" 
-														onkeyup="autoTextarea(this, 40, 300)" onkeydown="fn_keyDownEsc(event, this)" required>${repList['repVo'].rep_cont }</textarea>
-													</div>
-													<div class="dis-block float-left martop-5 marbtm-10 size-13 color-gray" style="width:100%"><span class="default-color">취소</span> 하실려면 <span class="color-red">Esc</span>키를 누르세요.</div>
-													
-													<!-- 파일첨부 -->
-													<label for="commentEditFile_${status.count }" class="marbtm-0">
-														<i class="fas fa-paperclip martop-10 size-24 color-gray cursor-point"></i>
-													</label>
-													<input type="file" id="commentEditFile_${status.count }" class="dis-none" onchange="commentFileUpload(this)">
-													
-													<!-- 이미지 목록이 나올부분 -->
-													<div class="comment-upload-img-list">
-														<c:forEach items="${repList['filesList'] }" var="filesVo">
-															<c:if test="${filesVo.files_kind == 'img' }">
-																<div class="upload-img-info martop-20" data-no="${filesVo.files_no }">
-																	<div class="upload-img" style="background-image:url('/files/view?files_no=${filesVo.files_no}')"></div>
-																	<i class="fas fa-times-circle img-close-btn" onclick="commentFileDelete(this)"></i>
-																</div>
+																	<div
+																		class="dis-block float-left martop-5 marbtm-10 size-13 color-gray"
+																		style="width: 100%">
+																		<span class="default-color">취소</span> 하실려면 <span
+																			class="color-red">Esc</span>키를 누르세요.
+																	</div>
+
+																	<!-- 파일첨부 -->
+																	<label for="commentEditFile_${status.count }"
+																		class="marbtm-0"> <i
+																		class="fas fa-paperclip martop-10 size-24 color-gray cursor-point"></i>
+																	</label> <input type="file"
+																		id="commentEditFile_${status.count }" class="dis-none"
+																		onchange="commentFileUpload(this)">
+
+																	<!-- 이미지 목록이 나올부분 -->
+																	<div class="comment-upload-img-list">
+																		<c:forEach items="${repList['filesList'] }"
+																			var="filesVo">
+																			<c:if test="${filesVo.files_kind == 'img' }">
+																				<div class="upload-img-info martop-20"
+																					data-no="${filesVo.files_no }">
+																					<div class="upload-img"
+																						style="background-image:url('/files/view?files_no=${filesVo.files_no}')"></div>
+																					<i class="fas fa-times-circle img-close-btn"
+																						onclick="commentFileDelete(this)"></i>
+																				</div>
+																			</c:if>
+																		</c:forEach>
+																	</div>
+
+																	<!-- 첨부파일 목록이 나올부분 -->
+																	<div class="comment-upload-file-list">
+																		<c:forEach items="${repList['filesList'] }"
+																			var="filesVo">
+																			<c:if test="${filesVo.files_kind == 'fil' }">
+																				<div class="upload-file-info martop-10"
+																					data-no="${filesVo.files_no }">
+																					<dl>
+																						<dt>
+																							<i class="dis-inblock file-icon-s"
+																								data-name="${filesVo.files_name }"></i>
+																						</dt>
+																						<dd>
+																							<div class="dis-block size-14 color-black"
+																								style="height: 26px; line-height: 26px;">
+																								${filesVo.files_name }<span
+																									class="marleft-10 color-blue-l">(${filesVo.files_size })</span>
+																							</div>
+																						</dd>
+																					</dl>
+																					<i class="far fa-times-circle file-close-btn"
+																						onclick="commentFileDelete(this)"></i>
+																				</div>
+																			</c:if>
+																		</c:forEach>
+																	</div>
+																</form>
+															</div>
+															<c:if test="${repList['repVo'].mem_id == memVo.mem_id }">
+																<!-- 댓글 수정,삭제 버튼 -->
+																<ul class="comment-edit-btn">
+																	<li class="cursor-point" onclick="fn_commentEdit(this)">수정</li>
+																	<li class="cursor-point reply-delete">삭제</li>
+																</ul>
 															</c:if>
-														</c:forEach>												
-													</div>
-													
-													<!-- 첨부파일 목록이 나올부분 -->
-													<div class="comment-upload-file-list">
-														<c:forEach items="${repList['filesList'] }" var="filesVo">
-															<c:if test="${filesVo.files_kind == 'fil' }">
-																<div class="upload-file-info martop-10" data-no="${filesVo.files_no }">
-																	<dl>
-																		<dt>
-																			<i class="dis-inblock file-icon-s" data-name="${filesVo.files_name }"></i>
-																		</dt>
-																		<dd>
-																			<div class="dis-block size-14 color-black" style="height:26px;line-height:26px;">
-																				${filesVo.files_name }<span class="marleft-10 color-blue-l">(${filesVo.files_size })</span>
-																			</div>
-																		</dd>
-																	</dl>
-																	<i class="far fa-times-circle file-close-btn" onclick="commentFileDelete(this)"></i>
-																</div>
-															</c:if>
-														</c:forEach>
-													</div>
-												</form>
-											</div>
-											<c:if test="${repList['repVo'].mem_id == memVo.mem_id }">
-												<!-- 댓글 수정,삭제 버튼 -->
-												<ul class="comment-edit-btn">
-													<li class="cursor-point" onclick="fn_commentEdit(this)">수정</li>
-													<li class="cursor-point reply-delete">삭제</li>
-												</ul>
-											</c:if>
-										</dd>
-									</dl>
-								</div>
-								<!-- 댓글 리스트:f -->
-							</c:forEach>
-							<!-- 댓글 입력:s -->
-							<form action="/flowolf/rep/insert" method="post" enctype="multipart/form-data">
-								<input type="hidden" class="timeline_col" name="timeline_col" value="">
-								<input type="hidden" class="timeline_no" name="timeline_no" value="">
-								<div class="comment-insert-box">
-									<dl>
-										<dt class="posi-re">
-											<i class="flow-icon icon-circle circle-s-re"></i>
-										
-										</dt>
-										<dd>
-											<div class="comment-textarea">
-												<textarea rows="5" cols="50" class="rep_cont" name="rep_cont"
-												placeholder="댓글을 입력하세요.(Enter는 입력, shift + Enter는 줄바꿈)"
-												onkeyup="autoTextarea(this, 36, 300)" onkeydown="fn_commentKeyDown(event, this)" required ></textarea>
-											</div>
-											
-											<!-- 파일첨부 -->
-											<label for="commentFile_${start.count }" class="marbtm-0">
-												<i class="fas fa-paperclip martop-10 size-24 color-gray cursor-point"></i>
-											</label>
-											<input type="file" id="commentFile_${start.count }" class="dis-none" onchange="commentFileUpload(this)">
-											
-											<!-- 이미지 목록이 나올부분 -->
-											<div class="comment-upload-img-list">
-											</div>
-											
-											<!-- 첨부파일 목록이 나올부분 -->
-											<div class="comment-upload-file-list">
-											</div>
-											
-										</dd>
-									</dl>
-								</div>
-							</form>
-							<!-- 댓글 입력:f -->
-						</div>
-						<!-- 댓글:f -->
-						
-					</div>
-					<!-- timeline footer:f -->
-											
+														</dd>
+													</dl>
+												</div>
+												<!-- 댓글 리스트:f -->
+											</c:forEach>
+											<!-- 댓글 입력:s -->
+											<form action="/flowolf/rep/insert" method="post"
+												enctype="multipart/form-data">
+												<input type="hidden" class="timeline_col"
+													name="timeline_col" value=""> <input type="hidden"
+													class="timeline_no" name="timeline_no" value="">
+												<div class="comment-insert-box">
+													<dl>
+														<dt class="posi-re">
+															<i class="flow-icon icon-circle circle-s-re"></i>
+
+														</dt>
+														<dd>
+															<div class="comment-textarea">
+																<textarea rows="5" cols="50" class="rep_cont"
+																	name="rep_cont"
+																	placeholder="댓글을 입력하세요.(Enter는 입력, shift + Enter는 줄바꿈)"
+																	onkeyup="autoTextarea(this, 36, 300)"
+																	onkeydown="fn_commentKeyDown(event, this)" required></textarea>
+															</div>
+
+															<!-- 파일첨부 -->
+															<label for="commentFile_${start.count }" class="marbtm-0">
+																<i
+																class="fas fa-paperclip martop-10 size-24 color-gray cursor-point"></i>
+															</label> <input type="file" id="commentFile_${start.count }"
+																class="dis-none" onchange="commentFileUpload(this)">
+
+															<!-- 이미지 목록이 나올부분 -->
+															<div class="comment-upload-img-list"></div>
+
+															<!-- 첨부파일 목록이 나올부분 -->
+															<div class="comment-upload-file-list"></div>
+
+														</dd>
+													</dl>
+												</div>
+											</form>
+											<!-- 댓글 입력:f -->
 										</div>
-										
-									</c:forEach>
-								
-									<script>
+										<!-- 댓글:f -->
+
+									</div>
+									<!-- timeline footer:f -->
+
+								</div>
+
+							</c:forEach>
+
+							<script>
 											function getSelectValue(frm) {
 												frm.textValue.value = frm.selectBox.options[frm.selectBox.selectedIndex].text;
 												frm.optionValue.value = frm.selectBox.options[frm.selectBox.selectedIndex].value;
 											}
 									</script>
-							
-							</div>
-
 
 						</div>
+
+
 					</div>
-				</section>
-			</main>
 		</div>
+		</section>
+		</main>
+	</div>
 	</div>
 
-	<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
 		crossorigin="anonymous"></script>
 	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-		integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+		integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
 		crossorigin="anonymous"></script>
 	<script src="/chord/resources/js/dashboard.js"></script>
 </body>
