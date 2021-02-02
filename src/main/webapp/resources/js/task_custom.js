@@ -21,7 +21,6 @@ function fn_dateReset(el){
 	dateInput.val('');
 }
 
-
 /*******************************************
 * Note : task rank list box show & hide(input)
 * 설명 : input태그에 focus되었을 때, 업무 우선순위 리스트 박스 show & hide
@@ -35,6 +34,20 @@ function fn_taskRankFocus(el){
 		taskRankList.fadeOut();
 	});
 }
+
+
+/*******************************************
+* Note : task rank list box show & hide(span)
+* 설명 : span태그 클릭시 input태그에 focus처리,
+* 		업무 우선순위 리스트 박스 show & hide
+*******************************************/
+function fn_taskRankClick(el){
+	var item = $(el);
+	var taskRankInput = item.siblings('.task-rank-input');
+	
+	taskRankInput.focus();
+}
+
 
 /*******************************************
 * Note : task rank select function
@@ -61,7 +74,6 @@ function fn_taskRankSelect(el){
 	});
 }
 
-
 /*******************************************
 * Note : task add item box show
 * 설명 : '추가항목입력' 버튼 클릭시 추가항목 박스 보이기
@@ -73,3 +85,5 @@ function fn_addItem(el){
 	item.fadeOut("fast");
 	addItemBox.fadeIn();
 }
+
+

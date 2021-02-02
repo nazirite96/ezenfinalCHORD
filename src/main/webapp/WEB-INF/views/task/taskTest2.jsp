@@ -23,7 +23,6 @@
 <link href="<%=request.getContextPath()%>/resources/css/JeCss.css" rel="stylesheet" type="text/css">
 <!-- task jquery-->
 <script	src="<%=request.getContextPath()%>/resources/js/task_custom.js"></script> 
-<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/common.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/style_margin.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/style_padding.css">
 </head>
@@ -36,7 +35,7 @@
 	<br />
 	<br />
 	 -->
-<form action="/chord/task/insert" method="post" enctype="multipart/form-data">	
+<form action="insertTask.do" method="post" enctype="multipart/form-data">	
 	<input type="hidden" name="mem_no" >
 	<input type="hidden" name="pro_no" >
 	<div class="tab-con-box">
@@ -103,7 +102,7 @@
 					<i class="far fa-calendar-plus"></i>
 				</dt>
 				<dd class="posi-re">
-					<input type="text" name="time_kind" placeholder="시작일설정"  id="datepicker1">
+					<input type="text" name="time_kind" placeholder="시작일설정"  id="datepicker1" class="datepicker-here">
 					<i class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point" onclick="fn_dateReset(this)"></i>
 				</dd>
 			</dl>
@@ -117,7 +116,8 @@
 					<i class="far fa-calendar-minus"></i>
 				</dt>
 				<dd class="posi-re">
-					<input type="text" name="time_kind" placeholder="마감일설정" id="datepicker2">
+					<input type="text" name="time_kind" placeholder="마감일설정" id="datepicker2" class="datepicker-here">
+					<i class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point" onclick="fn_dateReset(this)"></i>
 				</dd>
 			</dl>
 		</div>
@@ -130,10 +130,10 @@
 					<i class="far fa-flag"></i>
 				</dt>
 				<dd class="posi-re">
-					<input type="text" name="task_priority" class="task-rank-input"
-						placeholder="우선순위 선택" onfocus="fn_taskRankFocus(this)"
-						readonly="readonly"> <span class="task-rank"
-						onclick="fn_taskRankClick(this)"></span>
+					<input type="text" name="task_priority" class="task-rank-input"	placeholder="우선순위 선택" onfocus="fn_taskRankFocus(this)"
+						readonly="readonly"> 
+						<span class="task-rank" onclick="fn_taskRankClick(this)"></span>
+						
 
 					<!-- 우선순위 리스트(우선순위 설정 리스트) s -->
 					<ul class="task-rank-list">
@@ -157,7 +157,7 @@
 		<button type="button" class="add-item-btn" onclick="fn_addItem(this)"><i class="fas fa-angle-down maright-10"></i> 추가 항목 입력</button>
 		<!-- 글 -->
 		<textArea rows="5" cols="" name="task_content" class="autosize" onkeyup="resize(this)"
-			placeholder="글을 작성하세요." style="resize:none;margin-top: 20px"></textArea>
+			placeholder="글을 작성하세요."></textArea>
 
 		<!-- 이미지 목록 나올부분 -->
 		<div class="upload-img-list"></div>
@@ -253,10 +253,13 @@ datePickerSet($("#datepicker1"), $("#datepicker2"), true);
 	            return false;
 	    }
 	}
+	
 	function resize(obj) {
 		  obj.style.height = "1px";
-		  obj.style.height = (12+obj.scrollHeight)+"px";
+		  obj.style.height = (obj.scrollHeight)+"px";
 	}
+	
+	  
 </script>	
 </body>
 </html>
