@@ -169,7 +169,7 @@
 						<!-- project left content:s -->
 						<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 padleft-0">
 							<!-- project title(프로젝트 제목):s -->
-							<div id="proTitle" class="pro-detail-box project-title blue">
+							<div id="proTitle" class="pro-detail-box project-title back-color-blue-d">
 								<div class="pro-tit">
 									<i
 										class="fas fa-star size-20 color-yellow maright-15 cursor-point"
@@ -754,8 +754,11 @@
 							<h2>timeline</h2>
 							<div class="table-responsive"></div>
 							<c:forEach var="dto" items="${list }">
-								<div class="timeline-box martop-20">
-
+								<div id="timelineno${dto.tim_no }" class="timeline-box martop-20">
+								
+									<input type="hidden" class="col-no" data-no="${dto.tim_no }">
+									<input type="hidden" class="col-kind" data-kind="${dto.cont_kind }">
+									<input type="hidden" class="col-kindno" data-kindno="${dto.cont_no }">
 									<!-- timeline header:s -->
 									<div class="timeline-header back-color-white">
 										<!-- article writer info -->
@@ -880,12 +883,11 @@
 										<!-- 일반 게시글 수정:s -->
 										<form action="updateTim.do" method="post"
 											class="article-edit-form" enctype="multipart/form-data">
-											<input type="hidden" name="basic_no" value="${dto.tim_no }">
-
+											<input type="hidden" name="tim_no" value="${dto.tim_no }">
+											<input type="hidden" name="pro_no" value="${dto.pro_no }">
 											<!-- article edit box:s -->
 											<div class="article-edit-box">
-												<textarea rows="5" cols="50" placeholder="글을 작성하세요."
-													name="basic_cont" onkeyup="autoTextarea(this, 120, 500)"
+												<textarea rows="5" cols="50" placeholder="글을 작성하세요." name="tim_cont" onkeyup="autoTextarea(this, 120, 500)"
 													required="required">${dto.tim_cont}</textarea>
 
 												<!-- 이미지 목록이 나올부분 -->
@@ -902,7 +904,7 @@
 													<!--</c:if>
 														</c:forEach>-->
 												</div>
-
+-->
 												<!-- 첨부파일 목록이 나올부분  -->
 												<div class="upload-file-list">
 													<!-- <c:forEach items="${timeLine.filesList }" var="filesVo">
@@ -1198,8 +1200,7 @@
 
 															<!-- 댓글 수정 박스 -->
 															<div class="comment-edit-box">
-																<form action="/flowolf/rep/update" method="post"
-																	class="comment-edit-form" enctype="multipart/form-data">
+																<form action="/flowolf/rep/update" method="post" class="comment-edit-form" enctype="multipart/form-data">
 																	<input type="hidden" name="rep_no"
 																		value="${repList['repVo'].rep_no }">
 																	<div class="comment-textarea">
@@ -1326,7 +1327,9 @@
 								</div>
 
 							</c:forEach>
-
+							<div>
+							<%@include file="layerPopCon.jsp" %>
+							</div>
 							<script>
 											function getSelectValue(frm) {
 												frm.textValue.value = frm.selectBox.options[frm.selectBox.selectedIndex].text;
@@ -1335,13 +1338,14 @@
 									</script>
 
 						</div>
-
+						
 
 					</div>
 		</div>
 		</section>
 		</main>
 	</div>
+	
 	</div>
 
 
