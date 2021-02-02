@@ -19,4 +19,5 @@ public interface FilesDAO {
 		List<FilesDTO> getAllFiles();
 		//해당 파일 경로조회
 		String getPath(String filename);
+		List<String> getproName(int memNo);
 }

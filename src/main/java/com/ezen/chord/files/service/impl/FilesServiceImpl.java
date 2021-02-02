@@ -21,6 +21,7 @@ public class FilesServiceImpl implements FilesService {
 	
 	public final String PATH="C:\\JSP\\upload";
 	public String CRPATH="";	
+	public String PRONAME="";
 	
 	@Autowired
 	private FilesDAO filedao;
@@ -29,12 +30,18 @@ public class FilesServiceImpl implements FilesService {
 	@Override
 	public List<FilesDTO> getAllFiles() {
 		// TODO Auto-generated method stub
+		//
 		return filedao.getAllFiles();
 	}
 	@Override
 	public String getPath(String filename) {
 		// TODO Auto-generated method stub
 		return filedao.getPath(filename);
+	}
+	@Override
+	public List<String> getproName(int memNo) {
+		// TODO Auto-generated method stub
+		return filedao.getproName(memNo);
 	}
 	@Override
 	public Map<String, Object> updateFatch(int fileno,String fatch) {
@@ -53,7 +60,7 @@ public class FilesServiceImpl implements FilesService {
 	public int insertFile(FilesDTO filedto,String original,String name,String size) {
 		// TODO Auto-generated method stub
 		filedto.setFile_name(name);
-		filedto.setFile_path(PATH+File.separator+CRPATH+File.separator);
+		filedto.setFile_path(PATH+File.separator+PRONAME+File.separator+CRPATH+File.separator);
 		filedto.setFile_upload(original);
 		filedto.setFile_size(size);
 		filedto.setFile_kind("kind"); // 타임라인에서 가져올거임
@@ -100,12 +107,12 @@ public class FilesServiceImpl implements FilesService {
 	      body = name;
 	      ext = "";
 	    }
-		 File f=new File(PATH+File.separator+CRPATH+File.separator+name);
+		 File f=new File(PATH+File.separator+PRONAME+File.separator+CRPATH+File.separator+name);
 		 for(int i = 0;i<999;i++) {
 			 if(f.exists()) {
 				 count++;
 				 name=body+"("+count+")"+ext;
-				 f=new File(PATH+File.separator+CRPATH+File.separator+name);
+				 f=new File(PATH+File.separator+PRONAME+File.separator+CRPATH+File.separator+name);
 				 i--;
 			 }else {
 				 break;
@@ -115,16 +122,17 @@ public class FilesServiceImpl implements FilesService {
 	}
 	@Override
 	public void copyInto( MultipartFile upload, String checkName) {
-		System.out.println("작성자:"+checkName);
+		System.out.println(PATH+File.separator+PRONAME+File.separator+CRPATH+File.separator+checkName);
 		try {
 			byte bytes[]=upload.getBytes();
-			File outFile=new File(PATH+File.separator+CRPATH+File.separator+checkName);
+			File outFile=new File(PATH+File.separator+PRONAME+File.separator+CRPATH+File.separator+checkName);
 			FileOutputStream fos=new FileOutputStream(outFile);
 			fos.write(bytes);
 			fos.close();
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			//
 			e.printStackTrace();
 		}
 	}

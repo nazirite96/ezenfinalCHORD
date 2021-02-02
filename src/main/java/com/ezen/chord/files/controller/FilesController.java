@@ -32,59 +32,73 @@ public class FilesController {
 	@RequestMapping("/files.do")
 	public ModelAndView filesForm(@RequestParam(value = "foldername", defaultValue = "")String foldername,
 			@RequestParam(value = "del", defaultValue = "")String del,
+			@RequestParam(value = "projectName", defaultValue = "")String projectName,
 			HttpServletRequest request) {
 		
 		File f = new File(fileSerImp.PATH+File.separator+fileSerImp.CRPATH);
-		List<FilesDTO> test=null;
 		
+		List<FilesDTO> allFileList=null;
+		
+		if(projectName.equals("")) {
+			
+		}else {
+			fileSerImp.PRONAME=projectName;
+			new File(fileSerImp.PATH+File.separator+fileSerImp.PRONAME);
+		}
 		
 		if(!foldername.equals("")) {
-			f = new File(fileSerImp.PATH+File.separator+fileSerImp.CRPATH+File.separator+foldername);
+			f = new File(fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator+foldername);
 			if(f.exists()) {
 				fileSerImp.CRPATH+=File.separator+foldername;
 			}
 		}else {
 			fileSerImp.CRPATH=fileSerImp.CRPATH;
 		}
-		
+		System.out.println(fileSerImp.CRPATH);
 		
 		if(fileSerImp.CRPATH.equals("")) {
-			test=fileSerImp.getAllFiles();
+			allFileList=fileSerImp.getAllFiles();
 			del="";
 		}
+		
 		if(!del.equals("")) {	
+			System.out.println('?');
 			int fullindex=fileSerImp.CRPATH.lastIndexOf("\\");
 			String lastpath=fileSerImp.CRPATH.substring(0,fullindex);// 마지막 결로를 누르면 이자식이 저장되면됨
 			fileSerImp.CRPATH=lastpath;
 		}
 		
-		f = new File(fileSerImp.PATH+File.separator+fileSerImp.CRPATH);
+		f = new File(fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH);
+		System.out.println(fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH);
 		File files[] = f.listFiles();
 		ModelAndView mav = new ModelAndView();
-			ArrayList<String> list= new ArrayList<String>();
+			ArrayList<String> fileList= new ArrayList<String>();
 			ArrayList<String> folder= new ArrayList<String>();
 			for(int i=0;i<files.length;i++) {
 				String name = files[i].getName();
 				if(!fileSerImp.fileExt(name).equals("")) {
-					list.add(name);
+					fileList.add(name);
 				}else {
 					folder.add(name);
 				}
 			}
-			mav.addObject("list", list);
-			mav.addObject("test", test);
+			mav.addObject("fileList", fileList);
+			
 			mav.addObject("folder", folder);
+			mav.addObject("allFileList", allFileList);
 			mav.addObject("foldername",foldername);
 			mav.addObject("crpath", fileSerImp.CRPATH);
+			mav.addObject("clickproject", fileSerImp.PRONAME);
+			mav.addObject("proName",fileSerImp.getproName(2));
 			mav.setViewName("files/files");
 		return mav;
 	}
 	@RequestMapping("/pageReload.do")
 	public ModelAndView uploadfiles() {
 		fileSerImp.CRPATH="";
-		System.out.println("야실행안되냐?");
+		fileSerImp.PRONAME="";
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:files.do");
+		mav.setViewName("files/files");
 		return mav;
 	}
 	/**
@@ -110,7 +124,7 @@ public class FilesController {
 
 
 //	session.setAttribute("mem_no", 2);// 이건 충연이가 올리면 삭제
-//	int mem_no = (Integer) session.getAttribute("mem_no");// 테스트 테스트
+//	int mem_no = (Integer) session.getAttribute("memNO");// 테스트 테스트
 	/**
 	 * 업로드파일 화면단 (타임라인 쪽으로 이전 예정)
 	 * */
@@ -159,12 +173,12 @@ public class FilesController {
 		if(createfolder.equals("")) {
 			createfolder="새 폴더";
 		}
-		File f = new File(fileSerImp.PATH+File.separator+fileSerImp.CRPATH+File.separator+createfolder);
+		File f = new File(fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator+createfolder);
 		if(f.exists()){
 			String body=createfolder;
 			for(int i =1;i<999;i++) {
 				createfolder=body+" ("+i+")";
-				f = new File(fileSerImp.PATH+File.separator+fileSerImp.CRPATH+File.separator+createfolder);
+				f = new File(fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator+createfolder);
 				if(f.mkdir()) {
 					f.mkdir();
 					break;
@@ -173,7 +187,7 @@ public class FilesController {
 		}else {
 			f.mkdir();
 		}
-		mav.setViewName("chordView");
+		mav.setViewName("files/files");
 		return mav;
 	}
 	/**
@@ -182,6 +196,7 @@ public class FilesController {
 	@RequestMapping("/filedownload")
 	public ModelAndView filedwnload(
 			@RequestParam("filename")String filename) {
+		
 		File f = new File(fileSerImp.getPath(filename)+filename);
 		ModelAndView mav = new ModelAndView();
 		if(f.isDirectory()){
