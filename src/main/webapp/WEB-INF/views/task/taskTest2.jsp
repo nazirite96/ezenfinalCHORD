@@ -17,6 +17,8 @@
 <script src="<%=request.getContextPath()%>/resources/js/datepicker.en.js"></script>
 <!-- fontawesome -->
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<!-- font-awesome CSS -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 <!-- textArea 자동 높이 설정 -->
 <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
 <!-- Air datepicker css -->
@@ -34,15 +36,14 @@
 	<br />
 	<br />
 	<br />
-	 -->
-<form action="insertTask.do" method="post" enctype="multipart/form-data">	
 	<input type="hidden" name="mem_no" >
 	<input type="hidden" name="pro_no" >
+	 -->
+<form action="taskInsert.do" enctype="multipart/form-data">	
 	<div class="tab-con-box">
-
 		<!-- 업무명 s -->
 		<div class="input-box">
-			<input type="text" placeholder="업무명을 입력하세요.">
+			<input type="text" name="task_title" placeholder="업무명을 입력하세요." required="required">
 		</div>
 		<!-- 업무명 e -->
 		<!-- dl : 용어를 설명하는 목록
@@ -185,6 +186,7 @@
 		<input type="submit" value="올리기" class="article-submit-btn float-right font-bold size-18 color-white text-center default-back-color">
 	</div>
 </form>
+
 <script>
 datePickerSet($("#datepicker1"), $("#datepicker2"), true);
 
@@ -230,21 +232,7 @@ datePickerSet($("#datepicker1"), $("#datepicker2"), true);
 	                datePickerSet(sDate, eDate);
 	            }
 	        });
-
-	        //한개짜리 달력 datepicker
-	    } else if (!isValidStr(sDate)) {
-	        var sDay = sDate.val();
-	        if (flag && !isValidStr(sDay)) { //처음 입력 날짜 설정, update...			
-	            var sdp = sDate.datepicker().data("datepicker");
-	            sdp.selectDate(new Date(sDay.replace(/-/g, "/"))); //익스에서는 그냥 new Date하면 -을 인식못함 replace필요
-	        }
-
-	        sDate.datepicker({
-	            language: 'ko',
-	            autoClose: true
-	        });
 	    }
-
 
 	    function isValidStr(str) {
 	        if (str == null || str == undefined || str == "")
