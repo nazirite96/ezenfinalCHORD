@@ -15,4 +15,10 @@
     	<update id="updateFatch" parameterType="map">
     		<!--  -->
     	</update>
+    	<select id="getAllFiles" resultType="FilesDTO">
+    		select * from files
+    	</select>
+    	<select id="getpath" parameterType="String" resultType="String">
+    		select file_path from files where file_name=#{filename}
+    	</select>
     </mapper>

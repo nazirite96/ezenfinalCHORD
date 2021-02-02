@@ -35,6 +35,7 @@ public class FilesDAOImpl implements FilesDAO {
 		return 0;
 	}
 
+	
 	@Override
 	public Map<String, Object> updateFatch(Map<String, Object> map) {
 		// TODO Auto-generated method stub
@@ -42,9 +43,15 @@ public class FilesDAOImpl implements FilesDAO {
 	}
 
 	@Override
-	public List<FilesDTO> getAllFiles(FilesDTO filedto) {
+	public List<FilesDTO> getAllFiles() {
 		// TODO Auto-generated method stub
-		return null;
+		List<FilesDTO> AllFiles=sqlMap.selectList("getAllFiles");
+		return AllFiles;
+	}
+	@Override
+	public String getPath(String filename) {
+		// TODO Auto-generated method stub
+		return sqlMap.selectOne("getpath",filename);
 	}
 
 }
