@@ -16,5 +16,7 @@ public interface FilesDAO {
 		//경로 수정
 		Map<String,Object> updateFatch(Map<String,Object> map);
 		//전체 파일 조회
-		List<FilesDTO> getAllFiles(FilesDTO filedto);
+		List<FilesDTO> getAllFiles();
+		//해당 파일 경로조회
+		String getPath(String filename);
 }

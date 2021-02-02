@@ -27,9 +27,14 @@ public class FilesServiceImpl implements FilesService {
 	private ProjectDTO proDTO;
 	
 	@Override
-	public List<FilesDTO> getAllFiles(FilesDTO filedto) {
+	public List<FilesDTO> getAllFiles() {
 		// TODO Auto-generated method stub
-		return null;
+		return filedao.getAllFiles();
+	}
+	@Override
+	public String getPath(String filename) {
+		// TODO Auto-generated method stub
+		return filedao.getPath(filename);
 	}
 	@Override
 	public Map<String, Object> updateFatch(int fileno,String fatch) {
@@ -54,7 +59,7 @@ public class FilesServiceImpl implements FilesService {
 		filedto.setFile_kind("kind"); // 타임라인에서 가져올거임
 		filedto.setCont_kind("baisc"); // 타임라인에서 가져올 타입
 		filedto.setCont_no(0); // 타임라인에서 가져올 컨텐츠 타입 번호
-		filedto.setMem_no(4); // 사용자 맴버번호
+		filedto.setMem_no(2); // 사용자 맴버번호
 		filedto.setPro_no(20); // 사용자 속해있는 프로젝트 번호
 		int result=filedao.insertFile(filedto)>0?1:0;
 		return result;
@@ -81,7 +86,6 @@ public class FilesServiceImpl implements FilesService {
 	public String checkName(MultipartFile files) {
 		int count = 0;
 		String name =files.getOriginalFilename();
-		System.out.println(name);
 		if(name.equals("")) {
 			return "";
 		}

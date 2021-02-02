@@ -18,11 +18,17 @@ public interface FilesService {
 	//경로 수정
 	Map<String, Object> updateFatch(int fileno,String fatch);
 	//전체 파일 조회
-	List<FilesDTO> getAllFiles(FilesDTO filedto);
+	List<FilesDTO> getAllFiles();
+	//해당 파일 경로 조회
+	String getPath(String filename);
+	
 	//폴더 생성
 	void addFolder(String foldername);
 	//폴더 삭제
 	void delFolder(String foldername);
+	
+	
+	
 	//메서드 : 파일 중복 체크
 	String checkName(MultipartFile files);
 	//메서드 : 파일복사

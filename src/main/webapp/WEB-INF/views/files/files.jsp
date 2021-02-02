@@ -38,7 +38,6 @@
     <link href="/chord/resources/css/dashboard.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
-var foldername='${foldername}';
 var count = 1;
 /* 	$( document ).ready(function() {
 		$.ajax({
@@ -70,20 +69,15 @@ var count = 1;
 	    	    }
 	    });
 	}); */
-	function show2(cnt){
-		var cnt1=cnt
-		alert(cnt1)
-	}
 	
 	$(document).on("click", "#creat01", function(){
-		var foldername= $('.foldername').val();
+		var createfolder=$('.foldername').val();
 		$.ajax({
-	    	url:"folderAdd.do",
-	    	data:foldername,
+	    	url:"folderAdd.do?createfolder="+createfolder,
 	    	type:'GET',
 	    	dataType: "text",
 	    		success : function(data) {
-	    			alert(foldername+'을 생성하였음');
+	    			alert('폴더를 생성하였습니다.');
 	    			location.reload();
 	    	    },
 	    	    error : function(xhr, status, error) {     
@@ -91,26 +85,33 @@ var count = 1;
 	    	    }
 	    });
 	});
-
-	function show(repath){
-		alert(repath)
-		$.ajax({
-	    	url:"files.do?del="+repath,
-	    	type:'GET',
-	    	dataType: "text",
-	    		success : function(data) {
-	    	    },
-	    	    error : function(xhr, status, error) {     
-	    	          alert("HTTP REQUEST ERROR");
-	    	    }
-	    });
-	}
+	
+	$(function(){
+		$('.custom-select').on("change",function(){
+			var value=$('.custom-select').val();
+			if(value==0||value==1){
+				value="pageReload.do"
+			}
+			
+			$.ajax({
+		    	url: value,
+		    	type:'GET',
+		    	dataType: "text",
+		    		success : function(data) {
+		    			location.href='files.do';
+		    	    },
+		    	    error : function(xhr, status, error) {     
+		    	          alert("HTTP REQUEST ERROR");
+		    	    }
+		    });
+		});
+	});
 </script>
   </head>
   <body>
     
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Company name</a>
+  <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="index.do">Company name</a>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -140,13 +141,12 @@ var count = 1;
         </h1>
           </li>
           <li class="nav-item"><a class="nav-link" href="#"><span data-feather="file"></span>
-          <select class="custom-select" aria-label="Default select example">
-			  <option selected>전체파일</option>
-			  <option value="1">One</option>
-			  <option value="2">Two</option>
-			  <option value="3">Three</option>
-			</select>
-          </select>
+	          <select class="custom-select" aria-label="Default select example">
+				  <option value="1">전체파일</option>
+				  <option value="2">One</option>
+				  <option value="3">Two</option>
+				  <option value="4">Three</option>
+				</select>
           </a></li>
          
         </ul>
@@ -156,30 +156,14 @@ var count = 1;
           </a>
         </h1>
         <ul class="nav flex-column mb-2">
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              	프로젝트1
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-             	 프로젝트2
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Social engagement
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Year-end sale
-            </a>
-          </li>
+        <c:forEach var="folder" items="${folder }">
+	        <li class="nav-item">
+	            <a class="nav-link" href="?foldername=${folder }">
+	              <span data-feather="file-text"></span>
+	              	${folder }
+	            </a>
+	          </li>
+        </c:forEach>
         </ul>
       </div>
     </nav>
@@ -204,7 +188,12 @@ var count = 1;
         </div>
       </div>
       <c:set var="f" value="${foldername }"></c:set>
-       현재 경로 : ${crpath }${f } <a href="?del=good">뒤로가기</a>
+      <c:set var="path" value="${crpath }"></c:set>
+      <c:if test="${!empty path}">
+      		<div>
+       			현재 경로 : ${crpath } <a href="?del=chord">뒤로가기</a>
+     		</div>
+       </c:if>
 		<!-- 전체 리스트 뿌려줄거의 메인 -->
 		<form action="" method="POST">
 			<table>
@@ -219,18 +208,20 @@ var count = 1;
 				</thead>
 				<tbody class="allList">
 				<c:if test="${!empty files}"> 등록되어있는 파일이 없습니다.</c:if>
-					<c:forEach var="files" items="${list }">
+					<c:forEach var="files" items="${test }">
 							<tr>
 								<td>체크박스</td>
-								<td colspan="3"><a href="filedownload?filename=${files }">${files }</a></td>
+								<td colspan="3"><a href="filedownload?filename=${files.file_name }">${files.file_name }</a></td>
 							</tr>
 					</c:forEach>
+					<c:if test=""></c:if>
 					<c:forEach var="folder" items="${folder }">
-						<c:if test="${empty f}"> </c:if>
+						<c:if test="${!empty folder}"> 
 							<tr>
-								<td>체크박스</td>
+								<td>폴더 입니다.</td>
 								<td colspan="3"><a href="?foldername=${folder }">${folder }</a></td>
 							</tr>
+							</c:if>
 					</c:forEach>
 					
 				</tbody>
