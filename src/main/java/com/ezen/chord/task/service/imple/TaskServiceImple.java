@@ -34,8 +34,19 @@ public class TaskServiceImple implements TaskService {
 	
 	/*업무글 등록*/
 	@Override
-	public int insertTask(TaskDTO taskDTO) {
-		return taskDAO.insertTask(taskDTO);
+	public int insertTaskService(TaskDTO taskDTO) {
+		int result = taskDAO.insertTaskDAO(taskDTO);
+		if(taskDTO.getTask_content() == null || taskDTO.getTask_content().equals("")) {
+			taskDTO.setTask_content("");
+		}
+		if(taskDTO.getTask_priority() == null || taskDTO.getTask_priority().equals("")) {
+			taskDTO.setTask_priority("");
+		}
+		System.out.println(taskDTO.getTask_title()+"service");
+		System.out.println(taskDTO.getTask_content());
+		System.out.println(taskDTO.getTask_priority());
+		
+		return result;
 	}
 	
 	/*업무글 수정*/

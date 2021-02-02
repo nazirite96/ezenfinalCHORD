@@ -7,7 +7,7 @@ public interface TaskDAO {
 	public int getTaskSeq();
 	
 	/*업무글 등록*/
-	public int insertTask(TaskDTO taskDTO);
+	public int insertTaskDAO(TaskDTO taskDTO);
 	
 	/*업무글 수정*/
 	public int updateTask(TaskDTO taskDTO);

@@ -21,21 +21,23 @@ public class TaskDAOImple implements TaskDAO {
 	
 	@Override
 	public int getTaskSeq() {
-		return sqlMap.selectOne("taskMapper.getTaskSeq");
+		return sqlMap.selectOne("getTaskSeq");
 	}
 	
 	@Override
-	public int insertTask(TaskDTO taskDTO) {
-		return sqlMap.insert("taskMapper.insertTask", taskDTO);
+	public int insertTaskDAO(TaskDTO taskDTO) {
+		int result = sqlMap.insert("insertTask", taskDTO);
+		System.out.println(taskDTO.getTask_title()+"dao부분");
+		return result;
 	}
 	
 	@Override
 	public int deleteTask(TaskDTO taskDTO) {
-		return sqlMap.delete("taskMapper.deleteTask", taskDTO);
+		return sqlMap.delete("deleteTask", taskDTO);
 	}
 	
 	@Override
 	public int updateTask(TaskDTO taskDTO) {
-		return sqlMap.update("taskMapper.updateTask", taskDTO);
+		return sqlMap.update("updateTask", taskDTO);
 	}
 }

@@ -7,13 +7,13 @@
 
 	<!-- 업무 시퀀스 조회 -->
 	<select id="getTaskSeq" resultType="int">
-	select task_no.nextval from daul
+	select task_SEQ.nextval from dual
 	</select>
 	
 	<!-- 업무 등록 -->
    	<insert id="insertTask" parameterType="taskDTO">
     insert into task values(
-    #{task_no},#{task_title},#{task_content},#{task_state},#{task_priority}
+    #{task_no},#{task_title},#{task_state},#{task_content},#{task_priority}
     )
 	</insert>
 	

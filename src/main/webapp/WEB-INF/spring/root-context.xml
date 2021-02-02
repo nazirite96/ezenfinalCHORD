@@ -27,6 +27,7 @@
       <property name="mapperLocations" value="classpath:/sql/*SQL.xml" />
    </bean>
    
+   
 	<!-- mailSender -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com"></property>
@@ -51,8 +52,9 @@
    <context:component-scan base-package="com.ezen.chord.helper" />
    <context:component-scan base-package="com.ezen.chord.member"></context:component-scan>
    <context:component-scan base-package="com.ezen.chord.company"></context:component-scan>
+   <context:component-scan base-package="com.ezen.chord.task"></context:component-scan>
    
    <!-- Autowried -->
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"></bean>
-   
+ 
 </beans>

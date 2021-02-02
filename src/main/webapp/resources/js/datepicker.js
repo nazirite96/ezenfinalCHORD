@@ -598,7 +598,7 @@
                 this._triggerOnChange()
             }
         },
-
+	
         /**
          * Updates datepicker options
          * @param {String|Object} param - parameter's name to update. If object then it will extend current options
@@ -2041,6 +2041,8 @@
             this.maxHours = opts.maxHours < 0 || opts.maxHours > maxHours ? maxHours : opts.maxHours;
             this.maxMinutes = opts.maxMinutes < 0 || opts.maxMinutes > maxMinutes ? maxMinutes : opts.maxMinutes;
         },
+        
+        
 
         /**
          * Looks for min/max hours/minutes and if current values

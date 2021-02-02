@@ -19,6 +19,7 @@ function fn_dateReset(el){
 	var dateInput = item.siblings('input.datepicker-here');
 	
 	dateInput.val('');
+	dateInput.onFocus.value('');
 }
 
 /*******************************************
@@ -82,7 +83,7 @@ function fn_addItem(el){
 	var item = $(el);
 	var addItemBox = item.siblings('.add-item-box');
 
-	item.fadeOut("fast");
+	item.fadeOut(1);
 	addItemBox.fadeIn();
 }
 
