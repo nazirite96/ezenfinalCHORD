@@ -4,6 +4,8 @@
 *
 *******************************************/
 
+
+
 $(function() {
 
 	// 중요프로젝트 체크(icon click)
@@ -86,7 +88,7 @@ $(function() {
 
 // 프로젝트 보관함 popup
 function boxProEdit() {
-	// 				$(".proFolderEdit-form #pro_no").val("${proVo.pro_no}");
+	// 				$(".proFolderEdit-form #pro_no").val("1");
 	layer_popup("#proFolderEdit");
 }
 
@@ -105,86 +107,456 @@ function deletePro() {
 	layer_popup("#deletePro");
 }
 
-/*******************************************
-* 
-* Category : Alert
-* 
-*******************************************/
-function alertCustom(text, className) {
-	var alertBox = $('.alert');
 
-	alertBox.html(text);
-	alertBox.addClass(className);
-	alertBox.css('margin-left', -(alertBox.outerWidth() / 2));
-	alertBox.fadeIn();
-	setTimeout(function() { alertBox.fadeOut() }, 3000);
-}
+
+
 
 
 /*******************************************
-* 
-* Category : open layer popup
-* 
+*
+* Category : TimeLine 타임라인 삭제
+*
 *******************************************/
-function fn_openPopup(el) {
-	var item = $(el);
-	var mem_id = item.attr('data-id');		// id
-	var mem_nick = item.attr('data-nick');	// nick
-	var my_id = item.attr('data-my');		// my id
+/*******************************************
+* FLOWOLF Layer Pop-Up JS
+* 팀명 : #DEV
+* 최초작성일 : 2018-08-30
+* 작성자 : UA(Kim ji su)
+*******************************************/
 
-	//	$("#chat-tab-2 .friend-list").each(function(i, e){
-	//		if($("#chat-tab-2 .friend-list").eq(i).find(".chat-ptn-id").text() == mem_id){
-	//			$("#userInfoPop .apply-btn").hide();
-	//		} else {
-	//			$("#userInfoPop .apply-btn").show();
-	//		}
-	//	});
 
-	$.ajax({
-		url: "/mem/ptnChk",
-		method: "get",
-		data: { mem_id: mem_id },
-		dataType: "json",					// server로 부터 받을 data type
-		success: function(data) {			// data = phone number
 
-			layer_popup("#userInfoPop");
-			var profilePic = $("#userInfoPop").find(".profile-pic");		// image
-			var profileNick = $("#userInfoPop").find(".pop-user-nick");		// nick
-			var profileId = $("#userInfoPop").find(".pop-user-id");			// id
-			var profilePhone = $("#userInfoPop").find(".pop-user-phone");	// phone
-			var profileMy = $("#userInfoPop").find(".pop-my-id");			// my id
+/*******************************************
+* Note : layer pop-up
+* 설명 : <a> 태그 버튼 클릭시 경로(href)에 지정된
+* 		아이디값과 동일한 아이디를 가진 박스를 layer 팝업으로 띄워라
+*******************************************/
 
-			profilePic.css("background-image", "url('/mem/pic?mem_id=" + mem_id + "')");
-			profileNick.html(mem_nick);
-			profileId.html(mem_id);
-			profilePhone.html(data.phoneNum);
-			profileMy.html(my_id);
+// 새 비밀번호 설정(NEW PASSWORD)
+$('.find-pw-btn').click(function() {
+	var $href = $(this).attr('href');
+	layer_popup($href);
+});
 
-			// 본인 프로필 이미지 클릭했을 때
-			if (mem_id == my_id) {
-				$("#userInfoPop").find(".my-chat-btn").show();
-				$("#userInfoPop").find(".chat-btn").hide();
-				$("#userInfoPop").find(".apply-btn").hide();
-				$("#userInfoPop").find(".prof-edit-btn").show();
-			} else {
-				$("#userInfoPop").find(".my-chat-btn").hide();
-				$("#userInfoPop").find(".chat-btn").show();
-				$("#userInfoPop").find(".apply-btn").hide();
-				$("#userInfoPop").find(".prof-edit-btn").show();
-			}
+// 보관함(MY FOLDER)
+$('.add-folder-pop-btn').click(function() {
+	var $href = $(this).attr('href');
+	layer_popup($href);
+});
 
-			// 이미 동료(친구)인 유저의 프로필 이미지를 클릭했을 때
-			if (data.ptnResult == "true") {
-				$("#userInfoPop").find(".apply-btn").hide();
-				$("#userInfoPop").find(".prof-edit-btn").hide();
-			}
-		},
-		error: function(data) {
-			alert("error");
-		}
+// 보관함 수정(MY FOLDER > EDIT)
+$('.folder-edit').click(function() {
+	var $href = $(this).attr('href');
+	layer_popup($href);
+});
+
+// 보관함 삭제(MY FOLDER > DELETE)
+$('.folder-delete').click(function() {
+	var $href = $(this).attr('href');
+	layer_popup($href);
+});
+
+// 프로젝트 추가(ADD PROJECT > INSERT)
+$('.add-pro-link').click(function() {
+	var $href = $(this).attr('href');
+	layer_popup($href);
+});
+
+// 프로젝트 보관함 설정
+$('.pro-folder-edit-btn').click(function() {
+	var $href = $(this).attr('href');
+	layer_popup($href);
+});
+
+//채팅 팝업 동료 탭에서 내 프로필 클릭시 자세히보기
+$('.my-pop').click(function() {
+	var $href = $(this).attr('href');
+	layer_popup($href);
+});
+
+// 기본 layer popup
+function layer_popup(el) {
+
+	var $el = $(el);        //레이어의 id를 $el 변수에 저장
+	var isDim = $el.prev().hasClass('dimBg');   //dimmed 레이어를 감지하기 위한 boolean 변수
+	var layer = $el.parent('.dim-layer');
+
+	isDim ? layer.fadeIn() : $el.fadeIn();
+
+	var $elWidth = ~~($el.outerWidth()),
+		$elHeight = ~~($el.outerHeight()),
+		docWidth = $(document).width(),
+		docHeight = $(document).height();
+
+	// 화면의 중앙에 레이어를 띄운다.
+	if ($elHeight < docHeight || $elWidth < docWidth) {
+		$el.css({
+			marginTop: -$elHeight / 2,
+			marginLeft: -$elWidth / 2
+		})
+	} else {
+		$el.css({ top: 0, left: 0 });
+	}
+
+	$el.find('.btn-close').click(function() {
+		$el.find('input[type=text]').val('');
+		$el.find('input[type=password]').val('');
+		$el.find('input[type=checkbox]').prop('checked', false);
+		$el.find('input[type=radio]').prop('checked', false);
+		$el.find('textarea').val('');
+		isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+		return false;
+	});
+
+	$('.layer .dimBg').click(function() {
+		$('.dim-layer').fadeOut();
+		return false;
 	});
 
 }
+
+
+
+// task 상태 수정 팝업
+function fn_editTaskState(el) {
+
+	var item = $(el);
+	var stateList = item.parent('.task-state-list');
+	var layerPopCon = $("#editTaskState");
+
+	// task_no & task_state
+	var task_no = stateList.siblings(".edit-confirm").data("taskno");
+	var task_state = item.children().val();
+
+	// 값 이동
+	layerPopCon.children('form').children("input[name=task_no]").val(task_no);
+	layerPopCon.children('form').children("input[name=task_state]").val(task_state);
+
+	layer_popup(layerPopCon);
+
+}
+
+// task 진척도 수정 
+function fn_timeProgressSelect(el) {
+	var item = $(el);
+	var task_rate = item.children('span').text();
+	var task_no = item.siblings('input').data("taskno");
+
+	$(".edit-rate-form").children("input[name=task_no]").val(task_no);
+	$(".edit-rate-form").children("input[name=task_rate]").val(task_rate);
+
+	$(".edit-rate-form").submit();
+}
+
+// 이모티콘 유저 리스트 팝업
+function fn_emoUserPop(count) {
+	layer_popup("#emoUser_" + count);
+}
+
+$(function() {
+
+	// 상단 고정 버튼 클릭시
+	$(".pick-check-btn").click(function() {
+
+		// layer pop up show
+		var $href = $(this).attr('href');
+		layer_popup($href);
+
+		// layer pop text show & hide
+		var item = $(this);
+		var icon = item.children();
+		var layerWrap = $($href);
+
+		var timeline_col = $(this).parents(".timeline-box").children(".col-no").data("col");
+		var timeline_no = $(this).parents(".timeline-box").children(".col-no").data("no");
+
+		// 고정되어있는 글
+		if (item.hasClass('fixed')) {
+			alert("있다~");
+			var fixedCon = item.parent().parent().parent().parent();
+			var fixedTop = fixedCon.siblings(".article-fix-top");
+			var colNo = fixedTop.children().children(".col-no");
+
+			timeline_col = colNo.data("col");
+			timeline_no = colNo.data("no");
+		}
+
+		$(".fix-form .timeline_col").val(timeline_col);
+		$(".fix-form .timeline_no").val(timeline_no);
+
+		if (icon.hasClass('pick-active')) {		// 고정되어있음
+			layerWrap.find('p.fix-n').hide();
+			layerWrap.find('p.fix-y').show();	// 해제
+		} else {
+			layerWrap.find('p.fix-y').hide();
+			layerWrap.find('p.fix-n').show();	// 고정
+		}
+	});
+
+	// 좋아요 클릭 이벤트
+	$(".emoticon-box li").click(function() {
+		var item = $(this);
+		var emo_no = $(this).data("emono");
+		var timeline_col = $(this).parents(".timeline-box").children(".col-no").data("col");
+		var timeline_no = $(this).parents(".timeline-box").children(".col-no").data("no");
+
+		var emoticonAfterBtn = $(this).parents(".dropdown-menu").siblings(".emoticon-after-btn");
+		var likeResult = item.parents(".article-etc-menu").siblings(".like-result");
+		var likeImg = likeResult.children("img");
+		var likeMem = likeResult.children(".like-mem");
+		var size = likeMem.data("size");
+
+		var emoUserListPop = likeResult.siblings(".dim-layer");
+		var popCon = emoUserListPop.children(".pop-layer").children(".pop-con");
+		var emoUserCntSpan = popCon.children("ul").find("span");
+		var emoUserCnt = Number(popCon.children("ul").find("span").text());
+
+		var likeCountList = popCon.children(".like-count-list");
+		var simplebarCon = likeCountList.children(".simplebar-scroll-content").children(".simplebar-content");
+
+		$.ajax({
+			url: "/emoUser/insert",
+			method: "get",
+			data: { emo_no: emo_no, timeline_col: timeline_col, timeline_no: timeline_no },
+			dataType: "json",
+			success: function(data) {
+				fn_emoticon(item);
+				emoticonAfterBtn.data("emouser", data);
+
+				// 이모티콘 이미지
+				if (likeImg.length < 3) {
+					likeResult.prepend("<img src=\"/emo/view?emo_no=" + emo_no + "\" data-no=" + data + " width=\"20\" class=\"maright-10\">");
+				}
+
+				// 좋아요 누른 회원
+				if (size > 0) {
+					likeMem.html("<strong>${memVo.mem_nick }</strong> 님  외" + size + "명");
+				} else {
+					likeMem.html("<strong class=\"me\">${memVo.mem_nick }</strong> 님");
+				}
+
+				// data-size : +1
+				likeMem.data("size", size + 1);
+
+				// append 내용
+				var str = "<dl data-id=\"${memVo.mem_id }\">"
+					+ "<dt class=\"posi-re\">"
+					+ "<i class=\"icon-circle circle-s\"></i>"
+					+ "</dt>"
+					+ "<dd>"
+					+ "<div class=\"like-user-name\">${memVo.mem_nick }</div>"
+					+ "<div class=\"like-user-emoticon\"><img src=\"/emo/view?emo_no=" + emo_no + "\" width=\"40\"></div>"
+					+ "</dd>"
+					+ "</dl>";
+
+				emoUserCntSpan.html(emoUserCnt + 1);	// 인원수 추가
+				simplebarCon.append(str);			// 리스트 추가
+
+			}
+		});
+	});
+
+	// 이모티콘 취소 이벤트
+	$(".emoticon-after-btn").click(function() {
+		var item = $(this);
+		var emo_user_no = item.data("emouser");
+
+		var likeResult = item.parents(".article-etc-menu").siblings(".like-result");
+		var likeImg = likeResult.children("img");
+		var likeMem = likeResult.children(".like-mem");
+		var size = likeMem.data("size");
+
+		var emoUserListPop = likeResult.siblings(".dim-layer");
+		var popCon = emoUserListPop.children(".pop-layer").children(".pop-con");
+		var emoUserCntSpan = popCon.children("ul").find("span");
+		var emoUserCnt = Number(popCon.children("ul").find("span").text());
+
+		var likeCountList = popCon.children(".like-count-list");
+		var simplebarCon = likeCountList.children(".simplebar-scroll-content").children(".simplebar-content");
+		var emoUserOne = simplebarCon.children("dl");
+
+		$.ajax({
+			url: "/emoUser/delete",
+			method: "get",
+			data: { emo_user_no: emo_user_no },
+			dataType: "json",
+			success: function(data) {
+				fn_emoResultBtn(item);
+				item.data("emouser", "");
+
+				// 이모티콘 이미지
+				likeImg.each(function(i, e) {
+					if (likeImg.eq(i).data("no") == emo_user_no) {
+						likeImg.eq(i).remove();
+					}
+				});
+
+				// 좋아요 누른 회원
+				if (size == 1 && likeMem.children("strong").hasClass("me")) {
+					likeMem.html("");
+				} else if (size > 0) {
+					likeMem.html(size - 1 + "명");
+				} else {
+					likeMem.html("");
+				}
+
+				// data-size : -1
+				likeMem.data("size", size - 1);
+
+				emoUserCntSpan.html(emoUserCnt - 1);	// 인원수 감소
+				emoUserOne.each(function(i, e) {		// 리스트 삭제
+					if (emoUserOne.eq(i).data("id") == '${memVo.mem_id }') {
+						emoUserOne.eq(i).remove();
+					}
+				});
+			}
+		});
+	});
+
+	// 담아두기 버튼 이벤트
+	$(".coll-btn").click(function() {
+
+		var item = $(this);
+		var coll_no = item.data("collno");
+		var timeline_col = $(this).parents(".timeline-box").children(".col-no").data("col");
+		var timeline_no = $(this).parents(".timeline-box").children(".col-no").data("no");
+
+		if (item.hasClass('default-color')) {		// 취소					
+
+			$.ajax({
+				url: "/coll/delete",
+				method: "get",
+				data: { coll_no: coll_no },
+				dataType: "json",
+				success: function(data) {
+
+				}
+			});
+
+		} else {									// 등록
+
+			$.ajax({
+				url: "/coll/insert",
+				method: "get",
+				data: { timeline_col: timeline_col, timeline_no: timeline_no },
+				dataType: "json",
+				success: function(data) {
+					item.data("collno", data);
+				}
+			});
+		}
+
+		fn_likeChange(item);
+	});
+
+	// 타임라인 글 삭제 이벤트
+	$(".timeline-delete-btn").click(function() {
+		
+		
+		var timeline_kind = $(this).parents(".timeline-box").children(".col-kind").data("kind");
+		var timeline_kindno = $(this).parents(".timeline-box").children(".col-kindno").data("kindno");
+		
+
+		$("#deleteTimeLine .timeline_col").val(timeline_no);
+		$("#deleteTimeLine .content_kind").val(timeline_kind);
+		$("#deleteTimeLine .content_no").val(timeline_kindno);
+
+		// layer pop up show
+		layer_popup("#deleteTimeLine");
+	});
+
+	// 댓글 삭제 이벤트
+	$(".reply-delete").click(function() {
+		var item = $(this);
+		var commentListBox = item.parent().parent().parent().parent();
+		var rep_no = commentListBox.data("repno");
+
+		$("#deleteTimeLine .timeline_col").val("rep_no");
+		$("#deleteTimeLine .timeline_no").val(rep_no);
+
+		// layer pop up show
+		layer_popup("#deleteTimeLine");
+
+	});
+
+	// 첨부파일 이미지 바꾸기
+	$(".upload-file-info").each(function(i, e) {
+		var iconTag = $(this).find("i.dis-inblock");
+		var dataName = iconTag.attr("data-name");
+		fileExCheck(iconTag);
+	});
+
+	// '할 일' 항목 개수에 따라 각 항목 % 정하기
+	var percent = 0;
+	$(".todo-content").each(function(i, e) {
+		if ($(this).children("dl").length == 1) {
+			percent = 100;
+			$(this).children("dl").find('.todo-percent-txt').html(percent);
+		} else if ($(this).children("dl").length == 2) {
+			percent = 50;
+			$(this).children("dl").find('.todo-percent-txt').html(percent);
+		} else if ($(this).children("dl").length == 3) {
+			percent = 33;
+			$(this).children("dl").find('.todo-percent-txt').html(percent);
+			$(this).children("dl").eq(2).find('.todo-percent-txt').html(percent + 1);
+		} else if ($(this).children("dl").length == 4) {
+			percent = 25;
+			$(this).children("dl").find('.todo-percent-txt').html(percent);
+		} else if ($(this).children("dl").length == 5) {
+			percent = 20;
+			$(this).children("dl").find('.todo-percent-txt').html(percent);
+		}
+	});
+
+	// '할 일' 완료 % 및 개수, 전체 개수 구하기
+	$(".todo-content").each(function(i, e) {
+		var todoItemLength = $(this).find('dl').length;					// 할일 항목 개수
+		var todoItemSuccess = $(this).find('dl[data-chk=y]').length;	// 할일 항목 완료 개수
+		var todoPercent = $(this).siblings('.todo-info').find('.todo-percent-cnt');		// 할일 완료 %
+		var todoAllCount = $(this).siblings('.todo-info').find('.todo-all-cnt');		// 할일 항목 전체 개수
+		var todoFinishCount = $(this).siblings('.todo-info').find('.todo-finish-cnt');	// 할일 항목 완료 개수
+		var todoRange = $(this).siblings('.todo-progress-bar').find('.todo-range');		// 할일 % 게이지 바
+
+		todoAllCount.text(todoItemLength);
+		todoFinishCount.text(todoItemSuccess);
+
+		var itemPcnt = Math.floor(100 / todoItemLength);
+		var successPcnt = itemPcnt * todoItemSuccess;
+		todoPercent.html(successPcnt);
+		todoRange.css("width", successPcnt + "%");
+	});
+
+	// 상단 고정글 항목 우측 화살표 아이콘 변경
+	var fixTopLink = $(".article-fix-top a");
+	fixTopLink.on("click", function() {
+		if (!$(this).parent().siblings(".panel-collapse").hasClass("in")) {
+			fixTopLink.find("i.icon-arrow").removeClass("fa-angle-down");
+			fixTopLink.find("i.icon-arrow").addClass("fa-angle-left");
+			$(this).find("i.icon-arrow").removeClass("fa-angle-left");
+			$(this).find("i.icon-arrow").addClass("fa-angle-down");
+		} else {
+			$(this).find("i.icon-arrow").removeClass("fa-angle-down");
+			$(this).find("i.icon-arrow").addClass("fa-angle-left");
+		}
+	});
+
+	// 투표 상태바 처리
+	$(".time-vote-con").each(function(i, e) {
+		var voteCount = 0;
+		var voteCountResult = $(this).find(".vote-count-result").text();
+
+		voteCount += parseInt(voteCountResult);
+		var votePercent = parseInt(voteCountResult);
+		var pcntResult = (votePercent / voteCount) * 100;
+
+		$(this).find(".vote-range").css("width", pcntResult + '%');
+	});
+
+});
+
+
+
+
 
 
 /*******************************************

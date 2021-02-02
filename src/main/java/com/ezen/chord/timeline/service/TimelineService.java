@@ -9,5 +9,9 @@ public interface TimelineService {
 	public int insertTim(TimelineDTO timDTO);
 	
 	public List<TimelineDTO> getTimelineByProNo(int pro_no,int page);
+	
+	public int updateTim(TimelineDTO timDTO);
+	
+	public int deleteTim(TimelineDTO timDTO);
 
 }

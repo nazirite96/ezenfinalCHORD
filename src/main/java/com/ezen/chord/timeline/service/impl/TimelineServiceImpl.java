@@ -26,5 +26,31 @@ public class TimelineServiceImpl implements TimelineService {
 		// TODO Auto-generated method stub
 		return timDAO.getTimelineByProNo(pro_no, page);
 	}
-
+	
+	@Override
+	public int updateTim(TimelineDTO timDTO) {
+		// TODO Auto-generated method stub
+		return timDAO.updateTim(timDTO);
+	}
+	@Override
+	public int deleteTim(TimelineDTO timDTO) {
+		// TODO Auto-generated method stub
+		int result =0;
+		switch (timDTO.getCont_kind()) {
+		case "post":
+			result = timDAO.deleteTim(timDTO.getTim_no());
+			break;
+		case "task":
+			break;
+		case "sch":
+			break;
+		default:
+			break;
+		}
+		
+		
+		
+		return result;
+	}
+	
 }

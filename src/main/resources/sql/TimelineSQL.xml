@@ -15,4 +15,14 @@
 			where pro_no = #{pro_no}
 			order by tim_no desc
     	</select>
+    	<update id="updateTim" parameterType="timelineDTO">
+    		update timeline
+			set
+			tim_cont = #{tim_cont}
+			where tim_no = #{tim_no}
+    	</update>
+    	<delete id="deleteTim">
+    		delete timeline where tim_no = #{tim_no}
+    	</delete>
+    	
     </mapper>
