@@ -53,5 +53,9 @@ public class FilesDAOImpl implements FilesDAO {
 		// TODO Auto-generated method stub
 		return sqlMap.selectOne("getpath",filename);
 	}
-
+	@Override
+	public List<String> getproName(int memNo) {
+		List<String> getproName=sqlMap.selectList("getproName", memNo);
+		return getproName;
+	}
 }

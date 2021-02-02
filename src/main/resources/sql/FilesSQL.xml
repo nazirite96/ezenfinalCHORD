@@ -21,4 +21,7 @@
     	<select id="getpath" parameterType="String" resultType="String">
     		select file_path from files where file_name=#{filename}
     	</select>
+    	<select id="getproName" parameterType="INTEGER" resultType="String">
+    		select pro_name from project where mem_no=#{memNo}
+    	</select>
     </mapper>

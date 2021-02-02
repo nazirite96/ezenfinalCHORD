@@ -81,18 +81,23 @@ var count = 1;
 	    			location.reload();
 	    	    },
 	    	    error : function(xhr, status, error) {     
-	    	          alert("HTTP REQUEST ERROR");
+	    	    	alert(xhr,status,error);
 	    	    }
 	    });
 	});
+	
+	function reloadPage() {
+		location.href='files.do';
+	}
 	
 	$(function(){
 		$('.custom-select').on("change",function(){
 			var value=$('.custom-select').val();
 			if(value==0||value==1){
 				value="pageReload.do"
+			}else if(value=2){
+				value="pageReload.do"
 			}
-			
 			$.ajax({
 		    	url: value,
 		    	type:'GET',
@@ -143,8 +148,8 @@ var count = 1;
           <li class="nav-item"><a class="nav-link" href="#"><span data-feather="file"></span>
 	          <select class="custom-select" aria-label="Default select example">
 				  <option value="1">전체파일</option>
-				  <option value="2">One</option>
-				  <option value="3">Two</option>
+				  <option value="2">TEXT</option>
+				  <option value="3">이미지</option>
 				  <option value="4">Three</option>
 				</select>
           </a></li>
@@ -156,11 +161,11 @@ var count = 1;
           </a>
         </h1>
         <ul class="nav flex-column mb-2">
-        <c:forEach var="folder" items="${folder }">
+        <c:forEach var="pro" items="${proName }">
 	        <li class="nav-item">
-	            <a class="nav-link" href="?foldername=${folder }">
+	            <a class="nav-link" href="?projectName=${pro }">
 	              <span data-feather="file-text"></span>
-	              	${folder }
+	              	${pro }
 	            </a>
 	          </li>
         </c:forEach>
@@ -175,10 +180,10 @@ var count = 1;
           <div class="btn-group mr-2">
           
            <!-- Button trigger modal -->
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-			   폴더 생성
-			</button>
-			
+				<c:choose>
+		        	<c:when test="${!empty clickproject }"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">폴더 생성</button></c:when>
+		        	<c:when test="${empty clickproject }"><button disabled="disabled" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">폴더 생성</button></c:when>
+		        </c:choose>
             <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
           </div>
           <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
@@ -191,7 +196,7 @@ var count = 1;
       <c:set var="path" value="${crpath }"></c:set>
       <c:if test="${!empty path}">
       		<div>
-       			현재 경로 : ${crpath } <a href="?del=chord">뒤로가기</a>
+       			경로 : ${crpath } <a href="?del=chord" onclick="reloadPage();">뒤로가기</a>
      		</div>
        </c:if>
 		<!-- 전체 리스트 뿌려줄거의 메인 -->
@@ -207,22 +212,28 @@ var count = 1;
 					</tr>
 				</thead>
 				<tbody class="allList">
-				<c:if test="${!empty files}"> 등록되어있는 파일이 없습니다.</c:if>
-					<c:forEach var="files" items="${test }">
+				<c:if test="${empty clickproject}">
+					<c:forEach var="allFiles" items="${allFileList }">
 							<tr>
 								<td>체크박스</td>
-								<td colspan="3"><a href="filedownload?filename=${files.file_name }">${files.file_name }</a></td>
+								<td colspan="3"><a href="filedownload?filename=${allFiles.file_name }">${allFiles.file_name }</a></td>
 							</tr>
 					</c:forEach>
-					<c:if test=""></c:if>
-					<c:forEach var="folder" items="${folder }">
-						<c:if test="${!empty folder}"> 
+				</c:if>
+				<c:if test="${!empty clickproject}">
+					<c:forEach var="files" items="${fileList }">
 							<tr>
-								<td>폴더 입니다.</td>
-								<td colspan="3"><a href="?foldername=${folder }">${folder }</a></td>
+								<td>체크박스</td>
+								<td colspan="3"><a href="filedownload?filename=${files }">${files }</a></td>
 							</tr>
-							</c:if>
 					</c:forEach>
+						<c:forEach var="folder" items="${folder }">
+								<tr>
+									<td>폴더 입니다.</td>
+									<td colspan="3"><a href="?foldername=${folder }">${folder }</a></td>
+								</tr>
+						</c:forEach>
+				</c:if>
 					
 				</tbody>
 			</table>
@@ -248,7 +259,7 @@ var count = 1;
 			      </div>
 		      	<div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-primary" id="creat01">만들기</button>
+			     	<button type="button" class="btn btn-primary" id="creat01">만들기</button>
 		     	 </div>
 		       </form>
 		    </div>

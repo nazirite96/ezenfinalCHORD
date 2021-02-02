@@ -21,7 +21,8 @@ public interface FilesService {
 	List<FilesDTO> getAllFiles();
 	//해당 파일 경로 조회
 	String getPath(String filename);
-	
+	//해당 설정되어있는 프로젝트 이름 
+	List<String> getproName(int memNo);
 	//폴더 생성
 	void addFolder(String foldername);
 	//폴더 삭제
