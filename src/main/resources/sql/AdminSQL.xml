@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chord.admin">
+<!-- column = db / property = dto -->
+<select id="admin_getUserlogData" resultType="Map">
+select email as mail,name as name,count(*) as cnt from
+(select mem_email as email, mem_name as name, log_data as data
+from log_data,member 
+where log_data.mem_no = member.mem_no)group by email,name
+</select>
+<select id="admin_companycontents" resultType="CompanyDTO" parameterType="Integer">
+	select * from company where com_no=#{comNo}
+</select>
+<update id="admin_comUpdate" parameterType="CompanyDTO">
+	update company
+	set com_pwd=#{com_pwd} where com_no=#{com_no}
+</update>
+<select id="admin_memList" parameterType="Integer" resultType="Map">
+	select member.mem_no as mno, member.mem_email as memail,member.mem_name as mname,grade.gra_kind as gra,grade.gra_no as grano
+	from member 
+	left join grade on grade.mem_no=member.mem_no
+	where member.com_no=#{com_no}
+</select>
+<select id="admin_memContents" parameterType="Integer" resultType="Map">
+	select member.mem_no as mno, member.mem_email as memail, member.mem_name as mname, member.mem_date as mdate,member.com_no as comno,grade.gra_kind as gra,grade.gra_no as grano
+	from member 
+	left join grade on grade.mem_no=member.mem_no
+	where member.mem_no = #{mem_no}
+</select>
+<delete id="admin_positionDelete" parameterType="Integer">
+	delete from grade where mem_no= #{mem_no}
+</delete>
+</mapper>
+
+
+
+
