@@ -24,9 +24,10 @@ public class FilesDAOImpl implements FilesDAO {
 	}
 
 	@Override
-	public int delFile(int fileno) {
+	public int delFile(String filename) {
 		// TODO Auto-generated method stub
-		return 0;
+		int result = sqlMap.delete("delFile", filename);
+		return result;
 	}
 
 	@Override

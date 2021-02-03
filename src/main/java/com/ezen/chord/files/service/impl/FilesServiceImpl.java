@@ -79,9 +79,9 @@ public class FilesServiceImpl implements FilesService {
 	}
 
 	@Override
-	public int delFile(int filenO) {
+	public int delFile(String filename) {
 		// TODO Auto-generated method stub
-		return 0;
+		return filedao.delFile(filename);
 	}
 
 	@Override
@@ -196,6 +196,24 @@ public class FilesServiceImpl implements FilesService {
 	public void fileDelete(String deleteFileName) {
 		// TODO Auto-generated method stub
 		File f = new File(deleteFileName);
-		  f.delete();
+		  if(f.isFile()) { //f가 파일이라면,
+				f.delete();
+				System.out.println("파일 삭제");
+				
+				
+			}else { //f가 파일이 아니라면,
+				File files[] = f.listFiles();
+				for(int i=0;i<files.length;i++) {
+					if(files[i].isFile()) { //파일이라면,
+						files[i].delete();
+						
+					}else {
+						fileDelete(File.separator+files[i].getName());
+					}
+				}
+				//이미 폴더인게 확정된것.
+				f.delete();
+			}
+			
 	}
 }

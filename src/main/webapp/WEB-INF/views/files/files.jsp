@@ -112,7 +112,23 @@ var count = 1;
 			location.reload();
 		}
 	}
-	
+	function del(stuff,state){;
+		var result=confirm('해당 파일을 삭제시키겠습니까?');
+		if(result){
+			$.ajax({
+		    	url:"delFileAndFolder.do?filename="+stuff+"&state="+state,
+		    	type:'GET',
+		    	dataType: "text",
+		    		success : function(data) {
+		    			alert('삭제를 완료하였습니다.');
+		    			location.reload();
+		    	    },
+		    	    error : function(xhr, status, error) {     
+		    	    	alert(xhr,status,error);
+		    	    }
+		    }); 
+	}location.reload();
+}
 
 	// 체크 리스트들 , 로 담기
 	function get_chked_values(){
@@ -218,7 +234,7 @@ var count = 1;
 		        	<c:when test="${!empty clickproject }"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">폴더 생성</button></c:when>
 		        	<c:when test="${empty clickproject }"><button disabled="disabled" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">폴더 생성</button></c:when>
 		        </c:choose>
-            <button type="button" id="move01" class="btn btn-sm btn-outline-secondary">Export</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal3">삭제</button>
            		 <c:choose>
 		        	<c:when test="${!empty clickproject }"><button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal2">이동</button></c:when>
 		        	<c:when test="${empty clickproject }"><button disabled="disabled" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal2">이동</button></c:when>
@@ -285,12 +301,42 @@ var count = 1;
     </main>
   </div>
 </div>
-<!-- Modal -->
+
+		<!-- Modal -->
+     	<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">어떤 것을 살제하실? :></h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+			      <div class="modal-body2" style="text-align: center">
+			      <c:forEach var="files" items="${partFileList }">
+							<a href="javascript:del('${files.file_name }',1)">${files.file_name }</a><br>
+					</c:forEach>
+			        <c:forEach var="df" items="${folder }">
+			        		<a href="javascript:del('${df }',-1);">${df }</a> <br>
+			        </c:forEach>
+			        <c:if test="${empty folder}"> 삭제할 리스트가 없삼.... </c:if>
+			      </div>
+			     
+		      	<div class="modal-footer">
+		      	<div style="margin-bottom: 30px;margin-right: 134px;font-size: 10px; color: red;">
+		      		*참고로 폴더 삭제할 경우 안쪽 파일 전부 삭제가 됩니다~ :)
+		      	</div>
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		     	 </div>
+		    </div>
+		  </div>
+		</div>
+		<!-- Modal -->
      	<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">어느폴더에 이동시키실?</h5>
+		        <h5 class="modal-title" id="exampleModalLabel">어느폴더에 이동시키실? :></h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
@@ -315,14 +361,14 @@ var count = 1;
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">폴더 만들기</h5>
+		        <h5 class="modal-title" id="exampleModalLabel">폴더 메이커 :></h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
 		      <form name="fm">
 			      <div class="modal-body" style="text-align: center">
-			        폴더 이름 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" class="foldername">
+			      	  폴더 이름 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" class="foldername">
 			      </div>
 		      	<div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

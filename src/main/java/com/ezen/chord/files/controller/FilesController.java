@@ -58,7 +58,6 @@ public class FilesController {
 		}else {
 			fileSerImp.CRPATH=fileSerImp.CRPATH;
 		}
-		System.out.println(fileSerImp.CRPATH);
 		
 		if(fileSerImp.CRPATH.equals("")) {
 			allFileList=fileSerImp.getAllFiles();
@@ -66,7 +65,6 @@ public class FilesController {
 		}
 		
 		if(!del.equals("")) {	
-			System.out.println('?');
 			int fullindex=fileSerImp.CRPATH.lastIndexOf("\\");
 			String lastpath=fileSerImp.CRPATH.substring(0,fullindex);// 마지막 결로를 누르면 이자식이 저장되면됨
 			fileSerImp.CRPATH=lastpath;
@@ -115,8 +113,7 @@ public class FilesController {
 			Long number=files.get(i).getSize();
 			String size=fileSerImp.returnFileSize(number);
 			fileSerImp.copyInto(files.get(i), name);
-			int result = fileSerImp.insertFile(filedto, original, name, size);
-			System.out.println(result);
+			fileSerImp.insertFile(filedto, original, name, size);
 		}
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("files/insertFiles");
@@ -167,6 +164,27 @@ public class FilesController {
 			mav.setViewName("files/files");
 		return mav;
 	}
+	/**
+	 * 자자 너는 삭제를 시킬것이다.
+	 * */
+	@RequestMapping("/delFileAndFolder.do")
+	public ModelAndView delfileAndfolder(
+			@RequestParam(value="filename",defaultValue = "")String filename,
+			@RequestParam(value="state",defaultValue = "")int state) {
+		//1은 파일
+		System.out.println(filename);
+		System.out.println(state);
+		if(state==1) {
+			fileSerImp.delFile(filename);
+			fileSerImp.fileDelete(filename);
+		//아니면 폴더
+		}else {
+
+		}
+			ModelAndView mav=new ModelAndView();
+			mav.setViewName("files/files");
+		return mav;
+	}
 	
 	/**
 	 * 폴더 add
@@ -175,7 +193,6 @@ public class FilesController {
 	public ModelAndView getAllFolder(
 			@RequestParam(value = "createfolder",defaultValue ="")String createfolder) {
 		ModelAndView mav = new ModelAndView();
-		System.out.println(createfolder);
 		if(createfolder.equals("")) {
 			createfolder="새 폴더";
 		}
@@ -196,6 +213,7 @@ public class FilesController {
 		mav.setViewName("files/files");
 		return mav;
 	}
+	
 	/**
 	 * 다운로드 뷰 
 	 * */

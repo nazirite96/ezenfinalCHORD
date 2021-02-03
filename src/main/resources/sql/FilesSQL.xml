@@ -7,7 +7,8 @@
     	<insert id="insertFile" parameterType="filesDTO">
     		insert into files values(files_seq.nextval,#{file_name},#{file_path},#{file_upload},#{file_size},#{file_kind},sysdate,#{cont_kind},#{cont_no},#{mem_no},#{pro_no})
     	</insert>
-    	<delete id="delFile" parameterType="INTEGER">
+    	<delete id="delFile" parameterType="String">
+    	delete form files where file_name=#{filename}
     	</delete>
     	<update id="updateFile" parameterType="INTEGER">
     		<!--  -->
