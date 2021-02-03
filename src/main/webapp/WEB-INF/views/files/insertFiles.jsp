@@ -116,6 +116,8 @@ function selectFile(files){
       for(var i=0;i<files.length;i++){
          var fileName=files[i].name;
          var fileSize=files[i].size/1024/1024; //MB로 관리
+         var number=files[i].size;
+         var resultSize=returnFileSize(number);
          var fileNameArr = fileName.split("\.");
          var ext = fileNameArr[fileNameArr.length - 1];
          if($.inArray(ext, ['exe', 'bat', 'sh', 'java', 'jsp', 'html', 'js', 'css', 'xml']) >= 0){
@@ -133,7 +135,7 @@ function selectFile(files){
             	 addFileListImg(fileIndex,file);
             	 
              }else{
-            	 addFileList(fileIndex,fileName,fileSize); 
+            	 addFileList(fileIndex,fileName,resultSize); 
              }
              fileIndex++;
          }
@@ -242,12 +244,16 @@ function returnFileSize(number) {
 <body>
 	<div id="dropZone"
 		style="background-color: pink; width: 900px; height: 200px;">
-		여기에 파일을 가져다 놓으세요</div>
+		여기에 파일을 가져다 놓으세요
+		
+		</div>
 
 	<form name="uploadForm" id="uploadForm" enctype="multipart/form-data"
 		method="post">
 		<div style="background-color: #cbc4c4;">업로드 된파일들</div>
 	</form>
+	
+	
 	<div class="filebox bs3-primary">
 		<label for="ex_file2">업로드</label> <input type="file"
 			multiple="multiple" id="ex_file2" class="upload-hidden">

@@ -12,7 +12,7 @@ public interface FilesService {
 	//파일 등록
 	int insertFile(FilesDTO filedto,String original,String name, String size);
 	//파일 삭제
-	int delFile(int fileno);
+	int delFile(String filename);
 	//파일 수정
 	int updateFile(int fileno);
 	//경로 수정
