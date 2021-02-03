@@ -39,7 +39,7 @@
 	<input type="hidden" name="mem_no" >
 	<input type="hidden" name="pro_no" >
 	 -->
-<form action="taskInsert.do" enctype="multipart/form-data">	
+<form action="taskInsert.do" name="TaskDTO" enctype="multipart/form-data">	
 	<div class="tab-con-box">
 		<!-- 업무명 s -->
 		<div class="input-box">
