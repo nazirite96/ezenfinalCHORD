@@ -453,13 +453,15 @@ $(function() {
 	$(".timeline-delete-btn").click(function() {
 		
 		
+		var timeline_no = $(this).parents(".timeline-box").children(".col-no").data("no");
 		var timeline_kind = $(this).parents(".timeline-box").children(".col-kind").data("kind");
 		var timeline_kindno = $(this).parents(".timeline-box").children(".col-kindno").data("kindno");
-		
-
-		$("#deleteTimeLine .timeline_col").val(timeline_no);
+		var timeline_prono = $(this).parents(".timeline-box").children(".col-prono").data("prono");
+		window.alert(timeline_no+" "+timeline_kindno+" "+timeline_kind+" "+timeline_prono);
+		$("#deleteTimeLine .timeline_no").val(timeline_no);
 		$("#deleteTimeLine .content_kind").val(timeline_kind);
 		$("#deleteTimeLine .content_no").val(timeline_kindno);
+		$("#deleteTimeLine .project_no").val(timeline_prono);
 
 		// layer pop up show
 		layer_popup("#deleteTimeLine");

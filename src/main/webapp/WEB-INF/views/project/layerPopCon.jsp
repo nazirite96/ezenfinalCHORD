@@ -700,10 +700,10 @@
 	
     <div id="deleteTimeLine" class="pop-layer">
 		<form action="deleteTim.do" method="get" class="timeline-del-form">
-		
 			<input type="hidden" class="timeline_no" name="tim_no" value="">
 			<input type="hidden" class="content_kind" name="cont_kind" value="">
 			<input type="hidden" class="content_no" name="cont_no" value="">
+			<input type="hidden" class="project_no" name="pro_no" value="">
     		
     		<!-- pop con -->
 	   		<section class="pop-con border-box">
