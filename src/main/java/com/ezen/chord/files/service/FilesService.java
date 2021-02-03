@@ -16,11 +16,14 @@ public interface FilesService {
 	//파일 수정
 	int updateFile(int fileno);
 	//경로 수정
-	Map<String, Object> updateFatch(int fileno,String fatch);
+	int updateFatch(String filename, String pathRoot);
+	
 	//전체 파일 조회
 	List<FilesDTO> getAllFiles();
-	//해당 파일 경로 조회
+	//해당 파일 이름으로 경로 조회
 	String getPath(String filename);
+	//해당 파일 경로로 경로 조회
+	List<FilesDTO> getDBPath(String fullPath);
 	//해당 설정되어있는 프로젝트 이름 
 	List<String> getproName(int memNo);
 	//폴더 생성
@@ -38,4 +41,8 @@ public interface FilesService {
 	String returnFileSize(Long number);
 	//메서드 : 확장다 따오기
 	String fileExt(String name);
+	//메서드 : 파일 이동
+	void fileMove(String inFileName, String outFileName);
+	//메서드 : 파일 삭제 
+	void fileDelete(String deleteFileName);
 }

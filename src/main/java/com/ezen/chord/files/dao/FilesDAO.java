@@ -14,10 +14,13 @@ public interface FilesDAO {
 		//파일 수정
 		int updateFile(int fileno);
 		//경로 수정
-		Map<String,Object> updateFatch(Map<String,Object> map);
+		int updateFatch(Map<String, String> map);
 		//전체 파일 조회
 		List<FilesDTO> getAllFiles();
 		//해당 파일 경로조회
 		String getPath(String filename);
+		//해당 파일 경로로 경로 조회
+		List<FilesDTO> getDBPath(String fullPath);
+		//해당 프로젝트 가져오기
 		List<String> getproName(int memNo);
 }

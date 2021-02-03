@@ -1,6 +1,9 @@
 package com.ezen.chord.files.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +41,7 @@ public class FilesController {
 		File f = new File(fileSerImp.PATH+File.separator+fileSerImp.CRPATH);
 		
 		List<FilesDTO> allFileList=null;
+		List<FilesDTO> partFileList=null;
 		
 		if(projectName.equals("")) {
 			
@@ -67,25 +71,22 @@ public class FilesController {
 			String lastpath=fileSerImp.CRPATH.substring(0,fullindex);// 마지막 결로를 누르면 이자식이 저장되면됨
 			fileSerImp.CRPATH=lastpath;
 		}
-		
-		f = new File(fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH);
-		System.out.println(fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH);
+		String dbpath=fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH;
+		System.out.println(dbpath);
+		partFileList=fileSerImp.getDBPath(dbpath);
+		f = new File(dbpath);
 		File files[] = f.listFiles();
 		ModelAndView mav = new ModelAndView();
-			ArrayList<String> fileList= new ArrayList<String>();
 			ArrayList<String> folder= new ArrayList<String>();
 			for(int i=0;i<files.length;i++) {
 				String name = files[i].getName();
-				if(!fileSerImp.fileExt(name).equals("")) {
-					fileList.add(name);
-				}else {
+				if(fileSerImp.fileExt(name).equals("")) {
 					folder.add(name);
 				}
 			}
-			mav.addObject("fileList", fileList);
-			
 			mav.addObject("folder", folder);
 			mav.addObject("allFileList", allFileList);
+			mav.addObject("partFileList", partFileList);
 			mav.addObject("foldername",foldername);
 			mav.addObject("crpath", fileSerImp.CRPATH);
 			mav.addObject("clickproject", fileSerImp.PRONAME);
@@ -136,32 +137,37 @@ public class FilesController {
 	}
 	
 	/**
-	 *  파일 리스트 출력해주기
+	 *  파일 이동 관련 메섯흐
 	 * */
-	@RequestMapping("/getAllFiles.do")
-	public ModelAndView getAllFiles(@RequestParam(value="foldername",defaultValue = "")String foldername) {
-		ModelAndView mav = new ModelAndView();
-		String test=fileSerImp.PATH+File.separator;
-		if(!foldername.equals("")) {
-			test+=foldername;
-		}
-		File f = new File(test);
-		File files[] = f.listFiles();
-		ArrayList<String> list= new ArrayList<String>();
-		ArrayList<String> folder= new ArrayList<String>();
-		for(int i=0;i<files.length;i++) {
-			String name = files[i].getName();
-			if(!fileSerImp.fileExt(name).equals("")) {
-				list.add(name);
-			}else {
-				folder.add(name);
+	@RequestMapping("/moveList.do")
+	public ModelAndView getAllFiles(@RequestParam(value="chkList",defaultValue = "")List<String> chkList,
+			@RequestParam(value="foldername",defaultValue = "")String foldername,
+			@RequestParam(value="state",defaultValue = "")int state) {
+		
+		String beforePath=null;
+		String afterPath=null;
+		if(state==1) {
+			beforePath =fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator;
+			afterPath=fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator+foldername+File.separator;
+			for(int i=0;i<chkList.size();i++) {
+				fileSerImp.fileMove(beforePath+chkList.get(i),afterPath+chkList.get(i));
+				fileSerImp.updateFatch(chkList.get(i), fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator+foldername);
+			}
+		}else {
+			beforePath=fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator;
+			
+			afterPath =fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator;
+			for(int i=0;i<chkList.size();i++) {
+				fileSerImp.fileMove(beforePath+chkList.get(i),afterPath+chkList.get(i));
+				fileSerImp.updateFatch(chkList.get(i), fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator);
 			}
 		}
-		mav.addObject("list", list);
-		mav.addObject("folder", folder);
-		mav.setViewName("chordView");
+			ModelAndView mav=null;
+			mav = new ModelAndView();
+			mav.setViewName("files/files");
 		return mav;
 	}
+	
 	/**
 	 * 폴더 add
 	 * */

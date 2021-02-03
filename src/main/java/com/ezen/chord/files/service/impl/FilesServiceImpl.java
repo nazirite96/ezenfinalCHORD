@@ -1,6 +1,7 @@
 package com.ezen.chord.files.service.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -44,12 +45,17 @@ public class FilesServiceImpl implements FilesService {
 		return filedao.getproName(memNo);
 	}
 	@Override
-	public Map<String, Object> updateFatch(int fileno,String fatch) {
+	public int updateFatch(String filename, String pathRoot) {
 		// TODO Auto-generated method stub
-		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("fatch", fatch);
-		map.put("fileno", fileno);
+		Map<String, String> map=new HashMap<String, String>();
+		map.put("filename", filename);
+		map.put("pathRoot", pathRoot);
 		return filedao.updateFatch(map);
+	}
+	@Override
+	public List<FilesDTO> getDBPath(String fullPath) {
+		// TODO Auto-generated method stub
+		return filedao.getDBPath(fullPath);
 	}
 	@Override
 	public int updateFile(int fileno) {
@@ -60,10 +66,10 @@ public class FilesServiceImpl implements FilesService {
 	public int insertFile(FilesDTO filedto,String original,String name,String size) {
 		// TODO Auto-generated method stub
 		filedto.setFile_name(name);
-		filedto.setFile_path(PATH+File.separator+PRONAME+File.separator+CRPATH+File.separator);
+		filedto.setFile_path(PATH+File.separator+PRONAME+File.separator+CRPATH);
 		filedto.setFile_upload(original);
 		filedto.setFile_size(size);
-		filedto.setFile_kind("kind"); // 타임라인에서 가져올거임
+		filedto.setFile_kind(fileExt(name));
 		filedto.setCont_kind("baisc"); // 타임라인에서 가져올 타입
 		filedto.setCont_no(0); // 타임라인에서 가져올 컨텐츠 타입 번호
 		filedto.setMem_no(2); // 사용자 맴버번호
@@ -163,5 +169,33 @@ public class FilesServiceImpl implements FilesService {
 	      ext = "";
 	      return ext;
 	    }
+	}
+	@Override
+	public void fileMove(String inFileName, String outFileName) {
+		// TODO Auto-generated method stub
+		try {
+			   FileInputStream fis = new FileInputStream(inFileName);
+			   FileOutputStream fos = new FileOutputStream(outFileName);
+			   
+			   int data = 0;
+			   while((data=fis.read())!=-1) {
+			    fos.write(data);
+			   }
+			   fis.close();
+			   fos.close();
+			   
+			   //복사한뒤 원본파일을 삭제함
+			   fileDelete(inFileName);
+			   
+			  } catch (IOException e) {
+			   // TODO Auto-generated catch block
+			   e.printStackTrace();
+			  }
+	}
+	@Override
+	public void fileDelete(String deleteFileName) {
+		// TODO Auto-generated method stub
+		File f = new File(deleteFileName);
+		  f.delete();
 	}
 }

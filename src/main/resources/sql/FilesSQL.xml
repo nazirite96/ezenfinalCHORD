@@ -13,7 +13,7 @@
     		<!--  -->
     	</update>
     	<update id="updateFatch" parameterType="map">
-    		<!--  -->
+    		update files set file_path=#{pathRoot} where file_name=#{filename}
     	</update>
     	<select id="getAllFiles" resultType="FilesDTO">
     		select * from files
@@ -23,5 +23,8 @@
     	</select>
     	<select id="getproName" parameterType="INTEGER" resultType="String">
     		select pro_name from project where mem_no=#{memNo}
+    	</select>
+    	<select id="getDBPath" parameterType="String" resultType="FilesDTO">
+    		select * from files where file_path=#{fullPath}
     	</select>
     </mapper>
