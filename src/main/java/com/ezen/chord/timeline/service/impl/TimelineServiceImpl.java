@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ezen.chord.reply.dao.ReplyDAO;
 import com.ezen.chord.timeline.dao.TimelineDAO;
 import com.ezen.chord.timeline.dto.TimelineDTO;
 import com.ezen.chord.timeline.service.TimelineService;
@@ -14,17 +15,24 @@ public class TimelineServiceImpl implements TimelineService {
 	
 	@Autowired
 	private TimelineDAO timDAO;
+	@Autowired
+	private ReplyDAO repDAO;
 
 	@Override
 	public int insertTim(TimelineDTO timDTO) {
 		// TODO Auto-generated method stub
 		return timDAO.insertTim(timDTO);
 	}
+		
 	
 	@Override
 	public List<TimelineDTO> getTimelineByProNo(int pro_no, int page) {
 		// TODO Auto-generated method stub
-		return timDAO.getTimelineByProNo(pro_no, page);
+		List<TimelineDTO> list = timDAO.getTimelineByProNo(pro_no, page);
+		for(int i = 0 ; i < list.size() ; i++) {
+			list.get(i).setRepList(repDAO.selcetRepByTim_no(list.get(i).getTim_no()));
+		}
+		return list;
 	}
 	
 	@Override

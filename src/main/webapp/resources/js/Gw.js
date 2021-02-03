@@ -107,6 +107,106 @@ function deletePro() {
 	layer_popup("#deletePro");
 }
 
+/*******************************************
+*
+* Category : TimeLine 댓글 삭제
+*
+*******************************************/
+
+/*******************************************
+* Note : comment edit button clicked
+* 설명 : '댓글' 수정 버튼 클릭시 이벤트 발생
+*******************************************/
+function fn_commentEdit(el) {
+
+	var item = $(el);
+	var commentUserInfo = item.parent().siblings('.comment-user-info');
+	var commentTxt = item.parent().siblings('.article-txt');
+	var commentEditBtn = item.parent();
+	var commentEditBox = item.parent().siblings('.comment-edit-box');
+	var editTextarea = commentEditBox.find('textarea');
+
+	commentUserInfo.hide();
+	commentTxt.hide();
+	commentEditBtn.hide();
+	commentEditBox.show();
+	editTextarea.val(commentTxt.find('pre').text()).focus();
+	editTextarea.focus();
+	
+}
+
+/*******************************************
+* Note : comment edit key event
+* 설명 : '댓글' 수정시 키보드를 눌렀을 때 이벤트 처리
+*******************************************/
+function fn_keyDownEsc(event, el) {
+	var key = event.keyCode;
+	var item = $(el);
+
+	var commentEditBox = item.parent().parent().parent('.comment-edit-box');
+	var commentUserInfo = commentEditBox.siblings('.comment-user-info');
+	var commentTxt = commentEditBox.siblings('.article-txt');
+	var commentEditBtn = commentEditBox.siblings('.comment-edit-btn');
+
+
+	if (key == "13" && !event.shiftKey) {	// Enter 키 입력시
+
+		event.preventDefault(); // Enter 키 값 초기화(submit event reset)
+
+		if (!event.shiftKey) {
+			commentEditBox.children('form').submit();
+		}
+
+	} else if (key == "27") {	// ESC 키 입력시
+
+		event.preventDefault(); // Enter 키 값 초기화(submit event reset)
+
+		commentEditBox.hide();
+		commentUserInfo.show();
+		commentTxt.show();
+		commentEditBtn.show();
+
+	}
+}
+
+
+/*******************************************
+* Note : comment insert key event
+* 설명 : '댓글' 등록시 키보드를 눌렀을 때 이벤트 처리
+*******************************************/
+function fn_commentKeyDown(event, el) {
+
+	var key = event.keyCode;
+	
+	var item = $(el);
+	var commentInsertBox = item.parent().parent().parent().parent('.comment-insert-box');
+	var commentInsertForm = commentInsertBox.parent('form');
+	var commentWrap = commentInsertForm.parent();
+	var timelineFooter = commentWrap.parent();
+	var dataMemNo = timelineFooter.siblings('.col-memno').attr('data-memno');
+	var dataTimNo = timelineFooter.siblings('.col-no').attr('data-no');
+	var dataProNo = timelineFooter.siblings('.col-prono').attr('data-prono');
+	
+	var inputTimeMemNo = commentInsertBox.siblings('.timeline_mem_no');
+	var inputTimeNo = commentInsertBox.siblings('.timeline_no');
+	var inputTimeProNo = commentInsertBox.siblings('.timeline_pro_no');
+	inputTimeMemNo.val(dataMemNo);
+	inputTimeNo.val(dataTimNo);
+	inputTimeProNo.val(dataProNo);
+
+	if (key == "13") {	// Enter 키 입력시
+
+		if (!event.shiftKey) {
+			if (item.val() == "" || item.val() == null) {
+				alertCustom("댓글 내용을 작성해주세요", "alert-danger");
+				return false;
+			}
+
+			commentInsertForm.submit();
+		}
+
+	}
+}
 
 
 
@@ -1431,25 +1531,6 @@ function fn_editCancel(el) {
 }
 
 
-/*******************************************
-* Note : comment edit button clicked
-* 설명 : '댓글' 수정 버튼 클릭시 이벤트 발생
-*******************************************/
-function fn_commentEdit(el) {
-	var item = $(el);
-	var commentUserInfo = item.parent().siblings('.comment-user-info');
-	var commentTxt = item.parent().siblings('.article-txt');
-	var commentEditBtn = item.parent();
-	var commentEditBox = item.parent().siblings('.comment-edit-box');
-	var editTextarea = commentEditBox.find('textarea');
-
-	commentUserInfo.hide();
-	commentTxt.hide();
-	commentEditBtn.hide();
-	commentEditBox.show();
-	editTextarea.val(commentTxt.find('pre').text()).focus();
-	editTextarea.focus();
-}
 
 /*******************************************
 * Note : comment edit key event
@@ -1485,40 +1566,6 @@ function fn_keyDownEsc(event, el) {
 	}
 }
 
-
-/*******************************************
-* Note : comment insert key event
-* 설명 : '댓글' 등록시 키보드를 눌렀을 때 이벤트 처리
-*******************************************/
-function fn_commentKeyDown(event, el) {
-	var key = event.keyCode;
-	var item = $(el);
-	var commentInsertBox = item.parent().parent().parent().parent('.comment-insert-box');
-	var commentInsertForm = commentInsertBox.parent('form');
-	var commentWrap = commentInsertForm.parent();
-	var timelineFooter = commentWrap.parent();
-	var dataCol = timelineFooter.siblings('.col-no').attr('data-col');
-	var dataNo = timelineFooter.siblings('.col-no').attr('data-no');
-
-	var inputTimeCol = commentInsertBox.siblings('.timeline_col');
-	var inputTimeNo = commentInsertBox.siblings('.timeline_no');
-
-	inputTimeCol.val(dataCol);
-	inputTimeNo.val(dataNo);
-
-	if (key == "13") {	// Enter 키 입력시
-
-		if (!event.shiftKey) {
-			if (item.val() == "" || item.val() == null) {
-				alertCustom("댓글 내용을 작성해주세요", "alert-danger");
-				return false;
-			}
-
-			commentInsertForm.submit();
-		}
-
-	}
-}
 
 
 /*******************************************
