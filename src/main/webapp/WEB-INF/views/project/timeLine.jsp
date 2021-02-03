@@ -754,11 +754,12 @@
 							<h2>timeline</h2>
 							<div class="table-responsive"></div>
 							<c:forEach var="dto" items="${list }">
-								<div id="timelineno${dto.tim_no }" class="timeline-box martop-20">
+								<div class="timeline-box martop-20">
 								
 									<input type="hidden" class="col-no" data-no="${dto.tim_no }">
 									<input type="hidden" class="col-kind" data-kind="${dto.cont_kind }">
 									<input type="hidden" class="col-kindno" data-kindno="${dto.cont_no }">
+									<input type="hidden" class="col-prono" data-prono="${dto.pro_no }">
 									<!-- timeline header:s -->
 									<div class="timeline-header back-color-white">
 										<!-- article writer info -->
