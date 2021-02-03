@@ -199,6 +199,24 @@ function returnFileSize(number) {
        formData.append('files',fileList[uploadFileList[i]]);
     }
     $.ajax({
+    	xhr: function() {
+            var xhr = new window.XMLHttpRequest();
+
+            xhr.upload.addEventListener("progress", function(evt) {
+                if (evt.lengthComputable) {
+                    var percentComplete = evt.loaded / evt.total;
+                    percentComplete = parseInt(percentComplete * 100);
+                    console.log(percentComplete);
+
+                    if (percentComplete === 100) {
+
+                    }
+
+                }
+            }, false);
+
+            return xhr;
+        },
     	url:"upload.do",
     	data:formData,
     	type:'POST',
@@ -209,6 +227,7 @@ function returnFileSize(number) {
     	cache: false,
     	dataType: "text",
     		success : function() {
+
     			  alert("success");
     			  location.reload();
     	    },
@@ -221,20 +240,19 @@ function returnFileSize(number) {
 </script>
 
 <body>
-<div id="dropZone" style="background-color: pink; width: 900px; height: 200px;">
-   		여기에 파일을 가져다 놓으세요
-</div>
-   
-<form name="uploadForm" id="uploadForm" enctype="multipart/form-data" method="post">
-   <div style="background-color: #cbc4c4;">
-	   업로드 된파일들
-   </div>
-</form>
-<div class="filebox bs3-primary">
-   <label for="ex_file2">업로드</label> 
-   <input type="file" multiple="multiple" id="ex_file2" class="upload-hidden">
-</div>
-   <input type="button" value="올리기" onclick="uploadFile()">
+	<div id="dropZone"
+		style="background-color: pink; width: 900px; height: 200px;">
+		여기에 파일을 가져다 놓으세요</div>
+
+	<form name="uploadForm" id="uploadForm" enctype="multipart/form-data"
+		method="post">
+		<div style="background-color: #cbc4c4;">업로드 된파일들</div>
+	</form>
+	<div class="filebox bs3-primary">
+		<label for="ex_file2">업로드</label> <input type="file"
+			multiple="multiple" id="ex_file2" class="upload-hidden">
+	</div>
+	<input type="button" value="올리기" onclick="uploadFile()">
 </body>
 
 

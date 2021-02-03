@@ -86,10 +86,44 @@ var count = 1;
 	    });
 	});
 	
-	function reloadPage() {
-		location.href='files.do';
+	// 체크박스 항목을 이동할 통신
+	function chkMove(foldername,state){;
+	
+		if( $(":checkbox[name='chkList']:checked").length==0 ){
+		    alert("항목을 하나이상 체크해주세요.");
+		    location.reload();
+		}else{
+			var chkList=get_chked_values();
+			var result=confirm('해당 파일을 이동시키겠습니까?');
+			if(result){
+				$.ajax({
+			    	url:"moveList.do?foldername="+foldername+"&chkList="+chkList+"&state="+state,
+			    	type:'GET',
+			    	dataType: "text",
+			    		success : function(data) {
+			    			alert('해당화면으로 이동을 완료하였습니다.');
+			    			location.reload();
+			    	    },
+			    	    error : function(xhr, status, error) {     
+			    	    	alert(xhr,status,error);
+			    	    }
+			    });
+			}
+			location.reload();
+		}
 	}
 	
+
+	// 체크 리스트들 , 로 담기
+	function get_chked_values(){
+		  var chked_val = "";
+		  $(":checkbox[name='chkList']:checked").each(function(pi,po){
+		    chked_val += ","+po.value;
+		  });
+		  if(chked_val!="")chked_val = chked_val.substring(1);
+		  return chked_val;
+		}
+
 	$(function(){
 		$('.custom-select').on("change",function(){
 			var value=$('.custom-select').val();
@@ -184,7 +218,11 @@ var count = 1;
 		        	<c:when test="${!empty clickproject }"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">폴더 생성</button></c:when>
 		        	<c:when test="${empty clickproject }"><button disabled="disabled" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">폴더 생성</button></c:when>
 		        </c:choose>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+            <button type="button" id="move01" class="btn btn-sm btn-outline-secondary">Export</button>
+           		 <c:choose>
+		        	<c:when test="${!empty clickproject }"><button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal2">이동</button></c:when>
+		        	<c:when test="${empty clickproject }"><button disabled="disabled" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal2">이동</button></c:when>
+		        </c:choose>
           </div>
           <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
             <span data-feather="calendar"></span>
@@ -216,15 +254,21 @@ var count = 1;
 					<c:forEach var="allFiles" items="${allFileList }">
 							<tr>
 								<td>체크박스</td>
-								<td colspan="3"><a href="filedownload?filename=${allFiles.file_name }">${allFiles.file_name }</a></td>
+								<td><a href="filedownload?filename=${allFiles.file_name }">${allFiles.file_name }</a></td>
+								<td>${allFiles.file_size }</td>
+								<td>${allFiles.mem_no }</td>
+								<td>${allFiles.file_date }</td>
 							</tr>
 					</c:forEach>
 				</c:if>
 				<c:if test="${!empty clickproject}">
-					<c:forEach var="files" items="${fileList }">
+					<c:forEach var="files" items="${partFileList }">
 							<tr>
-								<td>체크박스</td>
-								<td colspan="3"><a href="filedownload?filename=${files }">${files }</a></td>
+								<td><input name="chkList" type="checkbox" value="${files.file_name }"></td>
+								<td><a href="filedownload?filename=${files.file_name }">${files.file_name }</a></td>
+								<td>${files.file_size }</td>
+								<td>${files.mem_no }</td>
+								<td>${files.file_date }</td>
 							</tr>
 					</c:forEach>
 						<c:forEach var="folder" items="${folder }">
@@ -234,7 +278,6 @@ var count = 1;
 								</tr>
 						</c:forEach>
 				</c:if>
-					
 				</tbody>
 			</table>
 		</form>
@@ -242,7 +285,31 @@ var count = 1;
     </main>
   </div>
 </div>
-
+<!-- Modal -->
+     	<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">어느폴더에 이동시키실?</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form name="fm">
+			      <div class="modal-body2" style="text-align: center">
+			        <c:forEach var="mf" items="${folder }">
+			        		<a href="javascript:chkMove('${mf }',1)">${mf }</a> <br>
+			        </c:forEach>
+			        <c:if test="${empty folder}"> <a href="javascript:chkMove('${crpath }',-1)">최상의 경로로...</a></c:if>
+			      </div>
+		      	<div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		     	 </div>
+		       </form>
+		    </div>
+		  </div>
+		</div>
+     	
 		<!-- Modal -->
 		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
