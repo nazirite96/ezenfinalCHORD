@@ -1,5 +1,9 @@
 package com.ezen.chord.timeline.dto;
 
+import java.util.List;
+
+import com.ezen.chord.reply.dto.ReplyDTO;
+
 public class TimelineDTO {
 	
 	private int tim_no;				//타임라인 번호
@@ -9,6 +13,8 @@ public class TimelineDTO {
 	private java.sql.Date tim_date;	//작성일
 	private int pro_no;				//작성 프로젝트
 	private int mem_no;				//작성자
+	private List<ReplyDTO> repList; //리플
+	
 	public int getTim_no() {
 		return tim_no;
 	}
@@ -50,6 +56,12 @@ public class TimelineDTO {
 	}
 	public void setMem_no(int mem_no) {
 		this.mem_no = mem_no;
+	}
+	public List<ReplyDTO> getRepList() {
+		return repList;
+	}
+	public void setRepList(List<ReplyDTO> repList) {
+		this.repList = repList;
 	}
 	
 	

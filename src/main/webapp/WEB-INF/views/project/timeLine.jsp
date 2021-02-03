@@ -760,6 +760,7 @@
 									<input type="hidden" class="col-kind" data-kind="${dto.cont_kind }">
 									<input type="hidden" class="col-kindno" data-kindno="${dto.cont_no }">
 									<input type="hidden" class="col-prono" data-prono="${dto.pro_no }">
+									<input type="hidden" class="col-memno" data-memno="${dto.mem_no }">
 									<!-- timeline header:s -->
 									<div class="timeline-header back-color-white">
 										<!-- article writer info -->
@@ -1125,11 +1126,11 @@
 
 										<!-- 댓글:s -->
 										<div class="timeline-comment-wrap">
-											<c:forEach items="${timeLine.repList }" var="repList"
+											<c:forEach items="${dto.repList }" var="repDTO"
 												varStatus="status">
 												<!-- 댓글 리스트:s -->
 												<div class="comment-list-box"
-													data-repno="${repList['repVo'].rep_no }">
+													data-repno="${repDTO.rep_no}">
 													<dl>
 														<dt class="posi-re cursor-point"
 															onclick="fn_openPopup(this)"
@@ -1144,7 +1145,7 @@
 															<!-- 댓글 작성자 정보 -->
 															<div class="comment-user-info">
 																<div
-																	class="dis-inblock font-bold size-15 color-black maright-10">작성자</div>
+																	class="dis-inblock font-bold size-15 color-black maright-10">${repDTO.mem_no }</div>
 																<div class="dis-inblock size-15 color-gray maright-20">
 																</div>
 																<!-- 												<div class="dis-inblock size-15 color-gray cursor-point" onclick="fn_likeChange(this)"> -->
@@ -1154,13 +1155,12 @@
 
 															<!-- 댓글내용 -->
 															<div class="article-txt martop-5">
-																<pre class="font-thin size-16 color-gray">댓글내용</pre>
+																<pre class="font-thin size-16 color-gray">${repDTO.rep_cont }</pre>
 															</div>
 
-															<!-- 댓글 이미지 목록 : s -->
+															<!-- 댓글 이미지 목록 : s 
 															<div class="comment-img-list">
-																<c:forEach items="${repList['filesList'] }"
-																	var="filesVo">
+																<c:forEach items="${repList['filesList'] }" var="filesVo">
 																	<c:if test="${filesVo.files_kind == 'img' }">
 																		<div class="upload-img-info martop-20">
 																			<div class="upload-img"
@@ -1169,9 +1169,10 @@
 																	</c:if>
 																</c:forEach>
 															</div>
+															-->
 															<!-- 댓글 이미지 목록 : f -->
 
-															<!-- 댓글 첨부파일 목록 : s -->
+															<!-- 댓글 첨부파일 목록 : s 
 															<div class="comment-file-list">
 																<c:forEach items="${repList['filesList'] }"
 																	var="filesVo">
@@ -1197,17 +1198,18 @@
 																	</c:if>
 																</c:forEach>
 															</div>
+															-->
 															<!-- 댓글 첨부파일 목록 : f -->
 
 															<!-- 댓글 수정 박스 -->
 															<div class="comment-edit-box">
-																<form action="/flowolf/rep/update" method="post" class="comment-edit-form" enctype="multipart/form-data">
+																<form action="repUpdate.do" method="post" class="comment-edit-form" enctype="multipart/form-data">
 																	<input type="hidden" name="rep_no"
-																		value="${repList['repVo'].rep_no }">
+																		value="${repDTO.rep_no }">
 																	<div class="comment-textarea">
 																		<textarea rows="5" cols="50" class="rep_cont"
 																			name="rep_cont" onkeyup="autoTextarea(this, 40, 300)"
-																			onkeydown="fn_keyDownEsc(event, this)" required>${repList['repVo'].rep_cont }</textarea>
+																			onkeydown="fn_keyDownEsc(event, this)" required>${repDTO.rep_cont }</textarea>
 																	</div>
 																	<div
 																		class="dis-block float-left martop-5 marbtm-10 size-13 color-gray"
@@ -1224,7 +1226,7 @@
 																		id="commentEditFile_${status.count }" class="dis-none"
 																		onchange="commentFileUpload(this)">
 
-																	<!-- 이미지 목록이 나올부분 -->
+																	<!-- 이미지 목록이 나올부분 
 																	<div class="comment-upload-img-list">
 																		<c:forEach items="${repList['filesList'] }"
 																			var="filesVo">
@@ -1239,8 +1241,8 @@
 																			</c:if>
 																		</c:forEach>
 																	</div>
-
-																	<!-- 첨부파일 목록이 나올부분 -->
+																			-->
+																	<!-- 첨부파일 목록이 나올부분 
 																	<div class="comment-upload-file-list">
 																		<c:forEach items="${repList['filesList'] }"
 																			var="filesVo">
@@ -1266,9 +1268,10 @@
 																			</c:if>
 																		</c:forEach>
 																	</div>
+																	-->
 																</form>
 															</div>
-															<c:if test="${repList['repVo'].mem_id == memVo.mem_id }">
+															<c:if test="${repDTO.mem_no == dto.mem_no }">
 																<!-- 댓글 수정,삭제 버튼 -->
 																<ul class="comment-edit-btn">
 																	<li class="cursor-point" onclick="fn_commentEdit(this)">수정</li>
@@ -1281,11 +1284,11 @@
 												<!-- 댓글 리스트:f -->
 											</c:forEach>
 											<!-- 댓글 입력:s -->
-											<form action="/flowolf/rep/insert" method="post"
+											<form action="insertRep.do" method="get"
 												enctype="multipart/form-data">
-												<input type="hidden" class="timeline_col"
-													name="timeline_col" value=""> <input type="hidden"
-													class="timeline_no" name="timeline_no" value="">
+												<input type="hidden" class="timeline_mem_no"name="mem_no" value=""> 
+												<input type="hidden" class="timeline_no" name="tim_no" value="">
+												<input type="hidden" class="timeline_pro_no" name="pro_no" value="">
 												<div class="comment-insert-box">
 													<dl>
 														<dt class="posi-re">

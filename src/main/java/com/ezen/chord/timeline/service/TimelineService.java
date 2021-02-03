@@ -13,5 +13,5 @@ public interface TimelineService {
 	public int updateTim(TimelineDTO timDTO);
 	
 	public int deleteTim(TimelineDTO timDTO);
-
+	
 }

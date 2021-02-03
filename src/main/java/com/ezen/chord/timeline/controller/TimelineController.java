@@ -5,9 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen.chord.reply.dto.ReplyDTO;
+import com.ezen.chord.reply.service.ReplyService;
 import com.ezen.chord.timeline.dto.TimelineDTO;
 import com.ezen.chord.timeline.service.TimelineService;
 
@@ -16,7 +17,10 @@ public class TimelineController {
 	
 	@Autowired
 	private TimelineService timService;
-
+	
+	@Autowired
+	private ReplyService repService;
+	
 	
 	@RequestMapping("/timeLine.do")
 	public ModelAndView getTimeline(int pro_no) {
@@ -59,6 +63,18 @@ public class TimelineController {
 		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no();
 	}
 	
+	
+	@RequestMapping("/insertRep.do")
+	public String insertRep(ReplyDTO repDTO,int pro_no) {
+		int result = repService.insertRep(repDTO);
+		return "redirect:/timeLine.do?pro_no="+pro_no;
+	}
+	
+	@RequestMapping("/updateRep.do")
+	public String updateRep(ReplyDTO repDTO,int pro_no) {
+		int result = repService.updateRep(repDTO);
+		return "redirect:/timeLine.do?pro_no="+pro_no;
+	}
 	
 	
 	
