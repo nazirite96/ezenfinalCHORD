@@ -3,6 +3,21 @@
 * Category : TimeLine
 *
 *******************************************/
+//얼럿
+function alertCustom(text, className){
+	var alertBox = $('.alert');
+	
+	alertBox.html(text);
+	alertBox.addClass(className);
+	alertBox.css('margin-left', -(alertBox.outerWidth()/2));
+	alertBox.fadeIn();
+	setTimeout(function(){alertBox.fadeOut()}, 3000);
+}
+
+
+
+
+//팝업
 
 
 
@@ -69,7 +84,7 @@ $(function() {
 
 		$.ajax({
 
-			url: "proUser/update",
+			url: "updateProUserColor.do",
 			method: "get",
 			data: { pro_user_color: changeColor },
 			dataType: "json",
@@ -557,7 +572,7 @@ $(function() {
 		var timeline_kind = $(this).parents(".timeline-box").children(".col-kind").data("kind");
 		var timeline_kindno = $(this).parents(".timeline-box").children(".col-kindno").data("kindno");
 		var timeline_prono = $(this).parents(".timeline-box").children(".col-prono").data("prono");
-		window.alert(timeline_no+" "+timeline_kindno+" "+timeline_kind+" "+timeline_prono);
+		
 		$("#deleteTimeLine .timeline_no").val(timeline_no);
 		$("#deleteTimeLine .content_kind").val(timeline_kind);
 		$("#deleteTimeLine .content_no").val(timeline_kindno);
@@ -572,12 +587,12 @@ $(function() {
 		var item = $(this);
 		var commentListBox = item.parent().parent().parent().parent();
 		var rep_no = commentListBox.data("repno");
+		var pro_no = commentListBox.data("prono");
 
-		$("#deleteTimeLine .timeline_col").val("rep_no");
-		$("#deleteTimeLine .timeline_no").val(rep_no);
-
+		$("#deleteReply .rep_no").val(rep_no);
+		$("#deleteReply .pro_no").val(pro_no);
 		// layer pop up show
-		layer_popup("#deleteTimeLine");
+		layer_popup("#deleteReply");
 
 	});
 

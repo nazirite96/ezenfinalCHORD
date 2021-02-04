@@ -2,6 +2,7 @@ package com.ezen.chord.timeline.service;
 
 import java.util.List;
 
+import com.ezen.chord.project.dto.ProjectDTO;
 import com.ezen.chord.timeline.dto.TimelineDTO;
 
 public interface TimelineService {
@@ -13,5 +14,7 @@ public interface TimelineService {
 	public int updateTim(TimelineDTO timDTO);
 	
 	public int deleteTim(TimelineDTO timDTO);
+	
+	public ProjectDTO getPro(int pro_no);
 	
 }

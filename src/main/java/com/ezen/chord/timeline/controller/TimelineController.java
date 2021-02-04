@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen.chord.project.dto.ProjectDTO;
 import com.ezen.chord.reply.dto.ReplyDTO;
 import com.ezen.chord.reply.service.ReplyService;
 import com.ezen.chord.timeline.dto.TimelineDTO;
@@ -25,14 +26,15 @@ public class TimelineController {
 	@RequestMapping("/timeLine.do")
 	public ModelAndView getTimeline(int pro_no) {
 		ModelAndView mav = new ModelAndView();
+		
+		ProjectDTO proDTO = timService.getPro(pro_no);
+		mav.addObject("proDTO", proDTO);
 		//프로젝트 정보를 받기
 		int page =0;
 		int mem_no=2;
 		List<TimelineDTO> list = timService.getTimelineByProNo(pro_no, page);
 		mav.addObject("list", list);
-		mav.addObject("pro_no", pro_no);
 		mav.addObject("mem_no", mem_no);
-		
 		mav.setViewName("project/timeLine");
 		
 		
@@ -76,6 +78,11 @@ public class TimelineController {
 		return "redirect:/timeLine.do?pro_no="+pro_no;
 	}
 	
+	@RequestMapping("/deleteRep.do")
+	public String deleteRep(int rep_no,int pro_no) {
+		int result = repService.deleteRep(rep_no);
+		return "redirect:/timeLine.do?pro_no="+pro_no;
+	}
 	
 	
 	

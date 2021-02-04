@@ -25,4 +25,11 @@ public class ProjectDAOImpl implements ProjectDAO{
 		return sqlMap.insert("insertPro",proDTO);
 	}
 	
+	@Override
+	public ProjectDTO getPro(int pro_no) {
+		// TODO Auto-generated method stub
+		return sqlMap.selectOne("getPro", pro_no);
+	}
+	
+	
 }

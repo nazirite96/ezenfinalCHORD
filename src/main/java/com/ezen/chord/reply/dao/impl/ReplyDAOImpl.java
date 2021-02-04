@@ -30,13 +30,13 @@ public class ReplyDAOImpl implements ReplyDAO {
 	@Override
 	public int deleteRep(int rep_no) {
 		// TODO Auto-generated method stub
-		return 0;
+		return sqlmap.delete("deleteRep", rep_no);
 	}
 
 	@Override
 	public int updateRep(ReplyDTO repDTO) {
 		// TODO Auto-generated method stub
-		return sqlmap.update("update", repDTO);
+		return sqlmap.update("updateRep", repDTO);
 	}
 
 }

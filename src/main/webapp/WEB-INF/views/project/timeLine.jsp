@@ -103,8 +103,7 @@
 								data-feather="shopping-cart"></span>중요</a></li>
 
 
-						<h1
-							class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+						<h1 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 							<span>collection</span><a
 								class="d-flex align-items-center text-muted" href="#"
 								aria-label="Add a new report"><span
@@ -184,13 +183,13 @@
 												data-prono="22"></i>
 										</c:otherwise>
 									</c:choose>
-									<span class="size-20 color-white">프로젝트 이름</span>
+									<span class="size-20 color-white">${proDTO.pro_name }</span>
 								</div>
 								<ul class="pro-edit-nav">
 									<li><i
 										class="fas fa-palette size-30 color-white cursor-point edit-color-btn"
 										onclick="fn_editColor(this)"></i>
-										<div class="edit-box edit-color-box">
+										<div class="edit-box edit-color-box" data-prono="${proDTO.pro_no}">
 											<div class="color-sample default-back-color">
 												<i class="fas fa-check-circle size-16"></i>
 											</div>
@@ -269,8 +268,8 @@
 										<!-- 글쓰기:s -->
 										<div id="tab-1" class="tabs-content active">
 											<form action="insertTim.do" method="post">
-												<input type="hidden" name="mem_no" value="${mem_no}">
-												<input type="hidden" name="pro_no" value="${pro_no }">
+												<input type="hidden" name="mem_no" value="${memNo}">
+												<input type="hidden" name="pro_no" value="${proDTO.pro_no }">
 												<input type="hidden" name="cont_kind" value="post">
 												<input type="hidden" name="cont_no" value="0">
 												<div class="tab-con-box">
@@ -312,7 +311,7 @@
 										<div id="tab-2" class="tabs-content con-task">
 											<form action="/flowolf/task/insert" method="post"
 												enctype="multipart/form-data">
-												<input type="hidden" name="mem_id" value="${memVo.mem_id }">
+												<input type="hidden" name="mem_id" value="${memNo }">
 												<input type="hidden" name="pro_no" value="${proVo.pro_no }">
 												<!-- tab-con-box:s -->
 												<div class="tab-con-box">
@@ -1130,7 +1129,7 @@
 												varStatus="status">
 												<!-- 댓글 리스트:s -->
 												<div class="comment-list-box"
-													data-repno="${repDTO.rep_no}">
+													data-repno="${repDTO.rep_no}" data-prono="${dto.pro_no }">
 													<dl>
 														<dt class="posi-re cursor-point"
 															onclick="fn_openPopup(this)"
@@ -1144,8 +1143,7 @@
 
 															<!-- 댓글 작성자 정보 -->
 															<div class="comment-user-info">
-																<div
-																	class="dis-inblock font-bold size-15 color-black maright-10">${repDTO.mem_no }</div>
+																<div class="dis-inblock font-bold size-15 color-black maright-10">${repDTO.mem_no }</div>
 																<div class="dis-inblock size-15 color-gray maright-20">
 																</div>
 																<!-- 												<div class="dis-inblock size-15 color-gray cursor-point" onclick="fn_likeChange(this)"> -->
@@ -1203,9 +1201,10 @@
 
 															<!-- 댓글 수정 박스 -->
 															<div class="comment-edit-box">
-																<form action="repUpdate.do" method="post" class="comment-edit-form" enctype="multipart/form-data">
+																<form action="updateRep.do" method="get" class="comment-edit-form" enctype="multipart/form-data">
 																	<input type="hidden" name="rep_no"
 																		value="${repDTO.rep_no }">
+																	<input type="hidden" name="pro_no" value="${dto.pro_no }">
 																	<div class="comment-textarea">
 																		<textarea rows="5" cols="50" class="rep_cont"
 																			name="rep_cont" onkeyup="autoTextarea(this, 40, 300)"
@@ -1349,7 +1348,7 @@
 		</section>
 		</main>
 	</div>
-	
+	<div class="alert flowolf-alert"></div>
 	</div>
 
 

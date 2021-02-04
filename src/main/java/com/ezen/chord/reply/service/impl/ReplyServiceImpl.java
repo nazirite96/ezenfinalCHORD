@@ -30,7 +30,7 @@ public class ReplyServiceImpl implements ReplyService {
 	@Override
 	public int deleteRep(int rep_no) {
 		// TODO Auto-generated method stub
-		return 0;
+		return repDAO.deleteRep(rep_no);
 	}
 
 	@Override
