@@ -29,14 +29,13 @@ public class AdminController {
 	@Autowired
 	JavaMailSender mailSender;
 
-	/*사이트 운영자*/
+	/*사이트 운영자 접속 통계*/
 	@RequestMapping("/adminWebForm.do")
 	public ModelAndView adminWebForm() {
 
         List<Map<String,Object>> userLogList = new ArrayList<Map<String,Object>>();
         try {
 			userLogList = asvc.adminLogDataService();
-			//System.out.println("listSize(): "+userLogList.toString());
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
 		}
@@ -50,8 +49,22 @@ public class AdminController {
 		return mav;
 	}
 	
+	/*사이트 운영자 파일 다운 이력*/
+	@RequestMapping("/adminFileForm.do")
+	public ModelAndView adminFileData() {
+
+		List<Map<String, Object>> fileList = asvc.adminFileListService();
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("fileList",fileList);
+		mav.setViewName("adminWeb/adminFileList");
+		
+		return mav;
+		
+	}
 	
-	/*회사관리자 _ 회사정보form*/
+	
+	/*회사관리자 _회사정보form*/
 	@RequestMapping("/adminCompanyForm.do")
 	public ModelAndView adminCompanyForm(int com_no) {
 		CompanyDTO comResult = asvc.adminComUpdateFormService(com_no);
@@ -67,8 +80,7 @@ public class AdminController {
 	/*회사관리자_회사정보수정*/
 	@RequestMapping("/adminComUpdate.do")
 	public ModelAndView adminComUpdate(CompanyDTO cdto) {
-		
-		//System.out.println(cdto.getCom_name() + cdto.getCom_no() + cdto.getCom_pwd() + cdto.getCom_sector());
+	
 		
 		int comResult = asvc.adminComUpdateService(cdto);
 		String msg = comResult>0?"성공~":"실패~";
@@ -104,9 +116,9 @@ public class AdminController {
 		
 		String setfrom = "choongyeon0101@gmail.com";
 		String senderName = "chord";
-		String toMail = req.getParameter("receiveMail"); //받는사람
-		String subject = "chord 회사 초대 메일입니다."; //제목
-		String contents = "회사 비밀번호 앞자리[ "+com_no+" ] 뒷자리[ "+com_pwd+" ] 입니다.";//내용 
+		String toMail = req.getParameter("receiveMail"); 
+		String subject = "chord 회사 초대 메일입니다."; 
+		String contents = "회사 비밀번호 앞자리[ "+com_no+" ] 뒷자리[ "+com_pwd+" ] 입니다.";
 		
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
@@ -133,8 +145,7 @@ public class AdminController {
 		
 	}
 	
-	
-	/*회사관리자 _ 회원관리 form*/
+	/*회사관리자 _ 회원관리 리스트*/
 	@RequestMapping("adminMemManagementForm.do")
 	public ModelAndView adminMemManagementForm(int com_no) {
 	
@@ -165,24 +176,57 @@ public class AdminController {
 		
 		if(memGrade.equals("company") || memGrade=="company") {
 			System.out.println("controller 회사 "+ dto.getMem_no());
-			asvc.adminPositionDeleteService(dto.getMem_no()); // 관리자 권한 delete
+			asvc.adminPositionDeleteService(dto.getMem_no()); 
 			
 		}else if(memGrade==null || memGrade.equals("")) {
 			System.out.println("일반 / 프로젝트");
 			Map<String,Integer> map = new HashMap<String,Integer>();
 			map.put("kind_no", dto.getCom_no());
 			map.put("mem_no", dto.getMem_no());
-			asvc.adminPositionInsertService(map);// position 업데이트해주기 grade insert
+			asvc.adminPositionInsertService(map);
 			
 		}
 		
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg","변경완료!");
-		mav.addObject("gopage","adminMemManagementForm.do?com_no="+dto.getCom_no()); // 회원목록
-		//mav.addObject("gopage","adminMemContents.do?com_no="+dto.getCom_no()+"&mem_no="+dto.getMem_no()); // 개인회원 정보
+		mav.addObject("gopage","adminMemManagementForm.do?com_no="+dto.getCom_no()); 
 		mav.setViewName("adminCom/adminMsg");
 		
 		return mav;
 	}
+	
+	
+	/*회사관리자_프로젝트 목록보기*/
+	@RequestMapping("/adminProListForm.do")
+	public ModelAndView adminProjectList(int com_no) {
+		
+		List<Map<String, Object>> list = asvc.adminProjectListService(com_no);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("prolist",list);
+		mav.setViewName("adminCom/adminProListForm");
+		
+		return mav;
+	}
+	
+	/*회사관리자_프로젝트 상세 내용보기*/
+	@RequestMapping("/adminProContents.do")
+	public ModelAndView adminProContents(int pro_no) {
+		
+		List<Map<String, Object>> nameList = asvc.adminProInfoService(pro_no); // 이름가져오기
+		List<Map<String, Object>> prolist = asvc.adminProContentsService(pro_no);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("name",nameList);
+		mav.addObject("proContents",prolist);
+		mav.setViewName("adminCom/adminProContents");
+		
+		return mav;
+	}
+	
+	/*회사관리자_프로젝트 삭제*/
+	
+	
+	
 }

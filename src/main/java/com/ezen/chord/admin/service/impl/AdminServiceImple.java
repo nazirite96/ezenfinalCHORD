@@ -25,6 +25,14 @@ public class AdminServiceImple implements AdminService {
 		return result;
 	}
 	
+	/* 웹 사이트 운영자_파일 다운 이력 list */
+	@Override
+	public List<Map<String, Object>> adminFileListService() {
+		List<Map<String, Object>> result = adao.adminFileListDAO();
+		return result;
+	}
+	
+	
 	/*회사 관리자_회사정보 조회 및 수정*/
 	@Override
 	public CompanyDTO adminComUpdateFormService(int com_no) {
@@ -71,4 +79,27 @@ public class AdminServiceImple implements AdminService {
 		System.out.println("service 관리자 삭제"+result);
 		return result;
 	}
+	
+	/*회사 관리자_프로젝트 리스트*/
+	@Override
+	public List<Map<String, Object>> adminProjectListService(int com_no) {
+		List<Map<String, Object>> list = adao.adminProjectListDAO(com_no);
+		return list;
+	}
+	
+	/*회사관리자_프로젝트 상세내용*/
+	@Override
+	public List<Map<String, Object>> adminProContentsService(int pro_no) {
+		List<Map<String, Object>> list = adao.adminProContentsDAO(pro_no);
+		return list;
+	}
+	
+	
+	/*회사관리자_프로젝트 이름가져오기*/
+	@Override
+	public List<Map<String, Object>> adminProInfoService(int pro_no) {
+		List<Map<String, Object>> list = adao.adminProInfoDAO(pro_no);
+		return list;
+	}
+	
 }

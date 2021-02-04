@@ -28,6 +28,18 @@ public class AdminDAOImple implements AdminDAO {
 		return result;
 	}
 	
+	/* 웹사이트 운영자_파일 다운 이력 list*/
+	@Override
+	public List<Map<String, Object>> adminFileListDAO() {
+		List<Map<String, Object>> result = null;
+		try {
+			result = sqlMap.selectList("chord.admin.admin_fileList");
+		} catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
+		return result;
+	}
+	
 	/*회사 관리자_회사정보 조회 및 수정*/
 	@Override
 	public CompanyDTO  adminComUpdateFormDAO(int com_no) {
@@ -94,4 +106,43 @@ public class AdminDAOImple implements AdminDAO {
 		System.out.println("회원관리_adminDAO: 관리자 삭제 "+result);
 		return result;
 	}
+	
+	/*회사관리자_프로젝트 리스트*/
+	@Override
+	public List<Map<String, Object>> adminProjectListDAO(int com_no) {
+		List<Map<String, Object>> list = null;
+		try {
+			list = sqlMap.selectList("chord.admin.admin_projectList",com_no);
+		} catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
+		return list;
+	}
+	
+	
+	/*회사관리자_프로젝트 상세내용*/
+	@Override
+	public List<Map<String, Object>> adminProContentsDAO(int pro_no) {
+		List<Map<String,Object>> list = null;
+		try {
+			list = sqlMap.selectList("chord.admin.admin_projectContents",pro_no);
+		} catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
+		return list;
+	}
+	
+	/*회사관리자_프로젝트 이름가져오기*/
+	@Override
+	public List<Map<String, Object>> adminProInfoDAO(int pro_no) {
+		List<Map<String,Object>> list = null;
+		try {
+			list = sqlMap.selectList("chord.admin.admin_projectInfo",pro_no);
+		} catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
+		return list;
+	}
+	
+	
 }
