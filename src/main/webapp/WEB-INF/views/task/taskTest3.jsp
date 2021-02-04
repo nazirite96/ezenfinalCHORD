@@ -26,7 +26,7 @@
 <!-- font-awesome CSS -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
 </head>
-<form action="taskInsert.do" method="post" enctype="multipart/form-data">
+<form action="#" method="post" enctype="multipart/form-data">
 
 	<!-- tab-con-box:s -->
 	<div class="tab-con-box">

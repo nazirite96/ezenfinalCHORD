@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -50,23 +51,25 @@ public class TaskController {
 	 * */
 	
 	@RequestMapping("/taskInsert.do")
-	public ModelAndView taskInsert(TaskDTO taskDTO,HttpSession session) throws IllegalStateException, IOException{
+	public ModelAndView taskInsert(HttpSession session
+			,@RequestParam(value="time_kind",required = false,defaultValue = "")String time_kind
+			,@RequestParam(value="task_priority",required = false,defaultValue = "")String task_priority
+			,@RequestParam(value="task_content",required = false,defaultValue = "")String task_content
+			,@ModelAttribute TaskDTO taskDTO) throws IllegalStateException, IOException{
 		
 		ModelAndView mav = new ModelAndView();
 		
-		
-		// 업무 시퀀스 조회
 		int task_no = taskService.getTaskSeq();
-		System.out.println(task_no+"컨트롤러");
-		taskDTO.setTask_no(task_no);		
+		
+		taskDTO.setTask_no(task_no);
+		taskDTO.setCont_no(task_no);
+		
 		int resultCnt = taskService.insertTaskService(taskDTO);
-		if(resultCnt==1) {
-
-			System.out.println(resultCnt+"컨트롤러");
-			mav.addObject("msg", "글이 등록되었습니다.");
-			mav.setViewName("task/taskTest3");
-			
-		}
+		
+		
+		
+		mav.addObject("msg", "ㅇㅇㅇㅇㅇㅇㅇㅇ");
+		mav.setViewName("task/taskView");
 		
 		return mav;
 		
