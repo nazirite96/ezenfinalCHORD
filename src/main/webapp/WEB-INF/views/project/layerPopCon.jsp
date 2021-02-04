@@ -720,7 +720,30 @@
 		</form>
 	</div>
 </div>
-<!-- 타임라인 삭제 레이어 팝업:f -->
+<!-- 댓글 삭제 레이어 팝업:s -->
+<div class="dim-layer">
+	<div class="dimBg"></div>
+	
+    <div id="deleteReply" class="pop-layer">
+		<form action="deleteRep.do" method="get" class="reply-del-form">
+			<input type="hidden" class="rep_no" name="rep_no" value="">
+    		<input type="hidden" class="pro_no" name="pro_no" value="">
+    		<!-- pop con -->
+	   		<section class="pop-con border-box">
+	   			<p class="marbtm-0 padtop-20 size-20 color-gray text-center">
+	   				댓글을 삭제하시겠습니까?
+	   			</p>
+			</section>
+			
+			<!-- pop footer -->
+			<footer class="pop-footer border-box">
+				<input type="button" name="" class="pop-btn default-btn btn-close" value="취소">
+				<input type="submit" name="" class="pop-btn submit-btn marleft-5 back-color-pupple-l timeline-del-btn" value="삭제하기">
+			</footer>
+		</form>
+	</div>
+</div>
+<!-- 댓글 삭제 레이어 팝업:f -->
 
 <!-- 업무상태 수정 confirm 레이어 팝업:s -->
 <div class="dim-layer">

@@ -15,4 +15,8 @@
     		VALUES(#{pro_no},#{pro_name},#{pro_cont},sysdate,#{kind_no},#{mem_no})
     	</insert>
     	
+    	<select id="getPro" resultType="projectDTO">
+    		select * from project
+    		where pro_no = #{pro_no}
+    	</select>
     </mapper>

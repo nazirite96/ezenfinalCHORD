@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ezen.chord.project.dao.ProjectDAO;
+import com.ezen.chord.project.dto.ProjectDTO;
 import com.ezen.chord.reply.dao.ReplyDAO;
 import com.ezen.chord.timeline.dao.TimelineDAO;
 import com.ezen.chord.timeline.dto.TimelineDTO;
@@ -17,6 +19,8 @@ public class TimelineServiceImpl implements TimelineService {
 	private TimelineDAO timDAO;
 	@Autowired
 	private ReplyDAO repDAO;
+	@Autowired
+	private ProjectDAO proDAO;
 
 	@Override
 	public int insertTim(TimelineDTO timDTO) {
@@ -60,5 +64,13 @@ public class TimelineServiceImpl implements TimelineService {
 		
 		return result;
 	}
+	
+	@Override
+	public ProjectDTO getPro(int pro_no) {
+		// TODO Auto-generated method stub
+		return proDAO.getPro(pro_no);
+	}
+	
+	
 	
 }

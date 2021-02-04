@@ -14,8 +14,13 @@
     	</select>
     	
     	<update id="updateRep" parameterType="replyDTO">
-    		update 
+    		update reply
+    		set rep_cont = #{rep_cont}
+    		where rep_no = #{rep_no}
     	</update>
+    	<delete id="deleteRep" parameterType="int">
+    		delete reply where rep_no = #{rep_no}
+    	</delete>
     </mapper>
    
     
