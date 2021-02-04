@@ -36,15 +36,13 @@ public class TaskServiceImple implements TaskService {
 	@Override
 	public int insertTaskService(TaskDTO taskDTO) {
 		int result = taskDAO.insertTaskDAO(taskDTO);
-		if(taskDTO.getTask_content() == null || taskDTO.getTask_content().equals("")) {
-			taskDTO.setTask_content("");
-		}
-		if(taskDTO.getTask_priority() == null || taskDTO.getTask_priority().equals("")) {
-			taskDTO.setTask_priority("");
-		}
 		System.out.println(taskDTO.getTask_title()+"service");
-		System.out.println(taskDTO.getTask_content());
-		System.out.println(taskDTO.getTask_priority());
+		System.out.println(taskDTO.getTime_kind()+"service단테스트");
+		String time_kind = taskDTO.getTime_kind();
+		String[] time_kind_s = time_kind.split(",");
+		String test = time_kind_s[0];
+		System.out.println(test+"service단");
+		
 		
 		return result;
 	}

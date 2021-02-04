@@ -11,18 +11,6 @@ function fn_checkTaskState(el){
 }
 
 /*******************************************
-* Note : task start & end date reset
-* 설명 : 업무시작일 및 종료일 값 초기화
-*******************************************/
-function fn_dateReset(el){
-	var item = $(el);
-	var dateInput = item.siblings('input.datepicker-here');
-	
-	dateInput.val('');
-	dateInput.onFocus.value('');
-}
-
-/*******************************************
 * Note : task rank list box show & hide(input)
 * 설명 : input태그에 focus되었을 때, 업무 우선순위 리스트 박스 show & hide
 *******************************************/

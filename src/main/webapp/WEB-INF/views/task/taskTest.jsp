@@ -133,7 +133,7 @@
 <body>
 	<h1>제진공간</h1>
 	
-<form action="/chord/task/insert" method="post" enctype="multipart/form-data">	
+<form action="#" method="post" enctype="multipart/form-data">	
 	<input type="hidden" name="mem_no" >
 	<input type="hidden" name="pro_no" >
 	<div class="tab-con-box">
