@@ -10,9 +10,9 @@
 <body>
 
 <jsp:include page="/WEB-INF/views/header.jsp"/>
-<div class="leftDiv">
-<jsp:include page="/WEB-INF/views/adminCom/adminLeftList.jsp"/>
-	<div class="secondDiv">
+<div class="adminCom_firstDiv">
+<jsp:include page="/WEB-INF/views/adminCom/adminComLeftList.jsp"/>
+	<div class="adminCom_SecDiv">
 		<h1>회원 초대하기</h1>
 		<form name="mailSend" action="adminMailSend.do" method="post"> 
 			<table>

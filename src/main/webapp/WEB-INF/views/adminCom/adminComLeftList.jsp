@@ -7,15 +7,15 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-	.leftDiv{
+	.adminCom_firstDiv{
 		display:grid;
     	grid-template-columns: 200px 1fr;
 	}
-	.secondDiv{
+	.adminCom_SecDiv{
 		padding-left: 50px;
    	 	padding-top: 10px;
 	}
-	.leftDiv ul {
+	.adminCom_firstDiv ul {
 	    font-size: 20px;
 	    border-right:2px dashed gray;
 	    width:150px;
@@ -27,7 +27,7 @@
 <body>
 	<ul>
 		<li><a href="adminCompanyForm.do?com_no=${sessionScope.comNo }">회사 관리</a></li>
-		<li><a href="#">프로젝트 관리</a></li>
+		<li><a href="adminProListForm.do?com_no=${sessionScope.comNo }">프로젝트 관리</a></li>
 		<li><a href="adminMemManagementForm.do?com_no=${sessionScope.comNo }">회원 관리</a></li>
 		<c:url var="mailSendUrl" value="adminMailSendForm.do">
 			<c:param name="com_no">${sessionScope.comNo }</c:param>

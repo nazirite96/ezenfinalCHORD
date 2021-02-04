@@ -17,9 +17,9 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/header.jsp"/>
-<div class="leftDiv">
-<jsp:include page="/WEB-INF/views/adminCom/adminLeftList.jsp"/>
-<div class="secondDiv">
+<div class="adminCom_firstDiv">
+<jsp:include page="/WEB-INF/views/adminCom/adminComLeftList.jsp"/>
+<div class="adminCom_SecDiv">
 <h1>멤버내용~</h1>
 <form name="adminChange_fm" action="adminChange.do">
 	<table border="1" cellspacing="0">

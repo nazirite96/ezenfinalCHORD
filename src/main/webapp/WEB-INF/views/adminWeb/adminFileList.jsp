@@ -1,13 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript"
-	src="https://www.gstatic.com/charts/loader.js"></script>
 <style>
 table, th, td {
 	border: solid 1px grey;
@@ -16,7 +14,7 @@ table, th, td {
 </style>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/header.jsp" />
+<jsp:include page="/WEB-INF/views/header.jsp" />
 	<div class="adminWeb_firstDiv">
 		<jsp:include page="/WEB-INF/views/adminWeb/adminWebLeftList.jsp" />
 		<div class="adminWeb_SecDiv">
@@ -27,20 +25,24 @@ table, th, td {
 						<tr>
 							<th>이메일</th>
 							<th>이름</th>
-							<th>누적 접속 수</th>
+							<th>파일 명</th>
+							<th>파일 크기</th>
+							<th>다운로드 시간</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:if test="${empty userLogList }">
+						<c:if test="${empty fileList }">
 							<tr>
-								<td colspan="3">접속한 사용자가 없습니다.</td>
+								<td colspan="5">다운 파일이 없습니다!</td>
 							</tr>
 						</c:if>
-						<c:forEach var="list" items="${userLogList }">
+						<c:forEach var="list" items="${fileList }">
 							<tr>
-								<td id="mail">${list.MAIL}</td>
-								<td id="name">${list.NAME }</td>
-								<td id="cnt">${list.CNT }</td>
+								<td id="">${list.MEMAIL}</td>
+								<td id="">${list.MNAME }</td>
+								<td id="">${list.FNAME }</td>
+								<td id="">${list.FSIZE}</td>
+								<td id="">${list.FDOWNDATE}</td>
 							</tr>
 						</c:forEach>
 					</tbody>

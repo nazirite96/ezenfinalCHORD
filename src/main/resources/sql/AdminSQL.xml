@@ -32,6 +32,34 @@ where log_data.mem_no = member.mem_no)group by email,name
 <delete id="admin_positionDelete" parameterType="Integer">
 	delete from grade where mem_no= #{mem_no}
 </delete>
+
+<select id="admin_fileList" resultType="Map">
+	select member.mem_email as memail,member.mem_name as mname,a.file_name as fname,a.log_file_downdate as fdowndate,a.file_size as fsize
+	from member,
+	(select log_file.log_file_no,log_file.mem_no, log_file.log_file_downdate, files.file_name, files.file_size
+	from log_file
+	left join files on log_file.file_no = files.file_no)a
+	where member.mem_no = a.mem_no
+</select>
+
+<select id="admin_projectList" parameterType="Integer" resultType="Map">
+	select project.pro_no as pno,pro_name as pname,pro_date as pdate 
+	from project 
+	left join company_project 
+	on project.pro_no=company_project.pro_no
+	where company_project.com_no=#{com_no}
+</select>
+<select id="admin_projectContents" parameterType="Integer" resultType="Map">
+	select project_user.mem_no as mno,member.mem_email as memail,member.mem_name as mname,pro_no as pno,pro_user_man_chk as manchk
+	from project_user 
+	left join member
+	on project_user.mem_no = member.mem_no
+	where pro_no=#{pro_no}
+</select>
+<select id="admin_projectInfo" resultType="Map">
+	select pro_no as pno,pro_name as pname from project
+	where pro_no=#{pro_no}
+</select>
 </mapper>
 
 
