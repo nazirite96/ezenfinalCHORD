@@ -23,6 +23,7 @@ public class FilesServiceImpl implements FilesService {
 	public final String PATH="C:\\JSP\\upload";
 	public String CRPATH="";	
 	public String PRONAME="";
+	public String STATE="";
 	
 	@Autowired
 	private FilesDAO filedao;
@@ -45,6 +46,11 @@ public class FilesServiceImpl implements FilesService {
 		return filedao.getproName(memNo);
 	}
 	@Override
+	public int delDBPath(String fullPath) {
+		// TODO Auto-generated method stub
+		return filedao.delDBPath(fullPath);
+	}
+	@Override
 	public int updateFatch(String filename, String pathRoot) {
 		// TODO Auto-generated method stub
 		Map<String, String> map=new HashMap<String, String>();
@@ -63,7 +69,7 @@ public class FilesServiceImpl implements FilesService {
 		return 0;
 	}
 	@Override
-	public int insertFile(FilesDTO filedto,String original,String name,String size) {
+	public int insertFile(FilesDTO filedto,String original,String name,String size,int mem_no) {
 		// TODO Auto-generated method stub
 		filedto.setFile_name(name);
 		filedto.setFile_path(PATH+File.separator+PRONAME+File.separator+CRPATH);
@@ -72,7 +78,7 @@ public class FilesServiceImpl implements FilesService {
 		filedto.setFile_kind(fileExt(name));
 		filedto.setCont_kind("baisc"); // 타임라인에서 가져올 타입
 		filedto.setCont_no(0); // 타임라인에서 가져올 컨텐츠 타입 번호
-		filedto.setMem_no(2); // 사용자 맴버번호
+		filedto.setMem_no(mem_no); 
 		filedto.setPro_no(20); // 사용자 속해있는 프로젝트 번호
 		int result=filedao.insertFile(filedto)>0?1:0;
 		return result;
@@ -84,6 +90,12 @@ public class FilesServiceImpl implements FilesService {
 		return filedao.delFile(filename);
 	}
 
+	@Override
+	public List<FilesDTO> etcList(String etc) {
+		// TODO Auto-generated method stub
+		return filedao.etcList(etc);
+	}
+	
 	@Override
 	public void addFolder(String foldername) {
 		// TODO Auto-generated method stub
@@ -193,27 +205,45 @@ public class FilesServiceImpl implements FilesService {
 			  }
 	}
 	@Override
-	public void fileDelete(String deleteFileName) {
+	public void fileDelete(String deleteFileName ) {
 		// TODO Auto-generated method stub
 		File f = new File(deleteFileName);
-		  if(f.isFile()) { //f가 파일이라면,
 				f.delete();
-				System.out.println("파일 삭제");
-				
-				
-			}else { //f가 파일이 아니라면,
-				File files[] = f.listFiles();
-				for(int i=0;i<files.length;i++) {
-					if(files[i].isFile()) { //파일이라면,
-						files[i].delete();
-						
-					}else {
-						fileDelete(File.separator+files[i].getName());
-					}
-				}
-				//이미 폴더인게 확정된것.
-				f.delete();
-			}
 			
 	}
+	@Override
+	public void folderDel(String deleteFolderName, String path) {
+		// TODO Auto-generated method stub
+		File f = new File(path+File.separator+deleteFolderName);
+		if(f.isFile()) {
+			f.delete();
+		}else {
+			File files[]=f.listFiles();
+			for(int i=0;i<files.length;i++) {
+				if(files[i].isFile()) {
+					files[i].delete();
+				}else {
+					String test=deleteFolderName+File.separator+files[i].getName();
+					folderDel(test, path);
+				}
+			}
+			f.delete();
+		}
+	}
+	/*
+	 * String
+	 * original=PATH+File.separator+PRONAME+File.separator+CRPATH+File.separator+
+	 * deleteFileName; File f = new File(original); if(f.isFile()) { //f가 파일이라면,
+	 * f.delete();
+	 * 
+	 * System.out.println("파일 삭제");
+	 * 
+	 * 
+	 * }else { //f가 파일이 아니라면, CRPATH+=File.separator+deleteFileName; File files[] =
+	 * f.listFiles(); for(int i=0;i<files.length;i++) { if(files[i].isFile()) {
+	 * //파일이라면, files[i].delete();
+	 * 
+	 * }else { fileDelete(File.separator+files[i].getName()); } } f = new
+	 * File(original); //이미 폴더인게 확정된것. f.delete(); }
+	 */
 }

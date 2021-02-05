@@ -10,20 +10,23 @@ import com.ezen.chord.files.dto.FilesDTO;
 public interface FilesService {
 
 	//파일 등록
-	int insertFile(FilesDTO filedto,String original,String name, String size);
+	int insertFile(FilesDTO filedto,String original,String name, String size,int mem_no);
 	//파일 삭제
 	int delFile(String filename);
 	//파일 수정
 	int updateFile(int fileno);
 	//경로 수정
 	int updateFatch(String filename, String pathRoot);
-	
+	//확장자로 구별하기
+	List<FilesDTO> etcList(String etc);
 	//전체 파일 조회
 	List<FilesDTO> getAllFiles();
 	//해당 파일 이름으로 경로 조회
 	String getPath(String filename);
 	//해당 파일 경로로 경로 조회
 	List<FilesDTO> getDBPath(String fullPath);
+	//해당 파일 경로로 삭제
+	int delDBPath(String fullPath);
 	//해당 설정되어있는 프로젝트 이름 
 	List<String> getproName(int memNo);
 	//폴더 생성
@@ -45,4 +48,6 @@ public interface FilesService {
 	void fileMove(String inFileName, String outFileName);
 	//메서드 : 파일 삭제 
 	void fileDelete(String deleteFileName);
+	//메서드 : 폴더 삭제
+	void folderDel(String deleteFolderName,String path);
 }

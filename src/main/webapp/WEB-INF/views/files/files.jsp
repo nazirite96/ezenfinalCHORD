@@ -17,6 +17,15 @@
 </head>
 
     <style>
+    
+    input[type='checkbox']  {
+		display: inline-block;
+		width: 53px;
+    height: 25px;;
+		border: 2px solid #bcbcbc;
+		cursor: pointer;
+	}
+	
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -32,43 +41,19 @@
         }
       }
     </style>
-
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="resources/img/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="resources/css/table_util.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/table_main.css">
+<!--===============================================================================================-->
     
     <!-- Custom styles for this template -->
-    <link href="/chord/resources/css/dashboard.css" rel="stylesheet">
+ <link href="/chord/resources/css/dashboard.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
-var count = 1;
-/* 	$( document ).ready(function() {
-		$.ajax({
-	    	url:"getAllFles.do",
-	    	type:'GET',
-	    	data: foldername,
-	    	dataType: "json",
-	    		success : function(data) {
-	    			var arr = data.list;
-	    			var folderarr = data.folder;
-	    			  for(var i=0; i<arr.length; i++){
-	    				  filelist="<tr>"+
-		    			  "<td>체크</td>"+
-		    			  "<td colspan='3'><a href='filedownload?filename="+arr[i]+"'>"+arr[i]+"</a></td>"+
-		    			  "</tr>";
-		    			  $('.allList').append(filelist);
-	    			  }
-	    			  for(var i=0; i<folderarr.length; i++){
-	    				  folderlist='<tr>'+
-		    			  '<td>체크</td>'+
-		    			  '<td colspan="3"><a href="getAllFiles.do?foldername='+folderarr[i]+'">'+folderarr[i]+'</a></td>'+
-		    			  '</tr>';
-		    			  $('.allList').append(folderlist);
-		    			  count++;
-	    			  }
-	    	    },
-	    	    error : function(xhr, status, error) {     
-	    	          alert("HTTP REQUEST ERROR");
-	    	    }
-	    });
-	}); */
 	
 	$(document).on("click", "#creat01", function(){
 		var createfolder=$('.foldername').val();
@@ -121,6 +106,7 @@ var count = 1;
 		    	dataType: "text",
 		    		success : function(data) {
 		    			alert('삭제를 완료하였습니다.');
+		    			
 		    			location.reload();
 		    	    },
 		    	    error : function(xhr, status, error) {     
@@ -140,20 +126,39 @@ var count = 1;
 		  return chked_val;
 		}
 
+	//종류별로 보여줄 리스트
 	$(function(){
 		$('.custom-select').on("change",function(){
 			var value=$('.custom-select').val();
-			if(value==0||value==1){
-				value="pageReload.do"
-			}else if(value=2){
-				value="pageReload.do"
+			if(value==1){
+				value='etclist.do?state='+value;
+			}else if(value==2){
+				value='etclist.do?state='+value;
+			}else if(value==3){
+				value='etclist.do?state='+value;
+			}else if(value==4){
+				value='etclist.do?state='+value;
+			}else if(value==5){
+				value='etclist.do?state='+value;
 			}
 			$.ajax({
 		    	url: value,
 		    	type:'GET',
-		    	dataType: "text",
+		    	dataType: "json",
 		    		success : function(data) {
-		    			location.href='files.do';
+		    			var data=data.etclist;
+		    			$('.allList').empty();
+		    			for(var i=0;data.length;i++){
+		    				var html='<tr class="row100 body">'+
+									'<td class="cell100 column1"><img src="resources/img/fileicon.png" width="45"></td>'+
+									'<td class="cell100 column2"><a href="filedownload?filename='+data[i].file_name+'">'+data[i].file_name+'<img src="resources/img/uploadicon.png" width="40"></a></td>'+
+									'<td class="cell100 column3">'+data[i].file_size+'</td>'+
+									'<td class="cell100 column4">'+data[i].mem_no+'</td>'+
+									'<td class="cell100 column5">'+data[i].file_date+'</td>'+
+									'</tr>';
+									
+									$('.allList').append(html);
+		    			}
 		    	    },
 		    	    error : function(xhr, status, error) {     
 		    	          alert("HTTP REQUEST ERROR");
@@ -161,10 +166,26 @@ var count = 1;
 		    });
 		});
 	});
+	//초기로 돌아가기
+	function pageRe(){
+		$.ajax({
+	    	url:"pageReload.do",
+	    	type:'GET',
+	    	dataType: "text",
+	    		success : function(data) {
+	    			history.replaceState({}, null, location.pathname);
+	    			location.reload();
+	    	    },
+	    	    error : function(xhr, status, error) {     
+	    	    	alert(xhr,status,error);
+	    	    }
+	    });
+	}
+
 </script>
   </head>
+  
   <body>
-    
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="index.do">Company name</a>
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -184,7 +205,7 @@ var count = 1;
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column" style="padding-bottom: 62%;">
           <li class="nav-item">
-            <a class="nav-link active" href="#">
+            <a class="nav-link active" href="javascript:pageRe();">
               <span data-feather="home"></span>
               	목록보기<span class="sr-only">(current)</span>
             </a>
@@ -198,9 +219,10 @@ var count = 1;
           <li class="nav-item"><a class="nav-link" href="#"><span data-feather="file"></span>
 	          <select class="custom-select" aria-label="Default select example">
 				  <option value="1">전체파일</option>
-				  <option value="2">TEXT</option>
-				  <option value="3">이미지</option>
-				  <option value="4">Three</option>
+				  <option value="2">txt</option>
+				  <option value="3">Excel</option>
+				  <option value="4">Word</option>
+				  <option value="5">pptx</option>
 				</select>
           </a></li>
          
@@ -222,141 +244,162 @@ var count = 1;
         </ul>
       </div>
     </nav>
-
+    
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">전체</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
           <div class="btn-group mr-2">
-          
-           <!-- Button trigger modal -->
+    <!-- Button trigger modal -->
+           
 				<c:choose>
 		        	<c:when test="${!empty clickproject }"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">폴더 생성</button></c:when>
-		        	<c:when test="${empty clickproject }"><button disabled="disabled" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">폴더 생성</button></c:when>
+		        	<c:when test="${empty clickproject }"><button disabled="disabled" type="button" class="btn btn-primary" data-toggle="modal">폴더 생성</button></c:when>
 		        </c:choose>
-            <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal3">삭제</button>
+           		 
+           		 <c:choose>
+		        	<c:when test="${!empty clickproject }"><button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal3">삭제</button></c:when>
+		        	<c:when test="${empty clickproject }"><button disabled="disabled" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal3">삭제</button></c:when>
+		        </c:choose>
+		        
            		 <c:choose>
 		        	<c:when test="${!empty clickproject }"><button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal2">이동</button></c:when>
 		        	<c:when test="${empty clickproject }"><button disabled="disabled" type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModal2">이동</button></c:when>
 		        </c:choose>
+		        
           </div>
           <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
             <span data-feather="calendar"></span>
-            This week
+        	    뒤로 가기
           </button>
         </div>
       </div>
-      <c:set var="f" value="${foldername }"></c:set>
+<c:set var="f" value="${foldername }"></c:set>
       <c:set var="path" value="${crpath }"></c:set>
       <c:if test="${!empty path}">
       		<div>
-       			경로 : ${crpath } <a href="?del=chord" onclick="reloadPage();">뒤로가기</a>
+       			경로 : ${crpath } <a href="?del=chord">뒤로가기</a>
      		</div>
        </c:if>
-		<!-- 전체 리스트 뿌려줄거의 메인 -->
-		<form action="" method="POST">
-			<table>
-				<thead>
-					<tr>
-						<th>체크박스</th>
-						<th>파일명</th>
-						<th>크기</th>
-						<th>등록자</th>
-						<th>최근 업로드</th>
-					</tr>
-				</thead>
-				<tbody class="allList">
-				<c:if test="${empty clickproject}">
-					<c:forEach var="allFiles" items="${allFileList }">
-							<tr>
-								<td>체크박스</td>
-								<td><a href="filedownload?filename=${allFiles.file_name }">${allFiles.file_name }</a></td>
-								<td>${allFiles.file_size }</td>
-								<td>${allFiles.mem_no }</td>
-								<td>${allFiles.file_date }</td>
-							</tr>
-					</c:forEach>
-				</c:if>
-				<c:if test="${!empty clickproject}">
-					<c:forEach var="files" items="${partFileList }">
-							<tr>
-								<td><input name="chkList" type="checkbox" value="${files.file_name }"></td>
-								<td><a href="filedownload?filename=${files.file_name }">${files.file_name }</a></td>
-								<td>${files.file_size }</td>
-								<td>${files.mem_no }</td>
-								<td>${files.file_date }</td>
-							</tr>
-					</c:forEach>
-						<c:forEach var="folder" items="${folder }">
-								<tr>
-									<td>폴더 입니다.</td>
-									<td colspan="3"><a href="?foldername=${folder }">${folder }</a></td>
+
+	<!-- 전체 리스트 뿌려줄거의 메인 -->
+	<div class="limiter">
+		<div class="container-table100" id="tak_table01">
+			<div class="wrap-table100">
+				<div class="table100 ver1 m-b-110">
+					<div class="table100-head">
+						<table>
+							<thead>
+								<tr class="row100 head">
+									<th class="cell100 column1">No.</th>
+									<th class="cell100 column2">파일명</th>
+									<th class="cell100 column3">크기</th>
+									<th class="cell100 column4">등록자</th>
+									<th class="cell100 column5">최근 업로드</th>
 								</tr>
-						</c:forEach>
-				</c:if>
-				</tbody>
-			</table>
-		</form>
+							</thead>
+						</table>
+					</div>
+					<div class="table100-body js-pscroll">
+							<table>
+							<tbody class="allList">
+							<c:if test="${empty clickproject}">
+								<c:forEach var="allFiles" items="${allFileList }">
+										<tr class="row100 body">
+											<td class="cell100 column1"><img src="resources/img/fileicon.png" width="45"></td>
+											<td class="cell100 column2"><a href="filedownload?filename=${allFiles.file_name }">${allFiles.file_name }<img src="resources/img/uploadicon.png" width="40"></a></td>
+											<td class="cell100 column3">${allFiles.file_size }</td>
+											<td class="cell100 column4">${allFiles.mem_no }</td>
+											<td class="cell100 column5">${allFiles.file_date }</td>
+										</tr>
+								</c:forEach>
+							</c:if>
+							<c:if test="${!empty clickproject}">
+								<c:forEach var="files" items="${partFileList }">
+										<tr class="row100 body">
+											<td class="cell100 column1">
+											<input type="checkbox" name="chkList" value="${files.file_name }">
+ 											 
+											</td>
+											<td class="cell100 column2"><a href="filedownload?filename=${files.file_name }">${files.file_name }<img src="resources/img/uploadicon.png" width="40"></a></td>
+											<td class="cell100 column3">${files.file_size }</td>
+											<td class="cell100 column4">${files.mem_no }</td>
+											<td class="cell100 column5">${files.file_date }</td>
+										</tr>
+								</c:forEach>
+									<c:forEach var="folder" items="${folder }">
+											<tr class="row100 body">
+												<td class="cell100 column1"><img src="resources/img/foldericon.png" width="50"></td>
+												<td class="cell100 column2" colspan="4"><a href="?foldername=${folder }">${folder }</a></td>
+											</tr>
+									</c:forEach>
+							</c:if>
+							</tbody>
+						</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>										
 		<!-- 전체 리스트 뿌려줄거의 메인  -->
     </main>
-  </div>
 </div>
 
-		<!-- Modal -->
-     	<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">어떤 것을 살제하실? :></h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
+<!-- Modal -->
+    	<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">어떤 것을 살제하실? :></h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+		      <div class="modal-body2" style="text-align: center;margin: 20px 0px;"">
+		      <c:forEach var="files" items="${partFileList }">
+						<a href="javascript:del('${files.file_name }',1)">${files.file_name }</a><br>
+				</c:forEach>
+		        <c:forEach var="df" items="${folder }">
+		        		<a href="javascript:del('${df }',-1);">${df }</a> <br>
+		        </c:forEach>
+		        <c:if test="${empty folder}"> 
+		        <c:if test="${empty partFileList }">삭제할 리스트가 없삼.... </c:if>
+		        </c:if>
 		      </div>
-			      <div class="modal-body2" style="text-align: center">
-			      <c:forEach var="files" items="${partFileList }">
-							<a href="javascript:del('${files.file_name }',1)">${files.file_name }</a><br>
-					</c:forEach>
-			        <c:forEach var="df" items="${folder }">
-			        		<a href="javascript:del('${df }',-1);">${df }</a> <br>
-			        </c:forEach>
-			        <c:if test="${empty folder}"> 삭제할 리스트가 없삼.... </c:if>
-			      </div>
-			     
-		      	<div class="modal-footer">
-		      	<div style="margin-bottom: 30px;margin-right: 134px;font-size: 10px; color: red;">
-		      		*참고로 폴더 삭제할 경우 안쪽 파일 전부 삭제가 됩니다~ :)
-		      	</div>
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		     	 </div>
-		    </div>
-		  </div>
-		</div>
-		<!-- Modal -->
-     	<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">어느폴더에 이동시키실? :></h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
+		     
+	      	<div class="modal-footer">
+	      	<div style="margin-bottom: 30px;margin-right: 134px;font-size: 10px; color: red;">
+	      		*참고로 폴더 삭제할 경우 안쪽 파일 전부 삭제가 됩니다~ :)
+	      	</div>
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	     	 </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- Modal -->
+    	<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">어느폴더에 이동시키실? :></h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+		      <div class="modal-body2" style="text-align: center;margin: 20px 0px;">
+		        <c:forEach var="mf" items="${folder }">
+		        		<a href="javascript:chkMove('${mf }',1)">${mf }</a> <br>
+		        </c:forEach>
+		        <c:if test="${empty folder}"> <a href="javascript:chkMove('${crpath }',-1)">최상의 경로로...</a></c:if>
 		      </div>
-		      <form name="fm">
-			      <div class="modal-body2" style="text-align: center">
-			        <c:forEach var="mf" items="${folder }">
-			        		<a href="javascript:chkMove('${mf }',1)">${mf }</a> <br>
-			        </c:forEach>
-			        <c:if test="${empty folder}"> <a href="javascript:chkMove('${crpath }',-1)">최상의 경로로...</a></c:if>
-			      </div>
-		      	<div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		     	 </div>
-		       </form>
-		    </div>
-		  </div>
-		</div>
-     	
-		<!-- Modal -->
+	      	<div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	     	 </div>
+	    </div>
+	  </div>
+	</div>
+	<!-- Modal -->
 		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
@@ -366,21 +409,22 @@ var count = 1;
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
-		      <form name="fm">
-			      <div class="modal-body" style="text-align: center">
-			      	  폴더 이름 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" class="foldername">
+			      <div class="modal-body01" style="text-align: center;margin: 39px 0px;">
+			       폴더 이름 :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="text" class="foldername">
 			      </div>
 		      	<div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 			     	<button type="button" class="btn btn-primary" id="creat01">만들기</button>
 		     	 </div>
-		       </form>
 		    </div>
 		  </div>
+		</div>
 		</div>
 
      <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
     <script src="/chord/resources/js/dashboard.js"></script>
+    
+
   </body>
 </html>

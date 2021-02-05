@@ -10,6 +10,9 @@
     	<delete id="delFile" parameterType="String">
     		delete from files where file_name=#{filename}
     	</delete>
+    	<delete id="deDBPath" parameterType="String">
+    		delete from files where file_path LIKE #{fullpath} || '%'
+    	</delete>
     	<update id="updateFile" parameterType="INTEGER">
     		<!--  -->
     	</update>
@@ -27,5 +30,8 @@
     	</select>
     	<select id="getDBPath" parameterType="String" resultType="FilesDTO">
     		select * from files where file_path=#{fullPath}
+    	</select>
+    	<select id="etcList" parameterType="String" resultType="FilesDTO">
+    		select * from files where file_kind=#{etc}
     	</select>
     </mapper>
