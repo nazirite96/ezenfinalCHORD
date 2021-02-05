@@ -46,10 +46,9 @@
   <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
   <ul class="navbar-nav px-3">
     <li class="nav-item text-nowrap">
-      <a class="nav-link" href="#">Sign out</a>
+      <a class="nav-link float-left" href="#">Sign out</a>
     </li>
   </ul>
 </nav>
@@ -171,7 +170,9 @@
 		   			<textarea name="pro_cont" rows="" cols="" placeholder="프로젝트 목표 및 개요 입력"></textarea>
 	   			</div>
 			</section>
-			
+			<!-- input hidden 회사번호 -->
+			<input type="hidden" name="com_no" value="${sessionScope.comNo }">
+			<input type="hidden" name="mem_no" value="${sessionScope.memNo }">
 			<!-- pop footer -->
 			<footer class="pop-footer border-box">
 				<input type="button" class="pop-btn default-btn btn-close" value="취소">

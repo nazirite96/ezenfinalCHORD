@@ -1290,12 +1290,12 @@ textarea::placeholder {color:#a0a0a0}
 /*******************************************
 * Note : flow icon
 *******************************************/
-.flow-icon {background:url('/chord/resources/img/sample.png') no-repeat}
+.flow-icon {background:url('/chord/resources/img/design_basic.png') no-repeat}
 
 /*******************************************
 * Note : photo circle
 *******************************************/
-.icon-circle {position:absolute;overflow:hidden;left:0;top:0;z-index:99;background:url('/chord/resources/img/sample.png') no-repeat}
+.icon-circle {position:absolute;overflow:hidden;left:0;top:0;z-index:99;background:url('/chord/resources/img/design_basic.png') no-repeat}
 .circle-b {width:150px;height:150px;background-position:0 -50px}
 .circle-m {width:60px;height:60px;background-position:-200px -50px}
 .circle-s {width:40px;height:40px;background-position:-300px -50px}

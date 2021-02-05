@@ -18,6 +18,8 @@ public class ProjectServiceImpl implements ProjectService {
 	private ProjectDAO projectDAO;
 	@Autowired
 	private ProjectUserDAO proUserDAO;
+	
+	
 	@Override
 	public int insertPro(ProjectDTO proDTO) {
 		// TODO Auto-generated method stub
@@ -30,12 +32,12 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		
 		//// 프로젝트 참여자 등록
-		if(result==1) {
+		if(result==2) {
 			ProjectUserDTO proUserDTO = new ProjectUserDTO();
 			proUserDTO.setPro_no(pro_no);
 			proUserDTO.setMem_no(proDTO.getMem_no());
 			proUserDTO.setPro_user_man_chk("manager");
-			proUserDTO.setPro_user_color("blue");
+			proUserDTO.setPro_user_color("default-back-color");
 			result = proUserDAO.insertProUser(proUserDTO);
 			if(result == 1) {
 				return 1;

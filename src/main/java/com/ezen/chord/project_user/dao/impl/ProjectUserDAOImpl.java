@@ -1,6 +1,8 @@
 package com.ezen.chord.project_user.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,23 @@ public class ProjectUserDAOImpl implements ProjectUserDAO {
 	public List<ProjectDTO> getListByMemNo(int mem_no) {
 		// TODO Auto-generated method stub
 		List<ProjectDTO> list = sqlMap.selectList("getListByMemNo", mem_no);
-		System.out.println(list.get(0).getMem_no());
 		return list;
 	}
+	
+	@Override
+	public int updateProUserColor(ProjectUserDTO proUserDTO) {
+		// TODO Auto-generated method stub
+		return sqlMap.update("updateProUserColor", proUserDTO);
+	}
+	
+	@Override
+	public ProjectUserDTO selectProUserByProAndMem(int pro_no, int mem_no) {
+		// TODO Auto-generated method stub
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		System.out.println(pro_no+":"+mem_no);
+		map.put("pro_no", pro_no);
+		map.put("mem_no", mem_no);
+		return sqlMap.selectOne("selectProUserByProAndMem", map);
+	}
+	
 }

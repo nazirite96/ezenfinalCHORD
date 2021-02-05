@@ -14,12 +14,12 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous">
-<!-- custom -->
-<link rel="stylesheet" href="/chord/resources/css/style_margin.css">
 <!-- jQuery 3.3.1 -->
 <script
 	src="<%=request.getContextPath()%>/resources/js/jquery-3.1.1.min.js"></script>
-
+<!-- custom -->
+<link rel="stylesheet" href="/chord/resources/css/style_margin.css">
+<link rel="stylesheet" href="/chord/resources/css/style_padding.css">
 <!-- icon  -->
 <script src="https://kit.fontawesome.com/1a984316ef.js"
 	crossorigin="anonymous"></script>
@@ -107,8 +107,7 @@
 							<span>collection</span><a
 								class="d-flex align-items-center text-muted" href="#"
 								aria-label="Add a new report"><span
-								data-feather="plus-circle"></span></a>
-						</h1>
+								data-feather="plus-circle"></span></a></h1>
 						<li class="nav-item"><a class="nav-link" href="#"><span
 								data-feather="users"></span>전체업무</a></li>
 						<li class="nav-item"><a class="nav-link" href="#"><span
@@ -168,7 +167,7 @@
 						<!-- project left content:s -->
 						<div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 padleft-0">
 							<!-- project title(프로젝트 제목):s -->
-							<div id="proTitle" class="pro-detail-box project-title back-color-blue-d">
+							<div id="proTitle" class="pro-detail-box project-title ${proUserDTO.pro_user_color }">
 								<div class="pro-tit">
 									<i
 										class="fas fa-star size-20 color-yellow maright-15 cursor-point"
@@ -182,13 +181,13 @@
 												data-prono="22"></i>
 										</c:otherwise>
 									</c:choose>
-									<span class="size-20 color-white">${proDTO.pro_name }</span>
+									<span class="size-20 color-white">${proUserDTO.pro_name }</span>
 								</div>
 								<ul class="pro-edit-nav">
 									<li><i
 										class="fas fa-palette size-30 color-white cursor-point edit-color-btn"
 										onclick="fn_editColor(this)"></i>
-										<div class="edit-box edit-color-box" data-prono="${proDTO.pro_no}" data-memno="${memNo }">
+										<div class="edit-box edit-color-box" data-prono="${proUserDTO.pro_no}" data-memno="${proUserDTO.mem_no }">
 											<div class="color-sample default-back-color">
 												<i class="fas fa-check-circle size-16"></i>
 											</div>
@@ -267,8 +266,8 @@
 										<!-- 글쓰기:s -->
 										<div id="tab-1" class="tabs-content active">
 											<form action="insertTim.do" method="post">
-												<input type="hidden" name="mem_no" value="${memNo}">
-												<input type="hidden" name="pro_no" value="${proDTO.pro_no }">
+												<input type="hidden" name="mem_no" value="${mem_no}">
+												<input type="hidden" name="pro_no" value="${proUserDTO.pro_no }">
 												<input type="hidden" name="cont_kind" value="post">
 												<input type="hidden" name="cont_no" value="0">
 												<div class="tab-con-box">
@@ -310,7 +309,7 @@
 										<div id="tab-2" class="tabs-content con-task">
 											<form action="/flowolf/task/insert" method="post"
 												enctype="multipart/form-data">
-												<input type="hidden" name="mem_id" value="${memNo }">
+												<input type="hidden" name="mem_id" value="${mem_no }">
 												<input type="hidden" name="pro_no" value="${proVo.pro_no }">
 												<!-- tab-con-box:s -->
 												<div class="tab-con-box">
@@ -769,9 +768,7 @@
 													data-nick="${timeLine.mem_nick }"
 													data-my="${memVo.mem_id }">
 													<i class="flow-icon icon-circle circle-s"></i>
-
-
-
+													<img src="/chord/resources/img/user-pic-sample.png" width="40">
 												</dt>
 												<dd>
 													<strong class="dis-block size-18 color-black">작성자
@@ -1046,9 +1043,9 @@
 											<!-- 이모티콘 사용자 리스트 팝업:f -->
 
 											<!-- 댓글 개수 -->
-											<div class="comment-count back-color-gray-l color-white">
+											<div class="comment-count default-back-color color-white">
 												<i class="fas fa-comment maright-10"></i>
-												댓글 갯수
+												${dto.repList.size()}개
 											</div>
 
 											<!-- 좋아요 / 댓글작성 / 담아두기 버튼 -->
@@ -1136,7 +1133,7 @@
 															data-nick="nick"
 															data-my="manager">
 															<i class="flow-icon icon-circle circle-s-re"></i>
-
+															<img src="/chord/resources/img/user-pic-sample.png" width="40">
 														</dt>
 														<dd class="posi-re">
 
@@ -1284,14 +1281,14 @@
 											<!-- 댓글 입력:s -->
 											<form action="insertRep.do" method="get"
 												enctype="multipart/form-data">
-												<input type="hidden" class="timeline_mem_no"name="mem_no" value=""> 
+												<input type="hidden" class="timeline_mem_no"name="mem_no" value="${proUserDTO.mem_no }"> 
 												<input type="hidden" class="timeline_no" name="tim_no" value="">
-												<input type="hidden" class="timeline_pro_no" name="pro_no" value="">
+												<input type="hidden" class="timeline_pro_no" name="pro_no" value="${proUserDTO.pro_no }">
 												<div class="comment-insert-box">
 													<dl>
 														<dt class="posi-re">
 															<i class="flow-icon icon-circle circle-s-re"></i>
-
+															<img src="/chord/resources/img/user-pic-sample.png" width="40">
 														</dt>
 														<dd>
 															<div class="comment-textarea">
