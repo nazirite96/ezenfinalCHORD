@@ -97,6 +97,12 @@ public class FilesServiceImpl implements FilesService {
 	}
 	
 	@Override
+	public int fileNo(String name) {
+		// TODO Auto-generated method stub
+		return filedao.fileNo(name);
+	}
+	
+	@Override
 	public void addFolder(String foldername) {
 		// TODO Auto-generated method stub
 
@@ -106,6 +112,14 @@ public class FilesServiceImpl implements FilesService {
 	public void delFolder(String foldername) {
 		// TODO Auto-generated method stub
 
+	}
+	@Override
+	public int log_fileInsert( int file_no, int mem_no) {
+		// TODO Auto-generated method stub
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("file_no", file_no);
+		map.put("mem_no", mem_no);
+		return filedao.log_fileInsert(map);
 	}
 	@Override
 	public String checkName(MultipartFile files) {
@@ -230,20 +244,5 @@ public class FilesServiceImpl implements FilesService {
 			f.delete();
 		}
 	}
-	/*
-	 * String
-	 * original=PATH+File.separator+PRONAME+File.separator+CRPATH+File.separator+
-	 * deleteFileName; File f = new File(original); if(f.isFile()) { //f가 파일이라면,
-	 * f.delete();
-	 * 
-	 * System.out.println("파일 삭제");
-	 * 
-	 * 
-	 * }else { //f가 파일이 아니라면, CRPATH+=File.separator+deleteFileName; File files[] =
-	 * f.listFiles(); for(int i=0;i<files.length;i++) { if(files[i].isFile()) {
-	 * //파일이라면, files[i].delete();
-	 * 
-	 * }else { fileDelete(File.separator+files[i].getName()); } } f = new
-	 * File(original); //이미 폴더인게 확정된것. f.delete(); }
-	 */
+
 }

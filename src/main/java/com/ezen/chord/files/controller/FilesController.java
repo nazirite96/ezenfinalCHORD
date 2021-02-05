@@ -38,7 +38,9 @@ public class FilesController {
 			@RequestParam(value = "del", defaultValue = "")String del,
 			@RequestParam(value = "projectName", defaultValue = "")String projectName,
 			HttpServletRequest request) {
+		HttpSession session=request.getSession();
 		
+		session.setAttribute("memNo", 2);/////////////////////////////이건 지울거
 		File f = new File(fileSerImp.PATH+File.separator+fileSerImp.CRPATH);
 		
 		List<FilesDTO> allFileList=null;
@@ -164,7 +166,7 @@ public class FilesController {
 		}
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("etclist",allFileList);
-		mav.setViewName("jsonView");
+		mav.setViewName("chordView");
 		return mav;
 	}
 	
@@ -253,7 +255,11 @@ public class FilesController {
 	 * */
 	@RequestMapping("/filedownload")
 	public ModelAndView filedwnload(
-			@RequestParam("filename")String filename) {
+			@RequestParam("filename")String filename,
+			HttpServletRequest request) {
+		
+		HttpSession session=request.getSession();
+		int mem_no = (Integer) session.getAttribute("memNo");
 		
 		File f = new File(fileSerImp.getPath(filename)+filename);
 		ModelAndView mav = new ModelAndView();
@@ -262,6 +268,9 @@ public class FilesController {
 			mav.setViewName("redirect:files.do");
 			return mav;
 		}else {
+		int fileNo=fileSerImp.fileNo(filename);
+		int result=fileSerImp.log_fileInsert(fileNo, mem_no);
+		System.out.println(result);
 		mav.addObject("downloadFile", f);
 		mav.setViewName("chordDownload");
 		}
