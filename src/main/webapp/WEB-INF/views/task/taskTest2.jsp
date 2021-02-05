@@ -80,8 +80,7 @@
 				</dt>
 				<dd class="posi-re">
 					<!-- 담당자 추가 input -->
-					<input type="text" id="mem_no" placeholder="담당자 추가"
-						onfocus="fn_taskManagerFocus(this)" />
+					<input type="text" id="mem_no" placeholder="담당자 추가" onfocus="fn_taskManagerFocus(this)" />
 
 					<!-- 담당자 리스트 -->
 					<div class="task-user-list"></div>
@@ -101,7 +100,7 @@
 					<i class="far fa-calendar-plus"></i>
 				</dt>
 				<dd class="posi-re">
-					<input type="text" name="time_kind" placeholder="시작일설정"  id="datepicker1" class="datepicker-here" data-timepicker="true" data-time-format='hh:ii aa'>
+					<input type="text" name="time_date" placeholder="시작일설정"  id="datepicker1" class="datepicker-here" data-timepicker="true" data-time-format='AA hh:ii:ss'>
 				</dd>
 			</dl>
 		</div>
@@ -114,7 +113,7 @@
 					<i class="far fa-calendar-minus"></i>
 				</dt>
 				<dd class="posi-re">
-					<input type="text" name="time_kind" placeholder="마감일설정" id="datepicker2" class="datepicker-here"data-timepicker="true" data-time-format='hh:ii aa'>
+					<input type="text" name="time_date" placeholder="마감일설정" id="datepicker2" class="datepicker-here"data-timepicker="true" data-time-format='AA hh:ii:ss'>
 				</dd>
 			</dl>
 		</div>
@@ -127,8 +126,7 @@
 					<i class="far fa-flag"></i>
 				</dt>
 				<dd class="posi-re">
-					<input type="text" name="task_priority" class="task-rank-input"	placeholder="우선순위 선택" onfocus="fn_taskRankFocus(this)"
-						readonly="readonly"> 
+					<input type="text" name="task_priority" class="task-rank-input"	placeholder="우선순위 선택" onfocus="fn_taskRankFocus(this)" readonly="readonly"> 
 						<span class="task-rank" onclick="fn_taskRankClick(this)"></span>
 						
 

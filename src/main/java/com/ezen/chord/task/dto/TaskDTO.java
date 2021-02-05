@@ -75,6 +75,21 @@ public class TaskDTO {
 		this.mem_no = mem_no;
 	}
 
+
+	public TaskDTO(int task_no, String task_title, String task_content, String task_state, String task_priority,
+			String time_kind, int mem_no, Date time_date, int cont_no) {
+		super();
+		this.task_no = task_no;
+		this.task_title = task_title;
+		this.task_content = task_content;
+		this.task_state = task_state;
+		this.task_priority = task_priority;
+		this.time_kind = time_kind;
+		this.mem_no = mem_no;
+		this.time_date = time_date;
+		this.cont_no = cont_no;
+	}
+
 	public Date getTime_date() {
 		return time_date;
 	}
@@ -91,19 +106,7 @@ public class TaskDTO {
 		this.cont_no = cont_no;
 	}
 
-	public TaskDTO(int task_no, String task_title, String task_content, String task_state, String task_priority,
-			String time_kind, int mem_no, Date time_date, int cont_no) {
-		super();
-		this.task_no = task_no;
-		this.task_title = task_title;
-		this.task_content = task_content;
-		this.task_state = task_state;
-		this.task_priority = task_priority;
-		this.time_kind = time_kind;
-		this.mem_no = mem_no;
-		this.time_date = time_date;
-		this.cont_no = cont_no;
-	}
+	
 	
 	
 	

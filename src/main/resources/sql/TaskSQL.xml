@@ -15,7 +15,7 @@
     insert all
 	into task(task_no,task_title,task_state,task_priority,task_content) values(#{task_no},#{task_title},#{task_state},#{task_priority},#{task_content})
 	into participants(cont_kind,cont_no,mem_no) values(3,#{cont_no},3)
-	into time(cont_kind,cont_no,time_kind,time_date) values(3,#{cont_no},#{time_kind},sysdate)
+	into time(cont_kind,cont_no,time_kind,time_date) values(3,#{cont_no},#{time_kind},#{time_date})
 	select * from dual
 	</insert>
 	
