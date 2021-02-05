@@ -60,8 +60,10 @@ public class ProjectController {
 	
 	@RequestMapping("/updateProUserColor.do")
 	@ResponseBody
-	public int updateProUserColor(String pro_user_color) {
-		System.out.println(pro_user_color);
+	public int updateProUserColor(ProjectUserDTO proDTO) {
+		System.out.println(proDTO.getPro_user_color());
+		System.out.println(proDTO.getPro_no());
+		System.out.println(proDTO.getMem_no());
 		
 		return 1;
 	}
