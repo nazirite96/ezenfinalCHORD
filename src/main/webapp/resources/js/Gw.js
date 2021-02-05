@@ -78,6 +78,8 @@ $(function() {
 	// 다른 색상을 선택했을 때 색상바꾸기
 	$(".edit-color-box").find("div").on("click", function() {
 		var changeColor = $(this).attr("class").split(' ').pop();
+		var pro_no = $(this).parent().data("prono")
+		var mem_no = $(this).parent().data("memno")
 		$("#proTitle").removeClass(backColor);
 		$("#proTitle").addClass(changeColor);
 		backColor = changeColor;
@@ -86,7 +88,7 @@ $(function() {
 
 			url: "updateProUserColor.do",
 			method: "get",
-			data: { pro_user_color: changeColor },
+			data: { pro_user_color: changeColor ,pro_no: pro_no, mem_no: mem_no  },
 			dataType: "json",
 			success: function(data) {
 				if (data == 1) {

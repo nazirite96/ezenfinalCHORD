@@ -175,7 +175,6 @@
 										data-prono="22"></i>
 									<c:choose>
 										<c:when test="${proVo.imp_chk == 1 }">
-
 										</c:when>
 										<c:otherwise>
 											<i
@@ -189,7 +188,7 @@
 									<li><i
 										class="fas fa-palette size-30 color-white cursor-point edit-color-btn"
 										onclick="fn_editColor(this)"></i>
-										<div class="edit-box edit-color-box" data-prono="${proDTO.pro_no}">
+										<div class="edit-box edit-color-box" data-prono="${proDTO.pro_no}" data-memno="${memNo }">
 											<div class="color-sample default-back-color">
 												<i class="fas fa-check-circle size-16"></i>
 											</div>
