@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -58,9 +59,11 @@ public class FilesController {
 		}else {
 			fileSerImp.CRPATH=fileSerImp.CRPATH;
 		}
+		System.out.println(fileSerImp.STATE);
 		
 		if(fileSerImp.CRPATH.equals("")) {
 			allFileList=fileSerImp.getAllFiles();
+			//int state1=Integer.parseInt(state);
 			del="";
 		}
 		
@@ -105,7 +108,12 @@ public class FilesController {
 	 * */
 	@RequestMapping("/upload.do")
 	public ModelAndView uploadfiles(FilesDTO filedto,
+			HttpServletRequest request,
 			@RequestParam("files")List<MultipartFile> files) {
+		
+		HttpSession session=request.getSession();
+		session.setAttribute("memNo", 2);/////////////////////////////이건 지울거
+		int mem_no = (Integer) session.getAttribute("memNo");
 		
 		for(int i=0;i<files.size();i++) {
 			String name=fileSerImp.checkName(files.get(i));
@@ -113,23 +121,50 @@ public class FilesController {
 			Long number=files.get(i).getSize();
 			String size=fileSerImp.returnFileSize(number);
 			fileSerImp.copyInto(files.get(i), name);
-			fileSerImp.insertFile(filedto, original, name, size);
+			fileSerImp.insertFile(filedto, original, name, size, mem_no);
 		}
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("files/insertFiles");
 		return mav;
 	}
 
-
-//	session.setAttribute("mem_no", 2);// 이건 충연이가 올리면 삭제
-//	int mem_no = (Integer) session.getAttribute("memNO");// 테스트 테스트
 	/**
 	 * 업로드파일 화면단 (타임라인 쪽으로 이전 예정)
 	 * */
 	@RequestMapping("/insertFiles.do")
 	public ModelAndView insertFiles() {
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("files/insertFiles");
+		return mav;
+	}
+	/**
+	 * 요소들을 보여줄 거임
+	 * */
+	@RequestMapping("/etclist.do")
+	public ModelAndView etclist(@RequestParam(value = "state", defaultValue = "1")int state) {
+		List<FilesDTO> allFileList=null;
+		fileSerImp.CRPATH="";
+		fileSerImp.PRONAME="";
+		switch (state) {
+		case 1:fileSerImp.STATE=""; break; // 전체리스트
+		case 2:fileSerImp.STATE=".txt"; break; // 텍스트보여줄 화면
+		case 3:fileSerImp.STATE=".xlsx"; break; // 엑셀형식
+		case 4:fileSerImp.STATE=".docx"; break; // 문서형식
+		default : fileSerImp.STATE=".pptx";//파워포인트
+			break;
+		}
+		switch (fileSerImp.STATE) {
+		case "": allFileList=fileSerImp.getAllFiles(); break; // 전체리스트
+		case ".txt":allFileList=fileSerImp.etcList(fileSerImp.STATE); break; // 텍스트보여줄 화면
+		case ".xlsx":allFileList=fileSerImp.etcList(fileSerImp.STATE); break; // 엑셀형식
+		case ".docx":allFileList=fileSerImp.etcList(fileSerImp.STATE); break; // 문서형식
+		default : allFileList=fileSerImp.etcList(fileSerImp.STATE);//파워포인트
+			break;
+		}
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("etclist",allFileList);
+		mav.setViewName("jsonView");
 		return mav;
 	}
 	
@@ -172,14 +207,13 @@ public class FilesController {
 			@RequestParam(value="filename",defaultValue = "")String filename,
 			@RequestParam(value="state",defaultValue = "")int state) {
 		//1은 파일
-		System.out.println(filename);
-		System.out.println(state);
+		String path=fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH;
 		if(state==1) {
 			fileSerImp.delFile(filename);
 			fileSerImp.fileDelete(filename);
-		//아니면 폴더
-		}else {
-
+		}else{
+			fileSerImp.delDBPath(path+File.separator+filename+File.separator);
+			fileSerImp.folderDel(filename, path);
 		}
 			ModelAndView mav=new ModelAndView();
 			mav.setViewName("files/files");

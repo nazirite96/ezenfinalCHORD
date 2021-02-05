@@ -29,11 +29,23 @@ public class FilesDAOImpl implements FilesDAO {
 		int result = sqlMap.delete("delFile", filename);
 		return result;
 	}
+	@Override
+	public int delDBPath(String fullPath) {
+		// TODO Auto-generated method stub
+		int result = sqlMap.delete("deDBPath",fullPath);
+		return result;
+	}
 
 	@Override
 	public int updateFile(int fileno) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	@Override
+	public List<FilesDTO> etcList(String etc) {
+		// TODO Auto-generated method stub
+		List<FilesDTO> etcList=sqlMap.selectList("etcList", etc);
+		return etcList;
 	}
 
 	@Override

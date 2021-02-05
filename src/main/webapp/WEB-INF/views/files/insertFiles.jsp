@@ -201,24 +201,6 @@ function returnFileSize(number) {
        formData.append('files',fileList[uploadFileList[i]]);
     }
     $.ajax({
-    	xhr: function() {
-            var xhr = new window.XMLHttpRequest();
-
-            xhr.upload.addEventListener("progress", function(evt) {
-                if (evt.lengthComputable) {
-                    var percentComplete = evt.loaded / evt.total;
-                    percentComplete = parseInt(percentComplete * 100);
-                    console.log(percentComplete);
-
-                    if (percentComplete === 100) {
-
-                    }
-
-                }
-            }, false);
-
-            return xhr;
-        },
     	url:"upload.do",
     	data:formData,
     	type:'POST',

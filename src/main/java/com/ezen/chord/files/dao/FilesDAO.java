@@ -23,4 +23,8 @@ public interface FilesDAO {
 		List<FilesDTO> getDBPath(String fullPath);
 		//해당 프로젝트 가져오기
 		List<String> getproName(int memNo);
+		//해당 파일 경로로 삭제
+		int delDBPath(String fullPath);
+		//확장자로 구별하기
+		List<FilesDTO> etcList(String etc);
 }

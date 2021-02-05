@@ -2,6 +2,8 @@ package com.ezen.chord.files.dto;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class FilesDTO {
 
 	private int file_no;  //파일 넘버
@@ -10,6 +12,7 @@ public class FilesDTO {
 	private String file_upload;  //파일 업로드명(파일이름이 중복될수도 있으니)
 	private String file_size; // 파일 크기
 	private String file_kind; // 파일 종류
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date file_date;  // 업데이트 시간
 	private String cont_kind; //컨텐츠 종류
 	private int cont_no;  // 컨텐츠 번호
