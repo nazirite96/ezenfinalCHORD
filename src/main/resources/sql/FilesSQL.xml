@@ -7,6 +7,9 @@
     	<insert id="insertFile" parameterType="filesDTO">
     		insert into files values(files_seq.nextval,#{file_name},#{file_path},#{file_upload},#{file_size},#{file_kind},sysdate,#{cont_kind},#{cont_no},#{mem_no},#{pro_no})
     	</insert>
+    	<insert id="log_fileInsert" parameterType="map">
+    		insert into log_file values(log_file_seq.nextval,#{file_no},#{mem_no},sysdate)
+    	</insert>
     	<delete id="delFile" parameterType="String">
     		delete from files where file_name=#{filename}
     	</delete>
@@ -16,6 +19,9 @@
     	<update id="updateFile" parameterType="INTEGER">
     		<!--  -->
     	</update>
+    	<select id="fileNo" resultType="Integer" parameterType="String">
+    		select file_no from files where file_name=#{name}
+    	</select>
     	<update id="updateFatch" parameterType="map">
     		update files set file_path=#{pathRoot} where file_name=#{filename}
     	</update>

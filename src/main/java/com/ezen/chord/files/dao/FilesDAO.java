@@ -15,6 +15,8 @@ public interface FilesDAO {
 		int updateFile(int fileno);
 		//경로 수정
 		int updateFatch(Map<String, String> map);
+		//프로젝트 번호 가져오기 
+		int fileNo(String name);
 		//전체 파일 조회
 		List<FilesDTO> getAllFiles();
 		//해당 파일 경로조회
@@ -27,4 +29,6 @@ public interface FilesDAO {
 		int delDBPath(String fullPath);
 		//확장자로 구별하기
 		List<FilesDTO> etcList(String etc);
+		//파일 로그가 저장될거임
+		int log_fileInsert(Map<String, Integer> map);
 }

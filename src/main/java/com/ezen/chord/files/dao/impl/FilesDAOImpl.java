@@ -78,4 +78,16 @@ public class FilesDAOImpl implements FilesDAO {
 		List<String> getproName=sqlMap.selectList("getproName", memNo);
 		return getproName;
 	}
+	@Override
+	public int fileNo(String name) {
+		// TODO Auto-generated method stub
+		int count = sqlMap.selectOne("fileNo",name);
+		return count;
+	}
+	@Override
+	public int log_fileInsert(Map<String, Integer> map) {
+		// TODO Auto-generated method stub
+		int result=sqlMap.insert("log_fileInsert",map);
+		return result;
+	}
 }

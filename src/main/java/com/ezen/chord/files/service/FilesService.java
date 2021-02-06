@@ -34,6 +34,10 @@ public interface FilesService {
 	//폴더 삭제
 	void delFolder(String foldername);
 	
+	//프로젝트 번호 가져오기 
+	int fileNo(String name);
+	//파일 로그가 저장될거임
+	int log_fileInsert(int file_no,int mem_no);
 	
 	
 	//메서드 : 파일 중복 체크
