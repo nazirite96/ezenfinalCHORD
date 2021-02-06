@@ -200,16 +200,10 @@ function fn_commentKeyDown(event, el) {
 	var commentInsertForm = commentInsertBox.parent('form');
 	var commentWrap = commentInsertForm.parent();
 	var timelineFooter = commentWrap.parent();
-	var dataMemNo = timelineFooter.siblings('.col-memno').attr('data-memno');
 	var dataTimNo = timelineFooter.siblings('.col-no').attr('data-no');
-	var dataProNo = timelineFooter.siblings('.col-prono').attr('data-prono');
 	
-	var inputTimeMemNo = commentInsertBox.siblings('.timeline_mem_no');
 	var inputTimeNo = commentInsertBox.siblings('.timeline_no');
-	var inputTimeProNo = commentInsertBox.siblings('.timeline_pro_no');
-	inputTimeMemNo.val(dataMemNo);
 	inputTimeNo.val(dataTimNo);
-	inputTimeProNo.val(dataProNo);
 
 	if (key == "13") {	// Enter 키 입력시
 

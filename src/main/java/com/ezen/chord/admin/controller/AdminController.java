@@ -1,7 +1,6 @@
 package com.ezen.chord.admin.controller;
 
 import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,16 +8,17 @@ import java.util.Map;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.ezen.chord.admin.service.AdminService;
 import com.ezen.chord.company.dto.CompanyDTO;
 import com.ezen.chord.member.dto.MemberDTO;
+import com.ezen.chord.project.service.ProjectService;
 
 @Controller
 public class AdminController {
@@ -28,6 +28,9 @@ public class AdminController {
 	
 	@Autowired
 	JavaMailSender mailSender;
+	
+	@Autowired
+	ProjectService proService;
 
 	/*사이트 운영자 접속 통계*/
 	@RequestMapping("/adminWebForm.do")

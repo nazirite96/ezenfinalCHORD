@@ -50,10 +50,9 @@ public class ProjectController {
 	
 	@RequestMapping("/insertPro.do")
 	public String insertPro(ProjectDTO proDTO) {
-		proDTO.setMem_no(2);
 		java.sql.Date date = new java.sql.Date(12);
 		proDTO.setPro_date(date);
-		System.out.println(proDTO.toString());
+		
 		proService.insertPro(proDTO);
 		return "project/projectList";
 	}
@@ -61,9 +60,14 @@ public class ProjectController {
 	@RequestMapping("/updateProUserColor.do")
 	@ResponseBody
 	public int updateProUserColor(ProjectUserDTO proDTO) {
-		System.out.println(proDTO.getPro_user_color());
+		if(proDTO.getPro_user_color().equals("select-color")) {
+			int result = 2;
+		}else {
+			int result = proUserService.updateProUserColor(proDTO);
+		}
 		System.out.println(proDTO.getPro_no());
 		System.out.println(proDTO.getMem_no());
+		
 		
 		return 1;
 	}

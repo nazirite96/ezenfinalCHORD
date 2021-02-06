@@ -11,4 +11,8 @@ public interface ProjectUserDAO {
 	public int insertProUser(ProjectUserDTO proUserDTO);	
 	
 	public List<ProjectDTO> getListByMemNo(int mem_no);
+	
+	public int updateProUserColor(ProjectUserDTO proUserDTO);
+	
+	public ProjectUserDTO selectProUserByProAndMem(int pro_no,int mem_no);
 }

@@ -11,8 +11,12 @@
     	</select>
     	
     	<insert id="insertPro" parameterType="projectDTO">
-    		insert into project
+    	insert all
+    		into project (PRO_NO, PRO_NAME, PRO_CONT, PRO_DATE, KIND_NO, MEM_NO)
     		VALUES(#{pro_no},#{pro_name},#{pro_cont},sysdate,#{kind_no},#{mem_no})
+    		into company_project(com_no ,com_pro_date,pro_no )
+    		VALUES(#{com_no},sysdate,#{pro_no})
+    	select * from dual
     	</insert>
     	
     	<select id="getPro" resultType="projectDTO">

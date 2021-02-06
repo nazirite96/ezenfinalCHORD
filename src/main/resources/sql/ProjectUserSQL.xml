@@ -13,4 +13,16 @@
 				A.pro_no = B.pro_no
 			where A.mem_no = #{mem_no}
 		</select>
+		<update id="updateProUserColor">
+			update project_user
+			set pro_user_color = #{pro_user_color}
+			where pro_no = #{pro_no} and mem_no = #{mem_no}
+		</update>
+		<select id="selectProUserByProAndMem" parameterType="hashMap" resultType="projectUserDTO">
+			select p_u.PRO_NO, p_u.MEM_NO, p_u.PRO_USER_MAN_CHK, p_u.PRO_USER_DATE, p_u.PRO_USER_COLOR, p.pro_name, p.pro_cont,p.pro_date
+			from project_user p_u 
+			left join project p 
+			on p_u.pro_no = p.pro_no
+			where p_u.pro_no = #{pro_no} and p_u.mem_no = #{mem_no}
+		</select>
 	</mapper>

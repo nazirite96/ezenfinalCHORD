@@ -10,8 +10,16 @@ public class ProjectDTO {
 	private java.sql.Date pro_date;	//프로젝트 등록일
 	private int kind_no;			//분류코드
 	private int mem_no;				//개설자
+	private int com_no; 			//회사 정보;
 	
 	
+	
+	public int getCom_no() {
+		return com_no;
+	}
+	public void setCom_no(int com_no) {
+		this.com_no = com_no;
+	}
 	public int getPro_no() {
 		return pro_no;
 	}

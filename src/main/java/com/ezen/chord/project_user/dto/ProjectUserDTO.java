@@ -4,10 +4,32 @@ public class ProjectUserDTO {
 	
 	private int pro_no; //프로젝트 번호
 	private int mem_no; //참석자
-	private String pro_user_man_chk;//참여자가 관리자인지 체크
-	private java.util.Date pro_user_date; //프로젝트 참여일;
+	private String pro_user_man_chk;	//참여자가 관리자인지 체크
+	private java.sql.Date pro_user_date; //프로젝트 참여일;
 	private String pro_user_color; //프로젝트 개인 설정;
+	private String pro_name;		//조인 프로젝트 - 프로젝트 이름
+	private String pro_cont;		//조인 프로젝트 - 프로젝트 내용
+	private java.sql.Date pro_date; //조인 프로젝트 - 프로젝트 생성
 	
+	
+	public String getPro_name() {
+		return pro_name;
+	}
+	public void setPro_name(String pro_name) {
+		this.pro_name = pro_name;
+	}
+	public String getPro_cont() {
+		return pro_cont;
+	}
+	public void setPro_cont(String pro_cont) {
+		this.pro_cont = pro_cont;
+	}
+	public java.sql.Date getPro_date() {
+		return pro_date;
+	}
+	public void setPro_date(java.sql.Date pro_date) {
+		this.pro_date = pro_date;
+	}
 	public int getPro_no() {
 		return pro_no;
 	}
@@ -29,7 +51,7 @@ public class ProjectUserDTO {
 	public java.util.Date getPro_user_date() {
 		return pro_user_date;
 	}
-	public void setPro_user_date(java.util.Date pro_user_date) {
+	public void setPro_user_date(java.sql.Date pro_user_date) {
 		this.pro_user_date = pro_user_date;
 	}
 	public String getPro_user_color() {
