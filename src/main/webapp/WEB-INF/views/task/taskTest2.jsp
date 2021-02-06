@@ -100,7 +100,7 @@
 					<i class="far fa-calendar-plus"></i>
 				</dt>
 				<dd class="posi-re">
-					<input type="text" name="time_date" placeholder="시작일설정"  id="datepicker1" class="datepicker-here" data-timepicker="true" data-time-format='AA hh:ii:ss'>
+					<input type="text" name="time_start_date" placeholder="시작일설정"  id="datepicker1" class="datepicker-here" data-timepicker="true" data-time-format='hh:ii'>
 				</dd>
 			</dl>
 		</div>
@@ -113,7 +113,7 @@
 					<i class="far fa-calendar-minus"></i>
 				</dt>
 				<dd class="posi-re">
-					<input type="text" name="time_date" placeholder="마감일설정" id="datepicker2" class="datepicker-here"data-timepicker="true" data-time-format='AA hh:ii:ss'>
+					<input type="text" name="time_end_date" placeholder="마감일설정" id="datepicker2" class="datepicker-here"data-timepicker="true" data-time-format='hh:ii'>
 				</dd>
 			</dl>
 		</div>
@@ -150,7 +150,7 @@
 
 		<!-- 추가 항목입력 버튼 -->
 		<button type="button" class="add-item-btn" onclick="fn_addItem(this)"><i class="fas fa-angle-down maright-10"></i> 추가 항목 입력</button>
-		<!-- 글 -->
+		<!-- 글 ${fn.trim(dto.content)}-->
 		<textArea rows="5" cols="" name="task_content" class="autosize" onkeyup="resize(this)"
 			placeholder="글을 작성하세요."></textArea>
 
