@@ -23,9 +23,6 @@ public class TimelineController {
 	@Autowired
 	private TimelineService timService;
 	
-	@Autowired
-	private ReplyService repService;
-	
 	
 	
 	@RequestMapping("/timeLine.do")
@@ -69,29 +66,6 @@ public class TimelineController {
 		int mem_no = (int)sess.getAttribute("memNo");
 		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no()+"&mem_no="+mem_no;
 	}
-	
-	
-	@RequestMapping("/insertRep.do")
-	public String insertRep(ReplyDTO repDTO,int pro_no,HttpSession sess) {
-		int result = repService.insertRep(repDTO);
-		int mem_no = (int)sess.getAttribute("memNo");
-		return "redirect:/timeLine.do?pro_no="+pro_no+"&mem_no="+mem_no;
-	}
-	
-	@RequestMapping("/updateRep.do")
-	public String updateRep(ReplyDTO repDTO,int pro_no,HttpSession sess) {
-		int result = repService.updateRep(repDTO);
-		int mem_no = (int)sess.getAttribute("memNo");
-		return "redirect:/timeLine.do?pro_no="+pro_no+"&mem_no="+mem_no;
-	}
-	
-	@RequestMapping("/deleteRep.do")
-	public String deleteRep(int rep_no,int pro_no,HttpSession sess) {
-		int result = repService.deleteRep(rep_no);
-		int mem_no = (int)sess.getAttribute("memNo");
-		return "redirect:/timeLine.do?pro_no="+pro_no+"&mem_no="+mem_no;
-	}
-	
 	
 	
 }

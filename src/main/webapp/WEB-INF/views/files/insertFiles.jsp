@@ -237,8 +237,7 @@ function returnFileSize(number) {
 	
 	
 	<div class="filebox bs3-primary">
-		<label for="ex_file2">업로드</label> <input type="file"
-			multiple="multiple" id="ex_file2" class="upload-hidden">
+		<label for="ex_file2">업로드</label> <input type="file" multiple="multiple" id="ex_file2" class="upload-hidden">
 	</div>
 	<input type="button" value="올리기" onclick="uploadFile()">
 </body>
