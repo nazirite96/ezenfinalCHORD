@@ -15,4 +15,10 @@ public interface ProjectUserDAO {
 	public int updateProUserColor(ProjectUserDTO proUserDTO);
 	
 	public ProjectUserDTO selectProUserByProAndMem(int pro_no,int mem_no);
+	
+	public List<ProjectUserDTO> selectInvitedProUser(int pro_no);
+	
+	public List<ProjectUserDTO> selectNotInvitedProUser(int pro_no,int com_no);
+	
+	public ProjectUserDTO chkProUser(int mem_no,int pro_no);		
 }

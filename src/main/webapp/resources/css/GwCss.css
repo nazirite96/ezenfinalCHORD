@@ -11,6 +11,10 @@
 * 최초작성일 : 2018-08-28
 * 작성자 : UA(Kim ji su)
 *******************************************/
+
+
+.block{display:block}
+
 .body-wrap-full {width:100%;letter-spacing:-0.06em}
 .container {width:100%;padding:0}
 
@@ -967,7 +971,7 @@ ul.pro-gather-nav li a:hover {background-color:#f1f2f3}
 - project right project member list style
 - (프로젝트 우측  참여자 리스트)
 ------------------------------------------*/
-.pro-right-user-list {display:flex;width:100%;height:250px;padding:15px 0;border:1px solid #ccc;border-top:0}
+.pro-right-user-list {display:flex;width:auto;overflow:auto;height:250px;padding:15px 0;border:1px solid #ccc;border-top:0}
 .pro-right-user-list dl,
 .pro-right-user-list dl dt,
 .pro-right-user-list dl dd {float:left}

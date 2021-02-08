@@ -18,7 +18,7 @@ public class projectUserServiceImpl implements ProjectUserService {
 	@Override
 	public int insertProUser(ProjectUserDTO proUserDTO) {
 		// TODO Auto-generated method stub
-		return 0;
+		return proUserDAO.insertProUser(proUserDTO);
 	}
 	
 	@Override
@@ -32,5 +32,6 @@ public class projectUserServiceImpl implements ProjectUserService {
 		// TODO Auto-generated method stub
 		return proUserDAO.selectProUserByProAndMem(pro_no, mem_no);
 	}
-
+	
+	
 }

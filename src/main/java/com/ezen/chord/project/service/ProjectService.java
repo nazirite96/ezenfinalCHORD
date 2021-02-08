@@ -19,6 +19,8 @@ public interface ProjectService {
 	//전체 프로젝트 조회
 	List<ProjectDTO> getProAllList(int mem_no);
 	
+	int chkProUser(int mem_no,int pro_no);
+	
 	
 	
 }

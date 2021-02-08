@@ -65,4 +65,16 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		return list;
 	}
+	
+	@Override
+	public int chkProUser(int mem_no, int pro_no) {
+		// TODO Auto-generated method stub
+		int result = 0;
+		if(proUserDAO.chkProUser(mem_no, pro_no)!=null) {
+			result = 1;
+		}
+		return result;
+	}
+	
+	
 }

@@ -17,4 +17,8 @@ public interface TimelineService {
 	
 	public ProjectUserDTO getPro(int pro_no,int mem_no);
 	
+	public List<ProjectUserDTO> invitedProUserList(int pro_no);
+	
+	public List<ProjectUserDTO> notInvitedProUserList(int pro_no,int com_no);
+	
 }

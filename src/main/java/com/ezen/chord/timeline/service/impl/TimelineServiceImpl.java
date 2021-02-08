@@ -74,6 +74,16 @@ public class TimelineServiceImpl implements TimelineService {
 		return proUserDAO.selectProUserByProAndMem(pro_no, mem_no);
 	}
 	
+	@Override
+	public List<ProjectUserDTO> invitedProUserList(int pro_no) {
+		// TODO Auto-generated method stub
+		return proUserDAO.selectInvitedProUser(pro_no);
+	}
 	
+	@Override
+	public List<ProjectUserDTO> notInvitedProUserList(int pro_no, int com_no) {
+		// TODO Auto-generated method stub
+		return proUserDAO.selectNotInvitedProUser(pro_no, com_no);
+	}
 	
 }

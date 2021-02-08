@@ -9,11 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ezen.chord.project.dto.ProjectDTO;
 import com.ezen.chord.project_user.dto.ProjectUserDTO;
-import com.ezen.chord.project_user.service.ProjectUserService;
-import com.ezen.chord.reply.dto.ReplyDTO;
-import com.ezen.chord.reply.service.ReplyService;
 import com.ezen.chord.timeline.dto.TimelineDTO;
 import com.ezen.chord.timeline.service.TimelineService;
 
@@ -26,9 +22,15 @@ public class TimelineController {
 	
 	
 	@RequestMapping("/timeLine.do")
-	public ModelAndView getTimeline(int pro_no,int mem_no) {
+	public ModelAndView getTimeline(int pro_no,HttpSession sess) {
 		ModelAndView mav = new ModelAndView();
+		int mem_no = (int)(sess.getAttribute("memNo"));
+		int com_no = (int)(sess.getAttribute("comNo"));
 		ProjectUserDTO proUserDTO = timService.getPro(pro_no,mem_no);
+		List<ProjectUserDTO> invitedProUserList = timService.invitedProUserList(pro_no);
+		List<ProjectUserDTO> notInvitedProUserList = timService.notInvitedProUserList(pro_no, com_no);
+		mav.addObject("notInvitedProUserList", notInvitedProUserList);
+		mav.addObject("invitedProUserList", invitedProUserList);
 		mav.addObject("proUserDTO", proUserDTO);
 		//프로젝트 정보를 받기
 		int page = 0; 
