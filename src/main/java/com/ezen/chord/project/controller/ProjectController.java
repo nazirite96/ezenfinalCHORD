@@ -95,4 +95,25 @@ public class ProjectController {
 		return "redirect:/timeLine.do?pro_no="+pro_no+"&mem_no="+mem_no;
 	}
 	
+	
+	@RequestMapping("/deleteProUser.do")
+	public String deleteProUser(int mem_no, int pro_no) {
+		int result = proUserService.deleteProUser(pro_no, mem_no);
+		return "redirect:/proList.do?mem_no="+mem_no;
+	}
+	
+	@RequestMapping("/deleteProject.do")
+	public String deleteProject(int pro_no,HttpSession sess) {
+		int mem_no = (int)sess.getAttribute("memNo");	
+		int result = proService.deletePro(pro_no);
+		return "redirect:/proList.do?mem_no="+mem_no;
+	}
+	
+	@RequestMapping("/updatePro.do")
+	public String updatePro(ProjectDTO proDTO) {
+		int result = proService.updatePro(proDTO);
+		return "redirect:/timeLine.do?pro_no="+proDTO.getPro_no()+"&mem_no="+proDTO.getMem_no();
+	}
+	
+	
 }

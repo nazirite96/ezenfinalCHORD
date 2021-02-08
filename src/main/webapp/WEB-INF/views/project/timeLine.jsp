@@ -276,9 +276,13 @@
 											<li class="cursor-point" onclick="boxProEdit()">보관함 설정</li>
 											<li class="cursor-point" onclick="deleteProUser()">프로젝트
 												나가기</li>
-											<li class="cursor-point" onclick="proUpdate()">프로젝트 수정</li>
-											<li class="cursor-point color-red" onclick="deletePro()">프로젝트
-												삭제</li>
+											<c:choose>
+												<c:when test="${proUserDTO.pro_user_man_chk eq 'manager' }">
+													<li class="cursor-point" onclick="proUpdate()">프로젝트 수정</li>
+													<li class="cursor-point color-red" onclick="deletePro()">프로젝트
+														삭제</li>
+												</c:when>
+											</c:choose>
 										</ul>
 									</li>
 								</ul>
@@ -814,10 +818,10 @@
 										</div>
 										<!-- article icon : s -->
 										<ul class="article-top-icon">
-											<c:if test="${proVo.mem_id == memVo.mem_id }">
+											<c:if test="${proUserDTO.pro_user_man_chk eq 'manager' }">
 												<!-- article pick button -->
 												<li><a href="#fixCheck" class="pick-check-btn"> <c:choose>
-															<c:when test="${timeLine.fix_chk == 'y' }">
+															<c:when test="${ProUserDTO.pro_user_man_chk == 'y' }">
 																<i
 																	class="fas fa-map-pin size-24 cursor-point pick-active"></i>
 															</c:when>
@@ -827,23 +831,24 @@
 														</c:choose>
 												</a></li>
 											</c:if>
-											<!-- article edit : s 
-							<c:if test="${timeLine.mem_id == memVo.mem_id }">-->
-											<li class="posi-re float-left">
-												<button id="articleEdit" type="button"
-													data-toggle="dropdown" aria-haspopup="true"
-													aria-expanded="false">
-													<i class="fas fa-ellipsis-v size-24 color-gray"></i>
-												</button>
-												<ul class="dropdown-menu" role="menu"
-													aria-labelledby="articleEdit">
-													<li class="cursor-point" onclick="fn_editArticle(this)">글
-														수정</li>
-													<li class="cursor-point timeline-delete-btn">글 삭제</li>
-												</ul>
-											</li>
-											<!-- </c:if>
-							 article edit : f -->
+											<!-- article edit : s -->
+										<c:if test="${proUserDTO.mem_no == dto.mem_no }">
+														<li class="posi-re float-left">
+															<button id="articleEdit" type="button"
+																data-toggle="dropdown" aria-haspopup="true"
+																aria-expanded="false">
+																<i class="fas fa-ellipsis-v size-24 color-gray"></i>
+															</button>
+															<ul class="dropdown-menu" role="menu"
+																aria-labelledby="articleEdit">
+																
+																<li class="cursor-point" onclick="fn_editArticle(this)">글
+																	수정</li>
+																<li class="cursor-point timeline-delete-btn">글 삭제</li>
+															</ul>
+														</li>
+														</c:if>
+							<!--  article edit : f -->
 										</ul>
 										<!-- article icon : f -->
 									</div>

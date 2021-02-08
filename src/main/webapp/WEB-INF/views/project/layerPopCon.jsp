@@ -268,8 +268,8 @@
 	<div class="dimBg"></div>
 	
 	<div id="editProject" class="pop-layer pop-add-project">
-		<form class="editPro-form" action="/flowolf/pro/update" method="get">
-			<input type="hidden" id="pro_no" name="pro_no" value="${proVo.pro_no }">
+		<form class="editPro-form" action="updatePro.do" method="get">
+			<input type="hidden" id="pro_no" name="pro_no" value="${proUserDTO.pro_no }">
 			
     		<!-- pop header -->
     		<header class="pop-top border-box">
@@ -283,14 +283,15 @@
 	   			<!-- 프로젝트 명 -->
    				<div class="dis-block">
 		   			<h3>프로젝트명</h3>
-		   			<input type="text" id="pro_name" name="pro_name" class="pop-input input-line" value="${proVo.pro_name }" placeholder="프로젝트명 입력(최대 50자)" required="required">
+		   			<input type="text" id="pro_name" name="pro_name" class="pop-input input-line" value="${proUserDTO.pro_name }" placeholder="프로젝트명 입력(최대 50자)" required="required">
+	   				<input type="hidden" name="mem_no" value="${memNo }">
 	   			</div>
 	   			
-	   			<!-- 프로젝트 분류 -->
+	   			<!-- 프로젝트 분류 
    				<div class="dis-block martop-20">
 		   			<h3>프로젝트 분류</h3>
 		   			<div class="pro-kind-box">
-						<!-- 분류 종료 List -->
+						<!-- 분류 종료 List 
 		   				<c:forEach items="${kindList }" var="kindVo">
 		   					<c:choose>
 		   						<c:when test="${kindVo.kind_no==proVo.kind_no }">
@@ -309,11 +310,11 @@
 		   				</c:forEach>
 		   			</div>
 	   			</div>
-	   			
+	   			-->
 	   			<!-- 프로젝트 개요 -->
    				<div class="dis-block martop-20">
 		   			<h3>프로젝트 개요</h3>
-		   			<textarea id="pro_cont" name="pro_cont" rows="" cols="" placeholder="프로젝트 목표 및 개요 입력">${proVo.pro_cont }</textarea>
+		   			<textarea id="pro_cont" name="pro_cont" rows="" cols="" placeholder="프로젝트 목표 및 개요 입력">${proUserDTO.pro_cont }</textarea>
 	   			</div>
 			</section>
 			
@@ -333,10 +334,10 @@
 	<div class="dimBg"></div>
 	
     <div id="deleteProUser" class="pop-layer">
-		<form action="/flowolf/proUser/deleteR" method="get">
+		<form action="deleteProUser.do" method="get">
 		
-		<input type="hidden" id="pro_no" name="pro_no" value="${proVo.pro_no }">
-    		
+		<input type="hidden" name="pro_no" value="${proUserDTO.pro_no }">
+    	<input type="hidden" name="mem_no" value="${memNo }">
     		<!-- pop con -->
 	   		<section class="pop-con border-box">
 	   			<p class="marbtm-0 padtop-20 size-20 color-gray text-center">
@@ -359,9 +360,9 @@
 	<div class="dimBg"></div>
 	
     <div id="deletePro" class="pop-layer">
-		<form action="/flowolf/pro/delete" method="get" class="timeline-del-form">
+		<form action="deleteProject.do" method="get" class="timeline-del-form">
 		
-			<input type="hidden" name="pro_no" value="${proVo.pro_no }">
+			<input type="hidden" name="pro_no" value="${proUserDTO.pro_no }">
     		
     		<!-- pop con -->
 	   		<section class="pop-con border-box">
@@ -373,14 +374,8 @@
 			<!-- pop footer -->
 			<footer class="pop-footer border-box">
 				<input type="button" name="" class="pop-btn default-btn btn-close" value="취소">
-				<c:choose>
-					<c:when test="${timeLineList.size() != 0 }">
-						<input type="button" name="" class="pop-btn submit-btn marleft-5 back-color-pupple-l btn-close" onclick="fn_failDeletePro()" value="삭제하기">
-					</c:when>
-					<c:otherwise>
-						<input type="submit" name="" class="pop-btn submit-btn marleft-5 back-color-pupple-l" value="삭제하기">
-					</c:otherwise>
-				</c:choose>
+				<input type="submit" name="" class="pop-btn submit-btn marleft-5 back-color-pupple-l" value="삭제하기">
+						
 			</footer>
 		</form>
 	</div>

@@ -23,4 +23,17 @@
     		select * from project
     		where pro_no = #{pro_no}
     	</select>
+    	
+    	<delete id="deletePro">
+    		delete project
+    		where pro_no = #{pro_no}
+    	</delete>
+    	
+    	<update id="updatePro" parameterType="projectDTO">
+    		update project
+    		set pro_name = #{pro_name},
+    		pro_cont = #{pro_cont}
+    		where pro_no = #{pro_no}
+    	</update>
+    	
     </mapper>

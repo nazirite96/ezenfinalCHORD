@@ -33,5 +33,11 @@ public class projectUserServiceImpl implements ProjectUserService {
 		return proUserDAO.selectProUserByProAndMem(pro_no, mem_no);
 	}
 	
+	@Override
+	public int deleteProUser(int pro_no, int mem_no) {
+		// TODO Auto-generated method stub
+		return proUserDAO.deleteProUser(mem_no, pro_no);
+	}
+	
 	
 }

@@ -21,6 +21,6 @@ public interface ProjectService {
 	
 	int chkProUser(int mem_no,int pro_no);
 	
-	
+	int deletePro(int pro_no);
 	
 }
