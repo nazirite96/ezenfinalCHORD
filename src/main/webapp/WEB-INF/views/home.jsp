@@ -25,6 +25,5 @@
  	<div>아이디 : ${dto.id }</div>
  </c:forEach>
  
- 
 </body>
 </html>

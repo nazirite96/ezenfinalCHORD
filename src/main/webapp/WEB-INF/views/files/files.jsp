@@ -63,6 +63,7 @@
 	    	dataType: "text",
 	    		success : function(data) {
 	    			alert('폴더를 생성하였습니다.');
+	    			history.replaceState({}, null, location.pathname);
 	    			location.reload();
 	    	    },
 	    	    error : function(xhr, status, error) {     
@@ -72,14 +73,16 @@
 	});
 	
 	// 체크박스 항목을 이동할 통신
-	function chkMove(foldername,state){;
-	
+	function chkMove(foldername,state){
 		if( $(":checkbox[name='chkList']:checked").length==0 ){
 		    alert("항목을 하나이상 체크해주세요.");
 		    location.reload();
 		}else{
 			var chkList=get_chked_values();
 			var result=confirm('해당 파일을 이동시키겠습니까?');
+			if(state==2){
+				foldername=foldername.substring(0,foldername.length-1);
+			}
 			if(result){
 				$.ajax({
 			    	url:"moveList.do?foldername="+foldername+"&chkList="+chkList+"&state="+state,
@@ -181,7 +184,41 @@
 	    	    }
 	    });
 	}
-
+	
+	function close01(){
+		$.ajax({
+	    	url:"close.do",
+	    	type:'GET',
+	    	dataType: "text",
+	    		success : function(data) {
+	    			history.replaceState({}, null, location.pathname);
+	    	    },
+	    	    error : function(xhr, status, error) {     
+	    	    	alert(xhr,status,error);
+	    	    }
+	    });
+	}
+	
+	function goback(){
+		location.href='?del=good';
+		history.replaceState({}, null, location.pathname);
+	}
+	
+	$(document).on("click", "#close01", function(){
+		$.ajax({
+	    	url:"close.do",
+	    	type:'GET',
+	    	dataType: "text",
+	    		success : function() {
+	    			history.replaceState({}, null, location.pathname);
+	    			location.href='index.do';
+	    	    },
+	    	    error : function(xhr, status, error) {     
+	    	    	alert(xhr,status,error);
+	    	    }
+	    });
+	});
+	
 </script>
   </head>
   
@@ -268,9 +305,9 @@
 		        </c:choose>
 		        
           </div>
-          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+          <button type="button" id="close01" class="btn btn-sm btn-outline-secondary dropdown-toggle">
             <span data-feather="calendar"></span>
-        	    뒤로 가기
+        	    닫&nbsp;&nbsp;기
           </button>
         </div>
       </div>
@@ -278,7 +315,7 @@
       <c:set var="path" value="${crpath }"></c:set>
       <c:if test="${!empty path}">
       		<div>
-       			경로 : ${crpath } <a href="?del=chord">뒤로가기</a>
+       			경로 : ${crpath } <a href="javascript:goback()">뒤로가기</a>
      		</div>
        </c:if>
 
@@ -391,7 +428,7 @@
 		        <c:forEach var="mf" items="${folder }">
 		        		<a href="javascript:chkMove('${mf }',1)">${mf }</a> <br>
 		        </c:forEach>
-		        <c:if test="${empty folder}"> <a href="javascript:chkMove('${crpath }',-1)">최상의 경로로...</a></c:if>
+		        <c:if test="${empty folder}"> <a href="javascript:chkMove('${crpath }k',2)">최상의 경로로...</a></c:if>
 		      </div>
 	      	<div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

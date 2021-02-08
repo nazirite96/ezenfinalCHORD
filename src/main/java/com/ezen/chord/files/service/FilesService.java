@@ -25,6 +25,8 @@ public interface FilesService {
 	String getPath(String filename);
 	//해당 파일 경로로 경로 조회
 	List<FilesDTO> getDBPath(String fullPath);
+	//세션에 올릴 경로들
+	List<String> pathList();
 	//해당 파일 경로로 삭제
 	int delDBPath(String fullPath);
 	//해당 설정되어있는 프로젝트 이름 
@@ -43,7 +45,7 @@ public interface FilesService {
 	//메서드 : 파일 중복 체크
 	String checkName(MultipartFile files);
 	//메서드 : 파일복사
-	void copyInto(MultipartFile upload,String checkName);
+	void copyInto(MultipartFile upload,String checkName,String serv);
 	//메서드 : 파일 용량 따오기
 	String returnFileSize(Long number);
 	//메서드 : 확장다 따오기
@@ -54,4 +56,12 @@ public interface FilesService {
 	void fileDelete(String deleteFileName);
 	//메서드 : 폴더 삭제
 	void folderDel(String deleteFolderName,String path);
+	
+	//메서드 : 프로젝트개설시 폴더 생성 (기웅아 이거 가져다 써라)
+	void createProfolder(String pro_name,String realpath);
+	//메서드 : 프로젝트삭제시 폴더 제거 (기웅아 이거 가져다 써라)
+	void delProfolder(String pro_name,String realpath);
+	//메서드 : 프로젝트가 변경될시 (기웅아 이거 가져다 써라)
+	void changePro(String pro_name,String realpath);
+	
 }

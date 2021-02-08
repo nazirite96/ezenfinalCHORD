@@ -211,7 +211,7 @@ function returnFileSize(number) {
     	cache: false,
     	dataType: "text",
     		success : function() {
-
+					debugger;
     			  alert("success");
     			  location.reload();
     	    },

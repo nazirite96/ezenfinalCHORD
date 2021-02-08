@@ -31,4 +31,6 @@ public interface FilesDAO {
 		List<FilesDTO> etcList(String etc);
 		//파일 로그가 저장될거임
 		int log_fileInsert(Map<String, Integer> map);
+		//세션에 올릴 경로들
+		List<String> pathList();
 }
