@@ -12,8 +12,8 @@ public class TaskDTO {
 	private String task_state;			//업무진행상황
 	private String task_priority;		//업무우선순위
 	
-	private String time_start_date;		//시작일 시간
-	private String time_end_date;		//마감일 시간
+	private String task_start_date;		//시작일 시간
+	private String task_end_date;		//마감일 시간
 	
 	
 	private int mem_no;					//멤버번호
@@ -23,6 +23,9 @@ public class TaskDTO {
 	private String tim_cont;			//타임라인 내용
 	private Date tim_date;				//게시글 작성시간
 	private int pro_no;					//프로젝트번호
+	private String mem_email;			//멤버이메일
+	private String mem_name;			//멤버이름
+	private String pro_name;			//프로젝트명
 	
 	public TaskDTO() {
 		super();
@@ -126,33 +129,59 @@ public class TaskDTO {
 		this.pro_no = pro_no;
 	}
 
-	public String getTime_start_date() {
-		return time_start_date;
+	
+
+	public String getTask_start_date() {
+		return task_start_date;
 	}
 
-	public void setTime_start_date(String time_start_date) {
-		this.time_start_date = time_start_date;
+	public void setTask_start_date(String task_start_date) {
+		this.task_start_date = task_start_date;
 	}
 
-	public String getTime_end_date() {
-		return time_end_date;
+	public String getTask_end_date() {
+		return task_end_date;
 	}
 
-	public void setTime_end_date(String time_end_date) {
-		this.time_end_date = time_end_date;
+	public void setTask_end_date(String task_end_date) {
+		this.task_end_date = task_end_date;
+	}
+
+	public String getMem_email() {
+		return mem_email;
+	}
+
+	public void setMem_email(String mem_email) {
+		this.mem_email = mem_email;
+	}
+
+	public String getMem_name() {
+		return mem_name;
+	}
+
+	public void setMem_name(String mem_name) {
+		this.mem_name = mem_name;
+	}
+
+	public String getPro_name() {
+		return pro_name;
+	}
+
+	public void setPro_name(String pro_name) {
+		this.pro_name = pro_name;
 	}
 
 	public TaskDTO(int task_no, String task_title, String task_content, String task_state, String task_priority,
-			String time_start_date, String time_end_date, int mem_no, int cont_no, String cont_kind, int tim_no,
-			String tim_cont, Date tim_date, int pro_no) {
+			String task_start_date, String task_end_date, int mem_no, int cont_no, String cont_kind, int tim_no,
+			String tim_cont, Date tim_date, int pro_no, String mem_email, String mem_name, String pro_name) {
 		super();
 		this.task_no = task_no;
 		this.task_title = task_title;
 		this.task_content = task_content;
 		this.task_state = task_state;
 		this.task_priority = task_priority;
-		this.time_start_date = time_start_date;
-		this.time_end_date = time_end_date;
+		this.task_start_date = task_start_date;
+		this.task_end_date = task_end_date;
 		this.mem_no = mem_no;
 		this.cont_no = cont_no;
 		this.cont_kind = cont_kind;
@@ -160,10 +189,11 @@ public class TaskDTO {
 		this.tim_cont = tim_cont;
 		this.tim_date = tim_date;
 		this.pro_no = pro_no;
+		this.mem_email = mem_email;
+		this.mem_name = mem_name;
+		this.pro_name = pro_name;
 	}
 
-
-	
 	
 
 	

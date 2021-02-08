@@ -6,6 +6,7 @@ import org.apache.naming.java.javaURLContextFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,7 +51,13 @@ public class TaskController {
 		return "task/taskView";
 	}
 	@RequestMapping("/taskBasic.do")
-	public String taskBasic() {
+	public String taskBasic(@RequestParam(value = "mem_email",required = false,defaultValue = "jj@naver.com")String mem_email, Model model) {
+		
+		System.out.println(mem_email);
+		// 전체 업무 리스트 조회
+		List<Map<String, Object>> taskList = taskService.selectAllTask(mem_email);
+		model.addAttribute("taskList", taskList);
+		
 		return "task/taskBasic";
 	}
 	@Autowired
@@ -89,11 +96,11 @@ public class TaskController {
 		int resultTaskPi = taskService.insertTaskPiService(taskDTO);
 		
 		/*시작날짜,마감날짜,시작마감일*/
-		if(taskDTO.getTime_start_date() != null && taskDTO.getTime_end_date().equals("")) {
+		if(taskDTO.getTask_start_date() != null && taskDTO.getTask_end_date().equals("")) {
 			int resultTaskStart = taskService.insertTaskStartDateService(taskDTO);	
-		}else if(taskDTO.getTime_end_date() != null && taskDTO.getTime_start_date().equals("")) {
+		}else if(taskDTO.getTask_end_date() != null && taskDTO.getTask_start_date().equals("")) {
 			int resultTaskEnd = taskService.insertTaskEndDateService(taskDTO);	
-		}else if(!taskDTO.getTime_start_date().equals("") && !taskDTO.getTime_end_date().equals("")) {
+		}else if(!taskDTO.getTask_start_date().equals("") && !taskDTO.getTask_end_date().equals("")) {
 			int resultTaskDate = taskService.insertTaskDateService(taskDTO);
 		}
 		/*타임라인관련*/

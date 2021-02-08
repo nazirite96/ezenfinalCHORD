@@ -23,6 +23,10 @@ public interface TaskService {
 	public int insertTaskTimService(TaskDTO taskDTO);
 	////////////////////////////////////////////////////////
 	
+	/*전체업무 조회*/
+	List<Map<String, Object>> selectAllTask(String mem_email);
+	
+	
 	/*업무글 수정*/
 	public int updateTask(TaskDTO taskDTO);
 	
