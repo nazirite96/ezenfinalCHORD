@@ -1,5 +1,7 @@
 package com.ezen.chord.task.dao.imple;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +46,7 @@ public class TaskDAOImple implements TaskDAO {
 	@Override
 	public int insertTaskStartDateDAO(TaskDTO taskDTO) {
 		int result = sqlMap.insert("insertTaskStartDate", taskDTO);
-		System.out.println(taskDTO.getTime_start_date()+"dao부분");
+		System.out.println(taskDTO.getTask_start_date()+"dao부분");
 
 		return result;
 	}
@@ -54,7 +56,7 @@ public class TaskDAOImple implements TaskDAO {
 	@Override
 	public int insertTaskEndDateDAO(TaskDTO taskDTO) {
 		int result = sqlMap.insert("insertTaskEndDate", taskDTO);
-		System.out.println(taskDTO.getTime_end_date()+"dao부분");
+		System.out.println(taskDTO.getTask_end_date()+"dao부분");
 		return result;
 	}
 	
@@ -62,8 +64,8 @@ public class TaskDAOImple implements TaskDAO {
 	@Override
 	public int insertTaskDateDAO(TaskDTO taskDTO) {
 		int result = sqlMap.insert("insertTaskDate", taskDTO);
-		System.out.println(taskDTO.getTime_start_date()+"dao부분,s");
-		System.out.println(taskDTO.getTime_end_date()+"dao부분,e");
+		System.out.println(taskDTO.getTask_start_date()+"dao부분,s");
+		System.out.println(taskDTO.getTask_end_date()+"dao부분,e");
 		return result;
 	}
 	
@@ -73,6 +75,13 @@ public class TaskDAOImple implements TaskDAO {
 		int result = sqlMap.insert("insertTaskTim", taskDTO);
 		
 		return result;
+	}
+	
+	/*전체업무 조회*/
+	@Override
+	public List<TaskDTO> selectAllTask(String mem_id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

@@ -102,7 +102,7 @@
 					<i class="far fa-calendar-plus"></i>
 				</dt>
 				<dd class="posi-re">
-					<input type="text" name="time_start_date" placeholder="시작일설정"  id="datepicker1" class="datepicker-here" data-timepicker="true" data-time-format='hh:ii' readonly>
+					<input type="text" name="task_start_date" placeholder="시작일설정"  id="datepicker1" class="datepicker-here" data-timepicker="true" data-time-format='hh:ii' readonly>
 				</dd>
 			</dl>
 		</div>
@@ -115,7 +115,7 @@
 					<i class="far fa-calendar-minus"></i>
 				</dt>
 				<dd class="posi-re">
-					<input type="text" name="time_end_date" placeholder="마감일설정" id="datepicker2" class="datepicker-here"data-timepicker="true" data-time-format='hh:ii' readonly>
+					<input type="text" name="task_end_date" placeholder="마감일설정" id="datepicker2" class="datepicker-here"data-timepicker="true" data-time-format='hh:ii' readonly>
 				</dd>
 			</dl>
 		</div>

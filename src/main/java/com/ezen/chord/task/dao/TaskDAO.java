@@ -1,6 +1,7 @@
 package com.ezen.chord.task.dao;
 
 import com.ezen.chord.task.dto.TaskDTO;
+import java.util.*;
 
 public interface TaskDAO {
 	
@@ -21,6 +22,9 @@ public interface TaskDAO {
 	/*업무글 등록(타임라인테이블)*/
 	public int insertTaskTimDAO(TaskDTO taskDTO);
 	////////////////////////////////////////////////////////
+	
+	/*전체업무 조회*/
+	List<TaskDTO> selectAllTask(String mem_id);
 	
 	
 	/*업무글 수정*/
