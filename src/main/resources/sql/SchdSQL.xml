@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="taskMapper">
+	<!-- 일정 시퀀스 조회 -->
+	<select id="getSchdSeq" resultType="int">
+		select schedule_SEQ.nextval from dual
+	</select>
+	
+	<insert id="insertSchd" parameterType="SchdDTO">
+	    insert into schedule values(
+	    #{schd_no},#{schd_loc},#{schd_memo}
+	    )
+	</insert>
+
+	
+</mapper>

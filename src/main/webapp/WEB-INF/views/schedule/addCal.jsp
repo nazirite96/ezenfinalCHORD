@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,6 +31,12 @@ function show(){
 				'검색'+searchInput+'\n'+
 				'내용'+content)
 	}
+	document.frm.submit();
+}
+var test="";
+function show02(member){
+	test=test+member+", ";
+	$('#mem_no').val(test);
 }
 </script>
 
@@ -38,7 +45,7 @@ function show(){
 <section>
 <div id="tab-" class="tabs-content con-schedule">
 	<!-- 일정:s -->
-	<form action="#" name="frm" method="POST">
+	<form action="#" name="frm" method="get">
 		<!-- tab-con-box:s -->
 		<input type="hidden" name="pro_no" value="${proVo.pro_no }">
 		
@@ -46,7 +53,7 @@ function show(){
 			<!-- 일정제목:s -->
 			<div class="input-box">
 				<input type="text" class="font-bold size-18"
-					name="schd_title" placeholder="일정 제목을 입력하세요."
+					name="tim_cont" placeholder="일정 제목을 입력하세요."
 					required="required" style="width: 90%">
 			</div>
 			<!-- 일정제목:f -->
@@ -60,15 +67,34 @@ function show(){
 					<dd>
 						<input type="text" required="required"
 							placeholder="시작날짜 - 종료날짜" data-range="true"
-							data-multiple-dates-separator="   -   "
+							data-multiple-dates-separator="  -  "
 							class="datepicker-here" id="datetime" name="datetime" data-timepicker="true" data-time-format='hh:ii'
 							style="width: 100%" />
 					</dd>
 				</dl>
 			</div>
 			<!-- 일정 시간 설정:f -->
-	
-	
+			<!-- 참가자 s -->
+		<div class="input-box martop-15" style="height: inherit">
+			<dl>
+				<dt class="maright-20">
+					<i class="fas fa-user-plus"></i>
+				</dt>
+				<dd class="posi-re">
+					<!-- 담당자 추가 input -->
+					<input type="text" id="mem_no" placeholder="참가자 추가" onfocus="fn_taskManagerFocus(this)" />
+					<!-- 담당자 리스트 -->
+					<div class="participants"></div>
+					<c:forEach var="mbs" items="${members }">
+						<a href="javascript:show02('${mbs }')">${mbs }</a><br>
+					</c:forEach>
+					<!-- 프로젝트 참여자 리스트(담당자 설정 리스트) s -->
+					<div class="pro-user-list"></div>
+					<!-- 프로젝트 참여자 리스트(담당자 설정 리스트) e -->
+				</dd>
+			</dl>
+		</div>
+		<!-- 참가자 e -->
 			<!-- 위치 검색:s -->
 			<div class="input-box martop-15">
 				<dl>
@@ -83,8 +109,6 @@ function show(){
 			</div>
 			<!-- 위치 검색:f -->
 			<div id="map" style="width:100%; height: 300px; display: none;"></div>
-						<input type="hidden" id="schd_lat" name="schd_lat">
-						<input type="hidden" id="schd_lon" name="schd_lon">
 	
 			<!-- 메모:s -->
 			<div class="input-box martop-15">
