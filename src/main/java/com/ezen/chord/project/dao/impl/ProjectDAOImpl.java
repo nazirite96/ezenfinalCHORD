@@ -31,5 +31,14 @@ public class ProjectDAOImpl implements ProjectDAO{
 		return sqlMap.selectOne("getPro", pro_no);
 	}
 	
-	
+	@Override
+	public int deletePro(int pro_no) {
+		// TODO Auto-generated method stub
+		return sqlMap.delete("deletePro", pro_no);
+	}
+	@Override
+	public int updatePro(ProjectDTO proDTO) {
+		// TODO Auto-generated method stub
+		return sqlMap.update("updatePro", proDTO);
+	}
 }

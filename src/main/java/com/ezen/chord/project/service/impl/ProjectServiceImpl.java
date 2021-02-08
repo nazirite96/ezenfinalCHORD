@@ -49,7 +49,7 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public int updatePro(ProjectDTO proDTO) {
 		// TODO Auto-generated method stub
-		return 0;
+		return projectDAO.updatePro(proDTO);
 	}
 
 	@Override
@@ -76,5 +76,10 @@ public class ProjectServiceImpl implements ProjectService {
 		return result;
 	}
 	
+	@Override
+	public int deletePro(int pro_no) {
+		// TODO Auto-generated method stub
+		return projectDAO.deletePro(pro_no);
+	}
 	
 }

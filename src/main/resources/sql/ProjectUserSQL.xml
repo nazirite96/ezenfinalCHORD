@@ -38,4 +38,8 @@
 			select * from project_user
 			where mem_no = #{mem_no} and pro_no = #{pro_no}
 		</select>
+		<delete id="deleteProUser" parameterType="hashmap">
+			delete project_user
+			where mem_no = #{mem_no} and pro_no = #{pro_no}
+		</delete>
 	</mapper>

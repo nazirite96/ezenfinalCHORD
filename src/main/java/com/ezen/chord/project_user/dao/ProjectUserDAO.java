@@ -21,4 +21,6 @@ public interface ProjectUserDAO {
 	public List<ProjectUserDTO> selectNotInvitedProUser(int pro_no,int com_no);
 	
 	public ProjectUserDTO chkProUser(int mem_no,int pro_no);		
+	
+	public int deleteProUser(int mem_no , int pro_no);
 }

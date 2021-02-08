@@ -72,4 +72,12 @@ public class ProjectUserDAOImpl implements ProjectUserDAO {
 	public int insertProUser(ProjectUserDTO proUserDTO) {
 		return sqlMap.insert("insertProUser",proUserDTO);
 	}
+	@Override
+	public int deleteProUser(int mem_no, int pro_no) {
+		// TODO Auto-generated method stub
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("pro_no", pro_no);
+		map.put("mem_no", mem_no);
+		return sqlMap.delete("deleteProUser", map);
+	}
 }

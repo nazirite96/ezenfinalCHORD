@@ -9,5 +9,7 @@ public interface ProjectUserService {
 	public int updateProUserColor(ProjectUserDTO proUserDTO);
 	
 	public ProjectUserDTO getProUser(int pro_no, int mem_no);
+	
+	public int deleteProUser(int pro_no, int mem_no);
 
 }
