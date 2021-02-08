@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +23,7 @@ import com.ezen.chord.project.dto.ProjectDTO;
 @Service
 public class FilesServiceImpl implements FilesService {
 	
-	public final String PATH="C:\\JSP\\upload";
+	public final String PATH="resources/files";
 	public String CRPATH="";	
 	public String PRONAME="";
 	public String STATE="";
@@ -71,6 +74,7 @@ public class FilesServiceImpl implements FilesService {
 	@Override
 	public int insertFile(FilesDTO filedto,String original,String name,String size,int mem_no) {
 		// TODO Auto-generated method stub
+		
 		filedto.setFile_name(name);
 		filedto.setFile_path(PATH+File.separator+PRONAME+File.separator+CRPATH);
 		filedto.setFile_upload(original);
@@ -122,6 +126,12 @@ public class FilesServiceImpl implements FilesService {
 		return filedao.log_fileInsert(map);
 	}
 	@Override
+	public List<String> pathList() {
+		// TODO Auto-generated method stub
+		return filedao.pathList();
+	}
+	
+	@Override
 	public String checkName(MultipartFile files) {
 		int count = 0;
 		String name =files.getOriginalFilename();
@@ -153,11 +163,10 @@ public class FilesServiceImpl implements FilesService {
 		 return name;
 	}
 	@Override
-	public void copyInto( MultipartFile upload, String checkName) {
-		System.out.println(PATH+File.separator+PRONAME+File.separator+CRPATH+File.separator+checkName);
+	public void copyInto( MultipartFile upload, String checkName,String serv) {
 		try {
 			byte bytes[]=upload.getBytes();
-			File outFile=new File(PATH+File.separator+PRONAME+File.separator+CRPATH+File.separator+checkName);
+			File outFile=new File(serv+PATH+File.separator+PRONAME+File.separator+CRPATH+File.separator+checkName);
 			FileOutputStream fos=new FileOutputStream(outFile);
 			fos.write(bytes);
 			fos.close();
@@ -244,5 +253,24 @@ public class FilesServiceImpl implements FilesService {
 			f.delete();
 		}
 	}
-
+	@Override
+	public void createProfolder(String pro_name,String realpath) {
+		// TODO Auto-generated method stub
+	File f= new File(realpath+PATH+File.separator+pro_name);
+			f.mkdir();
+	}
+	@Override
+	public void delProfolder(String pro_name, String realpath) {
+		// TODO Auto-generated method stub
+		File f = new File(realpath+PATH+File.separator+pro_name);
+		folderDel(pro_name, realpath);
+	}
+	@Override
+	public void changePro(String pro_name, String realpath) {
+		// TODO Auto-generated method stub
+		CRPATH="";
+		PRONAME="";
+		STATE="";
+		File f = new File(realpath+PATH+File.separator+pro_name);
+	}
 }

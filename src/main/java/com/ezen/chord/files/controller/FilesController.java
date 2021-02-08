@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,8 +26,10 @@ import com.ezen.chord.files.service.impl.FilesServiceImpl;
 @Controller
 public class FilesController {
 	
+	
 	@Autowired
 	FilesServiceImpl fileSerImp;
+	
 	
 	
 	/**
@@ -38,11 +41,13 @@ public class FilesController {
 			@RequestParam(value = "del", defaultValue = "")String del,
 			@RequestParam(value = "projectName", defaultValue = "")String projectName,
 			HttpServletRequest request) {
+		
 		HttpSession session=request.getSession();
-		
 		session.setAttribute("memNo", 2);/////////////////////////////이건 지울거
-		File f = new File(fileSerImp.PATH+File.separator+fileSerImp.CRPATH);
+		String serv =request.getSession().getServletContext().getRealPath("/");
 		
+		File f = new File(serv+fileSerImp.PATH);
+		List<String> pathList=fileSerImp.pathList();
 		List<FilesDTO> allFileList=null;
 		List<FilesDTO> partFileList=null;
 		
@@ -50,34 +55,34 @@ public class FilesController {
 			
 		}else {
 			fileSerImp.PRONAME=projectName;
-			new File(fileSerImp.PATH+File.separator+fileSerImp.PRONAME);
+			new File(serv+fileSerImp.PATH+File.separator+fileSerImp.PRONAME);
 		}
 		
 		if(!foldername.equals("")) {
-			f = new File(fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator+foldername);
+			f = new File(serv+fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator+foldername);
 			if(f.exists()) {
-				fileSerImp.CRPATH+=File.separator+foldername;
+				fileSerImp.CRPATH+=foldername+File.separator;
 			}
 		}else {
 			fileSerImp.CRPATH=fileSerImp.CRPATH;
 		}
-		System.out.println(fileSerImp.STATE);
 		
 		if(fileSerImp.CRPATH.equals("")) {
 			allFileList=fileSerImp.getAllFiles();
-			//int state1=Integer.parseInt(state);
 			del="";
 		}
 		
-		if(!del.equals("")) {	
-			int fullindex=fileSerImp.CRPATH.lastIndexOf("\\");
-			String lastpath=fileSerImp.CRPATH.substring(0,fullindex);// 마지막 결로를 누르면 이자식이 저장되면됨
+		if(!del.equals("")) {
+			int test=fileSerImp.CRPATH.length()-1;
+			String test2=fileSerImp.CRPATH.substring(0, test);
+			int fullindex=test2.lastIndexOf("\\");
+			String lastpath=fileSerImp.CRPATH.substring(0,fullindex+1);// 마지막 결로를 누르면 이자식이 저장되면됨
 			fileSerImp.CRPATH=lastpath;
 		}
 		String dbpath=fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH;
-		System.out.println(dbpath);
+		System.out.println(serv+dbpath);
 		partFileList=fileSerImp.getDBPath(dbpath);
-		f = new File(dbpath);
+		f = new File(serv+dbpath);
 		File files[] = f.listFiles();
 		ModelAndView mav = new ModelAndView();
 			ArrayList<String> folder= new ArrayList<String>();
@@ -87,6 +92,11 @@ public class FilesController {
 					folder.add(name);
 				}
 			}
+			
+
+			session.setAttribute("pathList", pathList);
+			
+			
 			mav.addObject("folder", folder);
 			mav.addObject("allFileList", allFileList);
 			mav.addObject("partFileList", partFileList);
@@ -95,6 +105,7 @@ public class FilesController {
 			mav.addObject("clickproject", fileSerImp.PRONAME);
 			mav.addObject("proName",fileSerImp.getproName(2));
 			mav.setViewName("files/files");
+			
 		return mav;
 	}
 	@RequestMapping("/pageReload.do")
@@ -110,22 +121,23 @@ public class FilesController {
 	 * */
 	@RequestMapping("/upload.do")
 	public ModelAndView uploadfiles(FilesDTO filedto,
-			HttpServletRequest request,
-			@RequestParam("files")List<MultipartFile> files) {
-		
+			@RequestParam("files")List<MultipartFile> files,
+			HttpServletRequest request) {
 		HttpSession session=request.getSession();
-		session.setAttribute("memNo", 2);/////////////////////////////이건 지울거
 		int mem_no = (Integer) session.getAttribute("memNo");
+
+		String serv =request.getSession().getServletContext().getRealPath("/");
 		
+		filedto.getFile();
 		for(int i=0;i<files.size();i++) {
 			String name=fileSerImp.checkName(files.get(i));
 			String original=files.get(i).getOriginalFilename();
 			Long number=files.get(i).getSize();
 			String size=fileSerImp.returnFileSize(number);
-			fileSerImp.copyInto(files.get(i), name);
+			fileSerImp.copyInto(files.get(i), name,serv);
 			fileSerImp.insertFile(filedto, original, name, size, mem_no);
 		}
-		ModelAndView mav = new ModelAndView();
+		ModelAndView mav= new ModelAndView();
 		mav.setViewName("files/insertFiles");
 		return mav;
 	}
@@ -139,6 +151,13 @@ public class FilesController {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("files/insertFiles");
 		return mav;
+	}
+	
+	@RequestMapping("/close.do")
+	public String closepage() {
+		fileSerImp.CRPATH="";
+		fileSerImp.PRONAME="";
+		return "redirect:/";
 	}
 	/**
 	 * 요소들을 보여줄 거임
@@ -173,24 +192,26 @@ public class FilesController {
 	/**
 	 *  파일 이동 관련 메섯흐
 	 * */
+	
 	@RequestMapping("/moveList.do")
 	public ModelAndView getAllFiles(@RequestParam(value="chkList",defaultValue = "")List<String> chkList,
 			@RequestParam(value="foldername",defaultValue = "")String foldername,
-			@RequestParam(value="state",defaultValue = "")int state) {
+			@RequestParam(value="state",defaultValue = "0")int state,
+			HttpServletRequest request) {
+		String serv =request.getSession().getServletContext().getRealPath("/");
 		
 		String beforePath=null;
 		String afterPath=null;
 		if(state==1) {
-			beforePath =fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator;
-			afterPath=fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator+foldername+File.separator;
+			beforePath =serv+fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator;
+			afterPath=serv+fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator+foldername+File.separator;
 			for(int i=0;i<chkList.size();i++) {
 				fileSerImp.fileMove(beforePath+chkList.get(i),afterPath+chkList.get(i));
-				fileSerImp.updateFatch(chkList.get(i), fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator+foldername);
+				fileSerImp.updateFatch(chkList.get(i), fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+foldername+File.separator);
 			}
 		}else {
-			beforePath=fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator;
-			
-			afterPath =fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator;
+			beforePath=serv+fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator;
+			afterPath =serv+fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator;
 			for(int i=0;i<chkList.size();i++) {
 				fileSerImp.fileMove(beforePath+chkList.get(i),afterPath+chkList.get(i));
 				fileSerImp.updateFatch(chkList.get(i), fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator);
@@ -201,20 +222,23 @@ public class FilesController {
 			mav.setViewName("files/files");
 		return mav;
 	}
+	
 	/**
 	 * 자자 너는 삭제를 시킬것이다.
 	 * */
 	@RequestMapping("/delFileAndFolder.do")
 	public ModelAndView delfileAndfolder(
 			@RequestParam(value="filename",defaultValue = "")String filename,
-			@RequestParam(value="state",defaultValue = "")int state) {
+			@RequestParam(value="state",defaultValue = "")int state,
+			HttpServletRequest request) {
+		String serv=request.getSession().getServletContext().getRealPath("/");
 		//1은 파일
-		String path=fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH;
+		String path=serv+fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH;
 		if(state==1) {
 			fileSerImp.delFile(filename);
 			fileSerImp.fileDelete(filename);
 		}else{
-			fileSerImp.delDBPath(path+File.separator+filename+File.separator);
+			fileSerImp.delDBPath(fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+filename+File.separator);
 			fileSerImp.folderDel(filename, path);
 		}
 			ModelAndView mav=new ModelAndView();
@@ -227,17 +251,19 @@ public class FilesController {
 	 * */
 	@RequestMapping("/folderAdd.do")
 	public ModelAndView getAllFolder(
-			@RequestParam(value = "createfolder",defaultValue ="")String createfolder) {
+			@RequestParam(value = "createfolder",defaultValue ="")String createfolder,
+			HttpServletRequest request) {
+			String serv =request.getSession().getServletContext().getRealPath("/");
 		ModelAndView mav = new ModelAndView();
 		if(createfolder.equals("")) {
 			createfolder="새 폴더";
 		}
-		File f = new File(fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator+createfolder);
+		File f = new File(serv+fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator+createfolder);
 		if(f.exists()){
 			String body=createfolder;
 			for(int i =1;i<999;i++) {
 				createfolder=body+" ("+i+")";
-				f = new File(fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator+createfolder);
+				f = new File(serv+fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH+File.separator+createfolder);
 				if(f.mkdir()) {
 					f.mkdir();
 					break;
@@ -253,28 +279,26 @@ public class FilesController {
 	/**
 	 * 다운로드 뷰 
 	 * */
-	@RequestMapping("/filedownload")
-	public ModelAndView filedwnload(
-			@RequestParam("filename")String filename,
-			HttpServletRequest request) {
-		
-		HttpSession session=request.getSession();
-		int mem_no = (Integer) session.getAttribute("memNo");
-		
-		File f = new File(fileSerImp.getPath(filename)+filename);
-		ModelAndView mav = new ModelAndView();
-		if(f.isDirectory()){
-			mav.addObject("foldername", filename);
-			mav.setViewName("redirect:files.do");
-			return mav;
-		}else {
-		int fileNo=fileSerImp.fileNo(filename);
-		int result=fileSerImp.log_fileInsert(fileNo, mem_no);
-		System.out.println(result);
-		mav.addObject("downloadFile", f);
-		mav.setViewName("chordDownload");
-		}
-		
-		return mav;
-	}
+//	@RequestMapping("/filedownload")
+//	public ModelAndView filedwnload(
+//			@RequestParam("filename")String filename,
+//			HttpServletRequest request) {
+//		HttpSession session=request.getSession();
+//		int mem_no = (Integer) session.getAttribute("memNo");
+//		String serv =request.getSession().getServletContext().getRealPath("/");
+//		File f = new File(serv+fileSerImp.getPath(filename)+filename);
+//		ModelAndView mav = new ModelAndView();
+//		if(f.isDirectory()){
+//			mav.addObject("foldername", filename);
+//			mav.setViewName("redirect:files.do");
+//			return mav;
+//		}else {
+//		int fileNo=fileSerImp.fileNo(filename);
+//		fileSerImp.log_fileInsert(fileNo, mem_no);
+//		mav.addObject("downloadFile", f);
+//		mav.setViewName("chordDownload");
+//		}
+//		
+//		return mav;
+//	}
 }

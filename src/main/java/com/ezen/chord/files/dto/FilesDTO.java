@@ -1,6 +1,9 @@
 package com.ezen.chord.files.dto;
 
 import java.sql.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -18,6 +21,8 @@ public class FilesDTO {
 	private int cont_no;  // 컨텐츠 번호
 	private int mem_no;  // 맴버 번호
 	private int pro_no;  // 프로젝트 번호 
+	
+	List<MultipartFile> files;
 	
 	public FilesDTO() {
 		// TODO Auto-generated constructor stub
@@ -38,7 +43,11 @@ public class FilesDTO {
 		this.mem_no = mem_no;
 		this.pro_no = pro_no;
 	}
-
+	
+	public List<MultipartFile> getFile() {
+		return this.files;
+	}
+	
 	public int getFile_no() {
 		return file_no;
 	}

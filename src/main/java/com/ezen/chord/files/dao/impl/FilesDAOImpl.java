@@ -90,4 +90,10 @@ public class FilesDAOImpl implements FilesDAO {
 		int result=sqlMap.insert("log_fileInsert",map);
 		return result;
 	}
+	@Override
+	public List<String> pathList() {
+		// TODO Auto-generated method stub
+		List<String> pathList=sqlMap.selectList("pathList");
+		return pathList;
+	}
 }
