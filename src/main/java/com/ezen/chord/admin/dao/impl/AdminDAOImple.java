@@ -23,8 +23,14 @@ public class AdminDAOImple implements AdminDAO {
 
 	/* 웹 사이트 운영자_회원로그인기록 list */
 	@Override
-	public List adminLogDataDAO() {
-		List result = sqlMap.selectList("chord.admin.admin_getUserlogData");
+	public List<Map<String, Object>> adminLogDataDAO() {
+		List<Map<String, Object>> result = null;
+		try {
+			result = sqlMap.selectList("chord.admin.admin_getUserlogData");
+		} catch (Exception e) {
+			e.getLocalizedMessage();
+		}
+		
 		return result;
 	}
 	
@@ -106,7 +112,7 @@ public class AdminDAOImple implements AdminDAO {
 		System.out.println("회원관리_adminDAO: 관리자 삭제 "+result);
 		return result;
 	}
-	
+
 	/*회사관리자_프로젝트 리스트*/
 	@Override
 	public List<Map<String, Object>> adminProjectListDAO(int com_no) {

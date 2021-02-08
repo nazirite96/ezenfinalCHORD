@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 <style type="text/css">
 	.adminCom_firstDiv{
 		display:grid;
@@ -16,13 +17,13 @@
    	 	padding-top: 10px;
 	}
 	.adminCom_firstDiv ul {
-	    font-size: 20px;
 	    border-right:2px dashed gray;
 	    width:150px;
 	    margin:0px;
 	    padding:35px;
   }
 </style>
+
 </head>
 <body>
 	<ul>

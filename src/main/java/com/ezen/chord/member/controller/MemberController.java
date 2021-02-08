@@ -234,7 +234,7 @@ public class MemberController {
 				session.setAttribute("comNo", userComNo);
 				session.setAttribute("comPwd", comPwd);
 				
-				mav.addObject("msg","로그인 성공~");
+				mav.addObject("msg",userName+"님 환영합니다!");
 				mav.addObject("gopage","index.do");
 				
 				
