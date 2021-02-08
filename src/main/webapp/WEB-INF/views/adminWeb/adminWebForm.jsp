@@ -6,8 +6,29 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript"
-	src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript"> 
+	google.charts.load('current', {'packages':['corechart']}); 
+	google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() { 
+	var data = new google.visualization.DataTable();
+	data.addColumn('string','name');
+	data.addColumn('number','count');
+		
+
+	data.addRows([
+		${result}
+	]);
+
+	var options = { 
+			'title': '접속 통계',
+			pieSliceText: 'label',
+			legend:'none'
+			}; 
+	var chart = new google.visualization.PieChart(document.getElementById('piechart')); 
+	chart.draw(data, options); } 
+</script>
 <style>
 table, th, td {
 	border: solid 1px grey;
@@ -21,12 +42,14 @@ table, th, td {
 		<jsp:include page="/WEB-INF/views/adminWeb/adminWebLeftList.jsp" />
 		<div class="adminWeb_SecDiv">
 			<h1>웹사이트 관리자 페이지 입니다~</h1>
+			<div id="piechart" style="width: 600px; height: 300px;"></div>
 			<form>
 				<table>
 					<thead>
 						<tr>
 							<th>이메일</th>
 							<th>이름</th>
+							<th>회사번호</th>
 							<th>누적 접속 수</th>
 						</tr>
 					</thead>
@@ -40,6 +63,7 @@ table, th, td {
 							<tr>
 								<td id="mail">${list.MAIL}</td>
 								<td id="name">${list.NAME }</td>
+								<td id="conNo">${list.COMNO }</td>
 								<td id="cnt">${list.CNT }</td>
 							</tr>
 						</c:forEach>

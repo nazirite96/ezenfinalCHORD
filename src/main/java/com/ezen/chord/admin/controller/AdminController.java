@@ -36,16 +36,25 @@ public class AdminController {
 	@RequestMapping("/adminWebForm.do")
 	public ModelAndView adminWebForm() {
 
-        List<Map<String,Object>> userLogList = new ArrayList<Map<String,Object>>();
-        try {
-			userLogList = asvc.adminLogDataService();
-		} catch (Exception e) {
-			System.out.println(e.getLocalizedMessage());
+    
+		List<Map<String, Object>> userLogList = asvc.adminLogDataService();
+		
+		
+		//결과가져오기
+		String result = null;
+		for(int i=0;i<userLogList.size();i++) {
+			if(result!=null) {
+				result +=",";
+			}else if(result==null) {
+				result="";
+			}
+			result += " ['"+userLogList.get(i).get("NAME").toString()+"',"+userLogList.get(i).get("CNT")+"] ";
 		}
-        
-        
+
+		
         ModelAndView mav = new ModelAndView();
         mav.addObject("userLogList",userLogList);
+        mav.addObject("result",result);
         mav.setViewName("adminWeb/adminWebForm");
   
    
@@ -83,7 +92,8 @@ public class AdminController {
 	/*회사관리자_회사정보수정*/
 	@RequestMapping("/adminComUpdate.do")
 	public ModelAndView adminComUpdate(CompanyDTO cdto) {
-	
+		
+		//System.out.println(cdto.getCom_name() + cdto.getCom_no() + cdto.getCom_pwd() + cdto.getCom_sector());
 		
 		int comResult = asvc.adminComUpdateService(cdto);
 		String msg = comResult>0?"성공~":"실패~";
@@ -119,9 +129,9 @@ public class AdminController {
 		
 		String setfrom = "choongyeon0101@gmail.com";
 		String senderName = "chord";
-		String toMail = req.getParameter("receiveMail"); 
-		String subject = "chord 회사 초대 메일입니다."; 
-		String contents = "회사 비밀번호 앞자리[ "+com_no+" ] 뒷자리[ "+com_pwd+" ] 입니다.";
+		String toMail = req.getParameter("receiveMail"); //받는사람
+		String subject = "chord 회사 초대 메일입니다."; //제목
+		String contents = "회사 비밀번호 앞자리[ "+com_no+" ] 뒷자리[ "+com_pwd+" ] 입니다.";//내용 
 		
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
@@ -179,21 +189,22 @@ public class AdminController {
 		
 		if(memGrade.equals("company") || memGrade=="company") {
 			System.out.println("controller 회사 "+ dto.getMem_no());
-			asvc.adminPositionDeleteService(dto.getMem_no()); 
+			asvc.adminPositionDeleteService(dto.getMem_no()); // 관리자 권한 delete
 			
 		}else if(memGrade==null || memGrade.equals("")) {
 			System.out.println("일반 / 프로젝트");
 			Map<String,Integer> map = new HashMap<String,Integer>();
 			map.put("kind_no", dto.getCom_no());
 			map.put("mem_no", dto.getMem_no());
-			asvc.adminPositionInsertService(map);
+			asvc.adminPositionInsertService(map);// position 업데이트해주기 grade insert
 			
 		}
 		
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg","변경완료!");
-		mav.addObject("gopage","adminMemManagementForm.do?com_no="+dto.getCom_no()); 
+		mav.addObject("gopage","adminMemManagementForm.do?com_no="+dto.getCom_no()); // 회원목록
+		//mav.addObject("gopage","adminMemContents.do?com_no="+dto.getCom_no()+"&mem_no="+dto.getMem_no()); // 개인회원 정보
 		mav.setViewName("adminCom/adminMsg");
 		
 		return mav;
@@ -229,7 +240,7 @@ public class AdminController {
 	}
 	
 	/*회사관리자_프로젝트 삭제*/
-	
+
 	
 	
 }

@@ -5,65 +5,195 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author"
+	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+<meta name="generator" content="Hugo 0.80.0">
+<title>HEADER</title>
+
+<link rel="canonical"
+	href="https://getbootstrap.com/docs/4.6/examples/dashboard/">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous">
+	
+<!--아이콘 -->
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"></script>
+
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+		crossorigin="anonymous"></script>
+	<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
+	<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+		integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+		crossorigin="anonymous"></script>
+	<script src="/chord/resources/js/dashboard.js"></script>
+
+<style type="text/css">
+.navbar-default{
+	background-color: #7b9acc ;
+}
+.navbar-default .navbar-nav > li > a {
+    color : #FCF6F5;
+    
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+   	color: #5E5E5E;
+}
+
+.navbar-default .navbar-brand{
+	color : #FCF6F5;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: #5E5E5E;
+}
+
+</style>
 </head>
 <body>
-<h3>header</h3>
-<h4><a href="index.do">index로 가기</a></h4>
-<br>
-<c:set var="sessionMemNo" value="${sessionScope.memNo}"></c:set>
-<c:set var="sessionName" value="${sessionScope.name}"></c:set>
-<c:set var="sessionGrade" value="${sessionScope.grade }"></c:set>
-<c:set var="sessionComNo" value="${sessionScope.comNo }"></c:set>
-<c:choose> 
-<c:when test="${sessionName!=null}">
-	
-	<c:set var="whatGrade" value="${sessionGrade}"></c:set>
+	<c:set var="sessionMemNo" value="${sessionScope.memNo}"></c:set>
+	<c:set var="sessionName" value="${sessionScope.name}"></c:set>
+	<c:set var="sessionGrade" value="${sessionScope.grade }"></c:set>
+	<c:set var="sessionComNo" value="${sessionScope.comNo }"></c:set>
 	<c:choose>
-		<c:when test="${whatGrade=='web_ses'}">
-			<div>
-				${sessionName}님이 로그인 했습니다. 
-				|
-				<a href="adminWebForm.do">관리자설정(사이트)</a> 
-				|
-				<a href="logout.do">로그아웃</a>
-			</div>
-		</c:when>
-		<c:when test="${whatGrade=='com_ses'}">
-			<div>
-				${sessionName}님이 로그인 했습니다. 
-				|
-				<c:url var="comContentsUrl" value="adminCompanyForm.do">
-					<c:param name="com_no">${sessionComNo}</c:param>
-				</c:url>
-				<a href="${comContentsUrl}">관리자설정(회사)</a> 
-				|
-				<a href="logout.do">로그아웃</a>
-			</div>
-		</c:when>
-		<c:when test="${whatGrade=='pro_ses'}">
-			<div>
-				${sessionName}님이 로그인 했습니다. 
-				|
-				<a href="#">관리자설정(프로젝트)</a> 
-				|
-				<a href="logout.do">로그아웃</a>
-			</div>
+		<c:when test="${sessionName!=null}">
+
+			<c:set var="whatGrade" value="${sessionGrade}"></c:set>
+			<c:choose>
+				<c:when test="${whatGrade=='web_ses'}">
+					<!-- 사이트 운영자 -->
+					<nav class="navbar navbar-default navbar-expand-lg">
+						<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
+							href="index.do">[ CHORD ]</a>
+						<button class="navbar-toggler" 
+						  type="button" 
+						  data-toggle="collapse" 
+						  data-target="#navbarNavAltMarkup" 
+						  aria-expanded="false" 
+						  aria-label="Toggle navigation">
+						  <span class="navbar-toggler-icon"></span>
+						</button> 
+						<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+						<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+							<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+								<li class="nav-item nav-link text-nowrap">
+								<a class="nav-link active">${sessionName}님 </a></li>
+								<li class="nav-item nav-link text-nowrap">
+								<a class="nav-link active"
+									href="adminWebForm.do">관리자</a></li>
+								<li class="nav-item nav-link text-nowrap">
+								<a class="nav-link active" href="logout.do">로그아웃</a></li>
+							</ul>
+						</div>
+					</nav>
+				</c:when>
+				<c:when test="${whatGrade=='com_ses'}">
+				<!-- 회사 관리자 -->
+					<nav class="navbar navbar-default navbar-expand-lg">
+						<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="index.do">[ CHORD ]</a>
+						  <button class="navbar-toggler" 
+						  type="button" 
+						  data-toggle="collapse" 
+						  data-target="#navbarNavAltMarkup" 
+						  aria-expanded="false" 
+						  aria-label="Toggle navigation">
+						  <span class="navbar-toggler-icon"></span>
+						  </button>
+						<input 
+						class="form-control mr-sm-2" 
+						type="text" 
+						placeholder="Search" 
+						aria-label="Search">
+						<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+							<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+								<li class="nav-item nav-link text-nowrap">
+								<a class="nav-link"><img src="resources/img/user.png" width="27" height="27">${sessionName}님 </a></li>
+								<li class="nav-item nav-link text-nowrap">
+								<a class="nav-link" href="#"><img src="resources/img/header/chat.png" width="25" height="25"></a></li>
+								<c:url var="comContentsUrl" value="adminCompanyForm.do">
+									<c:param name="com_no">${sessionComNo}</c:param>
+								</c:url>
+								<li class="nav-item nav-link text-nowrap">
+								<a class="nav-link" href="${comContentsUrl}">관리자</a></li>
+								<li class="nav-item nav-link text-nowrap">
+								<a class="nav-link" href="logout.do">로그아웃</a></li>
+							</ul>
+						</div>
+					</nav>
+				</c:when>
+				<c:when test="${whatGrade=='pro_ses'}">
+					<div>
+						${sessionName}님이 로그인 했습니다. | <a href="#">관리자설정(프로젝트)</a> | 
+						<a href="logout.do">로그아웃</a>
+					</div>
+				</c:when>
+				<c:otherwise>
+				<nav class="navbar navbar-default navbar-expand-lg">
+					<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="index.do">[ CHORD ]</a>
+						  <button class="navbar-toggler" 
+						  type="button" 
+						  data-toggle="collapse" 
+						  data-target="#navbarNavAltMarkup" 
+						  aria-expanded="false" 
+						  aria-label="Toggle navigation">
+						  <span class="navbar-toggler-icon"></span>
+						  </button>
+						<input 
+						class="form-control mr-sm-2" 
+						type="text" 
+						placeholder="Search" 
+						aria-label="Search">
+					<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+						<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+							<li class="nav-item nav-link text-nowrap">
+								<a class="nav-link">${sessionName}님 </a></li>
+							<li class="nav-item nav-link text-nowrap">
+								<a class="nav-link" href="#"><img src="resources/img/header/chat.png" width="25" height="25"></a></li>
+	 						<li class="nav-item nav-link text-nowrap">
+								<a class="nav-link" href="logout.do">로그아웃</a></li>
+						</ul>
+					</div>						
+				</nav>
+				</c:otherwise>
+			</c:choose>
 		</c:when>
 		<c:otherwise>
-			<div>
-				${sessionName}님이 로그인 했습니다. | <a href="logout.do">로그아웃</a>
-			</div>
+			<nav class="navbar navbar-default navbar-expand-lg">
+				<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="index.do">[ CHORD ]</a>
+					<button class="navbar-toggler" 
+						  type="button" 
+						  data-toggle="collapse" 
+						  data-target="#navbarNavAltMarkup" 
+						  aria-expanded="false" 
+						  aria-label="Toggle navigation">
+						  <span class="navbar-toggler-icon"></span>
+					</button>
+				<div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+					<ul class="navbar-nav">
+						<li class="nav-item nav-link text-nowrap ">
+							<a class="nav-link float-right" href="memJoinForm.do">회원가입</a></li>
+					 	<li class="nav-item nav-link text-nowrap ">
+					 		<a class="nav-link float-right" href="loginForm.do">로그인</a></li>	
+					</ul>
+				</div>
+			</nav>
 		</c:otherwise>
 	</c:choose>
-</c:when>
-<c:otherwise> 
-	<div>
-		<a href="memJoinForm.do">회원가입</a> | <a href="loginForm.do">로그인</a>
-	</div>
-</c:otherwise>
-</c:choose>
-
-<hr>
+	<br>
 </body>
 </html>

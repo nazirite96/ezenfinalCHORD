@@ -32,7 +32,6 @@ public class AdminServiceImple implements AdminService {
 		return result;
 	}
 	
-	
 	/*회사 관리자_회사정보 조회 및 수정*/
 	@Override
 	public CompanyDTO adminComUpdateFormService(int com_no) {
@@ -76,7 +75,6 @@ public class AdminServiceImple implements AdminService {
 	@Override
 	public int adminPositionDeleteService(int mem_no) {
 		int result = adao.adminPositionDeleteDAO(mem_no);
-		System.out.println("service 관리자 삭제"+result);
 		return result;
 	}
 	

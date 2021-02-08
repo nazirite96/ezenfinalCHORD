@@ -6,6 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+	#cntId{
+		text-align:center;
+	}
+</style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/header.jsp" />
@@ -20,6 +25,7 @@
 							<th>프로젝트 번호</th>
 							<th>프로젝트 이름</th>
 							<th>프로젝트 생성일</th>
+							<th>참여자 수</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -35,8 +41,8 @@
 									<c:param name="pro_no">${list.PNO}</c:param>
 								</c:url>
 								<td><a href="${proContentsUrl }">${list.PNAME }</a></td>
-								
 								<td>${list.PDATE }</td>
+								<td id="cntId">${list.CNT }</td>
 							</tr>
 						</c:forEach>
 					</tbody>
