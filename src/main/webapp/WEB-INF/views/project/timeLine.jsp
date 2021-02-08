@@ -119,7 +119,7 @@
 			<nav id="sidebarMenu"
 				class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
 				<div class="sidebar-sticky pt-3">
-					<ul class="nav flex-column">
+					<ul class="nav flex-column" >
 						<li class="nav-item"><a class="nav-link active" href="#">
 								<span data-feather="home"></span> 목록보기<span class="sr-only">(current)</span>
 						</a>
@@ -298,7 +298,7 @@
 									<div class="tabs-container">
 										<!-- 글쓰기:s -->
 										<div id="tab-1" class="tabs-content active">
-											<form action="insertTim.do" method="post">
+											<form action="insertTim.do" method="post" enctype="multipart/form-data">
 												<input type="hidden" name="mem_no" value="${mem_no}">
 												<input type="hidden" name="pro_no"
 													value="${proUserDTO.pro_no }"> <input type="hidden"
@@ -330,8 +330,7 @@
 															class="dis-none" onchange="imgUpload(this)"
 															accept="image/*">
 														<!-- 올리기(submit) 버튼 -->
-														<input type="submit" value="올리기"
-															class="article-submit-btn font-bold size-18 color-white text-center default-back-color">
+														<input type="submit" value="올리기" class="article-submit-btn font-bold size-18 color-white text-center default-back-color">
 													</div>
 												</div>
 
@@ -800,7 +799,7 @@
 											<dl>
 												<dt class="posi-re maright-15 cursor-point"
 													onclick="fn_openPopup(this)" data-id="${timeLine.mem_id }"
-													data-nick="${timeLine.mem_nick }"
+													data-nick="${timeLine.mem_no }"
 													data-my="${memVo.mem_id }">
 													<i class="flow-icon icon-circle circle-s"></i> <img
 														src="/chord/resources/img/user-pic-sample.png" width="40">
@@ -1010,7 +1009,7 @@
 													data-size="${timeLine.emoUserList.size() }">
 													<c:choose>
 														<c:when test="${emo_user_chk}">
-															<strong class="me">${memVo.mem_nick }</strong>	님
+															<strong class="me">${memVo.mem_no }</strong>	님
 										<c:if test="${timeLine.emoUserList.size()-1 != 0 }">
 											  외 ${timeLine.emoUserList.size()-1 }명
 										</c:if>
@@ -1051,13 +1050,13 @@
 																	<dt class="posi-re cursor-point"
 																		onclick="fn_openPopup(this)"
 																		data-id="${timeLine.mem_id }"
-																		data-nick="${timeLine.mem_nick }"
+																		data-nick="${timeLine.mem_no }"
 																		data-my="${memVo.mem_id }">
 																		<i class="icon-circle circle-s"></i>
 
 																	</dt>
 																	<dd>
-																		<div class="like-user-name">${emoUserVo.mem_nick }</div>
+																		<div class="like-user-name">${emoUserVo.mem_no }</div>
 																		<div class="like-user-emoticon">
 																			<img src="/emo/view?emo_no=${emoUserVo.emo_no }"
 																				width="40">
@@ -1377,7 +1376,7 @@
 						<!-- 이전화면으로 -->
 <div id="STATICMENU" class="col-xs-12 col-sm-12 col-md-3 col-lg-3 padright-0">
 						<div class="pro-right-box">
-							<a href="/flowolf/pro/main"
+							<a href="proList.do?mem_no=${memNo } "
 								class="pro-prev-btn size-18 default-color"> <i
 								class="fas fa-angle-left maright-15"></i> 이전화면
 							</a>
@@ -1387,15 +1386,15 @@
 						<div class="pro-right-box martop-15">
 							<ul class="pro-gather-nav">
 								<li><a
-									href="/flowolf/files/proFilesBox?pro_no=${proVo.pro_no }">
+									href="#">
 										<i class="fas fa-download color-blue-l"></i> <span
 										class="dis-block size-17 color-gray">파일함</span>
 								</a></li>
-								<li><a href="/flowolf/task/proTask"> <i
+								<li><a href="#"> <i
 										class="fas fa-laptop colo-green-l"></i> <span
 										class="dis-block size-17 color-gray">업무</span>
 								</a></li>
-								<li><a href="/flowolf/schd/callSchd"> <i
+								<li><a href="#"> <i
 										class="far fa-calendar-alt color-red"></i> <span
 										class="dis-block size-17 color-gray">일정</span>
 								</a></li>
@@ -1477,73 +1476,82 @@ function fn_collCancel(){
 						</div>
 						<!-- 초대하기 button : f -->
 
-						<!-- 화상채팅 button : s 
-						<div class="pro-right-box martop-15">
-							<a href="#faceChatPop"
-								class="right-link-btn face-chat-btn back-color-orange color-white">
-								<i class="fas fa-users maright-10"></i>화상회의
-							</a>
-						</div>
-						-->
-						<!-- 화상채팅 button : f -->
+					
 
 						<!-- 프로젝트 채팅 button : s -->
 						<div class="pro-right-box martop-15">
-							<a class="right-link-btn back-color-green-l color-white"
-								id="proChat" style="cursor: pointer;"> <i
-								class="fas fa-comments maright-10"></i>프로젝트 채팅
-							</a>
+							<a class="right-link-btn back-color-green-l color-white" id="proChat" style="cursor: pointer;"> <i
+								class="fas fa-comments maright-10"></i>프로젝트 채팅</a>
 						</div>
 						<!-- 프로젝트 채팅 button : f -->
 
 						<!-- 프로젝트 참여자 리스트 : s -->
 						<div class="pro-right-box pro-right-user-list" data-simplebar>
-
 							<!-- 프로젝트 관리자 : s -->
-							<span
-								class="dis-block float-left marbtm-5 padleft-15 padright-15 color-gray size-16">프로젝트
+							<ul class="nav flex-column block">
+							  <li class="nav-item">
+							    <span class="dis-block marbtm-5 padleft-15 padright-15 color-gray size-16">프로젝트
 								관리자</span>
-							<c:forEach items="${proUserList }" var="proUserVo">
-								<c:if test="${proUserVo.pro_user_man_chk == 'y' }">
+							  </li>
+							  <li class="nav-item">
+							   <c:forEach items="${invitedProUserList }" var="manager">
+								<c:if test="${manager.pro_user_man_chk == 'manager' }">
 									<dl class="marbtm-0 cursor-point" onclick="fn_openPopup(this)"
-										data-id="${proUserVo.mem_id }"
-										data-nick="${proUserVo.mem_nick }" data-my="${memVo.mem_id }">
+										data-id="${manager.mem_no }"
+										data-nick="${manager.mem_no }" data-my="${manager.mem_no }">
 										<dt class="posi-re">
 											<i class="icon-circle circle-xs cursor-point"></i> <img
-												src="/flowolf/mem/pic?mem_id=${proUserVo.mem_id }"
+												src="/chord/resources/img/sample.png"
 												width="24" class="cursor-point">
 										</dt>
 										<dd>
-											<span class="size-18 color-gray">${proUserVo.mem_nick }</span>
+											<span class="size-18 color-gray">${manager.mem_no }번 이름</span>
 											<!-- <i class="far fa-comment size-18 cursor-point"></i> -->
 										</dd>
 									</dl>
 								</c:if>
 							</c:forEach>
-
-							<!-- 프로젝트 관리자 : f -->
-
-							<!-- 프로젝트 참여자 : s -->
-							<span
+							
+							
+							  </li>
+							  <!-- 프로젝트 관리자 : f -->
+							  <!-- 프로젝트 참여자 : s -->
+							  <li class="nav-item">
+							    <span
 								class="dis-block float-left martop-15 marbtm-5 padleft-15 padright-15 color-gray size-16">프로젝트
-								참여자(${proUserList.size()-1 })</span>
-							<c:forEach items="${proUserList }" var="proUserVo">
-								<c:if test="${proUserVo.pro_user_man_chk == 'n' }">
+								참여자(${invitedProUserList.size()-1 })</span>
+							  </li>
+							  <li class="nav-item">
+							   <c:forEach items="${invitedProUserList }" var="invitedUser">
+								<c:if test="${invitedUser.pro_user_man_chk == 'normal' }">
 									<dl class="marbtm-0 cursor-point" onclick="fn_openPopup(this)"
-										data-id="${proUserVo.mem_id }"
-										data-nick="${proUserVo.mem_nick }" data-my="${memVo.mem_id }">
+										data-id="${invitedUser.mem_no }번 id"
+										data-nick="${invitedUser.mem_no }" data-my="${invitedUser.mem_no }">
 										<dt class="posi-re">
 											<i class="icon-circle circle-xs cursor-point"></i> <img
-												src="/flowolf/mem/pic?mem_id=${proUserVo.mem_id }"
+												src="/chord/resources/img/sample.png"
 												width="24" class="cursor-point">
 										</dt>
 										<dd>
-											<span class="size-18 color-gray">${proUserVo.mem_nick }</span>
+											<span class="size-18 color-gray">${invitedUser.mem_no }번 이름</span>
 											<!-- <i class="far fa-comment size-18 cursor-point"></i> -->
 										</dd>
 									</dl>
 								</c:if>
 							</c:forEach>
+							  </li>
+							</ul>
+							
+							
+							
+
+							
+							
+							
+								
+							
+							</div>
+							</div>
 							<!-- 프로젝트 참여자 : f -->
 
 							<form action="/flowolf/chat/insertMulti" method="get"
@@ -1569,55 +1577,7 @@ function fn_collCancel(){
 						</div>
 						<!-- 프로젝트 참여자 리스트 : f -->
 
-						<!-- 화상채팅 layer pop up : s -->
-						<div class="dim-layer">
-							<div class="dimBg"></div>
-
-							<script type="text/javascript">
-		$(function(){
-			var mem_id = "${memVo.mem_id}";
-			var ip = "${ip}";
-			var ipRoom ="${fcVo.fc_ip}";
-			var pro_no = ${proVo.pro_no };			
-			
-			$(".face-chat-btn").on("click", function(){
-				if(ipRoom == ''){
-					window.open("https://" + ip + ":9090/flowolf/faceChat/faceChat?ip="+ip+"&mem_id="+mem_id+"&pro_no="+pro_no, "faceChatMake", "width=700,height=700,top=100,left=100");
-				}else{
-					window.open("https://" + ipRoom + ":9090/flowolf/faceChat/faceChatRoom?mem_id="+mem_id+"&pro_no="+pro_no, "faceChatRoom", "width=700,height=700,top=100,left=100");
-				}
-				
-			});
-			// 화상회의 만들기
-			$(".face-chat-make").on("click", function(){				
-				
-				$.ajax({
-					url : "faceChatMake",
-					method : "POST",
-					dataType : "json", // server로 부터 받을 data type
-					data : {fc_ip:ip, pro_no:pro_no, mem_id:mem_id},
-					success : function(data) {
-						alert("success");
-					},
-					error : function(error) {
-						alert("error");
-					}
-				});
-				
-				window.open("https://" + ip + ":9090/flowolf/faceChat/faceChat?ip="+ip+"&mem_id="+mem_id+"&pro_no="+pro_no, "faceChatMake", "width=1000,height=1000,top=100,left=100");
-				
-			});
-			
-			// 화상회의 참여하기
-			$(".face-chat-room").on("click", function(){
-				window.open("https://" + ipRoom + ":9090/flowolf/faceChat/faceChatRoom?mem_id="+mem_id+"&pro_no="+pro_no, "faceChatRoom", "width=1000,height=1000,top=100,left=100");
-			});
-		});
-		</script>
-							<!-- 	</div> -->
-
-						</div>
-						<!-- 화상채팅 layer pop up : f -->
+						
 
 						<!-- 초대하기  layer pop up : s -->
 						<div class="dim-layer">
@@ -1629,8 +1589,7 @@ function fn_collCancel(){
 								<header class="pop-top border-box text-center">
 									<a href="#"
 										class="posi-ab dis-block over-hidden icon-close btn-close">close</a>
-									<strong class="dis-block size-28 color-black text-center">프로젝트
-										제목</strong>
+									<strong class="dis-block size-28 color-black text-center">${proUserDTO.pro_name }</strong>
 								</header>
 
 								<!-- pop con -->
@@ -1650,56 +1609,16 @@ function fn_collCancel(){
 										</dl>
 									</div>
 
-									<div
-										class="invite-kind-box back-color-white cursor-point martop-15"
-										data-id="inviteProjectMem" onclick="fn_subPopOpen(this)">
-										<dl>
-											<dt class="maright-20 padtop-5 back-color-pupple-l">
-												<i class="fas fa-users size-30 color-white"></i>
-											</dt>
-											<dd>
-												<strong class="dis-block size-24 color-black">프로젝트
-													참여자</strong> <strong class="dis-block size-18 color-gray-l">프로젝트를
-													함께 했던 사람을 초대할 수 있습니다.</strong>
-											</dd>
-										</dl>
-									</div>
-									<div
-										class="invite-kind-box back-color-white cursor-point martop-15"
-										data-id="inviteEmail" onclick="fn_subPopOpen(this)">
-										<dl>
-											<dt class="maright-20 padtop-5 back-color-orange">
-												<i class="fas fa-envelope size-30 color-white"></i>
-											</dt>
-											<dd>
-												<strong class="dis-block size-24 color-black">이메일로
-													초대장 발송</strong> <strong class="dis-block size-18 color-gray-l">초대장을
-													이메일로 발송할 수 있습니다</strong>
-											</dd>
-										</dl>
-									</div>
-									<div
-										class="invite-kind-box back-color-white cursor-point martop-15"
-										onclick="copyToClipboard('http://localhost:8180/proUser/copyTo?pro_no=${proVo.pro_no }&mem_id=${memVo.mem_id }')">
-										<dl>
-											<dt class="maright-20 padtop-5 back-color-red">
-												<i class="fas fa-link size-30 color-white"></i>
-											</dt>
-											<dd>
-												<strong class="dis-block size-24 color-black">초대 링크</strong>
-												<strong class="dis-block posi-re size-18 color-gray-l">
-													<span>https://localhost:9090/flowolf/proUser/copyTo</span>
-													<i class="fas fa-clone cursor-point"
-													onclick="copyToClipboard('http://localhost:8180/proUser/copyTo?pro_no=${proVo.pro_no }&mem_id=${memVo.mem_id }')"></i>
-												</strong>
-											</dd>
-										</dl>
-									</div>
+									
+									
+									
 								</section>
 
 								<!-- 동료초대 :s -->
 								<div id="invitePartner" class="popup-sub-box">
-									<form action="/flowolf/proUser/invite" method="post">
+									<form action="insertProUser.do" method="get">
+										<input type="hidden" name="pro_no" value="${proUserDTO.pro_no }">
+										
 
 										<!-- top : pop invite partner : s -->
 										<div class="pop-top-sub">
@@ -1721,17 +1640,17 @@ function fn_collCancel(){
 
 											<!-- user list:s -->
 											<div class="invite-user-list over-y-scroll">
-												<c:forEach items="${ptnMyList }" var="ptnVo">
-													<dl class="pop-user-list" data-id="${ptnVo.mem_id }"
-														data-no="${proVo.pro_no }"
+												<c:forEach items="${notInvitedProUserList }" var="notInvitedUser">
+													<dl class="pop-user-list" data-memno="${notInvitedUser.mem_no }"
+														data-no="${proUserDTO.pro_no }"
 														onclick="fn_inviteUserAdd(this)">
 														<dt class="maright-10">
 															<i class="icon-circle circle-s"></i> <img
-																src="/mem/pic?mem_id=${ptnVo.mem_id }" width="40">
+																src="/chord/resources/img/sample.png" width="40">
 														</dt>
 														<dd>
-															<strong class="dis-block size-20 color-black">${ptnVo.mem_nick }</strong>
-															<span class="dis-block size-14 color-gray-l">${ptnVo.mem_id }</span>
+															<strong class="dis-block size-20 color-black">${notInvitedUser.mem_no }</strong>
+															<span class="dis-block size-14 color-gray-l">${notIinvitedUser.mem_no }</span>
 															<button type="button" class="invite-add-btn">
 																<i class="fas fa-plus maright-15"></i> <span>추가</span>
 															</button>
@@ -1757,69 +1676,9 @@ function fn_collCancel(){
 								</div>
 								<!-- 동료초대 :f -->
 
-								<!-- 프로젝트 참여자 초대 :s -->
-								<div id="inviteProjectMem" class="popup-sub-box">
-									<form action="/flowolf/proUser/invite" method="post">
+					
 
-										<!-- top : pop invite project member : s -->
-										<div class="pop-top-sub">
-											<i class="fas fa-arrow-left size-20 cursor-point"
-												onclick="fn_popupBack(this)"></i> 프로젝트 참여자 초대하기 <i
-												class="flow-icon icon-close cursor-point"
-												onclick="fn_popSubClose(this)"></i>
-										</div>
-										<!-- top : pop invite project member : f -->
-
-										<!-- content : pop invite project member : s -->
-										<div class="pop-con-sub">
-
-											<!-- 추가된 참여자 리스트가 나올 부분 -->
-											<div class="select-user-list">
-												<span class="user-all-del" onclick="fn_userListDelete(this)">전체
-													삭제</span>
-											</div>
-
-											<!-- user list:s -->
-											<div class="invite-user-list over-y-scroll">
-												<c:forEach items="${getMemProUserList }" var="proUserVo">
-													<dl class="pop-user-list" data-id="${proUserVo.mem_id }"
-														data-no="${proVo.pro_no }"
-														onclick="fn_inviteUserAdd(this)">
-														<dt class="maright-10">
-															<i class="icon-circle circle-s"></i> <img
-																src="/mem/pic?mem_id=${proUserVo.mem_id }" width="40">
-														</dt>
-														<dd>
-															<strong class="dis-block size-20 color-black">${proUserVo.mem_nick }</strong>
-															<span class="dis-block size-14 color-gray-l">${proUserVo.mem_id }</span>
-															<button class="invite-add-btn">
-																<i class="fas fa-plus maright-15"></i> <span>추가</span>
-															</button>
-														</dd>
-													</dl>
-												</c:forEach>
-											</div>
-											<!-- user list:f -->
-										</div>
-										<!-- content : pop invite project member : f -->
-
-										<!-- footer : pop invite project member : s -->
-										<div class="pop-footer-sub">
-											<input type="button"
-												class="invate-frm-submit submit-btn color-white default-back-color"
-												value="초대">
-										</div>
-										<!-- footer : pop invite project member : f -->
-
-									</form>
-								</div>
-								<!-- 프로젝트 참여자 :f -->
-
-								<!-- 이메일 초대 :s -->
-								<div id="inviteEmail" class="popup-sub-box">
-									<!-- <include file="/include/pop_invite_email.jsp" %> -->
-								</div>
-								<!-- 이메일 초대 :f -->
+								
 							</div>
 							<!-- 초대하기 List pop : f -->
 

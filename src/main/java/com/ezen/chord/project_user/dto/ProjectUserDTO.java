@@ -1,6 +1,9 @@
 package com.ezen.chord.project_user.dto;
 
+import java.sql.Date;
+
 public class ProjectUserDTO {
+	
 	
 	private int pro_no; //프로젝트 번호
 	private int mem_no; //참석자
@@ -11,6 +14,18 @@ public class ProjectUserDTO {
 	private String pro_cont;		//조인 프로젝트 - 프로젝트 내용
 	private java.sql.Date pro_date; //조인 프로젝트 - 프로젝트 생성
 	
+	public ProjectUserDTO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public ProjectUserDTO(int pro_no, int mem_no, String pro_user_man_chk, Date pro_user_date, String pro_user_color) {
+		super();
+		this.pro_no = pro_no;
+		this.mem_no = mem_no;
+		this.pro_user_man_chk = pro_user_man_chk;
+		this.pro_user_date = pro_user_date;
+		this.pro_user_color = pro_user_color;
+	}
 	
 	public String getPro_name() {
 		return pro_name;

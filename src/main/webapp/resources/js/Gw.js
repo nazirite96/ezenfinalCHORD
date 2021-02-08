@@ -1682,7 +1682,7 @@ function fn_inviteUserAdd(el) {
 	if (addBtn.children('span').text() == '추가') {
 
 		$.ajax({
-			url: "/proUser/chk?pro_no=" + item.data("no") + "&mem_id=" + id,
+			url: "chkProUser.do?pro_no=" + item.data("no") + "&mem_no=" + item.data("memno"),
 			dataType: "json",
 			success: function(data) {
 				if (data == 1) {
@@ -1696,11 +1696,11 @@ function fn_inviteUserAdd(el) {
 						"<div class=\"select-user-box\" data-id=\"" + id + "\">"
 						+ "<div class=\"posi-re float-left maright-5\">"
 						+ "<i class=\"icon-circle circle-xs-re\"></i>"
-						+ "<img src=\"\" onerror=\"this.src='/image/user-pic-sample.png'\" width=\"24\">"
+						+ "<img src=\"/chord/resources/img/sample.png\"  width=\"24\">"
 						+ "</div>"
 						+ "<strong class=\"float-left size-14 color-black\">" + nick + "</strong>"
 						+ "<i class=\"fas fa-times float-left marleft-10 padtop-5 cursor-point\" onclick=\"fn_userDelete(this)\"></i>"
-						+ "<input type=\"hidden\" name=\"mem_id\" value=\"" + id + "\"/>"
+						+ "<input type=\"hidden\" name=\"mem_no\" value=\"" + item.data("memno") + "\"/>"
 						+ "</div>"
 					);
 

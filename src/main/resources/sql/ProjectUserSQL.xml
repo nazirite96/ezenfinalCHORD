@@ -5,7 +5,7 @@
 	<mapper namespace="projectUserMapper">
 		<insert id="insertProUser" parameterType="projectUserDTO">
 			insert into project_user
-			values(#{pro_no},#{mem_no},#{pro_user_man_chk},sysdate,#{pro_user_color})
+			values(#{pro_no},#{mem_no},#{pro_user_man_chk},sysdate,'default-back-color')
 		</insert>
 		<select id="getListByMemNo" resultType="projectDTO" parameterType="Integer">
 			SELECT A.pro_no,pro_name,pro_cont,pro_date,kind_no,A.mem_no FROM project_user A
@@ -24,5 +24,18 @@
 			left join project p 
 			on p_u.pro_no = p.pro_no
 			where p_u.pro_no = #{pro_no} and p_u.mem_no = #{mem_no}
+		</select>
+		<select id="selectInvitedProUser" resultType="projectUserDTO">
+			select * from project_user
+			where pro_no = #{pro_no}
+		</select>
+		<select id="selectNotInvitedProUser" parameterType="hashMap" resultType="projectUserDTO">
+			SELECT * FROM member A
+			LEFT JOIN (select * from project_user where pro_no = #{pro_no}) B ON
+			A.mem_no = B.mem_no WHERE B.mem_no IS NULL and A.com_no=#{com_no}
+		</select>
+		<select id="chkProUser" parameterType="hashMap" resultType="projectUserDTO">
+			select * from project_user
+			where mem_no = #{mem_no} and pro_no = #{pro_no}
 		</select>
 	</mapper>

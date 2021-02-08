@@ -20,11 +20,6 @@ public class ProjectUserDAOImpl implements ProjectUserDAO {
 	private SqlSessionTemplate sqlMap;
 	
 	
-	@Override
-	public int insertProUser(ProjectUserDTO proUserDTO) {
-		// TODO Auto-generated method stub
-		return sqlMap.insert("insertProUser", proUserDTO);
-	}
 	
 	@Override
 	public List<ProjectDTO> getListByMemNo(int mem_no) {
@@ -49,4 +44,32 @@ public class ProjectUserDAOImpl implements ProjectUserDAO {
 		return sqlMap.selectOne("selectProUserByProAndMem", map);
 	}
 	
+	
+	@Override
+	public List<ProjectUserDTO> selectInvitedProUser(int pro_no) {
+		// TODO Auto-generated method stub
+		return sqlMap.selectList("selectInvitedProUser" , pro_no);
+	}
+	@Override
+	public List<ProjectUserDTO> selectNotInvitedProUser(int pro_no, int com_no) {
+		// TODO Auto-generated method stub
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("pro_no", pro_no);
+		map.put("com_no", com_no);
+		return sqlMap.selectList("selectNotInvitedProUser", map);
+	}
+	
+	@Override
+	public ProjectUserDTO chkProUser(int mem_no, int pro_no) {
+		// TODO Auto-generated method stub
+		Map<String,Integer> map = new HashMap<String,Integer>();
+		map.put("pro_no", pro_no);
+		map.put("mem_no", mem_no);
+		return sqlMap.selectOne("chkProUser", map);
+	}
+	
+	@Override
+	public int insertProUser(ProjectUserDTO proUserDTO) {
+		return sqlMap.insert("insertProUser",proUserDTO);
+	}
 }
