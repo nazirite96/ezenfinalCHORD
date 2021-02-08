@@ -2,6 +2,8 @@ package com.ezen.chord.task.dto;
 
 import java.sql.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class TaskDTO {
 	
 	private int task_no;				//업무번호
@@ -9,10 +11,12 @@ public class TaskDTO {
 	private String task_content;		//업무내용
 	private String task_state;			//업무진행상황
 	private String task_priority;		//업무우선순위
-	private String time_start_kind;		//시작일(s)
-	private String time_end_kind;		//마감일(e)
+	
+	private String time_start_date;		//시작일 시간
+	private String time_end_date;		//마감일 시간
+	
+	
 	private int mem_no;					//멤버번호
-	private Date time_date;				//시작일시간,마감일시간
 	private int cont_no;				//컨텐츠번호
 	private String cont_kind;			//컨텐츠분류
 	private int tim_no;					//타임라인 인덱스
@@ -73,13 +77,6 @@ public class TaskDTO {
 		this.mem_no = mem_no;
 	}
 
-	public Date getTime_date() {
-		return time_date;
-	}
-
-	public void setTime_date(Date time_date) {
-		this.time_date = time_date;
-	}
 
 	public int getCont_no() {
 		return cont_no;
@@ -129,35 +126,34 @@ public class TaskDTO {
 		this.pro_no = pro_no;
 	}
 
-	public String getTime_start_kind() {
-		return time_start_kind;
+	public String getTime_start_date() {
+		return time_start_date;
 	}
 
-	public void setTime_start_kind(String time_start_kind) {
-		this.time_start_kind = time_start_kind;
+	public void setTime_start_date(String time_start_date) {
+		this.time_start_date = time_start_date;
 	}
 
-	public String getTime_end_kind() {
-		return time_end_kind;
+	public String getTime_end_date() {
+		return time_end_date;
 	}
 
-	public void setTime_end_kind(String time_end_kind) {
-		this.time_end_kind = time_end_kind;
+	public void setTime_end_date(String time_end_date) {
+		this.time_end_date = time_end_date;
 	}
 
 	public TaskDTO(int task_no, String task_title, String task_content, String task_state, String task_priority,
-			String time_start_kind, String time_end_kind, int mem_no, Date time_date, int cont_no, String cont_kind,
-			int tim_no, String tim_cont, Date tim_date, int pro_no) {
+			String time_start_date, String time_end_date, int mem_no, int cont_no, String cont_kind, int tim_no,
+			String tim_cont, Date tim_date, int pro_no) {
 		super();
 		this.task_no = task_no;
 		this.task_title = task_title;
 		this.task_content = task_content;
 		this.task_state = task_state;
 		this.task_priority = task_priority;
-		this.time_start_kind = time_start_kind;
-		this.time_end_kind = time_end_kind;
+		this.time_start_date = time_start_date;
+		this.time_end_date = time_end_date;
 		this.mem_no = mem_no;
-		this.time_date = time_date;
 		this.cont_no = cont_no;
 		this.cont_kind = cont_kind;
 		this.tim_no = tim_no;
@@ -165,6 +161,10 @@ public class TaskDTO {
 		this.tim_date = tim_date;
 		this.pro_no = pro_no;
 	}
+
+
+	
+	
 
 	
 	

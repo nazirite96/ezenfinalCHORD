@@ -30,7 +30,7 @@
 	<insert id="insertTaskStartDate" parameterType="taskDTO">
 	insert into time(cont_kind,cont_no,time_kind,time_date)
 	values(
-	#{cont_kind},#{cont_no},'s',#{time_start_date}
+	#{cont_kind},#{cont_no},'s',TO_DATE(#{time_start_date},'YYYY/MM/DD HH24:MI')
 	)
 	</insert>
 	
@@ -38,7 +38,7 @@
 	<insert id="insertTaskEndDate" parameterType="taskDTO">
 	insert into time(cont_kind,cont_no,time_kind,time_date)
 	values(
-	#{cont_kind},#{cont_no},'e',#{time_end_date}
+	#{cont_kind},#{cont_no},'e',TO_DATE(#{time_end_date},'YYYY/MM/DD HH24:MI')
 	)
 	</insert>
 	
@@ -47,11 +47,11 @@
 	insert all 
 	into time(cont_kind,cont_no,time_kind,time_date)
 	values(
-	#{cont_kind},#{cont_no},'s',#{time_start_date}
+	#{cont_kind},#{cont_no},'s',TO_DATE(#{time_start_date},'YYYY/MM/DD HH24:MI')
 	)
 	into time(cont_kind,cont_no,time_kind,time_date)
 	values(
-	#{cont_kind},#{cont_no},'e',#{time_end_date}
+	#{cont_kind},#{cont_no},'e',TO_DATE(#{time_end_date},'YYYY/MM/DD HH24:MI')
 	)
 	select * from dual
 	</insert>
@@ -59,7 +59,7 @@
 	<!-- 업무 등록에 쓰는거 TIM_NO, CONT_KIND, CONT_NO, TIM_CONT, TIM_DATE, PRO_NO, MEM_NO -->
     <insert id="insertTaskTim" parameterType="taskDTO">
     	insert into timeline
-		values (timeline_seq.nextval,#{cont_kind},#{cont_no},#{tim_cont},sysdate,#{pro_no},#{mem_no})
+		values (timeline_seq.nextval,#{cont_kind},0,'jjtest',sysdate,#{pro_no},#{mem_no})
     </insert>
 	
 	<!-- 업무 수정 -->

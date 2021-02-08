@@ -1,5 +1,7 @@
 package com.ezen.chord.task.service.imple;
 
+import java.text.SimpleDateFormat;
+
 import javax.inject.Inject;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -32,18 +34,67 @@ public class TaskServiceImple implements TaskService {
 		return taskDAO.getTaskSeq();
 	}
 	
-	/*업무글 등록*/
+	/*업무글 등록(task table)*/
 	@Override
 	public int insertTaskService(TaskDTO taskDTO) {
 		int result = taskDAO.insertTaskDAO(taskDTO);
 		System.out.println(taskDTO.getTask_title()+"service");
-		System.out.println(taskDTO.getTime_kind()+"service단테스트");
-		String time_kind = taskDTO.getTime_kind();
-		String[] time_kind_s = time_kind.split(",");
-		String test = time_kind_s[0];
-		System.out.println(test+"service단");
 		
+		return result;
+	}
+	
+	/*업무글 등록(담당자)*/
+	@Override
+	public int insertTaskPiService(TaskDTO taskDTO) {
+		int result = taskDAO.insertTaskPiDAO(taskDTO);
+		return result;
+	}
+	
+	/*업무글 등록(시작일)*/
+	@Override
+	public int insertTaskStartDateService(TaskDTO taskDTO) {
+		System.out.println(taskDTO.getTime_start_date()+"시작일");
+		if(taskDTO.getTime_start_date() == null || taskDTO.getTime_start_date().equals("")) {
+			taskDTO.setTime_start_date("1990-01-01");
+			System.out.println(taskDTO.getTime_start_date()+" 시작일 바꾼거");
+		}
+		int result = taskDAO.insertTaskStartDateDAO(taskDTO);
+		return result;
+	}
+	
+	/*업무글 등록(마감일)*/
+	@Override
+	public int insertTaskEndDateService(TaskDTO taskDTO) {
+		System.out.println(taskDTO.getTime_end_date()+"마감일");
+		if(taskDTO.getTime_end_date() == null || taskDTO.getTime_end_date().equals("")) {
+			taskDTO.setTime_end_date("1990-01-01");
+			System.out.println(taskDTO.getTime_end_date()+" 마감일 바꾼거");
+		}		
+		int result = taskDAO.insertTaskEndDateDAO(taskDTO);
 		
+		return result;
+	}
+	
+	/*업무글 등록(시작,마감일)*/
+	@Override
+	public int insertTaskDateService(TaskDTO taskDTO) {
+		
+		if(taskDTO.getTime_start_date() == null || taskDTO.getTime_start_date().equals("")) {
+			taskDTO.setTime_start_date("1990-01-01");
+			System.out.println(taskDTO.getTime_start_date()+" 시작일 바꾼거");
+		}		
+		if(taskDTO.getTime_end_date() == null || taskDTO.getTime_end_date().equals("")) {
+			taskDTO.setTime_end_date("1990-01-01");
+			System.out.println(taskDTO.getTime_end_date()+" 마감일 바꾼거");
+		}
+		int result = taskDAO.insertTaskDateDAO(taskDTO);
+		return result;
+	}
+	
+	/*업무글 등록(타임라인테이블)*/
+	@Override
+	public int insertTaskTimService(TaskDTO taskDTO) {
+		int result = taskDAO.insertTaskTimDAO(taskDTO);
 		return result;
 	}
 	

@@ -36,8 +36,10 @@
 	<br />
 	<input type="hidden" name="mem_no" >
 	<input type="hidden" name="pro_no" >
+	timeline tab write
 	 -->
-<form action="taskInsert.do" name="TaskDTO" enctype="multipart/form-data">	
+<form action="taskInsert.do" name="TaskDTO" enctype="multipart/form-data">
+
 	<div class="tab-con-box">
 		<!-- 업무명 s -->
 		<div class="input-box">
@@ -100,7 +102,7 @@
 					<i class="far fa-calendar-plus"></i>
 				</dt>
 				<dd class="posi-re">
-					<input type="text" name="time_start_date" placeholder="시작일설정"  id="datepicker1" class="datepicker-here" data-timepicker="true" data-time-format='hh:ii'>
+					<input type="text" name="time_start_date" placeholder="시작일설정"  id="datepicker1" class="datepicker-here" data-timepicker="true" data-time-format='hh:ii' readonly>
 				</dd>
 			</dl>
 		</div>
@@ -113,7 +115,7 @@
 					<i class="far fa-calendar-minus"></i>
 				</dt>
 				<dd class="posi-re">
-					<input type="text" name="time_end_date" placeholder="마감일설정" id="datepicker2" class="datepicker-here"data-timepicker="true" data-time-format='hh:ii'>
+					<input type="text" name="time_end_date" placeholder="마감일설정" id="datepicker2" class="datepicker-here"data-timepicker="true" data-time-format='hh:ii' readonly>
 				</dd>
 			</dl>
 		</div>

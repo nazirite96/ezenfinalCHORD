@@ -24,12 +24,57 @@ public class TaskDAOImple implements TaskDAO {
 		return sqlMap.selectOne("getTaskSeq");
 	}
 	
+	/*업무글 등록(task table)*/
 	@Override
 	public int insertTaskDAO(TaskDTO taskDTO) {
 		int result = sqlMap.insert("insertTask", taskDTO);
 		System.out.println(taskDTO.getTask_title()+"dao부분");
 		return result;
 	}
+	
+	/*업무글 등록(담당자)*/
+	@Override
+	public int insertTaskPiDAO(TaskDTO taskDTO) {
+		int result = sqlMap.insert("insertTaskPi", taskDTO);
+		System.out.println(taskDTO.getMem_no()+"dao부분");
+		return result;
+	}
+	
+	/*업무글 등록(시작일)*/
+	@Override
+	public int insertTaskStartDateDAO(TaskDTO taskDTO) {
+		int result = sqlMap.insert("insertTaskStartDate", taskDTO);
+		System.out.println(taskDTO.getTime_start_date()+"dao부분");
+
+		return result;
+	}
+
+	
+	/*업무글 등록(마감일)*/
+	@Override
+	public int insertTaskEndDateDAO(TaskDTO taskDTO) {
+		int result = sqlMap.insert("insertTaskEndDate", taskDTO);
+		System.out.println(taskDTO.getTime_end_date()+"dao부분");
+		return result;
+	}
+	
+	/*업무글 등록(시작,마감일)*/
+	@Override
+	public int insertTaskDateDAO(TaskDTO taskDTO) {
+		int result = sqlMap.insert("insertTaskDate", taskDTO);
+		System.out.println(taskDTO.getTime_start_date()+"dao부분,s");
+		System.out.println(taskDTO.getTime_end_date()+"dao부분,e");
+		return result;
+	}
+	
+	/*업무글 등록(타임라인테이블)*/	
+	@Override
+	public int insertTaskTimDAO(TaskDTO taskDTO) {
+		int result = sqlMap.insert("insertTaskTim", taskDTO);
+		
+		return result;
+	}
+	
 	
 	@Override
 	public int deleteTask(TaskDTO taskDTO) {
