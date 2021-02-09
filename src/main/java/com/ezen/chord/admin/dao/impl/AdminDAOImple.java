@@ -148,7 +148,6 @@ public class AdminDAOImple implements AdminDAO {
 			System.out.println(e.getLocalizedMessage());
 		}
 		return list;
-	}
-	
+	}	
 	
 }

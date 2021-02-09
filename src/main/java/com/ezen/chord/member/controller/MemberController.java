@@ -39,9 +39,9 @@ public class MemberController {
 		int j=0;
 		int com[]=new int[6];
 			
-		for(i=0;i<com.length;i++) {
+		for(i=0;i<com.length;i++) { //현재받은 숫자
 			com[i]=(int)(Math.random()*9+1);
-			for(j=0;j<i;j++) { 
+			for(j=0;j<i;j++) { //이미받은숫자를 담당
 				if(com[i]==com[j]) {
 					i--;
 					break;
@@ -197,8 +197,6 @@ public class MemberController {
 				String grade_type = msvc.login_getGradeService(mdto.getMem_email()); //관리자 타입 가져오기
 				if(grade_type.equals("company")) { // 회사관리자라면,
 					session.setAttribute("grade", "com_ses"); 
-				}else if(grade_type.equals("project")) { //프로젝트 관리자라면,
-					session.setAttribute("grade", "pro_ses");
 				}else if(grade_type.equals("website")) { // 사이트 관리자라면,
 					session.setAttribute("grade", "web_ses");
 				}else { //관리자가 아니라면
@@ -206,7 +204,7 @@ public class MemberController {
 				}
 				
 				MemberDTO userInfo = msvc.login_GetUserInfoService(mdto.getMem_email()); // 해당 회원 정보 가져오기
-				System.out.println(userInfo.getMem_name());
+				
 				String userName = userInfo.getMem_name();//이름가져오기
 				int userNo = userInfo.getMem_no();//멤버넘버가져오기
 				String userEmail = userInfo.getMem_email(); // 이메일가져오기
@@ -272,7 +270,37 @@ public class MemberController {
 		return mav;
 	}
 	
+	/******************************************* 마이 페이지 *******************************************/
 	
+	/*마이페이지*/
+	@RequestMapping("/goMyPage.do")
+	public ModelAndView myPage(int mem_no) {
+		MemberDTO memResult = msvc.myPageService(mem_no);
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("memResult",memResult);
+		mav.setViewName("member/myPageForm");
+		
+		return mav;
+		
+	}
+	
+	/*마이페이지 내 정보 수정*/
+	@RequestMapping("/memUpdate.do")
+	public ModelAndView myPageUpdate(MemberDTO mdto) {
+		
+		int result = msvc.myPageUpdateService(mdto);
+		String msg = result>0?"성공적으로 업데이트 되었습니다.":"업데이트에 실패했습니다.";
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg",msg);
+		mav.addObject("mem_no",mdto.getMem_no());
+		mav.addObject("gopage","goMyPage.do?mem_no="+mdto.getMem_no());
+		mav.setViewName("member/memMsg");
+		
+		return mav;
+	}
+
 	
 }
 

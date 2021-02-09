@@ -26,7 +26,9 @@ public interface MemberService {
 	public int login_userLogDataService(int mem_no);
 	public CompanyDTO login_getComPwdService(int com_no);
 	
-	
+	/*마이페이지*/
+	public MemberDTO myPageService(int mem_no);
+	public int myPageUpdateService(MemberDTO mdto);
 	
 	
 }

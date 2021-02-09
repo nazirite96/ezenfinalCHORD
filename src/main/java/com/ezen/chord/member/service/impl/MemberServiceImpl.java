@@ -75,5 +75,20 @@ public class MemberServiceImpl implements MemberService {
 		CompanyDTO result = mdao.login_getComPwdDAO(com_no);
 		return result;
 	}
+	
+	/*마이페이지*/
+	@Override
+	public MemberDTO myPageService(int mem_no) {
+		MemberDTO result = mdao.myPageDAO(mem_no);
+		return result;
+	}
+	
+	
+	/*마이페이지 내 정보 수정*/
+	@Override
+	public int myPageUpdateService(MemberDTO mdto) {
+		int result = mdao.myPageUpdateDAO(mdto);
+		return result;
+	}
 
 }

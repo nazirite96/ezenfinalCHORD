@@ -24,4 +24,8 @@ public interface MemberDAO {
 	public int login_userLogDataDAO(int mem_no);
 	public CompanyDTO login_getComPwdDAO(int com_no);
 	
+	/*마이페이지*/
+	public MemberDTO myPageDAO(int mem_no);
+	public int myPageUpdateDAO(MemberDTO mdto);	
+	
 }

@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ezen.chord.admin.service.AdminService;
@@ -93,10 +94,8 @@ public class AdminController {
 	@RequestMapping("/adminComUpdate.do")
 	public ModelAndView adminComUpdate(CompanyDTO cdto) {
 		
-		//System.out.println(cdto.getCom_name() + cdto.getCom_no() + cdto.getCom_pwd() + cdto.getCom_sector());
-		
 		int comResult = asvc.adminComUpdateService(cdto);
-		String msg = comResult>0?"성공~":"실패~";
+		String msg = comResult>0?"성공적으로 업데이트 되었습니다.":"업데이트에 실패했습니다.";
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg",msg);
@@ -159,11 +158,13 @@ public class AdminController {
 	}
 	
 	/*회사관리자 _ 회원관리 리스트*/
-	@RequestMapping("adminMemManagementForm.do")
+	@RequestMapping(value="/adminMemManagementForm.do")
 	public ModelAndView adminMemManagementForm(int com_no) {
 	
 		List<Map<String, Object>> memList = asvc.adminMemListService(com_no);
 
+		System.out.println(memList.toString());
+		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("memList",memList);
 		mav.setViewName("adminCom/adminMemManagementForm");
@@ -171,9 +172,32 @@ public class AdminController {
 	}
 	
 	/*회사 관리자_ 멤버 정보 수정*/
-	@RequestMapping("/adminMemContents.do")
-	public ModelAndView adminMemContents(int com_no,int mem_no) {
+	@RequestMapping(value="/adminMemContents.do",produces="text/plain;charset=utf-8")
+	public ModelAndView adminMemContents(@RequestParam(value="com_no",defaultValue = "0")int com_no,@RequestParam(value="mem_no",defaultValue = "0")int mem_no) {
+	
+//		List<Map<String, Object>> list = asvc.adminMemContentsService(mem_no);
+//		
+//		String jsonStr = "";
+//		for(int i=0;i<list.size();i++) {
+//			
+//			jsonStr += "{dto:{mno:"+list.get(i).get("MNO")
+//					+",comno:"+list.get(i).get("COMNO")
+//					+",memail:'"+list.get(i).get("MEMAIL")
+//					+"',mname:'"+list.get(i).get("MNAME")
+//					+"',mdate:'"+list.get(i).get("MDATE")
+//					+"',gra:'"+list.get(i).get("GRA")+"'}}";
+//			
+//
+//		}
+//		
+//		System.out.println(jsonStr);
+//		ModelAndView mav = new ModelAndView();
+//		mav.addObject("jsonStr",jsonStr);
+//		mav.setViewName("adminCom/adminJsonStr");
+//		
+//		return mav;		
 		
+			
 		ModelAndView mav = new ModelAndView();
 		
 		List<Map<String, Object>> list = asvc.adminMemContentsService(mem_no);
@@ -187,12 +211,13 @@ public class AdminController {
 	@RequestMapping("/adminChange.do")
 	public ModelAndView adminChange(MemberDTO dto,String memGrade) {
 		
+		System.out.println(memGrade);
+		
 		if(memGrade.equals("company") || memGrade=="company") {
 			System.out.println("controller 회사 "+ dto.getMem_no());
 			asvc.adminPositionDeleteService(dto.getMem_no()); // 관리자 권한 delete
 			
 		}else if(memGrade==null || memGrade.equals("")) {
-			System.out.println("일반 / 프로젝트");
 			Map<String,Integer> map = new HashMap<String,Integer>();
 			map.put("kind_no", dto.getCom_no());
 			map.put("mem_no", dto.getMem_no());
@@ -225,11 +250,12 @@ public class AdminController {
 	}
 	
 	/*회사관리자_프로젝트 상세 내용보기*/
-	@RequestMapping("/adminProContents.do")
+	@RequestMapping(value="/adminProContents.do",produces="text/plain;charset=utf-8")
 	public ModelAndView adminProContents(int pro_no) {
 		
 		List<Map<String, Object>> nameList = asvc.adminProInfoService(pro_no); // 이름가져오기
 		List<Map<String, Object>> prolist = asvc.adminProContentsService(pro_no);
+		
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("name",nameList);

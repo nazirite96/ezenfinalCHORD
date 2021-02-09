@@ -11,6 +11,7 @@
 		text-align:center;
 	}
 </style>
+<!-- http js파일 가져오기 -->
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/header.jsp" />

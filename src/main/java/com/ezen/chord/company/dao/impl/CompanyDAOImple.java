@@ -23,15 +23,27 @@ public class CompanyDAOImple implements CompanyDAO {
 	/*기존회사 넘버 확인 */
 	@Override
 	public int comNoCheckDAO(int num) {
+		int result=0;
+		try {
+			result = sqlMap.selectOne("comNoChkSQL",num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
-		int result = sqlMap.selectOne("comNoChkSQL",num);
+		
 		return result;
 	}
 	
 	/*기존 회사 비밀번호 확인*/
 	@Override
 	public int comPwdCheckDAO(CompanyDTO cdto) {
-		int result = sqlMap.selectOne("comPwdChkSQL",cdto);
+		int result=0;
+		try {
+			result = sqlMap.selectOne("comPwdChkSQL",cdto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return result;
 	}
 	
