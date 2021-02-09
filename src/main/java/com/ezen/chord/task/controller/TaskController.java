@@ -13,10 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ezen.chord.task.service.imple.*;
+import com.ezen.chord.project.dto.ProjectDTO;
+import com.ezen.chord.project.service.ProjectService;
+import com.ezen.chord.project_user.dto.ProjectUserDTO;
 import com.ezen.chord.task.dao.TaskDAO;
 import com.ezen.chord.task.dto.*;
 
 import com.ezen.chord.timeline.dto.*;
+import com.ezen.chord.timeline.service.TimelineService;
 import com.ezen.chord.timeline.service.impl.*;
 
 import java.io.IOException;
@@ -26,13 +30,51 @@ import java.sql.Date;
 
 @Controller
 public class TaskController {
-
+	
+	@Autowired
+	private TimelineService timService;
+	
+	@Autowired
+	private ProjectService proService;
 	
 	@RequestMapping("/taskTest.do")
-	public String TaskTest() {
+	public ModelAndView getProList(int mem_no,HttpSession session) {
 		
-		return "task/taskTest";
+		
+		ModelAndView mav = new ModelAndView();
+		List<ProjectDTO> proList = proService.getProAllList(mem_no);
+		mav.addObject("mem_no", mem_no);
+		
+		mav.addObject("proList", proList);
+		mav.setViewName("task/taskTest");
+		
+		return mav;
 	}
+	
+	@RequestMapping("/taskTest_1.do")
+	public ModelAndView getTimeline(int pro_no,HttpSession sess) {
+		ModelAndView mav = new ModelAndView();
+		int mem_no = (int)(sess.getAttribute("memNo"));
+		int com_no = (int)(sess.getAttribute("comNo"));
+		ProjectUserDTO proUserDTO = timService.getPro(pro_no,mem_no);
+		List<ProjectUserDTO> invitedProUserList = timService.invitedProUserList(pro_no);
+		List<ProjectUserDTO> notInvitedProUserList = timService.notInvitedProUserList(pro_no, com_no);
+		mav.addObject("notInvitedProUserList", notInvitedProUserList);
+		mav.addObject("invitedProUserList", invitedProUserList);
+		mav.addObject("proUserDTO", proUserDTO);
+		//프로젝트 정보를 받기
+		int page = 0; 
+		
+		List<TimelineDTO> list = timService.getTimelineByProNo(pro_no, page);
+		mav.addObject("list", list);
+		mav.addObject("mem_no", mem_no);
+		mav.setViewName("task/taskTest_1");
+		
+		
+		
+		return mav;
+	}
+	
 	
 	@RequestMapping("/taskTest2.do")
 	public String TaskTest2() {
@@ -60,6 +102,9 @@ public class TaskController {
 		
 		return "task/taskBasic";
 	}
+	
+
+	
 	@Autowired
 	private TaskServiceImple taskService;
 	

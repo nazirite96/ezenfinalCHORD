@@ -64,7 +64,7 @@
     
     <select id="selectAllTask" parameterType="String" resultType="taskDTO">
 		select t.*
-		,(select tim_cont from timeline where timeline.cont_kind = ti.cont_kind) AS tim_cont,p.*,ti.*,pro.pro_no AS pro_no
+		,p.*,ti.*,pro.pro_no AS pro_no
 		,(select mem_email from member m where m.mem_no = p.mem_no) AS mem_email,pro.pro_name AS pro_name
 		,(select mem_name from member m where m.mem_no = p.mem_no) AS mem_nick
 		from task t,participants p,time ti
