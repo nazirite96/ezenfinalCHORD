@@ -254,59 +254,59 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${taskList }" var="taskMap" varStatus="status">
+					<c:forEach items="${taskList }" var="taskDTO" varStatus="status">
 					<tr>
 						<td>${status.count}</td>
 						<td>
 							<c:choose>
-								<c:when test="${taskMap['taskDTO'].task_state == '요청' }">
+								<c:when test="${taskDTO.task_state == '요청' }">
 									<c:set var="stateClass" value="back-color-blue-l"/>
 									<c:set var="dataId" value="taskAll-state-request"/>
 								</c:when>
-								<c:when test="${taskMap['taskDTO'].task_state == '진행' }">
+								<c:when test="${taskDTO.task_state == '진행' }">
 									<c:set var="stateClass" value="back-color-green-l"/>
 									<c:set var="dataId" value="taskAll-state-progress"/>
 								</c:when>
-								<c:when test="${taskMap['taskDTO'].task_state == '피드백' }">
+								<c:when test="${taskDTO.task_state == '피드백' }">
 									<c:set var="stateClass" value="back-color-orange"/>
 									<c:set var="dataId" value="taskAll-state-feedback"/>
 								</c:when>
-								<c:when test="${taskMap['taskDTO'].task_state == '완료' }">
+								<c:when test="${taskDTO.task_state == '완료' }">
 									<c:set var="stateClass" value="default-back-color"/>
 									<c:set var="dataId" value="taskAll-state-success"/>
 								</c:when>
-								<c:when test="${taskMap['taskDTO'].task_state == '보류' }">
+								<c:when test="${taskDTO.task_state == '보류' }">
 									<c:set var="stateClass" value="back-color-gray"/>
 									<c:set var="dataId" value="taskAll-state-hold"/>
 								</c:when>
 							</c:choose>
-							<span class="task-state-box ${stateClass }" data-id="${dataId }">${taskMap['taskDTO'].task_state }</span>
+							<span class="task-state-box ${stateClass }" data-id="${dataId }">${taskDTO.task_state }</span>
 						</td>
 						<td>
 							<c:choose>
-								<c:when test="${taskMap['taskDTO'].task_priority == '긴급' }">
+								<c:when test="${taskDTO.task_priority == '긴급' }">
 									<c:set var="priClass" value="icon-emer"/>
 									<c:set var="dataId" value="taskAll-pri-emergency"/>
 								</c:when>
-								<c:when test="${taskMap['taskDTO'].task_priority == '높음' }">
+								<c:when test="${taskDTO.task_priority == '높음' }">
 									<c:set var="priClass" value="icon-high"/>
 									<c:set var="dataId" value="taskAll-pri-high"/>
 								</c:when>
-								<c:when test="${taskMap['taskDTO'].task_priority == '보통' }">
+								<c:when test="${taskDTO.task_priority == '보통' }">
 									<c:set var="priClass" value="icon-basic"/>
 									<c:set var="dataId" value="taskAll-pri-normal"/>
 								</c:when>
-								<c:when test="${taskMap['taskDTO'].task_priority == '낮음' }">
+								<c:when test="${taskDTO.task_priority == '낮음' }">
 									<c:set var="priClass" value="icon-low"/>
 									<c:set var="dataId" value="taskAll-pri-low"/>
 								</c:when>
-								<c:when test="${taskMap['taskDTO'].task_priority == null }">
+								<c:when test="${taskDTO.task_priority == null }">
 									<c:set var="dataId" value="taskAll-pri-null"/>
 								</c:when>
 							</c:choose>
 							<c:choose>
-								<c:when test="${taskMap['taskDTO'].task_priority != null }">
-									<span class="task-all-rank flow-icon ${priClass }" data-id="${dataId }">${taskMap['taskDTO'].task_priority }</span>
+								<c:when test="${taskDTO.task_priority != null }">
+									<span class="task-all-rank flow-icon ${priClass }" data-id="${dataId }">${taskDTO.task_priority }</span>
 								</c:when>
 								<c:otherwise>
 									<span data-id="${dataId }">-</span>
@@ -315,12 +315,8 @@
 						</td>
 						<td class="task-td-con">
 							<span class="dis-block size-16 color-black"></span>
-							<span class="dis-block size-12 color-gray">${taskMap['taskDTO'].pro_name }</span>
+							<span class="dis-block size-12 color-gray">${taskDTO.tim_cont }</span>
 						</td>
-						<td>
-							<div class="task-pcnt-bar task-pcnt-${taskMap['taskDTO'].task_rate }"><span>${taskMap['taskDTO'].task_rate }%</span></div>
-						</td>
-						<!-- 
 						<td class="task-manager">
 						<c:choose>
 							<c:when test="${taskMap['taskUserList'].size() == 0 }">
@@ -337,12 +333,11 @@
 							<span class="dis-none">${taskUserDTO.mem_nick }</span>
 						</c:forEach>
 						</td>
-						<td class="task-writer">${taskMap['taskDTO'].mem_nick }</td>
+						<td class="task-writer">${taskDTO.mem_name }</td>
 						<td>
-							<span class="task-start-date dis-none">${taskMap['taskDTO'].task_start_date }</span>
-							<span class="task-end-date">${taskMap['taskDTO'].task_end_date }</span>
+							<span class="task-start-date dis-none">${taskDTO.task_start_date }</span>
+							<span class="task-end-date">${taskDTO.task_end_date }</span>
 						</td>
-						 -->
 					</tr>
 					</c:forEach>
 				</tbody>

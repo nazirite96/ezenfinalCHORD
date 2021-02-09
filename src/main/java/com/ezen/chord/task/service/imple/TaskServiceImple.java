@@ -108,26 +108,17 @@ public class TaskServiceImple implements TaskService {
 	
 	/*전체업무 조회*/
 	@Override
-	public List<Map<String, Object>> selectAllTask(String mem_email) {
+	public List<TaskDTO> selectAllTask() {
 		
 		// 반환값
-		List<Map<String, Object>> resultList = new ArrayList<Map<String,Object>>();
+		List<TaskDTO> resultList = new ArrayList<TaskDTO>();
 		
 		// 업무글
-		List<TaskDTO> taskList = taskDAO.selectAllTask(mem_email);
+		List<TaskDTO> taskList = taskDAO.selectAllTask();
 		
 		for (TaskDTO taskDTO : taskList) {
 			
-			
-			
-			Map<String, Object> map = new HashMap<String, Object>();			
-			
-			map.put("taskDTO", taskDTO);
-			map.put("taskUserList", taskUserDAO.getTaskUserList(taskDTO.getTask_no()));
-			
-			
-			
-			resultList.add(map);			
+			resultList.add(taskDTO);
 		}
 		
 		return resultList;

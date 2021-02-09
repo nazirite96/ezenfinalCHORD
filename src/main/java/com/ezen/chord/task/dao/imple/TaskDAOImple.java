@@ -79,9 +79,9 @@ public class TaskDAOImple implements TaskDAO {
 	
 	/*전체업무 조회*/
 	@Override
-	public List<TaskDTO> selectAllTask(String mem_id) {
+	public List<TaskDTO> selectAllTask() {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlMap.selectList("selectAllTask");
 	}
 	
 	
