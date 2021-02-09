@@ -168,9 +168,6 @@ public class TaskController {
 //			//4-3. 둘다 있을때
 //		}
 		
-		
-		
-		
 		mav.addObject("msg", "ㅇㅇㅇㅇㅇㅇㅇㅇ");
 		mav.setViewName("taskView.do");
 		

@@ -30,7 +30,7 @@
 
 	<!-- 업무명:s -->
 	<div class="input-box">
-		<input type="text" class="font-bold size-18" placeholder="업무명을 입력하세요." value="${timeLine.taskVo.task_title }" readonly>
+		<input type="text" class="font-bold size-18" placeholder="업무명을 입력하세요." value="${dto.tim_cont }" readonly>
 	</div>
 	<!-- 업무명:f -->
 		
@@ -39,7 +39,7 @@
 		<dl>
 			<dt class="maright-20"><i class="fas fa-user-clock"></i></dt>
 			<dd>
-				<input type="hidden" class="edit-confirm" data-taskno="${timeLine.taskVo.task_no }">
+				<input type="hidden" class="edit-confirm" data-taskno="${dto.taskDTO.task_no }">
 				<div class="task-state-list">
 				
 					<c:set var="sReq" value=""/>

@@ -9,6 +9,8 @@ import com.ezen.chord.project.dao.ProjectDAO;
 import com.ezen.chord.project_user.dao.ProjectUserDAO;
 import com.ezen.chord.project_user.dto.ProjectUserDTO;
 import com.ezen.chord.reply.dao.ReplyDAO;
+import com.ezen.chord.task.dao.TaskDAO;
+import com.ezen.chord.task.dto.TaskDTO;
 import com.ezen.chord.timeline.dao.TimelineDAO;
 import com.ezen.chord.timeline.dto.TimelineDTO;
 import com.ezen.chord.timeline.service.TimelineService;
@@ -24,6 +26,8 @@ public class TimelineServiceImpl implements TimelineService {
 	private ProjectDAO proDAO;
 	@Autowired
 	private ProjectUserDAO proUserDAO;
+	@Autowired
+	private TaskDAO taskDAO;
 
 	@Override
 	public int insertTim(TimelineDTO timDTO) {
@@ -85,5 +89,12 @@ public class TimelineServiceImpl implements TimelineService {
 		// TODO Auto-generated method stub
 		return proUserDAO.selectNotInvitedProUser(pro_no, com_no);
 	}
+	
+	@Override
+	public TaskDTO getTask(int task_no) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	
 }

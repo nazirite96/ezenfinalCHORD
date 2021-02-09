@@ -25,7 +25,23 @@
 	crossorigin="anonymous"></script>
 <!-- gwjs -->
 <script type="text/javascript" src="/chord/resources/js/Gw.js"></script>
+<!-- taksFilesjs -->
+<script type="text/javascript" src="/chord/resources/js/taksFiles.js"></script>
 
+<!-- Air datepicker css -->
+<link href="<%=request.getContextPath()%>/resources/css/datepicker.min.css" rel="stylesheet" type="text/css" media="all">
+<!-- Air datepicker js -->
+<script src="<%=request.getContextPath()%>/resources/js/datepicker.js"></script>
+<!-- 달력 한글 추가를 위해 커스텀 -->
+<script src="<%=request.getContextPath()%>/resources/js/datepicker.ko.js"></script>
+<!-- fontawesome -->
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<!-- font-awesome CSS -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+<!-- textArea 자동 높이 설정 -->
+<script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
+<!-- Air datepicker css -->
+<link href="<%=request.getContextPath()%>/resources/css/JeCss.css" rel="stylesheet" type="text/css">
 <!-- 떠다니는 메뉴 -->
 <script type="text/javascript">
  var stmnLEFT = 10; // 오른쪽 여백 
@@ -56,7 +72,13 @@
 </script>
 
 <style type="text/css">
-#STATICMENU { margin: 0pt; padding: 0pt;  position: absolute; right: 0px; top: 0px;}
+#STATICMENU {
+	margin: 0pt;
+	padding: 0pt;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
 </style>
 
 <title>Insert title here</title>
@@ -94,7 +116,8 @@
 <link href="/chord/resources/css/dashboard.css" rel="stylesheet">
 <link rel="stylesheet" href="/chord/resources/css/GwCss.css">
 </head>
-<body id="contentBody" onload="InitializeStaticMenu();">>
+<body id="contentBody" onload="InitializeStaticMenu();">
+	>
 
 	<nav
 		class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -119,7 +142,7 @@
 			<nav id="sidebarMenu"
 				class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
 				<div class="sidebar-sticky pt-3">
-					<ul class="nav flex-column" >
+					<ul class="nav flex-column">
 						<li class="nav-item"><a class="nav-link active" href="#">
 								<span data-feather="home"></span> 목록보기<span class="sr-only">(current)</span>
 						</a>
@@ -137,8 +160,11 @@
 								data-feather="shopping-cart"></span>중요</a></li>
 
 
-						<h1 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-							<span>collection</span><a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report"><span
+						<h1
+							class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+							<span>collection</span><a
+								class="d-flex align-items-center text-muted" href="#"
+								aria-label="Add a new report"><span
 								data-feather="plus-circle"></span></a>
 						</h1>
 						<li class="nav-item"><a class="nav-link" href="#"><span
@@ -203,12 +229,12 @@
 							<div id="proTitle"
 								class="pro-detail-box project-title ${proUserDTO.pro_user_color }">
 								<div class="pro-tit">
-									
+
 									<c:choose>
 										<c:when test="${proVo.imp_chk == 1 }">
-										<i
-										class="fas fa-star size-20 color-yellow maright-15 cursor-point"
-										data-prono="22"></i>
+											<i
+												class="fas fa-star size-20 color-yellow maright-15 cursor-point"
+												data-prono="22"></i>
 										</c:when>
 										<c:otherwise>
 											<i
@@ -302,39 +328,41 @@
 									<div class="tabs-container">
 										<!-- 글쓰기:s -->
 										<div id="tab-1" class="tabs-content active">
-											<form action="insertTim.do" method="post" enctype="multipart/form-data">
+											<form id="uploadForm" action="insertTim.do" method="post" enctype="multipart/form-data">
 												<input type="hidden" name="mem_no" value="${mem_no}">
 												<input type="hidden" name="pro_no"
 													value="${proUserDTO.pro_no }"> <input type="hidden"
 													name="cont_kind" value="post"> <input type="hidden"
 													name="cont_no" value="0">
-												<div class="tab-con-box">
+												<div id="dropZone" class="tab-con-box" >
 													<textarea rows="5" cols="50" placeholder="글을 작성하세요."
 														name="tim_cont" onkeyup="autoTextarea(this, 120, 500)"
 														required="required"></textarea>
 
 													<!-- 이미지 목록이 나올부분 -->
-													<div class="upload-img-list"></div>
+													<div id="uploadImgForm" class="upload-img-list"></div>
 
 													<!-- 첨부파일 목록이 나올부분 -->
-													<div class="upload-file-list"></div>
+													<div id="uploadFileForm" class="upload-file-list"></div>
 													<div class="tab-dn-box">
 														<!-- 파일첨부 -->
-														<label for="articleFile"
+														<label for="ex_file2"
 															class="float-left maright-20 marbtm-0 font-thin size-18">
 															<i class="fas fa-paperclip maright-10"></i>파일첨부
-														</label> <input type="file" id="articleFile" name="articleFile"
-															class="dis-none" onchange="fileUpload(this)">
+														</label> 
+														<input type="file" multiple="multiple" id="ex_file2" name="articleFile"
+															class="dis-none upload-hidden uploadInputFile" onchange="dataSave()">
 
 														<!-- 이미지첨부  -->
 														<label for="article-img"
 															class="float-left marbtm-0 font-thin size-18"> <i
 															class="fas fa-camera maright-10"></i>이미지첨부
 														</label> <input type="file" id="article-img" name="imageFile"
-															class="dis-none" onchange="imgUpload(this)"
+															class="dis-none"
 															accept="image/*">
 														<!-- 올리기(submit) 버튼 -->
-														<input type="submit" value="올리기" class="article-submit-btn font-bold size-18 color-white text-center default-back-color">
+														<input type="button" value="올리기" onclick="uploadFile()"
+															class="article-submit-btn font-bold size-18 color-white text-center default-back-color">
 													</div>
 												</div>
 
@@ -344,21 +372,22 @@
 
 										<!-- 업무:s -->
 										<div id="tab-2" class="tabs-content con-task">
-											<form action="/flowolf/task/insert" method="post"
+											<form action="taskInsert.do" name="TaskDTO"
 												enctype="multipart/form-data">
-												<input type="hidden" name="mem_id" value="${mem_no }">
-												<input type="hidden" name="pro_no" value="${proVo.pro_no }">
-												<!-- tab-con-box:s -->
+												<input type="hidden" name="mem_no" value="${memNo }">
+												<input type="hidden" name="pro_no" value="${proUserDTO.pro_no }">
+
 												<div class="tab-con-box">
-													<!-- 업무명:s -->
+													<!-- 업무명 s -->
 													<div class="input-box">
 														<input type="text" name="task_title"
-															class="font-bold size-18" placeholder="업무명을 입력하세요."
-															required="required">
+															placeholder="업무명을 입력하세요." required="required">
 													</div>
-													<!-- 업무명:f -->
-
-													<!-- 업무상태:s -->
+													<!-- 업무명 e -->
+													<!-- dl : 용어를 설명하는 목록
+		 dt : 용어의 제목 
+		 dd : 용어를 설명 -->
+													<!-- 업무상태 s -->
 													<div class="input-box martop-15">
 														<dl>
 															<dt class="maright-20">
@@ -369,7 +398,7 @@
 																	<label class="checked"
 																		onchange="fn_checkTaskState(this)"> 요청<input
 																		type="radio" name="task_state" value="요청"
-																		class="dis-none" checked="checked">
+																		class="dis-none" checked>
 																	</label> <label onchange="fn_checkTaskState(this)"> 진행<input
 																		type="radio" name="task_state" value="진행"
 																		class="dis-none">
@@ -387,126 +416,66 @@
 															</dd>
 														</dl>
 													</div>
-													<!-- 업무상태:f -->
 
-													<!-- 담당자:s -->
+													<!-- 담당자 s -->
 													<div class="input-box martop-15" style="height: inherit">
 														<dl>
 															<dt class="maright-20">
 																<i class="fas fa-user-plus"></i>
 															</dt>
 															<dd class="posi-re">
-																<input type="text" id="tu_mem_id" placeholder="담당자 추가"
-																	onfocus="fn_taskManagerFocus(this)">
+																<!-- 담당자 추가 input -->
+																<input type="text" id="mem_no" placeholder="담당자 추가"
+																	onfocus="fn_taskManagerFocus(this)" />
 
 																<!-- 담당자 리스트 -->
 																<div class="task-user-list"></div>
 
-																<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
-																<div class="pro-user-list">
-																	<c:forEach items="${proUserList}" var="proUserDTO">
-																		<div class="pro-user-info"
-																			onclick="fn_taskManagerSelect(this)">
-																			<div class="pro-user-photo maright-10">
-																				<i class="icon-circle circle-s"></i>
-																				${proUserDTO.mem_id }
-																			</div>
-																			<span class="user-id">${proUserDTO.mem_id }</span>
-																		</div>
-																	</c:forEach>
-																</div>
-																<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):f -->
+																<!-- 프로젝트 참여자 리스트(담당자 설정 리스트) s -->
+																<div class="pro-user-list"></div>
+																<!-- 프로젝트 참여자 리스트(담당자 설정 리스트) e -->
 															</dd>
 														</dl>
 													</div>
-													<!-- 담당자:f -->
+													<!-- 담당자 e -->
 
-													<!-- 시작일:s -->
+													<!-- 시작일 s -->
 													<div class="input-box martop-15 add-item-box">
 														<dl>
 															<dt class="maright-20">
-																<i class="flow-icon icon-task icon-sDate"></i>
+																<i class="far fa-calendar-plus"></i>
 															</dt>
 															<dd class="posi-re">
 																<input type="text" name="task_start_date"
-																	placeholder="시작일설정" data-language='ko'
-																	class="datepicker-here" /> <i
-																	class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
-																	onclick="fn_dateReset(this)"></i>
+																	placeholder="시작일설정" id="datepicker1"
+																	class="datepicker-here" data-timepicker="true"
+																	data-time-format='hh:ii' readonly>
 															</dd>
 														</dl>
 													</div>
-													<!-- 시작일:f -->
+													<!-- 시작일 e -->
 
-													<!-- 마감일:s -->
+													<!-- 마감일 s -->
 													<div class="input-box martop-15 add-item-box">
 														<dl>
 															<dt class="maright-20">
-																<i class="flow-icon icon-task icon-fDate"></i>
+																<i class="far fa-calendar-minus"></i>
 															</dt>
 															<dd class="posi-re">
 																<input type="text" name="task_end_date"
-																	placeholder="마감일설정" data-language='ko'
-																	class="datepicker-here" /> <i
-																	class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
-																	onclick="fn_dateReset(this)"></i>
+																	placeholder="마감일설정" id="datepicker2"
+																	class="datepicker-here" data-timepicker="true"
+																	data-time-format='hh:ii' readonly>
 															</dd>
 														</dl>
 													</div>
-													<!-- 마감일:f -->
+													<!-- 마감일 e -->
 
-													<!-- 작업진척도:s -->
+													<!-- 우선순위 s -->
 													<div class="input-box martop-15 add-item-box">
 														<dl>
 															<dt class="maright-20">
-																<i class="far fa-chart-bar"></i>
-															</dt>
-															<dd>
-																<div class="work-range">
-																	<input type="hidden" name="task_rate" value="0">
-																	<span class="work-percent"></span>
-																	<div class="pcnt-bar"></div>
-																	<div class="pcnt-btn pcnt-20"
-																		onclick="fn_progressSelect(this)"
-																		data-toggle="tooltip" data-placement="bottom"
-																		title="20">
-																		<span>20</span>
-																	</div>
-																	<div class="pcnt-btn pcnt-40"
-																		onclick="fn_progressSelect(this)"
-																		data-toggle="tooltip" data-placement="bottom"
-																		title="40">
-																		<span>40</span>
-																	</div>
-																	<div class="pcnt-btn pcnt-60"
-																		onclick="fn_progressSelect(this)"
-																		data-toggle="tooltip" data-placement="bottom"
-																		title="60">
-																		<span>60</span>
-																	</div>
-																	<div class="pcnt-btn pcnt-80"
-																		onclick="fn_progressSelect(this)"
-																		data-toggle="tooltip" data-placement="bottom"
-																		title="80">
-																		<span>80</span>
-																	</div>
-																	<div class="pcnt-btn pcnt-100"
-																		onclick="fn_progressSelect(this)"
-																		data-toggle="tooltip" data-placement="bottom"
-																		title="100">
-																		<span>100</span>
-																	</div>
-																</div>
-															</dd>
-														</dl>
-													</div>
-													<!-- 작업진척도:f -->
-
-													<!-- 우선순위:s -->
-													<div class="input-box martop-15 add-item-box">
-														<dl>
-															<dt class="maright-20">
-																<i class="fas fa-flag"></i>
+																<i class="far fa-flag"></i>
 															</dt>
 															<dd class="posi-re">
 																<input type="text" name="task_priority"
@@ -514,7 +483,8 @@
 																	onfocus="fn_taskRankFocus(this)" readonly="readonly">
 																<span class="task-rank" onclick="fn_taskRankClick(this)"></span>
 
-																<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
+
+																<!-- 우선순위 리스트(우선순위 설정 리스트) s -->
 																<ul class="task-rank-list">
 																	<li onclick="fn_taskRankSelect(this)"><i
 																		class="flow-icon rank-icon icon-low"></i>낮음</li>
@@ -525,51 +495,54 @@
 																	<li onclick="fn_taskRankSelect(this)"><i
 																		class="flow-icon rank-icon icon-emer"></i>긴급</li>
 																</ul>
+
+																<!-- 우선순위 리스트(우선순위 설정 리스트) e -->
 															</dd>
 														</dl>
 													</div>
-													<!-- 우선순위:f -->
+													<!-- 우선순위 e -->
 
+													<!-- 추가 항목입력 버튼 -->
 													<button type="button" class="add-item-btn"
 														onclick="fn_addItem(this)">
 														<i class="fas fa-angle-down maright-10"></i> 추가 항목 입력
 													</button>
+													<!-- 글 ${fn.trim(dto.content)}-->
+													<textArea rows="5" cols="" name="task_content"
+														class="autosize" onkeyup="resize(this)"
+														placeholder="글을 작성하세요."></textArea>
 
-													<!-- 글 -->
-													<textarea rows="5" cols="" name="task_cont"
-														class="martop-20" placeholder="글을 작성하세요."></textarea>
-
-													<!-- 이미지 목록이 나올부분 -->
+													<!-- 이미지 목록 나올부분 -->
 													<div class="upload-img-list"></div>
 
-													<!-- 첨부파일 목록이 나올부분 -->
+													<!-- 첨부파일 목록 나올부분 -->
 													<div class="upload-file-list"></div>
 												</div>
-												<!-- tab-con-box:f -->
+												<!-- 본문부분 끝 -->
 
-												<!-- tab-dn-box:s -->
+												<!-- file icon, img icon, 올리기 버튼 있는 부분 -->
 												<div class="tab-dn-box">
 													<!-- 파일첨부 -->
-													<label for="articleFileTask"
+													<label class="articleFileTask"
 														class="float-left maright-20 marbtm-0 font-thin size-18">
 														<i class="fas fa-paperclip maright-10"></i>파일첨부
 													</label> <input type="file" id="articleFileTask" name="articleFile"
-														class="dis-none" onchange="fileUpload(this)">
+														class="dis-none">
 
-													<!-- 이미지첨부 
-													<label for="articleImgTask"
+													<!-- 이미지첨부 -->
+													<label class="articleImgTask"
 														class="float-left marbtm-0 font-thin size-18"> <i
 														class="fas fa-camera maright-10"></i>이미지첨부
 													</label> <input type="file" id="articleImgTask" name="imageFile"
-														class="dis-none" onchange="imgUpload(this)"
+														class="dis-none"
 														accept="image/*">
-													-->
-													<!-- 올리기(submit) 버튼 -->
+
+													<!-- 올리기 버튼 -->
 													<input type="submit" value="올리기"
 														class="article-submit-btn float-right font-bold size-18 color-white text-center default-back-color">
 												</div>
-												<!-- tab-dn-box:f -->
 											</form>
+
 										</div>
 										<!-- 업무:f -->
 										<div id="tab-3" class="tabs-content con-schedule">
@@ -785,7 +758,9 @@
 									</div>
 								</div>
 							</div>
+							
 							<div class="table-responsive"></div>
+							<!-- 타임라인 : start -->
 							<c:forEach var="dto" items="${list }">
 								<div class="timeline-box martop-20">
 
@@ -803,8 +778,7 @@
 											<dl>
 												<dt class="posi-re maright-15 cursor-point"
 													onclick="fn_openPopup(this)" data-id="${timeLine.mem_id }"
-													data-nick="${timeLine.mem_no }"
-													data-my="${memVo.mem_id }">
+													data-nick="${timeLine.mem_no }" data-my="${memVo.mem_id }">
 													<i class="flow-icon icon-circle circle-s"></i> <img
 														src="/chord/resources/img/user-pic-sample.png" width="40">
 												</dt>
@@ -832,23 +806,23 @@
 												</a></li>
 											</c:if>
 											<!-- article edit : s -->
-										<c:if test="${proUserDTO.mem_no == dto.mem_no }">
-														<li class="posi-re float-left">
-															<button id="articleEdit" type="button"
-																data-toggle="dropdown" aria-haspopup="true"
-																aria-expanded="false">
-																<i class="fas fa-ellipsis-v size-24 color-gray"></i>
-															</button>
-															<ul class="dropdown-menu" role="menu"
-																aria-labelledby="articleEdit">
-																
-																<li class="cursor-point" onclick="fn_editArticle(this)">글
-																	수정</li>
-																<li class="cursor-point timeline-delete-btn">글 삭제</li>
-															</ul>
-														</li>
-														</c:if>
-							<!--  article edit : f -->
+											<c:if test="${proUserDTO.mem_no == dto.mem_no }">
+												<li class="posi-re float-left">
+													<button id="articleEdit" type="button"
+														data-toggle="dropdown" aria-haspopup="true"
+														aria-expanded="false">
+														<i class="fas fa-ellipsis-v size-24 color-gray"></i>
+													</button>
+													<ul class="dropdown-menu" role="menu"
+														aria-labelledby="articleEdit">
+
+														<li class="cursor-point" onclick="fn_editArticle(this)">글
+															수정</li>
+														<li class="cursor-point timeline-delete-btn">글 삭제</li>
+													</ul>
+												</li>
+											</c:if>
+											<!--  article edit : f -->
 										</ul>
 										<!-- article icon : f -->
 									</div>
@@ -971,7 +945,7 @@
 													<i class="fas fa-paperclip maright-10"></i>파일첨부
 												</label> <input type="file" name="articleFile"
 													id="articleEditFile_b${dto.tim_no }" class="dis-none"
-													onchange="fileUpload(this)">
+													>
 
 												<!-- 이미지첨부 -->
 												<label for="articleEditImg_b${dto.tim_no }"
@@ -979,7 +953,7 @@
 													class="fas fa-camera maright-10"></i>이미지첨부
 												</label> <input type="file" name="imageFile"
 													id="articleEditImg_b${dto.tim_no }" class="dis-none"
-													onchange="imgUpload(this)" accept="image/*">
+													 accept="image/*">
 
 												<!-- submit & cancel 버튼 -->
 												<input type="submit" value="수정하기"
@@ -1313,6 +1287,7 @@
 												</div>
 												<!-- 댓글 리스트:f -->
 											</c:forEach>
+											
 											<!-- 댓글 입력:s -->
 											<form action="insertRep.do" method="get"
 												enctype="multipart/form-data">
@@ -1364,7 +1339,7 @@
 								</div>
 
 							</c:forEach>
-
+					<!-- 타임라인 : end -->
 
 
 							<script>
@@ -1377,40 +1352,39 @@
 						</div>
 						<!-- project left : end -->
 						<!-- project right : start -->
-						
+
 						<!-- 이전화면으로 -->
-<div id="STATICMENU" class="col-xs-12 col-sm-12 col-md-3 col-lg-3 padright-0">
-						<div class="pro-right-box">
-							<a href="proList.do?mem_no=${memNo } "
-								class="pro-prev-btn size-18 default-color"> <i
-								class="fas fa-angle-left maright-15"></i> 이전화면
-							</a>
-						</div>
+						<div id="STATICMENU"
+							class="col-xs-12 col-sm-12 col-md-3 col-lg-3 padright-0">
+							<div class="pro-right-box">
+								<a href="proList.do?mem_no=${memNo } "
+									class="pro-prev-btn size-18 default-color"> <i
+									class="fas fa-angle-left maright-15"></i> 이전화면
+								</a>
+							</div>
 
-						<!-- 파일함,업무,일정,할일,투표 -->
-						<div class="pro-right-box martop-15">
-							<ul class="pro-gather-nav">
-								<li><a
-									href="#">
-										<i class="fas fa-download color-blue-l"></i> <span
-										class="dis-block size-17 color-gray">파일함</span>
-								</a></li>
-								<li><a href="#"> <i
-										class="fas fa-laptop colo-green-l"></i> <span
-										class="dis-block size-17 color-gray">업무</span>
-								</a></li>
-								<li><a href="#"> <i
-										class="far fa-calendar-alt color-red"></i> <span
-										class="dis-block size-17 color-gray">일정</span>
-								</a></li>
-								<li><a href="#todoOnly" class="pro-todo-only"> <i
-										class="fas fa-list-ul color-pupple"></i> <span
-										class="dis-block size-17 color-gray">할일</span>
-								</a></li>
-							</ul>
-						</div>
+							<!-- 파일함,업무,일정,할일,투표 -->
+							<div class="pro-right-box martop-15">
+								<ul class="pro-gather-nav">
+									<li><a href="#"> <i
+											class="fas fa-download color-blue-l"></i> <span
+											class="dis-block size-17 color-gray">파일함</span>
+									</a></li>
+									<li><a href="#"> <i class="fas fa-laptop colo-green-l"></i>
+											<span class="dis-block size-17 color-gray">업무</span>
+									</a></li>
+									<li><a href="#"> <i
+											class="far fa-calendar-alt color-red"></i> <span
+											class="dis-block size-17 color-gray">일정</span>
+									</a></li>
+									<li><a href="#todoOnly" class="pro-todo-only"> <i
+											class="fas fa-list-ul color-pupple"></i> <span
+											class="dis-block size-17 color-gray">할일</span>
+									</a></li>
+								</ul>
+							</div>
 
-						<script type="text/javascript">
+							<script type="text/javascript">
 $(function(){
 	// 우측 '할일'모아보기 아이콘 클릭 시
 	$(".pro-todo-only").on("click", function(){
@@ -1472,104 +1446,103 @@ function fn_collCancel(){
 }
 </script>
 
-						<!-- 초대하기 button : s -->
-						<div class="pro-right-box martop-15">
-							<a href="#invitePop"
-								class="right-link-btn invite-btn default-back-color color-white">
-								<i class="fas fa-user-plus maright-10"></i>초대하기
-							</a>
+							<!-- 초대하기 button : s -->
+							<div class="pro-right-box martop-15">
+								<a href="#invitePop"
+									class="right-link-btn invite-btn default-back-color color-white">
+									<i class="fas fa-user-plus maright-10"></i>초대하기
+								</a>
+							</div>
+							<!-- 초대하기 button : f -->
+
+
+
+							<!-- 프로젝트 채팅 button : s -->
+							<div class="pro-right-box martop-15">
+								<a class="right-link-btn back-color-green-l color-white"
+									id="proChat" style="cursor: pointer;"> <i
+									class="fas fa-comments maright-10"></i>프로젝트 채팅
+								</a>
+							</div>
+							<!-- 프로젝트 채팅 button : f -->
+
+							<!-- 프로젝트 참여자 리스트 : s -->
+							<div class="pro-right-box pro-right-user-list" data-simplebar>
+								<!-- 프로젝트 관리자 : s -->
+								<ul class="nav flex-column block">
+									<li class="nav-item"><span
+										class="dis-block marbtm-5 padleft-15 padright-15 color-gray size-16">프로젝트
+											관리자</span></li>
+									<li class="nav-item"><c:forEach
+											items="${invitedProUserList }" var="manager">
+											<c:if test="${manager.pro_user_man_chk == 'manager' }">
+												<dl class="marbtm-0 cursor-point"
+													onclick="fn_openPopup(this)" data-id="${manager.mem_no }"
+													data-nick="${manager.mem_no }" data-my="${manager.mem_no }">
+													<dt class="posi-re">
+														<i class="icon-circle circle-xs cursor-point"></i> <img
+															src="/chord/resources/img/sample.png" width="24"
+															class="cursor-point">
+													</dt>
+													<dd>
+														<span class="size-18 color-gray">${manager.mem_no }번
+															이름</span>
+														<!-- <i class="far fa-comment size-18 cursor-point"></i> -->
+													</dd>
+												</dl>
+											</c:if>
+										</c:forEach></li>
+									<!-- 프로젝트 관리자 : f -->
+									<!-- 프로젝트 참여자 : s -->
+									<li class="nav-item"><span
+										class="dis-block float-left martop-15 marbtm-5 padleft-15 padright-15 color-gray size-16">프로젝트
+											참여자(${invitedProUserList.size()-1 })</span></li>
+									<li class="nav-item"><c:forEach
+											items="${invitedProUserList }" var="invitedUser">
+											<c:if test="${invitedUser.pro_user_man_chk == 'normal' }">
+												<dl class="marbtm-0 cursor-point"
+													onclick="fn_openPopup(this)"
+													data-id="${invitedUser.mem_no }번 id"
+													data-nick="${invitedUser.mem_no }"
+													data-my="${invitedUser.mem_no }">
+													<dt class="posi-re">
+														<i class="icon-circle circle-xs cursor-point"></i> <img
+															src="/chord/resources/img/sample.png" width="24"
+															class="cursor-point">
+													</dt>
+													<dd>
+														<span class="size-18 color-gray">${invitedUser.mem_no }번
+															이름</span>
+														<!-- <i class="far fa-comment size-18 cursor-point"></i> -->
+													</dd>
+												</dl>
+											</c:if>
+										</c:forEach></li>
+								</ul>
+
+
+
+
+
+
+
+
+
+							</div>
 						</div>
-						<!-- 초대하기 button : f -->
+						<!-- 프로젝트 참여자 : f -->
 
-					
-
-						<!-- 프로젝트 채팅 button : s -->
-						<div class="pro-right-box martop-15">
-							<a class="right-link-btn back-color-green-l color-white" id="proChat" style="cursor: pointer;"> <i
-								class="fas fa-comments maright-10"></i>프로젝트 채팅</a>
-						</div>
-						<!-- 프로젝트 채팅 button : f -->
-
-						<!-- 프로젝트 참여자 리스트 : s -->
-						<div class="pro-right-box pro-right-user-list" data-simplebar>
-							<!-- 프로젝트 관리자 : s -->
-							<ul class="nav flex-column block">
-							  <li class="nav-item">
-							    <span class="dis-block marbtm-5 padleft-15 padright-15 color-gray size-16">프로젝트
-								관리자</span>
-							  </li>
-							  <li class="nav-item">
-							   <c:forEach items="${invitedProUserList }" var="manager">
-								<c:if test="${manager.pro_user_man_chk == 'manager' }">
-									<dl class="marbtm-0 cursor-point" onclick="fn_openPopup(this)"
-										data-id="${manager.mem_no }"
-										data-nick="${manager.mem_no }" data-my="${manager.mem_no }">
-										<dt class="posi-re">
-											<i class="icon-circle circle-xs cursor-point"></i> <img
-												src="/chord/resources/img/sample.png"
-												width="24" class="cursor-point">
-										</dt>
-										<dd>
-											<span class="size-18 color-gray">${manager.mem_no }번 이름</span>
-											<!-- <i class="far fa-comment size-18 cursor-point"></i> -->
-										</dd>
-									</dl>
+						<form action="/flowolf/chat/insertMulti" method="get"
+							id="chatInsertMulti" name="chatInsertMulti">
+							<c:forEach items="${proUserList }" var="list">
+								<c:if test="${list.mem_id ne memVo.mem_id }">
+									<input type="hidden" value="${list.mem_id }" name="ptn">
 								</c:if>
 							</c:forEach>
-							
-							
-							  </li>
-							  <!-- 프로젝트 관리자 : f -->
-							  <!-- 프로젝트 참여자 : s -->
-							  <li class="nav-item">
-							    <span
-								class="dis-block float-left martop-15 marbtm-5 padleft-15 padright-15 color-gray size-16">프로젝트
-								참여자(${invitedProUserList.size()-1 })</span>
-							  </li>
-							  <li class="nav-item">
-							   <c:forEach items="${invitedProUserList }" var="invitedUser">
-								<c:if test="${invitedUser.pro_user_man_chk == 'normal' }">
-									<dl class="marbtm-0 cursor-point" onclick="fn_openPopup(this)"
-										data-id="${invitedUser.mem_no }번 id"
-										data-nick="${invitedUser.mem_no }" data-my="${invitedUser.mem_no }">
-										<dt class="posi-re">
-											<i class="icon-circle circle-xs cursor-point"></i> <img
-												src="/chord/resources/img/sample.png"
-												width="24" class="cursor-point">
-										</dt>
-										<dd>
-											<span class="size-18 color-gray">${invitedUser.mem_no }번 이름</span>
-											<!-- <i class="far fa-comment size-18 cursor-point"></i> -->
-										</dd>
-									</dl>
-								</c:if>
-							</c:forEach>
-							  </li>
-							</ul>
-							
-							
-							
+							<input type="hidden" value="${memVo.mem_id }" name="mem_id">
+						</form>
 
-							
-							
-							
-								
-							
-							</div>
-							</div>
-							<!-- 프로젝트 참여자 : f -->
-
-							<form action="/flowolf/chat/insertMulti" method="get"
-								id="chatInsertMulti" name="chatInsertMulti">
-								<c:forEach items="${proUserList }" var="list">
-									<c:if test="${list.mem_id ne memVo.mem_id }">
-										<input type="hidden" value="${list.mem_id }" name="ptn">
-									</c:if>
-								</c:forEach>
-								<input type="hidden" value="${memVo.mem_id }" name="mem_id">
-							</form>
-
-							<script type="text/javascript">
+						<script type="text/javascript">
 		$("#proChat").on("click", function() {
 			var check =document.chatInsertMulti;
 			window.open('', 'new', "width=467,height=640,top=100,left=100");
@@ -1579,118 +1552,121 @@ function fn_collCancel(){
 		});
 	</script>
 
-						</div>
-						<!-- 프로젝트 참여자 리스트 : f -->
+					</div>
+					<!-- 프로젝트 참여자 리스트 : f -->
 
-						
 
-						<!-- 초대하기  layer pop up : s -->
-						<div class="dim-layer">
-							<div class="dimBg"></div>
 
-							<div id="invitePop" class="pop-layer">
+					<!-- 초대하기  layer pop up : s -->
+					<div class="dim-layer">
+						<div class="dimBg"></div>
 
-								<!-- pop header -->
-								<header class="pop-top border-box text-center">
-									<a href="#"
-										class="posi-ab dis-block over-hidden icon-close btn-close">close</a>
-									<strong class="dis-block size-28 color-black text-center">${proUserDTO.pro_name }</strong>
-								</header>
+						<div id="invitePop" class="pop-layer">
 
-								<!-- pop con -->
-								<section class="pop-con border-box">
+							<!-- pop header -->
+							<header class="pop-top border-box text-center">
+								<a href="#"
+									class="posi-ab dis-block over-hidden icon-close btn-close">close</a>
+								<strong class="dis-block size-28 color-black text-center">${proUserDTO.pro_name }</strong>
+							</header>
 
-									<div class="invite-kind-box back-color-white cursor-point"
-										data-id="invitePartner" onclick="fn_subPopOpen(this)">
-										<dl>
-											<dt class="maright-20 padtop-5 back-color-green-l">
-												<i class="fas fa-building size-30 color-white"></i>
-											</dt>
-											<dd>
-												<strong class="dis-block size-24 color-black">동료 초대</strong>
-												<strong class="dis-block size-18 color-gray-l">동료를
-													초대할 수 있습니다.</strong>
-											</dd>
-										</dl>
-									</div>
+							<!-- pop con -->
+							<section class="pop-con border-box">
 
-									
-									
-									
-								</section>
-
-								<!-- 동료초대 :s -->
-								<div id="invitePartner" class="popup-sub-box">
-									<form action="insertProUser.do" method="get">
-										<input type="hidden" name="pro_no" value="${proUserDTO.pro_no }">
-										
-
-										<!-- top : pop invite partner : s -->
-										<div class="pop-top-sub">
-											<i class="fas fa-arrow-left size-20 cursor-point"
-												onclick="fn_popupBack(this)"></i> 동료 초대하기 <i
-												class="flow-icon icon-close cursor-point"
-												onclick="fn_popSubClose(this)"></i>
-										</div>
-										<!-- top : pop invite partner : f -->
-
-										<!-- content : pop invite partner : s -->
-										<div class="pop-con-sub">
-
-											<!-- 추가된 동료 리스트가 나올 부분 -->
-											<div class="select-user-list">
-												<span class="user-all-del" onclick="fn_userListDelete(this)">전체
-													삭제</span>
-											</div>
-
-											<!-- user list:s -->
-											<div class="invite-user-list over-y-scroll">
-												<c:forEach items="${notInvitedProUserList }" var="notInvitedUser">
-													<dl class="pop-user-list" data-memno="${notInvitedUser.mem_no }"
-														data-no="${proUserDTO.pro_no }"
-														onclick="fn_inviteUserAdd(this)">
-														<dt class="maright-10">
-															<i class="icon-circle circle-s"></i> <img
-																src="/chord/resources/img/sample.png" width="40">
-														</dt>
-														<dd>
-															<strong class="dis-block size-20 color-black">${notInvitedUser.mem_no }</strong>
-															<span class="dis-block size-14 color-gray-l">${notIinvitedUser.mem_no }</span>
-															<button type="button" class="invite-add-btn">
-																<i class="fas fa-plus maright-15"></i> <span>추가</span>
-															</button>
-														</dd>
-													</dl>
-												</c:forEach>
-											</div>
-											<!-- user list:f -->
-
-										</div>
-										<!-- content : pop invite partner : f -->
-
-										<!-- footer : pop invite partner : s -->
-										<div class="pop-footer-sub">
-											<input type="button"
-												class="invate-frm-submit submit-btn color-white default-back-color "
-												value="초대">
-										</div>
-										<!-- footer : pop invite partner : f -->
-
-									</form>
-
+								<div class="invite-kind-box back-color-white cursor-point"
+									data-id="invitePartner" onclick="fn_subPopOpen(this)">
+									<dl>
+										<dt class="maright-20 padtop-5 back-color-green-l">
+											<i class="fas fa-building size-30 color-white"></i>
+										</dt>
+										<dd>
+											<strong class="dis-block size-24 color-black">동료 초대</strong>
+											<strong class="dis-block size-18 color-gray-l">동료를
+												초대할 수 있습니다.</strong>
+										</dd>
+									</dl>
 								</div>
-								<!-- 동료초대 :f -->
 
-					
 
-								
+
+
+							</section>
+
+							<!-- 동료초대 :s -->
+							<div id="invitePartner" class="popup-sub-box">
+								<form action="insertProUser.do" method="get">
+									<input type="hidden" name="pro_no"
+										value="${proUserDTO.pro_no }">
+
+
+									<!-- top : pop invite partner : s -->
+									<div class="pop-top-sub">
+										<i class="fas fa-arrow-left size-20 cursor-point"
+											onclick="fn_popupBack(this)"></i> 동료 초대하기 <i
+											class="flow-icon icon-close cursor-point"
+											onclick="fn_popSubClose(this)"></i>
+									</div>
+									<!-- top : pop invite partner : f -->
+
+									<!-- content : pop invite partner : s -->
+									<div class="pop-con-sub">
+
+										<!-- 추가된 동료 리스트가 나올 부분 -->
+										<div class="select-user-list">
+											<span class="user-all-del" onclick="fn_userListDelete(this)">전체
+												삭제</span>
+										</div>
+
+										<!-- user list:s -->
+										<div class="invite-user-list over-y-scroll">
+											<c:forEach items="${notInvitedProUserList }"
+												var="notInvitedUser">
+												<dl class="pop-user-list"
+													data-memno="${notInvitedUser.mem_no }"
+													data-no="${proUserDTO.pro_no }"
+													onclick="fn_inviteUserAdd(this)">
+													<dt class="maright-10">
+														<i class="icon-circle circle-s"></i> <img
+															src="/chord/resources/img/sample.png" width="40">
+													</dt>
+													<dd>
+														<strong class="dis-block size-20 color-black">${notInvitedUser.mem_no }</strong>
+														<span class="dis-block size-14 color-gray-l">${notIinvitedUser.mem_no }</span>
+														<button type="button" class="invite-add-btn">
+															<i class="fas fa-plus maright-15"></i> <span>추가</span>
+														</button>
+													</dd>
+												</dl>
+											</c:forEach>
+										</div>
+										<!-- user list:f -->
+
+									</div>
+									<!-- content : pop invite partner : f -->
+
+									<!-- footer : pop invite partner : s -->
+									<div class="pop-footer-sub">
+										<input type="button"
+											class="invate-frm-submit submit-btn color-white default-back-color "
+											value="초대">
+									</div>
+									<!-- footer : pop invite partner : f -->
+
+								</form>
+
 							</div>
-							<!-- 초대하기 List pop : f -->
+							<!-- 동료초대 :f -->
+
+
+
 
 						</div>
-						<!-- 초대하기  layer pop up : f -->
+						<!-- 초대하기 List pop : f -->
 
-						<script type="text/javascript">
+					</div>
+					<!-- 초대하기  layer pop up : f -->
+
+					<script type="text/javascript">
 $(function(){
 
 	// 초대하기 layerPop 띄우기
@@ -1725,15 +1701,15 @@ $(function(){
 
 });
 </script>
-</div>
-						<!-- project right : end -->
-					</div>
-				</section>
-				<div>
-					<%@include file="layerPopCon.jsp"%>
-				</div>
-			</main>
 		</div>
+		<!-- project right : end -->
+	</div>
+	</section>
+	<div>
+		<%@include file="layerPopCon.jsp"%>
+	</div>
+	</main>
+	</div>
 
 	</div>
 	<div class="alert flowolf-alert"></div>
@@ -1748,5 +1724,7 @@ $(function(){
 		integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
 		crossorigin="anonymous"></script>
 	<script src="/chord/resources/js/dashboard.js"></script>
+	<!-- jjpicker -->
+<script type="text/javascript" src="/chord/resources/js/jjpicker.js"></script>
 </body>
 </html>

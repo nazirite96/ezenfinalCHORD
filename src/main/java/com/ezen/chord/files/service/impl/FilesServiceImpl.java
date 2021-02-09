@@ -82,6 +82,7 @@ public class FilesServiceImpl implements FilesService {
 		filedto.setFile_kind(fileExt(name));
 		filedto.setMem_no(mem_no); 
 		int result=filedao.insertFile(filedto)>0?1:0;
+		System.out.println("insertFileDB result:"+result);
 		return result;
 	}
 
@@ -165,6 +166,7 @@ public class FilesServiceImpl implements FilesService {
 			byte bytes[]=upload.getBytes();
 			File outFile=new File(serv+PATH+File.separator+PRONAME+File.separator+CRPATH+File.separator+checkName);
 			FileOutputStream fos=new FileOutputStream(outFile);
+			System.out.println(outFile.toString());
 			fos.write(bytes);
 			fos.close();
 			

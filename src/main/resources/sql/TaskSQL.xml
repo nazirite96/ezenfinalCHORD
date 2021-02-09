@@ -59,7 +59,7 @@
 	<!-- 업무 등록에 쓰는거 TIM_NO, CONT_KIND, CONT_NO, TIM_CONT, TIM_DATE, PRO_NO, MEM_NO -->
     <insert id="insertTaskTim" parameterType="taskDTO">
     	insert into timeline
-		values (timeline_seq.nextval,#{cont_kind},0,#{task_title},sysdate,#{pro_no},#{mem_no})
+		values (timeline_seq.nextval,#{cont_kind},#{task_no},#{task_title},sysdate,#{pro_no},#{mem_no})
     </insert>
     
     <select id="selectAllTask" parameterType="String" resultType="taskDTO">

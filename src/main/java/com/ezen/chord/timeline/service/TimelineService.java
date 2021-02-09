@@ -3,6 +3,7 @@ package com.ezen.chord.timeline.service;
 import java.util.List;
 
 import com.ezen.chord.project_user.dto.ProjectUserDTO;
+import com.ezen.chord.task.dto.TaskDTO;
 import com.ezen.chord.timeline.dto.TimelineDTO;
 
 public interface TimelineService {
@@ -20,5 +21,7 @@ public interface TimelineService {
 	public List<ProjectUserDTO> invitedProUserList(int pro_no);
 	
 	public List<ProjectUserDTO> notInvitedProUserList(int pro_no,int com_no);
+	
+	public TaskDTO getTask(int task_no);
 	
 }
