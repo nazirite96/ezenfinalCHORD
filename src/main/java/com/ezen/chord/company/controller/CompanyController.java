@@ -26,7 +26,7 @@ public class CompanyController {
 	@Autowired
 	CompanyDAO dao;
 
-	/*회사결정 form*/
+
 	/*회사 test form*/
 	@RequestMapping("/testForm.do")
 	public String existingCompanyForm() { 
@@ -60,6 +60,7 @@ public class CompanyController {
 			if(com_pwd_result>0) { // 번호+패스워드 모두 맞음
 
 				csvc.exComNoUpdateService(mdto);// com_no 업데이트해주기
+				//인설트 일반
 
 				mav.addObject("msg","입사 성공~");
 				mav.addObject("gopage","testForm.do");
@@ -72,13 +73,13 @@ public class CompanyController {
 
 
 			}else { // 번호는 맞지만, 패스워드 틀림
-				mav.addObject("msg","번호를 다시 입력해주세요.(1번)");
+				mav.addObject("msg","번호를 다시 입력해주세요.");
 				mav.addObject("gopage","exComPwdInputForm.do" );
 			}
 
 		}else { //번호 틀림
 
-			mav.addObject("msg","번호를 다시 입력해주세요.(2번)");
+			mav.addObject("msg","번호를 다시 입력해주세요.");
 			mav.addObject("gopage","exComPwdInputForm.do");
 
 		}
@@ -147,11 +148,14 @@ public class CompanyController {
 		/*자동 로그인 기능*/
 		String userName = csvc.comGetNameService(mdto.getMem_email()); // 해당 회원 이름 가져오기
 		/*세션 생성*/
-		session.setAttribute("name",userName);
-		session.setAttribute("email", mem_email);
+		//session.setAttribute("name",userName);
+		//session.setAttribute("email", mem_email);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("");
 		
 
-		return "company/comTestForm";
+		return "member/loginForm";
+		//return mav;
 	}
 
 }

@@ -6,17 +6,56 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
+	.body{
+		background-color:#FCF6F5;
+	}
+	.txtTD_css{
+		padding-bottom:12px;
+	}
+	/*테이블*/
 	.memJoin_css{
 		margin-top: 130px;
     	margin-left: auto;
     	margin-right:auto;
-    	font-size: 15pt;
+    	font-size: 12pt;
 	}
+	/*모든텍스트창*/
+	.alltxt_css{
+		width:300px;
+		height:37px;
+		border: 1px solid #ccc;
+	}
+	/*다음 버튼*/
+	.send_css{
+		width: 298px;
+	    height: 40px;
+	    font-size: 12pt;
+	    background-color: black;
+	    border: 1px solid black;
+	    color: white;	
+	}
+	/*메일중복확인 text*/
+	.mail_css{
+		width:200px;
+		height:37px;
+		border: 1px solid #ccc;
+		background-color:#e4e4e4;
+	}
+	/*메일 중복확인 bt*/
+	.mailcheckbt_css{
+		width: 100px;
+	    height: 38px;
+	    font-size: 12pt;
+	    background-color: #7b9acc;
+	    border: 1px solid #7b9acc;
+	    color: white;
+	}
+	
 </style>
 <script>
 	/*이메일 중복확인*/
 	function showup(){
-		window.open('emailChkForm.do','emailChk','width=500,height=350,top=100,left=100');
+		window.open('emailChkForm.do','emailChk','width=500,height=200,top=100,left=100');
 	}
 	
 	/*비밀번호 확인*/
@@ -42,37 +81,37 @@
 	}	
 </script>
 </head>
-<body>
+<body class="body">
 <jsp:include page="/WEB-INF/views/header.jsp"/>
 	<form name="memJoin_fm" action="memJoinEmailSendForm.do" method="post">
 		<table class="memJoin_css">
 			<tr>
-				<td>이메일</td>
+				<td><b>이메일</b></td>
 			</tr>
 			<tr>
-				<td><input type="email" name="mem_email" placeholder="이메일" readonly="readonly" id="email_id"></td>
-				<td><input type="button" onclick="showup()" value="중복확인"></td>
+				<td class="txtTD_css"><input type="email" name="mem_email" placeholder="email@gmail.com" readonly="readonly" id="email_id" class="mail_css">
+				<input type="button" onclick="showup()" value="중복확인" class="mailcheckbt_css"></td>
 			</tr>
 			<tr>
-				<td>이름</td>
+				<td><b>이름</b></td>
 			</tr>
 			<tr>
-				<td><input type="text" name="mem_name" placeholder="이름" id="name_id"></td>
+				<td class="txtTD_css"><input type="text" name="mem_name" placeholder="이름" id="name_id" class="alltxt_css"></td>
 			</tr>
 			<tr>
-				<td>비밀번호</td>
+				<td><b>비밀번호</b></td>
 			</tr>
 			<tr>
-				<td><input type="password" name="pwd_one" placeholder="비밀번호"></td>
+				<td class="txtTD_css"><input type="password" name="pwd_one" placeholder="비밀번호" class="alltxt_css"></td>
 			</tr>
 			<tr>
-				<td>비밀번호 확인</td>
+				<td><b>비밀번호 확인</b></td>
 			</tr>
 			<tr>
-				<td><input type="password" name="mem_pwd" placeholder="비밀번호 재입력"></td>
+				<td class="txtTD_css"><input type="password" name="mem_pwd" placeholder="비밀번호 재입력" class="alltxt_css"></td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center"><input type="button" onclick="confirm(pwd_one,mem_pwd)" value="다음" id="sendbt"></td>
+				<td colspan="2" align="center" class="txtTD_css"><input type="button" onclick="confirm(pwd_one,mem_pwd)" value="다음" id="sendbt" class="send_css"></td>
 			</tr>
 		</table>
 	</form>

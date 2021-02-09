@@ -96,5 +96,32 @@ public class MemberDAOImpl implements MemberDAO {
 		if(result.toString()==null) {System.out.println("에럿");}
 		return result;
 	}
+	
+	/*마이페이지*/
+	@Override
+	public MemberDTO myPageDAO(int mem_no) {
+		MemberDTO result = null;
+		try {
+			result = sqlMap.selectOne("chord.member.myPageSQL",mem_no);
+		} catch (Exception e) {
+			e.getLocalizedMessage();
+		}
+		return result;
+	}
+	
+	/*마이페이지 내 정보 수정*/
+	@Override
+	public int myPageUpdateDAO(MemberDTO mdto) {
+		int result = 0;
+		try {
+			result = sqlMap.update("chord.member.myPageUpdateSQL",mdto);
+		} catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
+			result = 0;
+			
+		}
+		return result;
+	}
+	
 
 }

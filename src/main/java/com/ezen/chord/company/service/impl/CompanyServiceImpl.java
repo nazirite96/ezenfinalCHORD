@@ -20,6 +20,7 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public int exComNoChkService(int num) {
 		int result = cdao.comNoCheckDAO(num);
+		System.out.println("com_service_1: "+num +"/"+result);
 		return result;
 	}
 
@@ -27,6 +28,7 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public int exComPwdChkService(CompanyDTO cdto) {
 		int result = cdao.comPwdCheckDAO(cdto);
+		System.out.println("com_service_2: "+cdto.getCom_no()+"/"+cdto.getCom_pwd() +"/"+result);
 		return result;
 	}
 	
@@ -34,6 +36,7 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public int exComNoUpdateService(MemberDTO mdto) {
 		int result = cdao.comNoUpdateDAO(mdto);
+		System.out.println("com_service: "+mdto.getMem_email() +"/"+result);
 		return result;
 	}
 	
@@ -41,6 +44,7 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public int buildCompanyService(CompanyDTO cdto) {
 		int result = cdao.buildCompanyDAO(cdto);
+		System.out.println("com_service:(회사설립) "+cdto.getCom_name() +"/"+result);
 		return result;
 	}
 	
@@ -48,6 +52,7 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public int findComNoService(String email) {
 		int result = cdao.findComNoDAO(email);
+		System.out.println("com_service:(회사넘버찾기) "+email +"/"+result);
 		return result;
 	}
 	
@@ -55,6 +60,7 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public int newPositionInsertService(Map map) {
 		int result = cdao.newPositionInsertDAO(map);
+		System.out.println("com_service:(새 회사 포지션 정해주기) "+map.getClass() +"/"+result);
 		return result;
 	}
 	
@@ -62,6 +68,7 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public int findMemNoService(String mem_email) {
 		int result = cdao.findMemNoDAO(mem_email);
+		System.out.println("com_service:(새 회사 멤버 넘버 찾기) "+mem_email +"/"+result);
 		return result;
 	}
 	
@@ -69,6 +76,7 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public String comGetNameService(String mem_email) {
 		String result = cdao.comGetNameDAO(mem_email);
+		System.out.println("com_service:(자동로그인): "+result);
 		return result;
 	}
 

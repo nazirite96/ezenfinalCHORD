@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,9 +29,7 @@
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>
-	<script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script>
 	<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
@@ -40,27 +38,55 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
 		integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
 		crossorigin="anonymous"></script>
-	<script src="/chord/resources/js/dashboard.js"></script>
 
 <style type="text/css">
+/* 네비바 */
 .navbar-default{
 	background-color: #7b9acc ;
 }
+/*[chord]*/
 .navbar-default .navbar-nav > li > a {
-    color : #FCF6F5;
-    
+    color : #FCF6F5; 
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
    	color: #5E5E5E;
 }
-
 .navbar-default .navbar-brand{
 	color : #FCF6F5;
 }
+/*메뉴*/
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
     color: #5E5E5E;
+}
+.navbar-default .navbar-toggler .navbar-toggler-icon {
+    border-color:#FCF6F5;
+}
+.navbar-default .navbar-toggler .navbar-toggler-icon:hover,
+.navbar-default .navbar-toggler .navbar-toggler-icon:focus
+{
+    border-color:#FCF6F5; 
+}
+/*dropdown*/
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+.navbar-default .navbar-nav > .dropdown > a {
+    border-top-color: #777;
+    border-bottom-color: #777;
+}
+.navbar-default .navbar-nav > .dropdown > a:hover,
+.navbar-default .navbar-nav > .dropdown > a:focus {
+    border-top-color: #333;
+    border-bottom-color: #333;
+}
+.navbar-default .navbar-nav > .open > a , 
+.navbar-default .navbar-nav > .open > a:hover , 
+.navbar-default .navbar-nav > .open > a:focus  {
+    border-top-color: #555;
+    border-bottom-color: #555;
 }
 
 </style>
@@ -95,7 +121,7 @@
 								<a class="nav-link active">${sessionName}님 </a></li>
 								<li class="nav-item nav-link text-nowrap">
 								<a class="nav-link active"
-									href="adminWebForm.do">관리자</a></li>
+									href="adminWebForm.do">사이트 운영자 관리</a></li>
 								<li class="nav-item nav-link text-nowrap">
 								<a class="nav-link active" href="logout.do">로그아웃</a></li>
 							</ul>
@@ -121,26 +147,30 @@
 						aria-label="Search">
 						<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 							<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+								<li class="nav-item nav-link text-nowrap dropdown">
+								<a class="nav-link" data-toggle="dropdown" href="#">
+								<img alt="user" src="resources/img/header/user.png" width="27" height="27"></a>
+									<div class="dropdown-menu">
+										<c:url var="gomypageURL" value="goMyPage.do">
+											<c:param name="mem_no">${sessionMemNo}</c:param>
+										</c:url>										
+										<a class="dropdown-item" href="${gomypageURL}">${sessionName}님</a>
+									</div>
+								</li>
 								<li class="nav-item nav-link text-nowrap">
-								<a class="nav-link"><img src="resources/img/user.png" width="27" height="27">${sessionName}님 </a></li>
-								<li class="nav-item nav-link text-nowrap">
-								<a class="nav-link" href="#"><img src="resources/img/header/chat.png" width="25" height="25"></a></li>
+								<a class="nav-link" href="#"><img alt="chat" src="resources/img/header/chat.png" width="25" height="25"></a></li>
 								<c:url var="comContentsUrl" value="adminCompanyForm.do">
 									<c:param name="com_no">${sessionComNo}</c:param>
 								</c:url>
 								<li class="nav-item nav-link text-nowrap">
-								<a class="nav-link" href="${comContentsUrl}">관리자</a></li>
+								<a class="nav-link" href="${comContentsUrl}">
+								<img alt="admin" src="resources/img/header/admin.png" width="25" height="25"></a></li>
 								<li class="nav-item nav-link text-nowrap">
-								<a class="nav-link" href="logout.do">로그아웃</a></li>
+								<a class="nav-link active" href="logout.do">
+								<img alt="logout" src="resources/img/header/exit.png" width="25" height="25"></a></li>
 							</ul>
 						</div>
 					</nav>
-				</c:when>
-				<c:when test="${whatGrade=='pro_ses'}">
-					<div>
-						${sessionName}님이 로그인 했습니다. | <a href="#">관리자설정(프로젝트)</a> | 
-						<a href="logout.do">로그아웃</a>
-					</div>
 				</c:when>
 				<c:otherwise>
 				<nav class="navbar navbar-default navbar-expand-lg">
@@ -160,12 +190,21 @@
 						aria-label="Search">
 					<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 						<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-							<li class="nav-item nav-link text-nowrap">
-								<a class="nav-link">${sessionName}님 </a></li>
+							<li class="nav-item nav-link text-nowrap dropdown">
+								<a class="nav-link" data-toggle="dropdown" href="#">
+								<img alt="user" src="resources/img/header/user.png" width="27" height="27"></a>
+									<div class="dropdown-menu dorpdown-menu-left">
+										<c:url var="gomypageURL" value="goMyPage.do">
+											<c:param name="mem_no">${sessionMemNo}</c:param>
+										</c:url>									
+										<a class="dropdown-item" href="${gomypageURL}">${sessionName}님</a>
+									</div>
+								</li>
 							<li class="nav-item nav-link text-nowrap">
 								<a class="nav-link" href="#"><img src="resources/img/header/chat.png" width="25" height="25"></a></li>
-	 						<li class="nav-item nav-link text-nowrap">
-								<a class="nav-link" href="logout.do">로그아웃</a></li>
+							<li class="nav-item nav-link text-nowrap">
+								<a class="nav-link active" href="logout.do">
+								<img alt="logout" src="resources/img/header/exit.png" width="25" height="25"></a></li>
 						</ul>
 					</div>						
 				</nav>
@@ -194,6 +233,4 @@
 			</nav>
 		</c:otherwise>
 	</c:choose>
-	<br>
 </body>
-</html>
