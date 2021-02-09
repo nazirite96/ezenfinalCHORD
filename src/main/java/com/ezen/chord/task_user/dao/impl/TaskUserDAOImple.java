@@ -20,10 +20,5 @@ public class TaskUserDAOImple implements TaskUserDAO {
 		this.sqlMap = sqlMap;
 	}
 	
-	@Override
-	public List<TaskUserDTO> getTaskUserList(int task_no) {
-		List<TaskUserDTO> result = sqlMap.selectList("getTaskUserList", task_no);
-		return result;
-	}
 
 }

@@ -59,21 +59,14 @@
 	<!-- 업무 등록에 쓰는거 TIM_NO, CONT_KIND, CONT_NO, TIM_CONT, TIM_DATE, PRO_NO, MEM_NO -->
     <insert id="insertTaskTim" parameterType="taskDTO">
     	insert into timeline
-		values (timeline_seq.nextval,#{cont_kind},0,#{task_title},sysdate,#{pro_no},#{mem_no})
+		values (timeline_seq.nextval,#{cont_kind},#{task_no},#{task_title},sysdate,#{pro_no},#{mem_no})
     </insert>
     
     <select id="selectAllTask" parameterType="String" resultType="taskDTO">
-		select t.*
-		,p.*,ti.*,pro.pro_no AS pro_no
-		,(select mem_email from member m where m.mem_no = p.mem_no) AS mem_email,pro.pro_name AS pro_name
-		,(select mem_name from member m where m.mem_no = p.mem_no) AS mem_nick
-		from task t,participants p,time ti
-		,(select m.*,pu.* from member m, project_user pu where m.mem_no=pu.mem_no AND mem_email = #{mem_email}) pu
-		,(select * from project) pro
-		where t.task_no = p.cont_no
-		AND  t.task_no = ti.cont_no
-		AND p.mem_no = pro.mem_no
-		AND  pu.pro_no = pro.pro_no
+		select * 
+		from (select * from task t left join time ti on t.task_no = ti.cont_no) A
+		left join timeline ti on A.task_no = ti.cont_no
+		where ti.cont_kind = 'task'
 		order by task_no desc
     </select>
 	

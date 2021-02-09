@@ -24,7 +24,7 @@ public interface TaskService {
 	////////////////////////////////////////////////////////
 	
 	/*전체업무 조회*/
-	List<Map<String, Object>> selectAllTask(String mem_email);
+	List<TaskDTO> selectAllTask();
 	
 	
 	/*업무글 수정*/

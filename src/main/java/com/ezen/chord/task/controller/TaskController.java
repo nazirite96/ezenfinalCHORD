@@ -2,7 +2,6 @@ package com.ezen.chord.task.controller;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.naming.java.javaURLContextFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -93,11 +92,10 @@ public class TaskController {
 		return "task/taskView";
 	}
 	@RequestMapping("/taskBasic.do")
-	public String taskBasic(@RequestParam(value = "mem_email",required = false,defaultValue = "jj@naver.com")String mem_email, Model model) {
+	public String taskBasic(Model model) {
 		
-		System.out.println(mem_email);
 		// 전체 업무 리스트 조회
-		List<Map<String, Object>> taskList = taskService.selectAllTask(mem_email);
+		List<TaskDTO> taskList = taskService.selectAllTask();
 		model.addAttribute("taskList", taskList);
 		
 		return "task/taskBasic";

@@ -25,11 +25,4 @@ public class TaskUserServiceImple implements TaskUserService {
 		super();
 		this.sqlMap = sqlMap;
 	}
-	
-	/*업무글의 지정자 목록 조회*/
-	@Override
-	public List<TaskUserDTO> getTaskUserList(int task_no) {
-		List<TaskUserDTO> result = taskUserDAO.getTaskUserList(task_no);
-		return result;
-	}
 }

@@ -141,7 +141,7 @@
 							<span>collection</span><a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report"><span
 								data-feather="plus-circle"></span></a>
 						</h1>
-						<li class="nav-item"><a class="nav-link" href="taskBasic.do?mem_id=jj@naver.com"><span
+						<li class="nav-item"><a class="nav-link" href="taskBasic.do"><span
 								data-feather="users"></span>전체업무</a></li>
 						<li class="nav-item"><a class="nav-link" href="#"><span
 								data-feather="bar-chart-2"></span>전체일정</a></li>
