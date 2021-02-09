@@ -80,10 +80,7 @@ public class FilesServiceImpl implements FilesService {
 		filedto.setFile_upload(original);
 		filedto.setFile_size(size);
 		filedto.setFile_kind(fileExt(name));
-		filedto.setCont_kind("baisc"); // 타임라인에서 가져올 타입
-		filedto.setCont_no(0); // 타임라인에서 가져올 컨텐츠 타입 번호
 		filedto.setMem_no(mem_no); 
-		filedto.setPro_no(20); // 사용자 속해있는 프로젝트 번호
 		int result=filedao.insertFile(filedto)>0?1:0;
 		return result;
 	}

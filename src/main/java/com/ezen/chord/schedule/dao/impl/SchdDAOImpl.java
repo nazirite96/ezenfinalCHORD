@@ -26,5 +26,23 @@ public class SchdDAOImpl implements SchdDAO {
 		int result = sqlMap.insert("insertSchd",dto);
 		return result;
 	}
+	@Override
+	public int insertParti(SchdDTO dto) {
+		// TODO Auto-generated method stub
+		int result = sqlMap.insert("insertParti");
+		return result;
+	}
+	@Override
+	public int insertTime(SchdDTO dto) {
+		// TODO Auto-generated method stub
+		int result = sqlMap.insert("insertSchdulDate",dto);
+		return result;
+	}
+	@Override
+	public int insertTimeLine(SchdDTO dto) {
+		// TODO Auto-generated method stub
+		int result= sqlMap.insert("insertTimeLine", dto);
+		return result;
+	}
 	
 }
