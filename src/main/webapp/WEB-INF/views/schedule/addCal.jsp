@@ -21,6 +21,7 @@
 function show(){
 	var schd_name = $('.font-bold').val();
 	var schd_date = $('.datepicker-here').val();
+	var mem_no = $('#mem_no').val();
 	var searchInput = $('#searchInput').val();
 	var content = $('#content').val();
 	if(schd_date.length<=16){
@@ -28,26 +29,59 @@ function show(){
 	}else{
 		alert('제목'+schd_name+'\n'+
 				'날짜'+schd_date+'\n'+
+				'참가자'+mem_no+'\n'+
 				'검색'+searchInput+'\n'+
 				'내용'+content)
 	}
 	document.frm.submit();
 }
-var test="";
-function show02(member){
-	test=test+member+", ";
-	$('#mem_no').val(test);
+
+var members="";
+var temp=true;
+function show02(member,ths){
+	if(temp==true){
+		temp=false;
+		members=member;
+	}else{
+		members=members+", "+member;
+	}
+	$('#mem_no').val(members);
+}
+
+$(function(){
+	$('#mem_no').focus(function(){
+		$('.participants').show();
+	});
+});
+$(function(){
+	$('#searchInput').focus(function(){
+		$('.participants').hide();
+	});
+	$('#content').focus(function(){
+		$('.participants').hide();
+	});
+})
+function delA(t){
+	t.remove();
+}
+function reload01(){
+	location.reload('.participants');
 }
 </script>
+
 
 
 <body>
 <section>
 <div id="tab-" class="tabs-content con-schedule">
 	<!-- 일정:s -->
-	<form action="#" name="frm" method="get">
+	<form action="taktest.do" name="frm" method="post">
+	<input type="hidden" name="schd_no" value="1">
+	<input type="hidden" name="cont_no" value="1">
+	<input type="hidden" name="pro_no" value="1">
+	<input type="hidden" name="mem_no" value="${sessionScope.memNo }">
 		<!-- tab-con-box:s -->
-		<input type="hidden" name="pro_no" value="${proVo.pro_no }">
+		<!-- <input type="hidden" name="pro_no" value="${proVo.pro_no }">-->
 		
 		<div class="tab-con-box">
 			<!-- 일정제목:s -->
@@ -65,7 +99,7 @@ function show02(member){
 						<i class="far fa-clock"></i>
 					</dt>
 					<dd>
-						<input type="text" required="required"
+						<input type="text" required="required" readonly="readonly"
 							placeholder="시작날짜 - 종료날짜" data-range="true"
 							data-multiple-dates-separator="  -  "
 							class="datepicker-here" id="datetime" name="datetime" data-timepicker="true" data-time-format='hh:ii'
@@ -82,13 +116,17 @@ function show02(member){
 				</dt>
 				<dd class="posi-re">
 					<!-- 담당자 추가 input -->
-					<input type="text" id="mem_no" placeholder="참가자 추가" onfocus="fn_taskManagerFocus(this)" />
+					<input type="text" id="mem_no" placeholder="참가자 추가" readonly="readonly" name="participants"/>
+					<input type="hidden" name="participants_no">
 					<!-- 담당자 리스트 -->
-					<div class="participants"></div>
-					<c:forEach var="mbs" items="${members }">
-						<a href="javascript:show02('${mbs }')">${mbs }</a><br>
-					</c:forEach>
+					<div class="participants" style="display:none;">
+						<c:forEach var="mbs" items="${members }">
+															<!--여기에 dto.no 꼭까먹지마시길 -->
+							<div><a href="javascript:show02('${mbs }')" onclick="delA(this)" class="dd(this)">${mbs }</a></div>
+						</c:forEach>
+						<input type="button" value="초기화:>" onclick="reload01()">
 					<!-- 프로젝트 참여자 리스트(담당자 설정 리스트) s -->
+					</div>
 					<div class="pro-user-list"></div>
 					<!-- 프로젝트 참여자 리스트(담당자 설정 리스트) e -->
 				</dd>
@@ -102,7 +140,7 @@ function show02(member){
 						<i class="fas fa-map-marker-alt"></i>
 					</dt>
 					<dd>
-						<input id="searchInput" name="schd_loc" class="controls" onkeyup="show1();"
+						<input id="searchInput" name="schd_loc" class="controls"  onkeyup="show1();"
 							type="text" placeholder="장소를입력하세요" style="width: 90%;">
 					</dd>
 				</dl>
@@ -140,7 +178,7 @@ function show02(member){
 </div>
 <script>
 function show1(){
-	
+	$('.participants').hide();
 	$('#map').show();
 //마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 var infowindow = new kakao.maps.InfoWindow({zIndex:1});

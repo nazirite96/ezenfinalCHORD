@@ -43,7 +43,7 @@ public class FilesController {
 			HttpServletRequest request) {
 		
 		HttpSession session=request.getSession();
-		session.setAttribute("memNo", 2);/////////////////////////////이건 지울거
+		int memNo=(Integer)session.getAttribute("memNo");
 		String serv =request.getSession().getServletContext().getRealPath("/");
 		
 		File f = new File(serv+fileSerImp.PATH);
@@ -103,7 +103,7 @@ public class FilesController {
 			mav.addObject("foldername",foldername);
 			mav.addObject("crpath", fileSerImp.CRPATH);
 			mav.addObject("clickproject", fileSerImp.PRONAME);
-			mav.addObject("proName",fileSerImp.getproName(2));
+			mav.addObject("proName",fileSerImp.getproName(memNo));
 			mav.setViewName("files/files");
 			
 		return mav;
@@ -125,6 +125,10 @@ public class FilesController {
 			HttpServletRequest request) {
 		HttpSession session=request.getSession();
 		int mem_no = (Integer) session.getAttribute("memNo");
+		
+		filedto.setCont_kind("baisc"); // 타임라인에서 가져올 타입
+		filedto.setCont_no(0); // 타임라인에서 가져올 컨텐츠 타입 번호
+		filedto.setPro_no(20); // 사용자 속해있는 프로젝트 번호
 
 		String serv =request.getSession().getServletContext().getRealPath("/");
 		
