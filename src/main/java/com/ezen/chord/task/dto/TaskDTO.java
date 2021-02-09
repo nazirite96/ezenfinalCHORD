@@ -20,7 +20,7 @@ public class TaskDTO {
 	private int cont_no;				//컨텐츠번호
 	private String cont_kind;			//컨텐츠분류
 	private int tim_no;					//타임라인 인덱스
-	private String tim_cont;			//타임라인 내용
+	private String tim_cont;			//업무시 업무 제목
 	private Date tim_date;				//게시글 작성시간
 	private int pro_no;					//프로젝트번호
 	private String mem_email;			//멤버이메일
