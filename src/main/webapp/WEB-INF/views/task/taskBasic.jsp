@@ -305,8 +305,8 @@
 								</c:when>
 							</c:choose>
 							<c:choose>
-								<c:when test="${taskMap['taskVo'].task_priority != null }">
-									<span class="task-all-rank flow-icon ${priClass }" data-id="${dataId }">${taskMap['taskVo'].task_priority }</span>
+								<c:when test="${taskMap['taskDTO'].task_priority != null }">
+									<span class="task-all-rank flow-icon ${priClass }" data-id="${dataId }">${taskMap['taskDTO'].task_priority }</span>
 								</c:when>
 								<c:otherwise>
 									<span data-id="${dataId }">-</span>
@@ -314,12 +314,13 @@
 							</c:choose>
 						</td>
 						<td class="task-td-con">
-							<span class="dis-block size-16 color-black">${taskMap['taskDTO'].task_title }</span>
+							<span class="dis-block size-16 color-black"></span>
 							<span class="dis-block size-12 color-gray">${taskMap['taskDTO'].pro_name }</span>
 						</td>
 						<td>
 							<div class="task-pcnt-bar task-pcnt-${taskMap['taskDTO'].task_rate }"><span>${taskMap['taskDTO'].task_rate }%</span></div>
 						</td>
+						<!-- 
 						<td class="task-manager">
 						<c:choose>
 							<c:when test="${taskMap['taskUserList'].size() == 0 }">
@@ -341,6 +342,7 @@
 							<span class="task-start-date dis-none">${taskMap['taskDTO'].task_start_date }</span>
 							<span class="task-end-date">${taskMap['taskDTO'].task_end_date }</span>
 						</td>
+						 -->
 					</tr>
 					</c:forEach>
 				</tbody>

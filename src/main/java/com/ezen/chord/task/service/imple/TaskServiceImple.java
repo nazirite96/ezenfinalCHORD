@@ -118,10 +118,14 @@ public class TaskServiceImple implements TaskService {
 		
 		for (TaskDTO taskDTO : taskList) {
 			
+			
+			
 			Map<String, Object> map = new HashMap<String, Object>();			
 			
 			map.put("taskDTO", taskDTO);
 			map.put("taskUserList", taskUserDAO.getTaskUserList(taskDTO.getTask_no()));
+			
+			
 			
 			resultList.add(map);			
 		}
