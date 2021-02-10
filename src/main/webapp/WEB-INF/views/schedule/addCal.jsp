@@ -17,11 +17,64 @@
 <link href="<%=request.getContextPath()%>/resources/css/JeCss.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/style_margin.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/style_padding.css">
+<link href="<%=request.getContextPath()%>/resources/css/JeCss2.css" rel="stylesheet" type="text/css">
 <script>
+
+/*******************************************
+* Note : task manager input focus
+* 설명 : 업무담당자 input태그에 focus되었을 시에
+* 		업무담당자(프로젝트 참여자) 리스트가 노출된다
+*******************************************/
+function fn_taskManagerFocus(el){
+
+	var item = $(el);
+	var projectUserList = item.siblings(".pro-user-list");
+	
+	projectUserList.fadeIn();
+	item.blur(function(){
+		projectUserList.fadeOut();
+	});
+	
+}
+
+
+/*******************************************
+* Note : task manager select
+* 설명 : 업무담당자(프로젝트 참여자) 리스트에서 담당자를 선택했을 때
+* 		담당자리스트에 담당자 추가
+*******************************************/
+function fn_taskManagerSelect(el){
+	var item = $(el);
+	var src = item.find('img').attr('src');
+	var name = item.find('.user-id').text();
+	var id = item.find('.user-id').data("id");
+	var taskUserList = item.parent().siblings('.task-user-list');
+	   
+	var eqChk = 0;   // 해당 회원이 있는지 체크하는 변수
+	   
+	taskUserList.find('div').each(function(i, e){
+		if(taskUserList.find('div').eq(i).attr("data-name") == name){
+			eqChk = 1;
+		}
+	});
+	   
+	if(eqChk == 1){
+		alert('이미 선택된 참여자를 다시 추가할 수 없습니다.');
+	}else{
+		taskUserList.addClass('martop-10');
+		taskUserList.append(
+			"<div class=\"name-tag\" data-name=\""+ name + "\">"
+	            + "<strong class=\"marleft-10\">" + name + "</strong>"
+	            + "<i class=\"fas fa-times-circle marleft-15\" onclick=\"fn_taskUserRemove(this)\"></i>"
+	            + "<input type=\"hidden\" name=\"members\" value=\"" + id + "\">"
+            + "</div>"
+		);
+	}
+}
 function show(){
 	var schd_name = $('.font-bold').val();
 	var schd_date = $('.datepicker-here').val();
-	var mem_no = $('#mem_no').val();
+	var members = $('#mem_no').val();
 	var searchInput = $('#searchInput').val();
 	var content = $('#content').val();
 	if(schd_date.length<=16){
@@ -36,16 +89,11 @@ function show(){
 	document.frm.submit();
 }
 
-var members="";
-var temp=true;
-function show02(member,ths){
-	if(temp==true){
-		temp=false;
-		members=member;
-	}else{
-		members=members+", "+member;
-	}
-	$('#mem_no').val(members);
+
+function show02(member){
+	html='<span><a href="">'+member+'</a></span>';
+	$('.pro-user-list').append(html);
+	
 }
 
 $(function(){
@@ -61,8 +109,14 @@ $(function(){
 		$('.participants').hide();
 	});
 })
+var count=0;
+var arr=[];
 function delA(t){
-	t.remove();
+	$('#mem_no').hide();
+	$(t).hide();
+}
+function deleteMem(asdff){
+	alert(asdff);
 }
 function reload01(){
 	location.reload('.participants');
@@ -107,32 +161,32 @@ function reload01(){
 					</dd>
 				</dl>
 			</div>
-			<!-- 일정 시간 설정:f -->
-			<!-- 참가자 s -->
-		<div class="input-box martop-15" style="height: inherit">
+
+		<div class="input-box martop-15" style="height:inherit">
 			<dl>
-				<dt class="maright-20">
-					<i class="fas fa-user-plus"></i>
-				</dt>
+				<dt class="maright-20"><i class="fas fa-user-plus"></i></dt>
 				<dd class="posi-re">
-					<!-- 담당자 추가 input -->
-					<input type="text" id="mem_no" placeholder="참가자 추가" readonly="readonly" name="participants"/>
-					<input type="hidden" name="participants_no">
+					<input type="text" id="tu_mem_id" placeholder="담당자 추가" onfocus="fn_taskManagerFocus(this)">
+					
 					<!-- 담당자 리스트 -->
-					<div class="participants" style="display:none;">
-						<c:forEach var="mbs" items="${members }">
-															<!--여기에 dto.no 꼭까먹지마시길 -->
-							<div><a href="javascript:show02('${mbs }')" onclick="delA(this)" class="dd(this)">${mbs }</a></div>
-						</c:forEach>
-						<input type="button" value="초기화:>" onclick="reload01()">
-					<!-- 프로젝트 참여자 리스트(담당자 설정 리스트) s -->
+					<div class="task-user-list">
 					</div>
-					<div class="pro-user-list"></div>
-					<!-- 프로젝트 참여자 리스트(담당자 설정 리스트) e -->
+					
+					<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
+					<div class="pro-user-list">
+						<c:forEach items="${members }" var="mbs">
+							<div class="pro-user-info" onclick="fn_taskManagerSelect(this)">
+								<div class="pro-user-photo maright-10">
+									<i class="icon-circle circle-s"></i>
+								</div>
+								<span class="user-id" data-id="${mbs }">${mbs }</span>
+							</div>						
+						</c:forEach>
+					</div>
+					<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):f -->
 				</dd>
 			</dl>
 		</div>
-		<!-- 참가자 e -->
 			<!-- 위치 검색:s -->
 			<div class="input-box martop-15">
 				<dl>
