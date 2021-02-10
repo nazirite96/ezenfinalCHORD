@@ -66,15 +66,39 @@ function fn_taskManagerSelect(el){
 			"<div class=\"name-tag\" data-name=\""+ name + "\">"
 	            + "<strong class=\"marleft-10\">" + name + "</strong>"
 	            + "<i class=\"fas fa-times-circle marleft-15\" onclick=\"fn_taskUserRemove(this)\"></i>"
-	            + "<input type=\"hidden\" name=\"members\" value=\"" + id + "\">"
+	            + "<input type=\"hidden\" name=\"participants\" value=\"" + id + "\">"
             + "</div>"
 		);
 	}
 }
+/*******************************************
+ * Note : task user remove
+ * 설명 : 업무담당자(프로젝트 참여자) 리스트에서 
+ * 		 추가된 업무지정자 삭제
+ *******************************************/
+function fn_taskUserRemove(el){
+	var item = $(el);
+	item.parent("div").remove();	
+}
+/*******************************************
+ * Note : task user delete
+ * 설명 : 업무담당자(프로젝트 참여자) 리스트에서 
+ * 		 추가된 업무지정자 삭제
+ *******************************************/
+function fn_taskUserDelete(el){
+	var item = $(el);	
+	var task_user_no = item.data("no");	
+	var frm = item.parents(".article-edit-form");
+	
+	frm.prepend("<input type=\"hidden\" name=\"participants\" value=\""+task_user_no+"\">");	
+	item.parent("div").remove();
+	
+}
+
+
 function show(){
 	var schd_name = $('.font-bold').val();
 	var schd_date = $('.datepicker-here').val();
-	var members = $('#mem_no').val();
 	var searchInput = $('#searchInput').val();
 	var content = $('#content').val();
 	if(schd_date.length<=16){
@@ -82,7 +106,6 @@ function show(){
 	}else{
 		alert('제목'+schd_name+'\n'+
 				'날짜'+schd_date+'\n'+
-				'참가자'+mem_no+'\n'+
 				'검색'+searchInput+'\n'+
 				'내용'+content)
 	}
@@ -90,44 +113,13 @@ function show(){
 }
 
 
-function show02(member){
-	html='<span><a href="">'+member+'</a></span>';
-	$('.pro-user-list').append(html);
-	
-}
-
-$(function(){
-	$('#mem_no').focus(function(){
-		$('.participants').show();
-	});
-});
-$(function(){
-	$('#searchInput').focus(function(){
-		$('.participants').hide();
-	});
-	$('#content').focus(function(){
-		$('.participants').hide();
-	});
-})
-var count=0;
-var arr=[];
-function delA(t){
-	$('#mem_no').hide();
-	$(t).hide();
-}
-function deleteMem(asdff){
-	alert(asdff);
-}
-function reload01(){
-	location.reload('.participants');
-}
 </script>
 
 
 
 <body>
 <section>
-<div id="tab-" class="tabs-content con-schedule">
+<div id="tab-3" class="tabs-content con-schedule">
 	<!-- 일정:s -->
 	<form action="taktest.do" name="frm" method="post">
 	<input type="hidden" name="schd_no" value="1">

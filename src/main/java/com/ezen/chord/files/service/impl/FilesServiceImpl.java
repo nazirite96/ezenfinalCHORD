@@ -22,7 +22,8 @@ import com.ezen.chord.project.dto.ProjectDTO;
 
 @Service
 public class FilesServiceImpl implements FilesService {
-	
+	HttpServletRequest rs;
+	String realpath="";
 	public final String PATH="resources/files";
 	public String CRPATH="";	
 	public String PRONAME="";
@@ -253,23 +254,48 @@ public class FilesServiceImpl implements FilesService {
 		}
 	}
 	@Override
-	public void createProfolder(String pro_name,String realpath) {
+	public void createProfolder(String pro_name) {
 		// TODO Auto-generated method stub
+		realpath=rs.getSession().getServletContext().getRealPath("/");
 	File f= new File(realpath+PATH+File.separator+pro_name);
 			f.mkdir();
 	}
 	@Override
-	public void delProfolder(String pro_name, String realpath) {
+	public void delProfolder(String pro_name) {
 		// TODO Auto-generated method stub
+		realpath=rs.getSession().getServletContext().getRealPath("/");
 		File f = new File(realpath+PATH+File.separator+pro_name);
-		folderDel(pro_name, realpath);
+		if(f.isFile()) {
+			f.delete();
+		}else {
+			File files[]=f.listFiles();
+			for(int i=0;i<files.length;i++) {
+				if(files[i].isFile()) {
+					files[i].delete();
+				}else {
+					String test=pro_name+File.separator+files[i].getName();
+					delProfolder(test);
+				}
+			}
+			f.delete();
+		}
+		delDBPath(PATH+File.separator+pro_name+File.separator);	
 	}
 	@Override
-	public void changePro(String pro_name, String realpath) {
+	public void changePro(String pro_name) {
 		// TODO Auto-generated method stub
 		CRPATH="";
-		PRONAME="";
 		STATE="";
-		File f = new File(realpath+PATH+File.separator+pro_name);
+		PRONAME=pro_name;
+		
 	}
+	//폴더명 바꾸기 
+//	public void reProfor(String rename,String realpath) {
+//		File file = new File("D:\\Test.java");
+//		File file2 = new File("D:\\Testaaa.java");
+//	//변경
+//	if(file.exists()) {
+//		file.renameTo(file2); //변경 
+//		} 
+//	}
 }
