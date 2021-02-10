@@ -96,5 +96,10 @@ public class TimelineServiceImpl implements TimelineService {
 		return null;
 	}
 	
+	@Override
+	public int getTimSeq() {
+		// TODO Auto-generated method stub
+		return timDAO.getTimSeq();
+	}
 	
 }

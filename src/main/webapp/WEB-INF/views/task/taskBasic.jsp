@@ -31,6 +31,7 @@
     <link href="/chord/resources/css/dashboard.css" rel="stylesheet">
     <link href="/chord/resources/css/JeCss2.css" rel="stylesheet">
     <script	src="/chord/resources/js/task_custom2.js"></script>
+    <script	src="/chord/resources/js/getDate.js"></script>
     		<!-- scroll custom CSS & JS -->
 		<link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.min.css" />
 		<script src="https://unpkg.com/simplebar@latest/dist/simplebar.js"></script>

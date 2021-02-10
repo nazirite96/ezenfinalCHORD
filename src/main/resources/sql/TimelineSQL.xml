@@ -7,7 +7,7 @@
     	<!-- TIM_NO, CONT_KIND, CONT_NO, TIM_CONT, TIM_DATE, PRO_NO, MEM_NO -->
     	<insert id="insertTim" parameterType="timelineDTO">
     		insert into timeline
-			values (timeline_seq.nextval,#{cont_kind},#{cont_no},#{tim_cont},sysdate,#{pro_no},#{mem_no})
+			values (#{tim_no},#{cont_kind},#{cont_no},#{tim_cont},sysdate,#{pro_no},#{mem_no})
     	</insert>
     	
     	<select id="getTimelinByProNo" parameterType="hashMap" resultType="timelineDTO">
@@ -24,5 +24,7 @@
     	<delete id="deleteTim">
     		delete timeline where tim_no = #{tim_no}
     	</delete>
-    	
+    	<select id="getTimSeq" resultType="int">
+    		select timeline_SEQ.nextval from dual
+    	</select>
     </mapper>

@@ -49,19 +49,19 @@
 					<c:set var="sHol" value=""/>
 					
 					<c:choose>
-						<c:when test="${timeLine.taskVo.task_state == '요청' }">
+						<c:when test="${timeLine.taskDTO.task_state == '요청' }">
 							<c:set var="sReq" value="checked"/>
 						</c:when>
-						<c:when test="${timeLine.taskVo.task_state == '진행' }">
+						<c:when test="${timeLine.taskDTO.task_state == '진행' }">
 							<c:set var="sPro" value="checked"/>
 						</c:when>
-						<c:when test="${timeLine.taskVo.task_state == '피드백' }">
+						<c:when test="${timeLine.taskDTO.task_state == '피드백' }">
 							<c:set var="sFee" value="checked"/>
 						</c:when>
-						<c:when test="${timeLine.taskVo.task_state == '완료' }">
+						<c:when test="${timeLine.taskDTO.task_state == '완료' }">
 							<c:set var="sCom" value="checked"/>
 						</c:when>
-						<c:when test="${timeLine.taskVo.task_state == '보류' }">
+						<c:when test="${timeLine.taskDTO.task_state == '보류' }">
 							<c:set var="sHol" value="checked"/>
 						</c:when>
 					</c:choose>
@@ -117,7 +117,7 @@
 		<dl>
 			<dt class="maright-20"><i class="flow-icon icon-task icon-sDate"></i></dt>
 			<dd class="posi-re">
-				<input type="text" placeholder="시작일" value="${timeLine.taskVo.task_start_date }" readonly/>
+				<input type="text" placeholder="시작일" value="${timeLine.taskDTO.task_start_date }" readonly/>
 			</dd>
 		</dl>
 	</div>
@@ -128,39 +128,12 @@
 		<dl>
 			<dt class="maright-20"><i class="flow-icon icon-task icon-fDate"></i></dt>
 			<dd class="posi-re">
-				<input type="text" placeholder="마감일" value="${timeLine.taskVo.task_end_date }" readonly/>
+				<input type="text" placeholder="마감일" value="${timeLine.taskDTO.task_end_date }" readonly/>
 			</dd>
 		</dl>
 	</div>
 	<!-- 마감일:f -->
 	
-	<!-- 작업진척도:s -->
-	<div class="input-box martop-15 add-item-box">
-		<dl>
-			<dt class="maright-20"><i class="far fa-chart-bar"></i></dt>
-			<dd>
-				<div class="work-range">
-					<input type="hidden" data-taskno="${timeLine.taskVo.task_no }">
-					<c:choose>
-						<c:when test="${timeLine.taskVo.task_rate >= 60 }">
-							<span class="work-percent color-white">${timeLine.taskVo.task_rate }%</span>
-						</c:when>
-						<c:otherwise>
-							<span class="work-percent color-black">${timeLine.taskVo.task_rate }%</span>
-						</c:otherwise>
-					</c:choose>
-					<div class="pcnt-bar" style="right:${100-timeLine.taskVo.task_rate }%"></div>
-					<div class="pcnt-btn pcnt-20" onclick="fn_timeProgressSelect(this)" data-toggle="tooltip" data-placement="bottom" title="20"><span>20</span></div>
-					<div class="pcnt-btn pcnt-40" onclick="fn_timeProgressSelect(this)" data-toggle="tooltip" data-placement="bottom" title="40"><span>40</span></div>
-					<div class="pcnt-btn pcnt-60" onclick="fn_timeProgressSelect(this)" data-toggle="tooltip" data-placement="bottom" title="60"><span>60</span></div>
-					<div class="pcnt-btn pcnt-80" onclick="fn_timeProgressSelect(this)" data-toggle="tooltip" data-placement="bottom" title="80"><span>80</span></div>
-					<div class="pcnt-btn pcnt-100" onclick="fn_timeProgressSelect(this)" data-toggle="tooltip" data-placement="bottom" title="100"><span>100</span></div>
-				</div>
-			</dd>
-		</dl>
-	</div>
-	<!-- 작업진척도:f -->	
-		
 	<!-- 우선순위:s -->
 	<div class="input-box martop-15 add-item-box">
 		<dl>
@@ -168,22 +141,22 @@
 			<dd class="posi-re">
 				<span class="task-rank">
 					<c:choose>
-						<c:when test="${timeLine.taskVo.task_priority == null}">
+						<c:when test="${timeLine.taskDTO.task_priority == null}">
 							<p class="mar-0 pad-0 color-gray">우선순위</p>
 						</c:when>
 						<c:otherwise>
 							<c:choose>
-								<c:when test="${timeLine.taskVo.task_priority == '낮음'}">
-									<i class="flow-icon rank-icon icon-low"></i>${timeLine.taskVo.task_priority }
+								<c:when test="${timeLine.taskDTO.task_priority == '낮음'}">
+									<i class="flow-icon rank-icon icon-low"></i>${timeLine.taskDTO.task_priority }
 								</c:when>
-								<c:when test="${timeLine.taskVo.task_priority == '보통'}">
-									<i class="flow-icon rank-icon icon-basic"></i>${timeLine.taskVo.task_priority }
+								<c:when test="${timeLine.taskDTO.task_priority == '보통'}">
+									<i class="flow-icon rank-icon icon-basic"></i>${timeLine.taskDTO.task_priority }
 								</c:when>
-								<c:when test="${timeLine.taskVo.task_priority == '높음'}">
-									<i class="flow-icon rank-icon icon-high"></i>${timeLine.taskVo.task_priority }
+								<c:when test="${timeLine.taskDTO.task_priority == '높음'}">
+									<i class="flow-icon rank-icon icon-high"></i>${timeLine.taskDTO.task_priority }
 								</c:when>
-								<c:when test="${timeLine.taskVo.task_priority == '긴급'}">
-									<i class="flow-icon rank-icon icon-emer"></i>${timeLine.taskVo.task_priority }
+								<c:when test="${timeLine.taskDTO.task_priority == '긴급'}">
+									<i class="flow-icon rank-icon icon-emer"></i>${timeLine.taskDTO.task_priority }
 								</c:when>
 							</c:choose>
 						</c:otherwise>
@@ -198,7 +171,7 @@
 	
 	<!-- 내용:s -->
 	<div class="article-txt martop-50">
-		<pre>${timeLine.taskVo.task_cont }</pre>
+		<pre>${timeLine.taskDTO.task_content }</pre>
 	</div>
 	<!-- 내용:f -->
 	
@@ -243,16 +216,16 @@
 </div>
 
 <!-- 업무 수정:s -->
-<form action="/flowolf/task/update" method="post" enctype="multipart/form-data" class="article-edit-form">
+<form action="taskUpdate.do" method="post" enctype="multipart/form-data" class="article-edit-form">
 
-	<input type="hidden" name="task_no" value="${timeLine.taskVo.task_no }"> 
+	<input type="hidden" name="task_no" value="${timeLine.taskDTO.task_no }"> 
 	
 	<!-- article edit box:s -->
 	<div class="article-edit-box con-task">
 
 		<!-- 업무명:s -->
 		<div class="input-box">
-			<input type="text" name="task_title" class="font-bold size-18" placeholder="업무명을 입력하세요." value="${timeLine.taskVo.task_title }">
+			<input type="text" name="task_title" class="font-bold size-18" placeholder="업무명을 입력하세요." value="${timeLine.taskDTO.task_title }">
 		</div>
 		<!-- 업무명:f -->
 			
@@ -324,7 +297,7 @@
 			<dl>
 				<dt class="maright-20"><i class="flow-icon icon-task icon-sDate"></i></dt>
 				<dd class="posi-re">
-					<input type="text" name="task_start_date" placeholder="시작일설정" data-language='ko' class="datepicker-here" value="${timeLine.taskVo.task_start_date }"/>
+					<input type="text" name="task_start_date" placeholder="시작일설정" data-language='ko' class="datepicker-here" value="${timeLine.taskDTO.task_start_date }"/>
 					<i class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point" onclick="fn_dateReset(this)"></i>
 				</dd>
 			</dl>
@@ -336,47 +309,20 @@
 			<dl>
 				<dt class="maright-20"><i class="flow-icon icon-task icon-fDate"></i></dt>
 				<dd class="posi-re">
-					<input type="text" name="task_end_date" placeholder="마감일설정" data-language='ko' class="datepicker-here" value="${timeLine.taskVo.task_end_date }"/>
+					<input type="text" name="task_end_date" placeholder="마감일설정" data-language='ko' class="datepicker-here" value="${timeLine.taskDTO.task_end_date }"/>
 					<i class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point" onclick="fn_dateReset(this)"></i>
 				</dd>
 			</dl>
 		</div>
 		<!-- 마감일:f -->
 		
-		<!-- 작업진척도:s -->
-		<div class="input-box martop-15 add-item-box">
-			<dl>
-				<dt class="maright-20"><i class="far fa-chart-bar"></i></dt>
-				<dd>
-					<div class="work-range">
-						<input type="hidden" name="task_rate" value="${timeLine.taskVo.task_rate }">
-						<c:choose>
-							<c:when test="${timeLine.taskVo.task_rate >= 60 }">
-								<span class="work-percent color-white">${timeLine.taskVo.task_rate }%</span>
-							</c:when>
-							<c:otherwise>
-								<span class="work-percent color-black">${timeLine.taskVo.task_rate }%</span>
-							</c:otherwise>
-						</c:choose>
-						<div class="pcnt-bar" style="right:${100-timeLine.taskVo.task_rate }%"></div>
-						<div class="pcnt-btn pcnt-20" onclick="fn_progressSelect(this);" data-toggle="tooltip" data-placement="bottom" title="20"><span>20</span></div>
-						<div class="pcnt-btn pcnt-40" onclick="fn_progressSelect(this);" data-toggle="tooltip" data-placement="bottom" title="40"><span>40</span></div>
-						<div class="pcnt-btn pcnt-60" onclick="fn_progressSelect(this);" data-toggle="tooltip" data-placement="bottom" title="60"><span>60</span></div>
-						<div class="pcnt-btn pcnt-80" onclick="fn_progressSelect(this);" data-toggle="tooltip" data-placement="bottom" title="80"><span>80</span></div>
-						<div class="pcnt-btn pcnt-100" onclick="fn_progressSelect(this);" data-toggle="tooltip" data-placement="bottom" title="100"><span>100</span></div>
-					</div>
-				</dd>
-			</dl>
-		</div>
-		<!-- 작업진척도:f -->
-			
 		<!-- 우선순위:s -->
 		<div class="input-box martop-15 add-item-box">
 			<dl>
 				<dt class="maright-20"><i class="fas fa-flag"></i></dt>
 				<dd class="posi-re">
 						<c:choose>
-							<c:when test="${timeLine.taskVo.task_priority == null }">
+							<c:when test="${timeLine.taskDTO.task_priority == null }">
 								<input type="text" name="task_priority"  class="task-rank-input" placeholder="우선순위 선택" onfocus="fn_taskRankFocus(this)" readonly>
 								<span class="task-rank" onclick="fn_taskRankClick(this)">
 								</span>
@@ -384,7 +330,7 @@
 							<c:otherwise>
 								<input type="text" name="task_priority"  class="task-rank-input" style="display:none" placeholder="우선순위 선택" onfocus="fn_taskRankFocus(this)" readonly>
 								<span class="task-rank" onclick="fn_taskRankClick(this)">
-									<i class="flow-icon rank-icon icon-low"></i>${timeLine.taskVo.task_priority }
+									<i class="flow-icon rank-icon icon-low"></i>${timeLine.taskDTO.task_priority }
 								</span>
 							</c:otherwise>
 						</c:choose>
@@ -404,7 +350,7 @@
 		<button type="button" class="add-item-btn" onclick="fn_addItem(this)"><i class="fas fa-angle-down maright-10"></i> 추가 항목 입력</button>
 		
 		<textarea rows="5" name="task_cont" cols="50" placeholder="글을 작성하세요." class="martop-30"
-		onkeyup="autoTextarea(this, 120, 500)">${timeLine.taskVo.task_cont }</textarea>
+		onkeyup="autoTextarea(this, 120, 500)">${timeLine.taskDTO.task_content }</textarea>
 		
 		<!-- 이미지 목록이 나올부분 -->
 		<div class="upload-img-list">

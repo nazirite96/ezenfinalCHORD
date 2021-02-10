@@ -117,6 +117,22 @@ public class TaskServiceImple implements TaskService {
 		List<TaskDTO> taskList = taskDAO.selectAllTask();
 		
 		for (TaskDTO taskDTO : taskList) {
+			System.out.println(taskDTO.getTask_start_date()+"업무조회데이터");
+			System.out.println(taskDTO.getTask_end_date()+"업무조회데이터");
+			String task_start_date = taskDTO.getTask_start_date().substring(0, 10);
+			String task_end_date = taskDTO.getTask_end_date().substring(0, 10);
+			System.out.println(task_start_date+"업무조회데이터2");
+			System.out.println(task_end_date+"업무조회데이터2");			
+			if(task_start_date.equals("1990-01-01")) {
+				taskDTO.setTask_start_date("");
+				taskDTO.setTask_end_date(task_end_date);
+			}else if(task_end_date.equals("1990-01-01")) {
+				taskDTO.setTask_start_date(task_start_date);
+				taskDTO.setTask_end_date("");
+			}else {
+				taskDTO.setTask_start_date(task_start_date);
+				taskDTO.setTask_end_date(task_end_date);
+			}
 			
 			resultList.add(taskDTO);
 		}
