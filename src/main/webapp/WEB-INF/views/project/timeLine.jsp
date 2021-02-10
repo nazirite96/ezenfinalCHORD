@@ -1520,14 +1520,6 @@ function fn_collCancel(){
 										</c:forEach></li>
 								</ul>
 
-
-
-
-
-
-
-
-
 							</div>
 						</div>
 						<!-- 프로젝트 참여자 : f -->
