@@ -21,20 +21,19 @@ import com.ezen.chord.task_user.dao.TaskUserDAO;
 @Service
 public class TaskServiceImple implements TaskService {
 	
-	@Inject
+	@Autowired
 	private TaskDAO taskDAO;
 	
 	@Inject
 	private TaskUserDAO taskUserDAO;
 	
-	
-	@Autowired
-	private SqlSessionTemplate sqlMap;
-	
-	public TaskServiceImple(SqlSessionTemplate sqlMap) {
-		super();
-		this.sqlMap = sqlMap;
-	}
+//	
+//	private SqlSessionTemplate sqlMap;
+//	
+//	public TaskServiceImple(SqlSessionTemplate sqlMap) {
+//		super();
+//		this.sqlMap = sqlMap;
+//	}
 
 	/*업무 시퀀스 조회*/
 	@Override

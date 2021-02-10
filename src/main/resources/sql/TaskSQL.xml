@@ -107,7 +107,7 @@
 		where task_no = #{task_no}	
 	</update>
 
-	<!-- 업무 등록(담당자) -->
+	<!-- 업무 등록(담당자) 
 	<insert id="insertTaskPi" parameterType="taskDTO">
 		update participants
 			set cont_kind = #{cont_kind}
@@ -115,12 +115,11 @@
 			,mem_no = #{mem_no}
 		where cont_no = #{task_no}	
 	</insert>
-
+	-->
 	<!-- 업무 삭제 -->
 	<delete id="deleteTask" parameterType="taskDTO">
 		delete from task where
 		task_no = #{task_no}
 	</delete>
-
 
 </mapper>

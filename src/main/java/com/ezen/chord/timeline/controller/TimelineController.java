@@ -25,7 +25,7 @@ public class TimelineController {
 	@Autowired
 	private TimelineService timService;
 	@Autowired
-	FilesService fileService;
+	private FilesService fileService;
 	
 	
 	@RequestMapping("/timeLine.do")
@@ -35,7 +35,7 @@ public class TimelineController {
 		int mem_no = (int)(sess.getAttribute("memNo"));
 		int com_no = (int)(sess.getAttribute("comNo"));
 		//업로드 폴더 변경
-		
+		fileService.changePro(pro_name);
 		ProjectUserDTO proUserDTO = timService.getPro(pro_no,mem_no);
 		List<ProjectUserDTO> invitedProUserList = timService.invitedProUserList(pro_no);
 		List<ProjectUserDTO> notInvitedProUserList = timService.notInvitedProUserList(pro_no, com_no);
