@@ -1,6 +1,5 @@
 package com.ezen.chord.project.controller;
 
-import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen.chord.files.service.FilesService;
 import com.ezen.chord.project.dto.ProjectDTO;
 import com.ezen.chord.project.service.ProjectService;
 import com.ezen.chord.project_user.dto.ProjectUserDTO;
@@ -35,6 +35,9 @@ public class ProjectController {
 	
 	//중요한 정보
 	
+	@Autowired
+	private FilesService filesSerivce;
+	
 	
 	@RequestMapping("/proList.do")
 	public ModelAndView getProList(int mem_no,HttpSession session) {
@@ -54,7 +57,7 @@ public class ProjectController {
 	public String insertPro(ProjectDTO proDTO) {
 		java.sql.Date date = new java.sql.Date(12);
 		proDTO.setPro_date(date);
-		
+		filesSerivce.addFolder(proDTO.getPro_name());
 		proService.insertPro(proDTO);
 		return "project/projectList";
 	}
@@ -103,9 +106,11 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("/deleteProject.do")
-	public String deleteProject(int pro_no,HttpSession sess) {
+	public String deleteProject(int pro_no,String pro_name,HttpSession sess) {
 		int mem_no = (int)sess.getAttribute("memNo");	
 		int result = proService.deletePro(pro_no);
+		//폴더 삭제
+		filesSerivce.delProfolder(pro_name, "");
 		return "redirect:/proList.do?mem_no="+mem_no;
 	}
 	

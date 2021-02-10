@@ -200,6 +200,11 @@ function returnFileSize(number) {
     for(var i=0;i<uploadFileList.length;i++){
        formData.append('files',fileList[uploadFileList[i]]);
     }
+    
+    form.submit();
+    
+    
+    
     $.ajax({
     	url:"upload.do",
     	data:formData,
