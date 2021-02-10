@@ -138,17 +138,20 @@ public class TaskController {
 		/*parti테이블관련*/
 		int resultTaskPi = taskService.insertTaskPiService(taskDTO);
 		
-		/*시작날짜,마감날짜,시작마감일*/
+		/*시작,마감일*/
+		int resultTaskDate = taskService.insertTaskDateService(taskDTO);
+		
+		/*타임라인관련*/
+		int resultTaskTim = taskService.insertTaskTimService(taskDTO);
+		
+		/*시작날짜,마감날짜,시작마감일
 		if(taskDTO.getTask_start_date() != null && taskDTO.getTask_end_date().equals("")) {
 			int resultTaskStart = taskService.insertTaskStartDateService(taskDTO);	
 		}else if(taskDTO.getTask_end_date() != null && taskDTO.getTask_start_date().equals("")) {
 			int resultTaskEnd = taskService.insertTaskEndDateService(taskDTO);	
 		}else if(!taskDTO.getTask_start_date().equals("") && !taskDTO.getTask_end_date().equals("")) {
-			int resultTaskDate = taskService.insertTaskDateService(taskDTO);
-		}
-		/*타임라인관련*/
-		int resultTaskTim = taskService.insertTaskTimService(taskDTO);
-		
+			
+		}*/
 		//1. seq.nextval을 가져와
 		//2. task insert (taskno 필수)
 		// dao.insertTask
@@ -166,7 +169,6 @@ public class TaskController {
 //			//4-3. 둘다 있을때
 //		}
 		
-		mav.addObject("msg", "ㅇㅇㅇㅇㅇㅇㅇㅇ");
 		mav.setViewName("taskView.do");
 		
 		return mav;
