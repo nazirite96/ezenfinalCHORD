@@ -150,12 +150,13 @@ function returnFileSize(number) {
  
  // 해당 파일 업로드
  function uploadFile(){
+
 	 //등록 파일 리스트
     var uploadFileList = Object.keys(fileList);
 	var form =$('#uploadForm');
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////	 
 	//파일 없으면 올릴수 없는데 타임라인 4개니까 확인바람
-	 if(uploadFileList.length==0){
+	if(uploadFileList.length==0){
 		 form.submit();
 		
 	 }else{
@@ -167,18 +168,24 @@ function returnFileSize(number) {
 	}
     var form =$('#uploadForm');
     var formData = new FormData(form[0]);
+    
+    
+    
+    
     for(var i=0;i<uploadFileList.length;i++){
        formData.append('files',fileList[uploadFileList[i]]);
     }
-	form.submit();
+	
+	
    	 $.ajax({
-   		url:"upload.do",
+   		url:"insertTim.do",
     	data:formData,
     	type:'POST',
         enctype:'multipart/form-data',
     	//뭔지모르겟지만 파일 보낼때 두개 false는 꼭해줘야함
     	contentType: false,
     	processData: false,
+    	
     	cache: false,
     	dataType: "text",
     		success : function() {

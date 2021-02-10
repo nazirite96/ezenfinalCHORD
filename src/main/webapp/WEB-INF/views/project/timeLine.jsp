@@ -158,8 +158,6 @@
 								data-feather="file"></span>전체</a></li>
 						<li class="nav-item"><a class="nav-link" href="#"><span
 								data-feather="shopping-cart"></span>중요</a></li>
-
-
 						<h1
 							class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 							<span>collection</span><a
@@ -330,10 +328,10 @@
 										<div id="tab-1" class="tabs-content active">
 											<form id="uploadForm" action="insertTim.do" method="post" enctype="multipart/form-data">
 												<input type="hidden" name="mem_no" value="${mem_no}">
-												<input type="hidden" name="pro_no"
-													value="${proUserDTO.pro_no }"> <input type="hidden"
-													name="cont_kind" value="post"> <input type="hidden"
-													name="cont_no" value="0">
+												<input type="hidden" name="pro_no" value="${proUserDTO.pro_no }"> 
+												<input type="hidden" name="cont_kind" value="post"> 
+												<input type="hidden" name="cont_no" value="0">
+												
 												<div id="dropZone" class="tab-con-box" >
 													<textarea rows="5" cols="50" placeholder="글을 작성하세요."
 														name="tim_cont" onkeyup="autoTextarea(this, 120, 500)"
@@ -351,15 +349,17 @@
 															<i class="fas fa-paperclip maright-10"></i>파일첨부
 														</label> 
 														<input type="file" multiple="multiple" id="ex_file2" name="articleFile"
-															class="dis-none upload-hidden uploadInputFile" onchange="dataSave()">
+															class="dis-none upload-hidden uploadInputFile">
 
 														<!-- 이미지첨부  -->
 														<label for="article-img"
 															class="float-left marbtm-0 font-thin size-18"> <i
 															class="fas fa-camera maright-10"></i>이미지첨부
-														</label> <input type="file" id="article-img" name="imageFile"
+														</label> 
+														<input type="file" id="article-img" name="imageFile"
 															class="dis-none"
 															accept="image/*">
+															
 														<!-- 올리기(submit) 버튼 -->
 														<input type="button" value="올리기" onclick="uploadFile()"
 															class="article-submit-btn font-bold size-18 color-white text-center default-back-color">
@@ -746,15 +746,10 @@
 														class="article-submit-btn float-right font-bold size-18 color-white text-center default-back-color">
 												</div>
 												<!-- tab-dn-box:f -->
-
-
 											</form>
 										</div>
 										<!-- 할일:f -->
 
-										<!-- 투표:s -->
-										<div id="tab-5" class="tabs-content con-vote"></div>
-										<!-- 투표:f -->
 									</div>
 								</div>
 							</div>
@@ -762,6 +757,7 @@
 							<div class="table-responsive"></div>
 							<!-- 타임라인 : start -->
 							<c:forEach var="dto" items="${list }">
+								<!-- basic 글 : start -->
 								<div class="timeline-box martop-20">
 
 									<input type="hidden" class="col-no" data-no="${dto.tim_no }">
@@ -828,24 +824,29 @@
 									</div>
 									<!-- timeline header:f -->
 									<div class="timeline-content">
-
-										<div class="timeline-article con-article">
-											<!-- 내용:s -->
-											<div class="article-txt">
-												<pre>${dto.tim_cont}</pre>
-											</div>
-											<!-- 내용:f -->
-
+										
+										<c:choose>
+										<!-- 기본글 : start -->
+											<c:when test="${dto.cont_kind eq 'post' }">
+												<div class="timeline-article con-article">
+													<!-- 내용:s -->
+													<div class="article-txt">
+														<pre>${dto.tim_cont}</pre>
+													</div>
+													<!-- 내용:f -->
+											
+											
+										
 											<!-- 이미지:s -->
 											<div class="article-img martop-20">
 
 												<div class="swiper-container-img">
 													<div class="swiper-wrapper">
 														<!-- <c:forEach items="${timeLine.filesList }" var="filesVo">
-																<c:if test="${filesVo.files_kind == 'img' }">-->
+																<c:if test="${filesVo.files_kind == 'img' }">
 														<div class="swiper-slide img-con"
 															style="background-image:url('/files/view?files_no=${filesVo.files_no}')"></div>
-														<!-- 	</c:if>
+														 	</c:if>
 															</c:forEach>-->
 													</div>
 													Add Arrows
@@ -966,6 +967,33 @@
 											<!-- article edit dn:f -->
 										</form>
 										<!-- 일반 게시글 수정:f -->
+									<!-- 기본글 : finsh -->
+									<!-- 업무글 : start -->
+										</c:when>
+										<c:when test="${dto.cont_kind eq 'task' }">
+										
+										
+										
+										
+										
+										</c:when>
+									<!-- 업무글 : finsh -->
+									<!-- 스케쥴글 : start -->
+										<c:when test="${dto.cont_kind eq 'schd' }">
+										
+										
+										
+										</c:when>
+									<!-- 스케쥴글 : finsh -->
+									<!-- 할일글 : start -->
+										<c:when test="${dto.cont_kind eq 'todo' }">
+										
+										
+										
+										
+										</c:when>
+									<!-- 할일글 : finsh -->
+									</c:choose>
 									</div>
 									<!-- timeline footer:s -->
 									<div class="timeline-footer">
@@ -1002,52 +1030,6 @@
 												</div>
 											</div>
 
-											<!-- 이모티콘 사용자 리스트 팝업:s -->
-											<div class="dim-layer">
-												<div class="dimBg"></div>
-
-												<div id="emoUser_${start.index }" class="pop-layer">
-													<!-- pop header -->
-													<header class="pop-top border-box">
-														리액션 확인 <a href="#"
-															class="posi-ab dis-block over-hidden icon-close btn-close">close</a>
-													</header>
-
-													<!-- pop con -->
-													<section class="pop-con border-box">
-														<!-- 좋아요 개수 : s -->
-														<ul class="like-count-info">
-															<li>총 <span>${timeLine.emoUserList.size() }</span></li>
-														</ul>
-														<!-- 좋아요 개수 : f -->
-
-														<!-- 좋아요 리스트 : s -->
-														<div class="like-count-list" data-simplebar>
-															<c:forEach items="${timeLine.emoUserList }"
-																var="emoUserVo">
-																<dl data-id="${emoUserVo.mem_id }">
-																	<dt class="posi-re cursor-point"
-																		onclick="fn_openPopup(this)"
-																		data-id="${timeLine.mem_id }"
-																		data-nick="${timeLine.mem_no }"
-																		data-my="${memVo.mem_id }">
-																		<i class="icon-circle circle-s"></i>
-
-																	</dt>
-																	<dd>
-																		<div class="like-user-name">${emoUserVo.mem_no }</div>
-																		<div class="like-user-emoticon">
-																			<img src="/emo/view?emo_no=${emoUserVo.emo_no }"
-																				width="40">
-																		</div>
-																	</dd>
-																</dl>
-															</c:forEach>
-														</div>
-														<!-- 좋아요 리스트 : f -->
-													</section>
-												</div>
-											</div>
 											<!-- 이모티콘 사용자 리스트 팝업:f -->
 
 											<!-- 댓글 개수 -->
@@ -1339,7 +1321,7 @@
 								</div>
 
 							</c:forEach>
-					<!-- 타임라인 : end -->
+					<!-- 타임라인 : finish -->
 
 
 							<script>
@@ -1350,7 +1332,7 @@
 									</script>
 
 						</div>
-						<!-- project left : end -->
+						<!-- project left : finish -->
 						<!-- project right : start -->
 
 						<!-- 이전화면으로 -->
@@ -1694,7 +1676,7 @@ $(function(){
 });
 </script>
 		</div>
-		<!-- project right : end -->
+		<!-- project right : finish -->
 	</div>
 	</section>
 	<div>

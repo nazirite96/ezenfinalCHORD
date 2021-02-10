@@ -14,5 +14,7 @@ public interface TimelineDAO {
 	public int updateTim(TimelineDTO timDTO);
 	
 	public int deleteTim(int tim_no);
+	
+	public int getTimSeq();
 
 }

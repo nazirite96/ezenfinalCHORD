@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,10 +29,13 @@ public class TimelineController {
 	
 	
 	@RequestMapping("/timeLine.do")
-	public ModelAndView getTimeline(int pro_no,HttpSession sess) {
+	@ResponseBody
+	public ModelAndView getTimeline(int pro_no,String pro_name,HttpSession sess) {
 		ModelAndView mav = new ModelAndView();
 		int mem_no = (int)(sess.getAttribute("memNo"));
 		int com_no = (int)(sess.getAttribute("comNo"));
+		//업로드 폴더 변경
+		
 		ProjectUserDTO proUserDTO = timService.getPro(pro_no,mem_no);
 		List<ProjectUserDTO> invitedProUserList = timService.invitedProUserList(pro_no);
 		List<ProjectUserDTO> notInvitedProUserList = timService.notInvitedProUserList(pro_no, com_no);
@@ -67,11 +71,32 @@ public class TimelineController {
 	
 	@RequestMapping("/insertTim.do")
 	public String insertTim(TimelineDTO timDTO ,
-							
+							FilesDTO filesDTO ,
+							@RequestParam("articleFile")List<MultipartFile> files,
 							HttpServletRequest request) {
 		HttpSession sess=request.getSession();
 		int mem_no = (Integer) sess.getAttribute("memNo");
 		
+		String serv =request.getSession().getServletContext().getRealPath("/");
+		int tim_no = timService.getTimSeq();
+		timDTO.setTim_no(tim_no);
+		
+		filesDTO.setCont_kind("tim");
+		filesDTO.setCont_no(tim_no);
+		filesDTO.setPro_no(timDTO.getPro_no());
+		filesDTO.getFile();
+		if(files != null) {
+			for(MultipartFile file : files) {
+				if(!file.isEmpty()) {
+					String name=fileService.checkName(file);
+					String original=file.getOriginalFilename();
+					Long number=file.getSize();
+					String size=fileService.returnFileSize(number);
+					fileService.copyInto(file, name,serv);
+					fileService.insertFile(filesDTO, original, name, size, mem_no);
+				}
+			}
+		}
 		int result = timService.insertTim(timDTO);
 		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no()+"&mem_no="+mem_no;
 	}

@@ -46,5 +46,9 @@ public class TimelineDAOImpl implements TimelineDAO{
 		return sqlmap.delete("deleteTim", tim_no);
 	}
 	
-	
+	@Override
+	public int getTimSeq() {
+		// TODO Auto-generated method stub
+		return sqlmap.selectOne("getTimSeq");
+	}
 }

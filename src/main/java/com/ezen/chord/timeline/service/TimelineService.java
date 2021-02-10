@@ -24,4 +24,6 @@ public interface TimelineService {
 	
 	public TaskDTO getTask(int task_no);
 	
+	public int getTimSeq();
+	
 }
