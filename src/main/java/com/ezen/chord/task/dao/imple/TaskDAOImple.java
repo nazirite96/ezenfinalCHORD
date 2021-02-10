@@ -15,11 +15,6 @@ public class TaskDAOImple implements TaskDAO {
 	
 	@Autowired
 	private SqlSessionTemplate sqlMap;
-
-	public TaskDAOImple(SqlSessionTemplate sqlMap) {
-		super();
-		this.sqlMap = sqlMap;
-	}
 	
 	@Override
 	public int getTaskSeq() {

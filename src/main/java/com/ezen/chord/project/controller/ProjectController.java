@@ -110,7 +110,7 @@ public class ProjectController {
 		int mem_no = (int)sess.getAttribute("memNo");	
 		int result = proService.deletePro(pro_no);
 		//폴더 삭제
-		filesSerivce.delProfolder(pro_name, "");
+		filesSerivce.delProfolder(pro_name);
 		return "redirect:/proList.do?mem_no="+mem_no;
 	}
 	

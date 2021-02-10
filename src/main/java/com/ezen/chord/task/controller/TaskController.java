@@ -1,31 +1,24 @@
 package com.ezen.chord.task.controller;
 
+import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ezen.chord.task.service.imple.*;
 import com.ezen.chord.project.dto.ProjectDTO;
 import com.ezen.chord.project.service.ProjectService;
 import com.ezen.chord.project_user.dto.ProjectUserDTO;
-import com.ezen.chord.task.dao.TaskDAO;
-import com.ezen.chord.task.dto.*;
-
-import com.ezen.chord.timeline.dto.*;
+import com.ezen.chord.task.dto.TaskDTO;
+import com.ezen.chord.task.service.TaskService;
+import com.ezen.chord.timeline.dto.TimelineDTO;
 import com.ezen.chord.timeline.service.TimelineService;
-import com.ezen.chord.timeline.service.impl.*;
-
-import java.io.IOException;
-import java.util.*;
-import java.sql.*;
-import java.sql.Date;
 
 @Controller
 public class TaskController {
@@ -35,6 +28,10 @@ public class TaskController {
 	
 	@Autowired
 	private ProjectService proService;
+	
+	@Autowired
+	private TaskService taskService;
+	
 	
 	@RequestMapping("/taskTest.do")
 	public ModelAndView getProList(int mem_no,HttpSession session) {
@@ -103,14 +100,7 @@ public class TaskController {
 	
 
 	
-	@Autowired
-	private TaskServiceImple taskService;
 	
-	@Autowired
-	private TaskDAO taskDAO;
-	
-	@Autowired
-	private TimelineServiceImpl timelineService;
 	
 	/** userService 랑 fileService autowried 해와야함
 	 * ,@RequestParam(value="mem_id", required = false)List<String> MemIdList

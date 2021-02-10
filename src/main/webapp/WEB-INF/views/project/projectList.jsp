@@ -181,7 +181,7 @@
 		</form>
 	</div>
 	<c:forEach var="dto" items="${proList }">
-		<div><a href="timeLine.do?pro_no=${dto.pro_no }&mem_no=${mem_no}">${dto.pro_no } ${dto.pro_name } </a></div>
+		<div><a href="timeLine.do?pro_no=${dto.pro_no }&mem_no=${mem_no}&pro_name=${dto.pro_name}">${dto.pro_no } ${dto.pro_name } </a></div>
 	</c:forEach>
       
 

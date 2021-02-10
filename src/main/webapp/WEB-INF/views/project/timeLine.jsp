@@ -826,8 +826,8 @@
 									<div class="timeline-content">
 										
 										<c:choose>
-										<!-- 기본글 : start -->
 											<c:when test="${dto.cont_kind eq 'post' }">
+											<!-- 기본글 : start -->
 												<div class="timeline-article con-article">
 													<!-- 내용:s -->
 													<div class="article-txt">
@@ -968,31 +968,26 @@
 										</form>
 										<!-- 일반 게시글 수정:f -->
 									<!-- 기본글 : finsh -->
-									<!-- 업무글 : start -->
+									
 										</c:when>
 										<c:when test="${dto.cont_kind eq 'task' }">
+										<!-- 업무글 : start -->
 										
 										
 										
-										
-										
+										<!-- 업무글 : finsh -->
 										</c:when>
-									<!-- 업무글 : finsh -->
-									<!-- 스케쥴글 : start -->
 										<c:when test="${dto.cont_kind eq 'schd' }">
+										<!-- 스케쥴글 : start -->
 										
-										
-										
+										<!-- 스케쥴글 : finsh -->
 										</c:when>
-									<!-- 스케쥴글 : finsh -->
-									<!-- 할일글 : start -->
 										<c:when test="${dto.cont_kind eq 'todo' }">
+										<!-- 할일글 : start -->
 										
 										
-										
-										
+										<!-- 할일글 : finsh -->
 										</c:when>
-									<!-- 할일글 : finsh -->
 									</c:choose>
 									</div>
 									<!-- timeline footer:s -->
