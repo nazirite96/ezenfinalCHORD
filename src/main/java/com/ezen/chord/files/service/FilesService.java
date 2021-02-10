@@ -58,10 +58,10 @@ public interface FilesService {
 	void folderDel(String deleteFolderName,String path);
 	
 	//메서드 : 프로젝트개설시 폴더 생성 (기웅아 이거 가져다 써라)
-	void createProfolder(String pro_name,String realpath);
+	void createProfolder(String pro_name);
 	//메서드 : 프로젝트삭제시 폴더 제거 (기웅아 이거 가져다 써라)
-	void delProfolder(String pro_name,String realpath);
+	void delProfolder(String pro_name);
 	//메서드 : 프로젝트가 변경될시 (기웅아 이거 가져다 써라)
-	void changePro(String pro_name,String realpath);
+	void changePro(String pro_name);
 	
 }

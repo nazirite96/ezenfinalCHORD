@@ -1,26 +1,516 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
+ <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    
+      <!-- Custom styles for this template -->
+    <link href="/chord/resources/css/dashboard.css" rel="stylesheet">
+    <link href='https://code.jquery.com/ui/1.12.1/themes/hot-sneaks/jquery-ui.css' rel="stylesheet"/>
+	<link href='<%=request.getContextPath() %>/resources/js/fullcalendar.css' rel='stylesheet' />
+	<link href='<%=request.getContextPath() %>/resources/js/fullcalendar.print.css' rel='stylesheet' media='print' />
+	<script src='<%=request.getContextPath()%>/resources/js/moment.min.js'></script>
+	<script src='<%=request.getContextPath()%>/resources/js/fullcalendar.min.js'></script>
+	<script src='<%=request.getContextPath()%>/resources/js/ko.js'></script>
+    
 <title>Insert title here</title>
+
+
 </head>
-<body>
-<h2>���Ϻ��� ������ �����ϰٳ볪�̴�</h2>
-<div id="map" style="width:100%; height: 100vh;"></div>
-			  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8bzzn6nlXYfctPLkT0aCHApiK0aig4KA&callback&callback=initMap&region=kr"></script>
-			  <script>
-			    function initMap() {
-			      var seoul = { lat: 37.5642135 ,lng: 127.0016985 };
-			      var map = new google.maps.Map(
-			        document.getElementById('map'), {
-			          zoom: 12,
-			          center: seoul
-			        });
-			      
-			    }
-			  </script>
-<a href="addCal.do">�ϴ� ���� ��� ����</a>
-</body>
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+
+  </head>
+  <body>
+    
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Company name</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link float-left" href="#">Sign out</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="sidebar-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">
+              <span data-feather="home"></span>
+              	목록보기<span class="sr-only">(current)</span>
+            </a>
+            <h1 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>project</span>
+          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h1>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#"><span data-feather="file"></span>전체</a></li>
+          <li class="nav-item"><a class="nav-link" href="#"><span data-feather="shopping-cart"></span>중요</a></li>
+          
+          
+          <h1 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"><span>collection</span><a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report"><span data-feather="plus-circle"></span></a></h1>
+          
+          <li class="nav-item"><a class="nav-link" href="taskBasic.do"><span data-feather="users"></span>전체업무</a></li>
+          <li class="nav-item"><a class="nav-link" href="#"><span data-feather="bar-chart-2"></span>전체일정</a></li>
+          <li class="nav-item"><a class="nav-link" href="#"><span data-feather="layers"></span>전체파일</a></li>
+          <li class="nav-item"><a class="nav-link" href="#"><span data-feather="layers"></span>담아둔글</a></li>
+          <li class="nav-item"><a class="nav-link" href="#"><span data-feather="layers"></span>내 게시글</a></li>
+        </ul>
+
+        <h1 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"><span>Saved reports</span><a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h1>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text"></span>
+              Current month
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text"></span>
+              Last quarter
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text"></span>
+              Social engagement
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text"></span>
+              Year-end sale
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Dashboard</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group mr-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+            <span data-feather="calendar"></span>
+            This week
+          </button>
+        </div>
+      </div>
+      <section class="content full-calendar">
+	<div class="project-wrap">
+		<div class='modal fade' id='successModal' tabindex='-1' role='dialog' aria-labelledby='successModalLabel' aria-hidden='true'>
+			<div class='modal-dialog' role='document'>
+				<div class='modal-content'>
+					<div class="modal-header" id="rwriter" style="font-weight:700;font-family:ghodic; font-size:150%;background-color:#dddddd;">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+					</div>
+					<div class='modal-body'>
+					<a id ='pno' class="coll-head-link">
+						&nbsp;       &nbsp;&nbsp;&nbsp;       &nbsp;   프로젝트 바로가기<i class="fas fa-angle-double-right marleft-10"></i>
+					</a>
+						<div class="timeline-article con-schedule" style="width:auto;">
+							<div class="container">
+								<div class="schedule-header">
+									<dl>
+										<dt class="maright-15">
+											<span class="dis-block font-thin size-20 color-red text-center" id="rmonth"></span>
+											<strong class="dis-block font-bold size-40 color-black text-center" id="rday"></strong>
+										</dt>
+										<dd class="font-bold size-20 color-black" id="rtitle"></dd>
+										<dd class="martop-10 font-bold size-16 color-black" id="rduration"></dd>
+									</dl>
+								</div>
+								<!-- 위치 검색:s -->
+								<div id="viewResolver" class="input-box martop-15">
+									<i class="fas fa-map-marker-alt"></i>
+									<span id="rlocation"></span>
+									<span class="dis-block" id="rmap"></span>
+								</div>
+								<!-- 메모:s -->
+								<div class="input-box martop-15">
+									<p></p>
+									<i class="fas fa-sticky-note"></i>
+									<span id="rmemo"></span>
+								</div>
+								<!-- 알람:s -->
+								<div>
+									<p></p>
+									<i class="fas fa-bell"></i>
+									<span id="ralarm"></span>
+								</div>
+							<!-- 알람:f -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- full calendar left content : s -->
+		<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 padleft-0 full-calendar-left">
+			<div id="calendar"></div>
+		</div>
+		<!-- full calendar left content : f -->
+		
+			
+		<!-- full calendar right content : s -->
+		<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 padright-0 full-calendar-right">
+			
+			<strong class="dis-block marbtm-18 padleft-10 font-thin size-20 color-gray">일정</strong>
+			
+			<ul class="schd-edit marbtm-20">
+				<li>
+					<input type="radio" id="myInsertSchd" name="radio" class="custom-check-input schd-my-check"
+					onchange="fn_myInsertSchdCheck(this)">
+					<label for="myInsertSchd">내가 등록한 일정</label>
+				</li>
+				<li>
+					<input type="radio" id="inviteSchd" name="radio" class="custom-check-input schd-invite-check"
+					onchange="fn_inviteSchdCheck(this)">
+					<label for="inviteSchd">초대받은 일정</label>
+				</li>
+				<li>
+					<input type="radio" id="allSchd" name="radio" class="custom-check-input schd-all-check"
+					onchange="fn_allSchdCheck(this)" checked>
+					<label for="allSchd">모든 일정</label>
+				</li>
+			</ul>			
+			
+		</div>
+		<!-- full calendar right content : f -->
+	</div>
+</section>
+      
+      
+      
+      
+      
+<script type="text/javascript">
+$(document).ready(function(){
+	  ajaxData(); 
+});
+
+function ajaxData() {
+	var mem_id = "${mem_id}";
+	var request = $.ajax({
+	type : "POST",
+	url : "${pageContext.request.contextPath}/schd/callCalendar2?mem_id="+mem_id
+	});   
+	//ajax 실행 값 확인
+	request.done(function(schd) {
+		var mySchedule = schd.mySchedule; //내가만든리스트
+		var invitedSchd = schd.invitedSchd; //음음니가초대한리스트
+		
+		//내가 설정한 스케줄 리스트
+	 	var test = [];
+	 	if(mySchedule.length>0){
+	 		for(var i = 0; i<mySchedule.length; i++){
+	 			test.push({
+	 				id 		: mySchedule[i].schd_no
+	 				,title	: mySchedule[i].schd_title
+	 				,start	: mySchedule[i].schd_start_time 
+	 				,end	: mySchedule[i].schd_end_time
+	 				,color	: '#ee6d66'
+	 				,schd_loc	: mySchedule[i].schd_loc
+                    ,memo	: mySchedule[i].schd_memo
+                    ,st		: mySchedule[i].schd_start_time
+                    ,alarm	: mySchedule[i].schd_alarm
+                    ,ed		: mySchedule[i].schd_end_time
+                    ,writer	: mySchedule[i].mem_nick
+                    ,lat	: mySchedule[i].schd_lat
+                    ,lon	: mySchedule[i].schd_lon
+                    ,pro_no : mySchedule[i].pro_no
+	 			})
+	 		}
+	 	}
+	 		
+		//내가 초대된 스케줄 리스트
+	 	if(invitedSchd.length>0){
+		 	for(var i = 0; i<invitedSchd.length; i++){
+		 		test.push( {
+		 			id		: invitedSchd[i].schd_no
+					,title	: invitedSchd[i].schd_title
+					,start	: invitedSchd[i].schd_start_time
+	 				,end	: invitedSchd[i].schd_end_time
+		 			,color	: '#f1c40f'
+	 				,schd_loc	: invitedSchd[i].schd_loc
+                    ,memo	: invitedSchd[i].schd_memo
+                    ,st		: invitedSchd[i].schd_start_time
+                    ,ed		: invitedSchd[i].schd_end_time
+                    ,alarm	: invitedSchd[i].schd_alarm
+                    ,writer	: invitedSchd[i].mem_nick
+                    ,lat	: invitedSchd[i].schd_lat
+                    ,lon	: invitedSchd[i].schd_lon
+                    ,pro_no : invitedSchd[i].pro_no
+		 		})
+			}
+		}
+		//캘린더
+		calendarRendering(test)
+	});
+	
+	//실패시 알림
+	request.fail(function( jqXHR, textStatus ) {
+		alert( "Request failed: " + textStatus );
+	});
+} 
+		
+		//모든일정 체크 event
+		function fn_allSchdCheck(el){
+			$('#calendar').fullCalendar('destroy');
+			var item = $(el);
+			if(item.prop('checked')){
+				ajaxData(); 
+			}
+		}
+		
+		//내가 초대된 일정 클릭했을때 event
+		function fn_inviteSchdCheck(el){
+			var item = $(el);
+			if(item.prop('checked')){
+				//기존의 calendar rendering된 이벤트 제거
+				$('#calendar').fullCalendar('destroy');
+				var mem_id = "${mem_id}";
+				var request = $.ajax({
+					type : "POST",
+					url : "${pageContext.request.contextPath}/schd/callCalendar2?mem_id="+mem_id
+				});   
+				
+				//ajax 실행 값 확인
+				request.done(function(schd) {
+					var invitedSchd = schd.invitedSchd; //내가만든리스트
+					//내가 설정한스케줄리스트 Array로 담기
+				 	var test = [];
+				 	if(invitedSchd.length>0){
+				 		for(var i = 0; i<invitedSchd.length; i++){
+				 			test.push({
+				 				id		: invitedSchd[i].schd_no
+								,title	: invitedSchd[i].schd_title
+								,start	: invitedSchd[i].schd_start_time
+				 				,end	: invitedSchd[i].schd_end_time
+					 			,color	: '#f1c40f'
+				 				,schd_loc	: invitedSchd[i].schd_loc
+			                    ,memo	: invitedSchd[i].schd_memo
+			                    ,st		: invitedSchd[i].schd_start_time
+			                    ,ed		: invitedSchd[i].schd_end_time
+			                    ,alarm	: invitedSchd[i].schd_alarm
+			                    ,writer	: invitedSchd[i].mem_nick
+			                    ,lat	: invitedSchd[i].schd_lat
+			                    ,lon	: invitedSchd[i].schd_lon
+			                    ,pro_no : invitedSchd[i].pro_no
+				 	 		})
+				 	 	}
+				 	}
+				 	//캘린더 render
+				 	calendarRendering(test);
+				});
+				//실패시 보여주기
+				request.fail(function( jqXHR, textStatus ) {
+					alert( "일정 로딩 실패" + textStatus );
+				});
+			}
+		}
+		
+		// 내가 등록한 일정 보여주기
+		function fn_myInsertSchdCheck(el){
+			var item = $(el);
+			
+			if(item.prop('checked')){
+				
+				//기존의 calendar rendering된 이벤트 제거
+				$('#calendar').fullCalendar('destroy');
+				var mem_id = "${mem_id}";
+				var request = $.ajax({
+					type : "POST",
+					url : "${pageContext.request.contextPath}/schd/callCalendar2?mem_id="+mem_id
+				});   
+				
+				//ajax 실행 값 확인
+				request.done(function(schd) {
+					var mySchedule = schd.mySchedule; //내가만든리스트
+					//내가 설정한스케줄리스트 Array로 담기
+				 	var test = [];
+				 	if(mySchedule.length>0){
+				 		for(var i = 0; i<mySchedule.length; i++){
+				 			test.push({
+				 				 id 	: mySchedule[i].schd_no
+								,title	: mySchedule[i].schd_title
+								,start	: mySchedule[i].schd_start_time 
+								,end	: mySchedule[i].schd_end_time
+								,color	: '#ee6d66'
+								,schd_loc	: mySchedule[i].schd_loc
+				                ,memo	: mySchedule[i].schd_memo
+				                ,st		: mySchedule[i].schd_start_time
+				                ,ed		: mySchedule[i].schd_end_time
+				                ,writer	: mySchedule[i].mem_nick
+			                    ,lat	: mySchedule[i].schd_lat
+			                    ,lon	: mySchedule[i].schd_lon
+			                    ,pro_no : mySchedule[i].pro_no
+				 	 		})
+				 	 	}
+				 	}
+					calendarRendering(test);
+				});
+				
+			}
+			
+			//실패시 보여주기
+			request.fail(function( jqXHR, textStatus ) {
+				alert( "일정 로딩 실패" + textStatus );
+			});
+		}
+		
+		function calendarRendering(test){
+			$('#calendar').fullCalendar({
+				header:{ //헤더부분에 뜨는 메뉴 설정
+					left : "month, agendaWeek agendaDay",
+					center: "title",
+					right:"today, prevYear,prev,next,nextYear" 
+				},
+				buttonText:{
+					prevYear:new moment().year() -1,
+					nextYear:new moment().year() +1
+				},
+				viewRender:function(view){
+					var y = moment($('#calendar').fullCalendar('getDate')).year();
+					$(".fc-prevYear-button").text(y-1);
+					$(".fc-nextYear-button").text(y+1);
+				},
+				themeSystem:"jquery-ui",
+				events : test,
+				eventClick: function(r) {
+					rendering(r)
+				}
+			});
+		}
+		
+		function rendering(r){
+			$('#successModal').modal('show');
+			$('#pno').attr('href', '/pro/detail?pro_no='+r.pro_no);
+			$('#rwriter').html('&nbsp  &nbsp'+r.writer);
+			$('#rtitle').html(r.title);
+			$('#rmonth').html(r.st.substr(5,2)+'월');
+			$('#rday').html(r.st.substr(8,2));
+			$('#rduration').html(getFormatDate(new Date(r.st))+" - "+getFormatDate(new Date(r.ed)));
+			$('#rlocation').html(placeFormatter(r));
+			$('#rmap').html(view(r.lon,r.lat));
+			$('#rmemo').html('&nbsp &nbsp'+memoBinder(r.memo));
+			$('#ralarm').html('&nbsp &nbsp'+alertFormatter(r.st, r.alarm));
+				
+		}
+		
+		function memoBinder(r){
+			var memo = null;
+			if(r == 'undefined' || r == null || r == ''){
+				memo = '메모 없음';
+				return memo;
+			}
+			console.log('콘솔' + r);
+			return r;
+		}
+		
+		
+		function placeFormatter(r){
+			console.log(r);
+			var diff=null;
+			var placeMaker = '';
+			if(r.schd_loc==diff|| r.schd_loc==placeMaker || r.schd_loc== null|| r.schd_loc =='undefined'){
+				$("#viewResolver").hide();
+			}else{
+				$("#viewResolver").show();
+				placeMaker = '&nbsp &nbsp'+r.schd_loc+'<a href="'+"https://maps.google.com?q="+r.schd_loc+'" target="google_blank" class="marleft-15">'+'지도보기'+'</a>'+'<p></p>';
+			}
+			return placeMaker;
+		}
+		
+		function alertFormatter(start, end){
+			var diff = (new Date(start).getTime() - new Date(end).getTime())/(1000*60);
+			var date = "";
+			if(diff == 0){
+				date = "미리알림 없음";
+			} else if (0 < diff && diff < 60) {
+				date = diff + "분 전 미리 알림";
+			} else if (diff!=0 && diff < 181 && (diff / 60) < 4) {
+				date = diff / 60 + "시간 전 미리 알림";
+			} else if (1439 < diff && diff % 1440 == 0) {
+				date = diff / 1440 + "일 전 미리 알림";
+			} else{
+				date = '미리알림 없음';
+			}
+			return date;
+		}
+		
+		function getFormatDate(date){
+				var year = date.getFullYear();
+				var month = (1 + date.getMonth());
+				month = month >= 10 ? month : '0' + month;
+				var day = date.getDate();
+				day = day >= 10 ? day : '0' + day;
+				return  year + '-' + month + '-' + day;
+			}
+			
+		function view(lon, lat){
+				if(lon != null && lat !=null){
+					var mapsrc = "<img src=https://maps.googleapis.com/maps/api/staticmap?center="
+				+ lat
+				+ ","
+				+ lon
+				+ "&amp;zoom=15&amp;size=480x300&amp;markers=color:red|"
+				+ lat
+				+ ","
+				+ lon
+				+ "&amp;key=AIzaSyADjbtMn46r9DGFyo_ZRz3c6fOXzuOKWCw>";
+					return mapsrc;
+				}else{
+					return "";
+				}
+		}
+		</script>
+		
+		
+    </main>
+  </div>
+</div>
+  </body>
 </html>

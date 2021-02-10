@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen.chord.files.service.impl.FilesServiceImpl;
 import com.ezen.chord.schedule.dto.SchdDTO;
 import com.ezen.chord.schedule.sevice.impl.SchdServiceImpl;
 import com.ezen.chord.task.dto.TaskDTO;
@@ -22,6 +23,9 @@ public class SchdController {
 
 	@Autowired
 	SchdServiceImpl schdSerImpl;
+	
+	@Autowired
+	FilesServiceImpl file;
 	
 	@RequestMapping("/fullCalender.do")
 	public ModelAndView fullCalender () {
@@ -38,9 +42,17 @@ public class SchdController {
 		return mav;
 	}
 	
+	@RequestMapping("/listCal.do")
+	public ModelAndView listCalender () {
+		ModelAndView mav=new ModelAndView();
+		mav.addObject("members");
+		mav.setViewName("schedule/listCal");
+		return mav;
+	}
+	
 	@RequestMapping("/taktest.do")
 	public ModelAndView addCal (@ModelAttribute SchdDTO dto ,
-			@RequestParam(value = "participants",defaultValue = "")String participants,
+			@RequestParam(value = "participants",defaultValue = "")List<String> participants,
 			@RequestParam(value = "datetime",defaultValue = "")String datetime
 			){
 
@@ -53,13 +65,13 @@ public class SchdController {
 		dto.setCont_no(seq);
 		dto.setPro_no(19);
 		
+		System.out.println(participants);
 		
 //		System.out.println(schdSerImpl.insertSchd(dto));
 //		System.out.println(schdSerImpl.insertTime(dto, start, end));
 //		System.out.println(schdSerImpl.insertTimeLine(dto));
-//		String listno[]=participants.split(",");
-//		for(int i=0;i<listno.length;i++) {
-//			System.out.println(schdSerImpl.insertParti(dto));
+//		for(int i=0;i<participants.size;i++) {
+//			System.out.println(schdSerImpl.insertParti(dto)); ////////요건아직
 //		}
 		
 		ModelAndView mav=new ModelAndView();
