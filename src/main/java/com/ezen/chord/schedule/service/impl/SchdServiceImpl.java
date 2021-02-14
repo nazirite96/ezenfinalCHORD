@@ -1,4 +1,8 @@
-package com.ezen.chord.schedule.sevice.impl;
+package com.ezen.chord.schedule.service.impl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +43,31 @@ public class SchdServiceImpl implements SchdService {
 	public int insertTimeLine(SchdDTO dto) {
 		// TODO Auto-generated method stub
 		return dao.insertTimeLine(dto);
+	}
+	@Override
+	public List<SchdDTO> getSchdMyList(int mem_no) {
+		// TODO Auto-generated method stub
+		return dao.getSchdMyList(mem_no);
+	}
+	@Override
+	public List<SchdDTO> getInvited_Schd(int mem_no) {
+		// TODO Auto-generated method stub
+		return dao.getInvited_Schd(mem_no);
+	}
+	@Override
+	public Map<String, Object> groupCalendarList(int mem_no) {
+		// TODO Auto-generated method stub
+		List<SchdDTO> mySchedule = dao.getSchdMyList(mem_no);
+		List<SchdDTO> invitedSchd = dao.getInvited_Schd(mem_no);
+		Map<String,Object> returnMap = new HashMap<String,Object>();
+		returnMap.put("mySchedule", mySchedule);
+		returnMap.put("invitedSchd", invitedSchd);
+		return returnMap;
+	}
+	@Override
+	public List<SchdDTO> getSchdList(int schd_no) {
+		// TODO Auto-generated method stub
+		return dao.getSchdList(schd_no);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.ezen.chord.schedule.dao.impl;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -44,5 +46,22 @@ public class SchdDAOImpl implements SchdDAO {
 		int result= sqlMap.insert("insertTimeLine", dto);
 		return result;
 	}
-	
+	@Override
+	public List<SchdDTO> getSchdMyList(int mem_no) {
+		// TODO Auto-generated method stub
+		List<SchdDTO> getSchdMyList=sqlMap.selectList("getSchdMyList", mem_no);
+		return getSchdMyList;
+	}
+	@Override
+	public List<SchdDTO> getInvited_Schd(int mem_no) {
+		// TODO Auto-generated method stub
+		List<SchdDTO> getInvited_Schd=sqlMap.selectList("getInvited_Schd", mem_no);
+		return getInvited_Schd;
+	}
+	@Override
+	public List<SchdDTO> getSchdList(int schd_no) {
+		// TODO Auto-generated method stub
+		List<SchdDTO> getSchdList=sqlMap.selectList("getSchdList", schd_no);
+		return getSchdList;
+	}
 }

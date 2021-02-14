@@ -7,20 +7,41 @@
 <meta charset="UTF-8">
  <!-- Required meta tags -->
     <meta charset="utf-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    
-      <!-- Custom styles for this template -->
-    <link href="/chord/resources/css/dashboard.css" rel="stylesheet">
-    <link href='https://code.jquery.com/ui/1.12.1/themes/hot-sneaks/jquery-ui.css' rel="stylesheet"/>
-	<link href='<%=request.getContextPath() %>/resources/js/fullcalendar.css' rel='stylesheet' />
-	<link href='<%=request.getContextPath() %>/resources/js/fullcalendar.print.css' rel='stylesheet' media='print' />
-	<script src='<%=request.getContextPath()%>/resources/js/moment.min.js'></script>
-	<script src='<%=request.getContextPath()%>/resources/js/fullcalendar.min.js'></script>
-	<script src='<%=request.getContextPath()%>/resources/js/ko.js'></script>
-    
+    <link rel="stylesheet"  href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+     <link href="/chord/resources/css/dashboard.css" rel="stylesheet">
+	<!-- jQuery 3.3.1 -->
+	
+<script src="<%=request.getContextPath()%>/resources/js/jquery-3.1.1.min.js"></script>
+<!-- jQuery 3.3.1 -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		
+<!-- custom -->
+<link rel="stylesheet" href="/chord/resources/css/style_margin.css">
+<link rel="stylesheet" href="/chord/resources/css/style_padding.css">
+<!-- icon  -->
+<script src="https://kit.fontawesome.com/1a984316ef.js"
+	crossorigin="anonymous"></script>
+<!-- gwjs -->
+<!-- Air datepicker css -->
+<link href="<%=request.getContextPath()%>/resources/css/datepicker.min.css" rel="stylesheet" type="text/css" media="all">
+<!-- Air datepicker js -->
+<script src="<%=request.getContextPath()%>/resources/js/datepicker.js"></script>
+<!-- 달력 한글 추가를 위해 커스텀 -->
+<script src="<%=request.getContextPath()%>/resources/js/datepicker.ko.js"></script>
+<!-- fontawesome -->
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<!-- font-awesome CSS -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+<!-- textArea 자동 높이 설정 -->
+<script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
+<!-- Air datepicker css -->
+<link href="<%=request.getContextPath()%>/resources/css/JeCss.css" rel="stylesheet" type="text/css">
+<!-- 떠다니는 메뉴 -->
+
 <title>Insert title here</title>
 
 
@@ -49,7 +70,7 @@
     
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Company name</a>
-  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <ul class="navbar-nav px-3">
@@ -124,19 +145,17 @@
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
+        <h1 class="h2">전체 일정</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
-          <div class="btn-group mr-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-          </div>
+
           <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
             <span data-feather="calendar"></span>
-            This week
+            닫기
           </button>
         </div>
       </div>
-      <section class="content full-calendar">
+      <section class="content full-calendar" style="padding-left: 7%;
+    padding-right: 7%;">
 	<div class="project-wrap">
 		<div class='modal fade' id='successModal' tabindex='-1' role='dialog' aria-labelledby='successModalLabel' aria-hidden='true'>
 			<div class='modal-dialog' role='document'>
@@ -174,13 +193,6 @@
 									<i class="fas fa-sticky-note"></i>
 									<span id="rmemo"></span>
 								</div>
-								<!-- 알람:s -->
-								<div>
-									<p></p>
-									<i class="fas fa-bell"></i>
-									<span id="ralarm"></span>
-								</div>
-							<!-- 알람:f -->
 							</div>
 						</div>
 					</div>
@@ -188,14 +200,14 @@
 			</div>
 		</div>
 		<!-- full calendar left content : s -->
-		<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 padleft-0 full-calendar-left">
+		<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 padleft-0 full-calendar-left" style="position: absolute;    width: 72%;">
 			<div id="calendar"></div>
 		</div>
 		<!-- full calendar left content : f -->
 		
 			
 		<!-- full calendar right content : s -->
-		<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 padright-0 full-calendar-right">
+		<div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 padright-0 full-calendar-right" style="left: 87%;">
 			
 			<strong class="dis-block marbtm-18 padleft-10 font-thin size-20 color-gray">일정</strong>
 			
@@ -219,23 +231,27 @@
 			
 		</div>
 		<!-- full calendar right content : f -->
+		<!-- Custom styles for this template -->
 	</div>
 </section>
-      
-      
-      
-      
-      
+    <link href='https://code.jquery.com/ui/1.12.1/themes/hot-sneaks/jquery-ui.css' rel="stylesheet"/>
+	<link href='<%=request.getContextPath() %>/resources/css/fullcalendar.css' rel='stylesheet' />
+	<link href='<%=request.getContextPath() %>/resources/css/fullcalendar.print.css' rel='stylesheet' media='print' />
+	<link href="<%=request.getContextPath()%>/resources/css/JeCss2.css" rel="stylesheet" type="text/css">
+	<script src='<%=request.getContextPath()%>/resources/js/moment.min.js'></script>
+	<script src='<%=request.getContextPath()%>/resources/js/fullcalendar.min.js'></script>
+	<script src='<%=request.getContextPath()%>/resources/js/ko.js'></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	  ajaxData(); 
 });
 
 function ajaxData() {
-	var mem_id = "${mem_id}";
-	var request = $.ajax({
-	type : "POST",
-	url : "${pageContext.request.contextPath}/schd/callCalendar2?mem_id="+mem_id
+	var mem_id = "${memNo}";
+	var request = 
+$.ajax({
+	type : "get",
+	url : "callCalender.do?mem_id="+mem_id,
 	});   
 	//ajax 실행 값 확인
 	request.done(function(schd) {
@@ -248,18 +264,15 @@ function ajaxData() {
 	 		for(var i = 0; i<mySchedule.length; i++){
 	 			test.push({
 	 				id 		: mySchedule[i].schd_no
-	 				,title	: mySchedule[i].schd_title
-	 				,start	: mySchedule[i].schd_start_time 
-	 				,end	: mySchedule[i].schd_end_time
+	 				,title	: mySchedule[i].tim_cont
+	 				,start	: mySchedule[i].time_start_date
+	 				,end	: mySchedule[i].time_end_date
 	 				,color	: '#ee6d66'
 	 				,schd_loc	: mySchedule[i].schd_loc
                     ,memo	: mySchedule[i].schd_memo
-                    ,st		: mySchedule[i].schd_start_time
-                    ,alarm	: mySchedule[i].schd_alarm
-                    ,ed		: mySchedule[i].schd_end_time
+                    ,st		: mySchedule[i].time_start_date
+                    ,ed		: mySchedule[i].time_end_date
                     ,writer	: mySchedule[i].mem_nick
-                    ,lat	: mySchedule[i].schd_lat
-                    ,lon	: mySchedule[i].schd_lon
                     ,pro_no : mySchedule[i].pro_no
 	 			})
 	 		}
@@ -269,20 +282,17 @@ function ajaxData() {
 	 	if(invitedSchd.length>0){
 		 	for(var i = 0; i<invitedSchd.length; i++){
 		 		test.push( {
-		 			id		: invitedSchd[i].schd_no
-					,title	: invitedSchd[i].schd_title
-					,start	: invitedSchd[i].schd_start_time
-	 				,end	: invitedSchd[i].schd_end_time
-		 			,color	: '#f1c40f'
-	 				,schd_loc	: invitedSchd[i].schd_loc
-                    ,memo	: invitedSchd[i].schd_memo
-                    ,st		: invitedSchd[i].schd_start_time
-                    ,ed		: invitedSchd[i].schd_end_time
-                    ,alarm	: invitedSchd[i].schd_alarm
-                    ,writer	: invitedSchd[i].mem_nick
-                    ,lat	: invitedSchd[i].schd_lat
-                    ,lon	: invitedSchd[i].schd_lon
-                    ,pro_no : invitedSchd[i].pro_no
+                    id 		: mySchedule[i].schd_no
+	 				,title	: mySchedule[i].tim_cont
+	 				,start	: mySchedule[i].time_start_date
+	 				,end	: mySchedule[i].time_end_date
+	 				,color	: '#f1c40f'
+	 				,schd_loc	: mySchedule[i].schd_loc
+                    ,memo	: mySchedule[i].schd_memo
+                    ,st		: mySchedule[i].time_start_date
+                    ,ed		: mySchedule[i].time_end_date
+                    ,writer	: mySchedule[i].mem_nick
+                    ,pro_no : mySchedule[i].pro_no
 		 		})
 			}
 		}
@@ -311,10 +321,10 @@ function ajaxData() {
 			if(item.prop('checked')){
 				//기존의 calendar rendering된 이벤트 제거
 				$('#calendar').fullCalendar('destroy');
-				var mem_id = "${mem_id}";
+				var mem_id = "${memNo}";
 				var request = $.ajax({
 					type : "POST",
-					url : "${pageContext.request.contextPath}/schd/callCalendar2?mem_id="+mem_id
+					url : "callCalender.do?mem_id="+mem_id
 				});   
 				
 				//ajax 실행 값 확인
@@ -325,20 +335,17 @@ function ajaxData() {
 				 	if(invitedSchd.length>0){
 				 		for(var i = 0; i<invitedSchd.length; i++){
 				 			test.push({
-				 				id		: invitedSchd[i].schd_no
-								,title	: invitedSchd[i].schd_title
-								,start	: invitedSchd[i].schd_start_time
-				 				,end	: invitedSchd[i].schd_end_time
-					 			,color	: '#f1c40f'
-				 				,schd_loc	: invitedSchd[i].schd_loc
-			                    ,memo	: invitedSchd[i].schd_memo
-			                    ,st		: invitedSchd[i].schd_start_time
-			                    ,ed		: invitedSchd[i].schd_end_time
-			                    ,alarm	: invitedSchd[i].schd_alarm
-			                    ,writer	: invitedSchd[i].mem_nick
-			                    ,lat	: invitedSchd[i].schd_lat
-			                    ,lon	: invitedSchd[i].schd_lon
-			                    ,pro_no : invitedSchd[i].pro_no
+				 				id 		: mySchedule[i].schd_no
+				 				,title	: mySchedule[i].tim_cont
+				 				,start	: mySchedule[i].time_start_date
+				 				,end	: mySchedule[i].time_end_date
+				 				,color	: '#f1c40f'
+				 				,schd_loc	: mySchedule[i].schd_loc
+			                    ,memo	: mySchedule[i].schd_memo
+			                    ,st		: mySchedule[i].time_start_date
+			                    ,ed		: mySchedule[i].time_end_date
+			                    ,writer	: mySchedule[i].mem_nick
+			                    ,pro_no : mySchedule[i].pro_no
 				 	 		})
 				 	 	}
 				 	}
@@ -360,10 +367,10 @@ function ajaxData() {
 				
 				//기존의 calendar rendering된 이벤트 제거
 				$('#calendar').fullCalendar('destroy');
-				var mem_id = "${mem_id}";
+				var mem_id = "${memNo}";
 				var request = $.ajax({
 					type : "POST",
-					url : "${pageContext.request.contextPath}/schd/callCalendar2?mem_id="+mem_id
+					url : "callCalender.do?mem_id="+mem_id
 				});   
 				
 				//ajax 실행 값 확인
@@ -374,18 +381,16 @@ function ajaxData() {
 				 	if(mySchedule.length>0){
 				 		for(var i = 0; i<mySchedule.length; i++){
 				 			test.push({
-				 				 id 	: mySchedule[i].schd_no
-								,title	: mySchedule[i].schd_title
-								,start	: mySchedule[i].schd_start_time 
-								,end	: mySchedule[i].schd_end_time
-								,color	: '#ee6d66'
-								,schd_loc	: mySchedule[i].schd_loc
-				                ,memo	: mySchedule[i].schd_memo
-				                ,st		: mySchedule[i].schd_start_time
-				                ,ed		: mySchedule[i].schd_end_time
-				                ,writer	: mySchedule[i].mem_nick
-			                    ,lat	: mySchedule[i].schd_lat
-			                    ,lon	: mySchedule[i].schd_lon
+				 				id 		: mySchedule[i].schd_no
+				 				,title	: mySchedule[i].tim_cont
+				 				,start	: mySchedule[i].time_start_date
+				 				,end	: mySchedule[i].time_end_date
+				 				,color	: '#ee6d66'
+				 				,schd_loc	: mySchedule[i].schd_loc
+			                    ,memo	: mySchedule[i].schd_memo
+			                    ,st		: mySchedule[i].time_start_date
+			                    ,ed		: mySchedule[i].time_end_date
+			                    ,writer	: mySchedule[i].mem_nick
 			                    ,pro_no : mySchedule[i].pro_no
 				 	 		})
 				 	 	}
@@ -427,7 +432,7 @@ function ajaxData() {
 		
 		function rendering(r){
 			$('#successModal').modal('show');
-			$('#pno').attr('href', '/pro/detail?pro_no='+r.pro_no);
+			$('#pno').attr('href', '#');
 			$('#rwriter').html('&nbsp  &nbsp'+r.writer);
 			$('#rtitle').html(r.title);
 			$('#rmonth').html(r.st.substr(5,2)+'월');
@@ -436,7 +441,6 @@ function ajaxData() {
 			$('#rlocation').html(placeFormatter(r));
 			$('#rmap').html(view(r.lon,r.lat));
 			$('#rmemo').html('&nbsp &nbsp'+memoBinder(r.memo));
-			$('#ralarm').html('&nbsp &nbsp'+alertFormatter(r.st, r.alarm));
 				
 		}
 		
@@ -464,22 +468,6 @@ function ajaxData() {
 			return placeMaker;
 		}
 		
-		function alertFormatter(start, end){
-			var diff = (new Date(start).getTime() - new Date(end).getTime())/(1000*60);
-			var date = "";
-			if(diff == 0){
-				date = "미리알림 없음";
-			} else if (0 < diff && diff < 60) {
-				date = diff + "분 전 미리 알림";
-			} else if (diff!=0 && diff < 181 && (diff / 60) < 4) {
-				date = diff / 60 + "시간 전 미리 알림";
-			} else if (1439 < diff && diff % 1440 == 0) {
-				date = diff / 1440 + "일 전 미리 알림";
-			} else{
-				date = '미리알림 없음';
-			}
-			return date;
-		}
 		
 		function getFormatDate(date){
 				var year = date.getFullYear();
@@ -512,5 +500,7 @@ function ajaxData() {
     </main>
   </div>
 </div>
+<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
   </body>
 </html>
