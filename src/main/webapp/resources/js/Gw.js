@@ -803,14 +803,14 @@ function fn_taskManagerFocus(el) {
 function fn_taskManagerSelect(el) {
 	var item = $(el);
 	var src = item.find('img').attr('src');
-	var name = item.find('.user-id').text();
-	var id = item.find('.user-id').data("id");
+	var name = item.find('.user-no').text();
+	var no = item.find('.user-no').data("no");
 	var taskUserList = item.parent().siblings('.task-user-list');
 
 	var eqChk = 0;   // 해당 회원이 있는지 체크하는 변수
 
 	taskUserList.find('div').each(function(i, e) {
-		if (taskUserList.find('div').eq(i).attr("data-name") == name) {
+		if (taskUserList.find('div').eq(i).attr("data-no") == no) {
 			eqChk = 1;
 		}
 	});
@@ -820,11 +820,11 @@ function fn_taskManagerSelect(el) {
 	} else {
 		taskUserList.addClass('martop-10');
 		taskUserList.append(
-			"<div class=\"name-tag\" data-name=\"" + name + "\">"
-			+ "<img src=\"" + src + "\" onerror=\"this.src='/image/user-pic-sample.png'\" width=\"24\">"
+			"<div class=\"name-tag\" data-no=\"" + no + "\">"
+			+ "<img src=\"" + src + "\" width=\"24\">"
 			+ "<strong class=\"marleft-10\">" + name + "</strong>"
 			+ "<i class=\"fas fa-times-circle marleft-15\" onclick=\"fn_taskUserRemove(this)\"></i>"
-			+ "<input type=\"hidden\" name=\"tu_mem_id\" value=\"" + id + "\">"
+			+ "<input type=\"hidden\" name=\"tu_mem_list\" value=\"" + no + "\">"
 			+ "</div>"
 		);
 	}

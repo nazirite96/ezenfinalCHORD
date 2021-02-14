@@ -3,6 +3,7 @@ package com.ezen.chord.timeline.dto;
 import java.util.List;
 
 import com.ezen.chord.reply.dto.ReplyDTO;
+import com.ezen.chord.schedule.dto.SchdDTO;
 import com.ezen.chord.task.dto.TaskDTO;
 
 public class TimelineDTO {
@@ -15,8 +16,15 @@ public class TimelineDTO {
 	private int pro_no;				//작성 프로젝트
 	private int mem_no;				//작성자
 	private List<ReplyDTO> repList; //리플
-	private TaskDTO taskDTO;
+	private TaskDTO taskDTO;		//task
+	private SchdDTO SchdDTO;
 	
+	public SchdDTO getSchdDTO() {
+		return SchdDTO;
+	}
+	public void setSchdDTO(SchdDTO schdDTO) {
+		SchdDTO = schdDTO;
+	}
 	public TaskDTO getTaskDTO() {
 		return taskDTO;
 	}

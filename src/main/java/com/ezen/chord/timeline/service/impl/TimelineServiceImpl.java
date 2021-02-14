@@ -60,6 +60,7 @@ public class TimelineServiceImpl implements TimelineService {
 			result = timDAO.deleteTim(timDTO.getTim_no());
 			break;
 		case "task":
+			result = timDAO.deleteTim(timDTO.getTim_no());
 			break;
 		case "sch":
 			break;
@@ -93,7 +94,7 @@ public class TimelineServiceImpl implements TimelineService {
 	@Override
 	public TaskDTO getTask(int task_no) {
 		// TODO Auto-generated method stub
-		return null;
+		return taskDAO.getTaskDTO(task_no);
 	}
 	
 	@Override
