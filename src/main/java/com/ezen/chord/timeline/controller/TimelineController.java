@@ -16,6 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ezen.chord.files.dto.FilesDTO;
 import com.ezen.chord.files.service.FilesService;
 import com.ezen.chord.project_user.dto.ProjectUserDTO;
+import com.ezen.chord.schedule.dto.SchdDTO;
+import com.ezen.chord.schedule.service.SchdService;
+import com.ezen.chord.task.dto.TaskDTO;
+import com.ezen.chord.task.service.TaskService;
 import com.ezen.chord.timeline.dto.TimelineDTO;
 import com.ezen.chord.timeline.service.TimelineService;
 
@@ -26,6 +30,10 @@ public class TimelineController {
 	private TimelineService timService;
 	@Autowired
 	private FilesService fileService;
+	@Autowired
+	private TaskService taskService;
+	@Autowired 
+	private SchdService schdService;
 	
 	
 	@RequestMapping("/timeLine.do")
@@ -54,6 +62,9 @@ public class TimelineController {
 			case "task":
 				list.get(i).setTaskDTO(timService.getTask(list.get(i).getCont_no()));
 				break;
+				
+			case "schd":
+				//list.get(i).setSchdDTO(timService.get);
 			default:
 				break;
 			}
@@ -101,6 +112,123 @@ public class TimelineController {
 		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no()+"&mem_no="+mem_no;
 	}
 	
+	@RequestMapping("/insertTimWithTask.do")
+	public String insertTimWithTask(TimelineDTO timDTO ,
+							FilesDTO filesDTO ,
+							TaskDTO taskDTO,
+							@RequestParam("tu_mem_list")List<Integer> tu_mem_list,
+							@RequestParam("articleFile")List<MultipartFile> files,
+							HttpServletRequest request) {
+		
+		HttpSession sess=request.getSession();
+		int mem_no = (Integer) sess.getAttribute("memNo");
+		int task_no = taskService.getTaskSeq();
+		
+		String serv =request.getSession().getServletContext().getRealPath("/");
+		int tim_no = timService.getTimSeq();
+		timDTO.setTim_no(tim_no);
+		timDTO.setCont_no(task_no);
+		
+		filesDTO.setCont_kind("tim");
+		
+		filesDTO.setCont_no(tim_no);
+		filesDTO.setPro_no(timDTO.getPro_no());
+		filesDTO.getFile();
+		if(files != null) {
+			for(MultipartFile file : files) {
+				if(!file.isEmpty()) {
+					String name=fileService.checkName(file);
+					String original=file.getOriginalFilename();
+					Long number=file.getSize();
+					String size=fileService.returnFileSize(number);
+					fileService.copyInto(file, name,serv);
+					fileService.insertFile(filesDTO, original, name, size, mem_no);
+				}
+			}
+		}
+		int result = timService.insertTim(timDTO);
+		
+		taskDTO.setTask_no(task_no);
+		taskDTO.setCont_no(task_no);
+		taskDTO.setTask_title(timDTO.getTim_cont());
+		/*task테이블관련*/
+		int resultTask = taskService.insertTaskService(taskDTO);
+		
+		/*parti테이블관련*/
+		int resultTaskPi = taskService.insertTaskPiService(taskDTO);
+		
+		/*시작,마감일*/
+		int resultTaskDate = taskService.insertTaskDateService(taskDTO);
+		/*타임라인관련*/
+		// int resultTaskTim = taskService.insertTaskTimService(taskDTO);
+		
+		for(int i = 0 ; i < tu_mem_list.size() ; i++) {
+			System.out.println(tu_mem_list.get(i));
+		}
+		
+		
+		
+		
+		
+		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no()+"&mem_no="+mem_no;
+	}
+	
+	@RequestMapping("/insertTimWithSchd.do")
+	public String insertTimWithSchd(TimelineDTO timDTO ,
+							FilesDTO filesDTO ,
+							SchdDTO schdDTO,
+							@RequestParam(value = "datetime",defaultValue = "")String datetime,
+							@RequestParam("tu_mem_list")List<Integer> tu_mem_list,
+							@RequestParam("articleFile")List<MultipartFile> files,
+							HttpServletRequest request) {
+		
+		HttpSession sess=request.getSession();
+		int mem_no = (Integer) sess.getAttribute("memNo");
+		int schd_no = schdService.getSchdSeq();
+		
+		String serv =request.getSession().getServletContext().getRealPath("/");
+		int tim_no = timService.getTimSeq();
+		timDTO.setTim_no(tim_no);
+		timDTO.setCont_no(schd_no);
+		
+		filesDTO.setCont_kind("tim");
+		
+		filesDTO.setCont_no(tim_no);
+		filesDTO.setPro_no(timDTO.getPro_no());
+		filesDTO.getFile();
+		if(files != null) {
+			for(MultipartFile file : files) {
+				if(!file.isEmpty()) {
+					String name=fileService.checkName(file);
+					String original=file.getOriginalFilename();
+					Long number=file.getSize();
+					String size=fileService.returnFileSize(number);
+					fileService.copyInto(file, name,serv);
+					fileService.insertFile(filesDTO, original, name, size, mem_no);
+				}
+			}
+		}
+		int result = timService.insertTim(timDTO);
+		
+		schdDTO.setSchd_no(schd_no);
+		String start=datetime.substring(0,16);
+		String end=datetime.substring(21,37);
+		schdDTO.setCont_kind("schedul");
+		schdDTO.setCont_no(schd_no);
+	
+		
+		for(int i = 0 ; i < tu_mem_list.size() ; i++) {
+			System.out.println(tu_mem_list.get(i));
+		}
+		
+		
+		
+		
+		
+		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no()+"&mem_no="+mem_no;
+	}
+	
+	
 	
 	@RequestMapping("/updateTim.do")
 	public String updateTim(TimelineDTO timDTO ,HttpSession sess) {
@@ -112,6 +240,9 @@ public class TimelineController {
 	@RequestMapping("/deleteTim.do")
 	public String deleteTim(TimelineDTO timDTO ,HttpSession sess) {
 		int result = timService.deleteTim(timDTO);
+		System.out.println(timDTO.getTim_no());
+		System.out.println(result);
+		
 		int mem_no = (int)sess.getAttribute("memNo");
 		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no()+"&mem_no="+mem_no;
 	}

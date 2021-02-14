@@ -2,8 +2,10 @@ package com.ezen.chord.schedule.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +13,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ezen.chord.files.service.impl.FilesServiceImpl;
 import com.ezen.chord.schedule.dto.SchdDTO;
-import com.ezen.chord.schedule.sevice.impl.SchdServiceImpl;
+import com.ezen.chord.schedule.service.SchdService;
 import com.ezen.chord.task.dto.TaskDTO;
+import com.google.gson.Gson;
 
 @Controller
 public class SchdController {
 
 	@Autowired
-	SchdServiceImpl schdSerImpl;
+	SchdService schdService;
 	
 	@Autowired
 	FilesServiceImpl file;
@@ -33,6 +37,23 @@ public class SchdController {
 		mav.setViewName("schedule/fullCalender");
 		return mav;
 	}
+	@RequestMapping("/callCalender.do")
+	@ResponseBody
+	public void callCalender (@RequestParam(value = "mem_id",defaultValue = "0")int mem_id,
+			HttpServletResponse response) {
+		
+		Map<String,Object> map = schdService.groupCalendarList(mem_id);
+		Gson gson = new Gson();
+		String json = "";
+		json = gson.toJson(map);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("utf-8");
+		try {
+			response.getWriter().print(json);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	@RequestMapping("/addCal.do")
 	public ModelAndView addCal () {
 		ModelAndView mav=new ModelAndView();
@@ -42,13 +63,18 @@ public class SchdController {
 		return mav;
 	}
 	
+	
+	
 	@RequestMapping("/listCal.do")
 	public ModelAndView listCalender () {
 		ModelAndView mav=new ModelAndView();
-		mav.addObject("members");
+		List<SchdDTO> members = schdService.getSchdList(43);
+		mav.addObject("members",members);
 		mav.setViewName("schedule/listCal");
 		return mav;
 	}
+	
+	
 	
 	@RequestMapping("/taktest.do")
 	public ModelAndView addCal (@ModelAttribute SchdDTO dto ,
@@ -56,7 +82,7 @@ public class SchdController {
 			@RequestParam(value = "datetime",defaultValue = "")String datetime
 			){
 
-		int seq=schdSerImpl.getSchdSeq();
+		int seq=schdService.getSchdSeq();
 		String start=datetime.substring(0,16);
 		String end=datetime.substring(21,37);
 
@@ -67,12 +93,12 @@ public class SchdController {
 		
 		System.out.println(participants);
 		
-//		System.out.println(schdSerImpl.insertSchd(dto));
-//		System.out.println(schdSerImpl.insertTime(dto, start, end));
-//		System.out.println(schdSerImpl.insertTimeLine(dto));
-//		for(int i=0;i<participants.size;i++) {
-//			System.out.println(schdSerImpl.insertParti(dto)); ////////요건아직
-//		}
+		System.out.println(schdService.insertSchd(dto));
+		System.out.println(schdService.insertTime(dto, start, end));
+		System.out.println(schdService.insertTimeLine(dto));
+		for(int i=0;i<participants.size();i++) {
+			System.out.println(schdService.insertParti(dto)); ////////요건아직
+		}
 		
 		ModelAndView mav=new ModelAndView();
 		mav.setViewName("schedule/addCal");

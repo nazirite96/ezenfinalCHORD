@@ -154,5 +154,16 @@
 		delete from task where
 		task_no = #{task_no}
 	</delete>
-
+	<!-- 기웅 수정 -->
+	<select id="selectTaskByNo" parameterType="int" resultType="taskDTO">
+	select t.*,c.task_start_date,c.task_end_date from task t left join 
+	(select * from 
+	(select (A.time_date) as task_start_date,(B.time_date) as task_end_date,(a.cont_no) as s_cont_no,(b.cont_no) as e_cont_no from
+	(select * 
+	from time
+	where cont_kind = 'task' and cont_no = #{task_no} and time_kind = 's') B left join 
+	(select * from time where cont_kind = 'task' and cont_no = #{task_no} and time_kind = 'e') A on
+	A.cont_no = B.cont_no) A ) C on t.task_no = c.s_cont_no or t.task_no = c.e_cont_no
+	where task_no = #{task_no}
+	</select>
 </mapper>

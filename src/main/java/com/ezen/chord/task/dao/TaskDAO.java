@@ -42,4 +42,6 @@ public interface TaskDAO {
 	
 	/*업무글 삭제*/
 	public int deleteTask(TaskDTO taskDTO);
+	
+	public TaskDTO getTaskDTO(int task_no);
 }

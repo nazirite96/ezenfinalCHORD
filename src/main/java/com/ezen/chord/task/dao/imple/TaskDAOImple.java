@@ -120,4 +120,16 @@ public class TaskDAOImple implements TaskDAO {
 		return sqlMap.delete("deleteTask", taskDTO);
 	}
 	
+
+	@Override
+	public int updateTask(TaskDTO taskDTO) {
+		return sqlMap.update("updateTask", taskDTO);
+	}
+	
+	@Override
+	public TaskDTO getTaskDTO(int task_no) {
+		// TODO Auto-generated method stub
+		return sqlMap.selectOne("selectTaskByNo", task_no);
+	}
+
 }

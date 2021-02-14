@@ -22,24 +22,24 @@
 		<div class="schedule-header">
 			<dl>
 				<dt class="maright-15">
-					<span class="dis-block font-thin size-20 color-red text-center">${fn:substring(timeLine.schdVo.schd_start_time, 5, 7) }123월</span>
-					<strong class="dis-block font-bold size-40 color-black text-center">${fn:substring(timeLine.schdVo.schd_start_time, 8, 10) }123</strong>
+					<span class="dis-block font-thin size-20 color-red text-center">${fn:substring(members.time_start_date, 5, 7) }월</span>
+					<strong class="dis-block font-bold size-40 color-black text-center">${fn:substring(members.time_start_date, 8, 10) }</strong>
 				</dt>
-				<dd class="font-bold size-20 color-black">${timeLine.schdVo.schd_title }123</dd>
-				<dd class="martop-10 font-bold size-16 color-black">${timeLine.schdVo.schd_start_time }   -   ${timeLine.schdVo.schd_end_time }123-123</dd>
+				<dd class="font-bold size-20 color-black">${members.tim_cont }</dd>
+				<dd class="martop-10 font-bold size-16 color-black">${members.time_start_date }   -   ${members.time_end_date }</dd>
 			</dl>
 		</div>
 		
 		<!-- 위치 검색:s -->
 		<c:choose>
-			<c:when test="${timeLine.schdVo.schd_loc != null }">
+			<c:when test="${members.schd_loc != null }">
 				<div class="input-box">
 					<dl>
 						<dt class="maright-20"><i class="fas fa-map-marker-alt"></i></dt>
 						<dd>
-							<div class="dis-block marbtm-15">${timeLine.schdVo.schd_loc }123<a href="https://maps.google.com?q=${timeLine.schdVo.schd_loc }" target="google_blank" class="marleft-15">지도보기</a></div>
+							<div class="dis-block marbtm-15">${members.schd_loc }<a href="https://maps.google.com?q=${members.schd_loc }" target="google_blank" class="marleft-15">지도보기</a></div>
 							<div id="googleMap" class="dis-block" >
-								<img src="https://maps.googleapis.com/maps/api/staticmap?center=${timeLine.schdVo.schd_lat },${timeLine.schdVo.schd_lon }&amp;zoom=15&amp;size=800x200&amp;markers=color:red|${timeLine.schdVo.schd_lat },${timeLine.schdVo.schd_lon }&amp;key=AIzaSyAmxDFvVfjjBQ0eWrQ2Pgv8odc0L8rbJU4" style="height:100%; width:100%">
+								<img src="https://maps.googleapis.com/maps/api/staticmap?center=${members.schd_lat },${members.schd_lon }&amp;zoom=15&amp;size=800x200&amp;markers=color:red|${members.schd_lat },${members.schd_lon }&amp;key=AIzaSyAmxDFvVfjjBQ0eWrQ2Pgv8odc0L8rbJU4" style="height:100%; width:100%">
 							</div>
 						</dd>
 					</dl>
@@ -50,33 +50,57 @@
 		
 		<!-- 메모:s -->
 		<c:choose>
-			<c:when test="${timeLine.schdVo.schd_memo != null}">
+			<c:when test="${members.schd_memo != null}">
 				<div class="input-box martop-15">
 					<dl>
 						<dt class="maright-20"><i class="fas fa-sticky-note"></i></dt>
 						<dd>
-							${timeLine.schdVo.schd_memo }
+							${members.schd_memo }
 						</dd>
 					</dl>
 				</div>
 			</c:when>
 		</c:choose>
 		<!-- 메모:f -->
+		
+		<!-- 알람:s -->
+		<c:choose>
+			<c:when test="${members.minute != null}">
+				<div class="input-box martop-15" style="border:0">
+					<dl>
+						<dt class="maright-20"><i class="fas fa-bell"></i></dt>
+						<dd>
+							${members.minute} 전 미리알림
+						</dd>
+					</dl>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="input-box martop-15" style="border:0">
+					<dl>
+						<dt class="maright-20"><i class="fas fa-bell"></i></dt>
+						<dd>
+							미리알림 없음
+						</dd>
+					</dl>
+				</div>
+			</c:otherwise>
+		</c:choose>
+		<!-- 알람:f -->
 	</div>
 </div>
 
 	
 <!-- 일정 수정:s -->
 <form action="/flowolf/schd/update" class="article-edit-form" method="POST">
-<input type="hidden" name="schd_no"value="${timeLine.schdVo.schd_no }">
+<input type="hidden" name="schd_no"value="${members.schd_no }">
 <input type="hidden" name="pro_no"value="${proVo.pro_no }">
-
 	<!-- article edit box:s -->
 	<div class="article-edit-box">
 	
 		<!-- 일정제목:s -->
 		<div class="input-box">
-			<input type="text" name="schd_title" class="font-bold size-18" value=" ${timeLine.schdVo.schd_title }" required="required">
+			<input type="text" name="tim_cont" class="font-bold size-18" value=" ${members.tim_cont }" required="required">
 		</div>
 		<!-- 일정제목:f -->
 		
@@ -85,10 +109,10 @@
 			<dl>
 				<dt class="maright-20"><i class="far fa-clock"></i></dt>
 				<dd>
-					<input type="hidden" value="${timeLine.schdVo.schd_start_time }   -   ${timeLine.schdVo.schd_end_time }" name="defaultDate">
+					<input type="hidden" value="${members.time_start_date }   -   ${members.time_end_date }" name="defaultDate">
 					<input type="text"
-<%-- 					placeholder="${timeLine.schdVo.schd_start_time }   -   ${timeLine.schdVo.schd_end_time }" --%>
-					placeholder="${timeLine.schdVo.schd_start_time }   -   ${timeLine.schdVo.schd_end_time }"
+<%-- 					placeholder="${members.time_start_date }   -   ${members.time_end_date }" --%>
+					placeholder="${members.time_start_date }   -   ${members.time_end_date }"
 					data-range="true"
 					data-multiple-dates-separator="   -   "
 					class="datepicker-here"
@@ -99,30 +123,33 @@
 			</dl>
 		</div>
 		<!-- 일정 시간 설정:f -->
-
+		<!-- 위치 검색:s -->
 		<!-- 위치 검색:f -->
 		<div class="input-box martop-15">
 			<dl>
 				<dt class="maright-20"><i class="fas fa-map-marker-alt"></i></dt>
 				<c:choose>
-					<c:when test="${timeLine.schdVo.schd_loc != null }">
+					<c:when test="${members.schd_loc != null }">
 						<dd>
-							<input id="searchInput2" name ="schd_loc" class="controls" type="text" value="${timeLine.schdVo.schd_loc }"   style="width:90%">
+							<input id="searchInput2" name ="schd_loc" class="controls" type="text" value="${members.schd_loc }"   style="width:90%">
 							<div id="map" class="dis-block" style="width:100%;"></div>
-<%-- 							<img src="https://maps.googleapis.com/maps/api/staticmap?center=${timeLine.schdVo.schd_lat },${timeLine.schdVo.schd_lon }&amp;zoom=15&amp;size=630x300&amp;markers=color:red|${timeLine.schdVo.schd_lat },${timeLine.schdVo.schd_lon }&amp;key=AIzaSyADjbtMn46r9DGFyo_ZRz3c6fOXzuOKWCw" style="width:100%; height:100%;"> --%>
-							<input type="hidden" id="schd_lat2" class="schd_lat2"name="schd_lat" value="${timeLine.schdVo.schd_lat}"> 
-							<input type="hidden" id="schd_lon2" class="schd_lon2"name="schd_lon" value="${timeLine.schdVo.schd_lon}">
+<%-- 							<img src="https://maps.googleapis.com/maps/api/staticmap?center=${members.schd_lat },${members.schd_lon }&amp;zoom=15&amp;size=630x300&amp;markers=color:red|${members.schd_lat },${members.schd_lon }&amp;key=AIzaSyADjbtMn46r9DGFyo_ZRz3c6fOXzuOKWCw" style="width:100%; height:100%;"> --%>
+							<input type="hidden" id="schd_lat2" class="schd_lat2"name="schd_lat" value="${members.schd_lat}"> 
+							<input type="hidden" id="schd_lon2" class="schd_lon2"name="schd_lon" value="${members.schd_lon}">
 						</dd>
 					</c:when>
 					<c:otherwise>
 						<dd>
 							<input id="searchInput2" name ="schd_loc" class="controls" type="text" style="width:90%">
+							<input type="hidden" class="schd_lat2" id="schd_lat2" name="schd_lat" value="${members.schd_lat}"> 
+							<input type="hidden" class="schd_lon2" id="schd_lon2" name="schd_lon" value="${members.schd_lon}">
 						</dd>
 					</c:otherwise>
 				</c:choose>
 			</dl>
 		</div>
-
+		
+		
 		
 		<script>
 			$('.datepicker-here').datepicker({
@@ -142,8 +169,8 @@
 				<dt class="maright-20"><i class="fas fa-sticky-note"></i></dt>
 				<dd>
 					<c:choose>
-						<c:when test="${timeLine.schdVo.schd_memo !=null }">
-							<textarea rows="2" cols="" name="schd_memo" >${timeLine.schdVo.schd_memo }</textarea>
+						<c:when test="${members.schd_memo !=null }">
+							<textarea rows="2" cols="" name="schd_memo" >${members.schd_memo }</textarea>
 						</c:when>
 						<c:otherwise>
 							<textarea rows="2" cols="" name="schd_memo" ></textarea>
@@ -153,6 +180,27 @@
 			</dl>
 		</div>
 		<!-- 메모:f -->
+		
+		<!-- 알람:s -->
+		<div class="input-box martop-15">
+			<dl>
+				<dt class="maright-20"><i class="fas fa-bell"></i></dt>
+				<dd>
+					<select name="alert_time" onchange="getSelectValue(this.form);">
+						<option value="0">없음</option>
+						<option value="10">10분전 미리알림</option>
+						<option value="30">30분전 미리알림</option>
+						<option value="60">1시간전 미리알림</option>
+						<option value="120">2시간전 미리알림</option>
+						<option value="180">3시간전 미리알림</option>
+						<option value="1440">1일전</option>
+						<option value="2880">2일전</option>
+						<option value="10080">7일전</option>
+					</select>
+				</dd>
+			</dl>
+		</div>
+		<!-- 알람:f -->
 	</div>
 	<!-- article edit box:f -->
 	
@@ -168,82 +216,59 @@
 </form>
 </section>
 </body>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3F6HUmoF9DMA6KsovfusumiMHCDmjKPg&libraries=places&callback=autoComplete" async defer></script>
-			<script type="text/javascript">
-			/*******************************************
-			* Google Map Api
-			* 팀명 : #DEV
-			* 최초작성일 : 2018-10-06
-			* 작성자 : TA(Kim jin young)
-			*******************************************/
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da2da3e53b6d01f803242012ae94fba6&libraries=services"></script>
+<script>
+var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
-			function autoComplete() {
-				var map = new google.maps.Map(document.getElementById('map'), {
-					center : {
-						lat : -33.8688,
-						lng : 151.2195
-					},
-					zoom : 13
-				});
-				var input = document.getElementById('searchInput2');
-				map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = {
+	        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+	        level: 3 // 지도의 확대 레벨
+	    };  
 
-				var autocomplete = new google.maps.places.Autocomplete(input);
-				autocomplete.bindTo('bounds', map);
+	// 지도를 생성합니다    
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
 
-				var infowindow = new google.maps.InfoWindow();
-				var marker = new google.maps.Marker({
-					map : map,
-					anchorPoint : new google.maps.Point(0, -29)
-				});
+	// 장소 검색 객체를 생성합니다
+	var ps = new kakao.maps.services.Places(); 
 
-				autocomplete.addListener('place_changed', function() {
-					infowindow.close();
-					marker.setVisible(false);
-					var place = autocomplete.getPlace();
-					if (!place.geometry) {
-						window.alert("장소를 선택해주세요");
-						return;
-					}
+	// 키워드로 장소를 검색합니다
+	ps.keywordSearch('', placesSearchCB); 
 
-					// 지역정보가 있으면 맵에 표시하기
-					if (place.geometry.viewport) {
-						map.fitBounds(place.geometry.viewport);
-					} else {
-						map.setCenter(place.geometry.location);
-						map.setZoom(17);
-					}
-					marker.setIcon(({
-						url : place.icon,
-						size : new google.maps.Size(71, 71),
-						origin : new google.maps.Point(0, 0),
-						anchor : new google.maps.Point(17, 34),
-						scaledSize : new google.maps.Size(35, 35)
-					}));
-					marker.setPosition(place.geometry.location);
-					marker.setVisible(true);
+	// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+	function placesSearchCB (data, status, pagination) {
+	    if (status === kakao.maps.services.Status.OK) {
 
-					var address = '';
-					if (place.address_components) {
-						address = [
-							(place.address_components[0]
-									&& place.address_components[0].short_name || ''),
-							(place.address_components[1]
-									&& place.address_components[1].short_name || ''),
-							(place.address_components[2]
-									&& place.address_components[2].short_name || '') ]
-							.join(' ');
-					}
+	        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+	        // LatLngBounds 객체에 좌표를 추가합니다
+	        var bounds = new kakao.maps.LatLngBounds();
 
-					infowindow.setContent('<div><strong>' + place.name
-							+ '</strong><br>' + address);
-					infowindow.open(map, marker);
+	        for (var i=0; i<data.length; i++) {
+	            displayMarker(data[i]);    
+	            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+	        }       
 
-					$('#schd_lat2').val(place.geometry.location.lat());
-					$('#schd_lon2').val(place.geometry.location.lng());
-					console.log('위도'+place.geometry.location.lat());
-					console.log('경도'+place.geometry.location.lng());
-				});
-			}
-			</script>
+	        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+	        map.setBounds(bounds);
+	    } 
+	}
+
+	// 지도에 마커를 표시하는 함수입니다
+	function displayMarker(place) {
+	    
+	    // 마커를 생성하고 지도에 표시합니다
+	    var marker = new kakao.maps.Marker({
+	        map: map,
+	        position: new kakao.maps.LatLng(place.y, place.x) 
+	    });
+
+	    // 마커에 클릭이벤트를 등록합니다
+	    kakao.maps.event.addListener(marker, 'click', function() {
+	        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+	        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+	        infowindow.open(map, marker);
+	    });
+}
+</script>
+}
 <!-- 일정 수정:f -->
