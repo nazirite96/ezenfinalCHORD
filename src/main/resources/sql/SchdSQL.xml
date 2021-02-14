@@ -16,7 +16,7 @@
 	</insert>
 	<insert id="insertTimeLine" parameterType="SchdDTO">
 	    insert into timeline values(
-	    #{timeline_seq.nextval},#{cont_kind},#{cont_no},#{cont_no},sysdate,#{pro_no},#{mem_no}
+	    timeline_seq.nextval,#{cont_kind},#{cont_no},#{tim_cont},sysdate,#{pro_no},#{mem_no}
 	    )
 	</insert>
 	<insert id="insertParti" parameterType="SchdDTO">
@@ -36,4 +36,52 @@
 			)
 		select * from dual
 	</insert>
+	<select id="getSchdMyList" resultType="SchdDTO" parameterType="INTEGER">
+		select 
+		sh.schd_no,
+		tl.tim_cont,
+		(select ti.time_date from time ti where ti.cont_kind='schedule' and ti.cont_no=sh.schd_no and ti.time_kind='s')as time_start_date,
+		(select ti.time_date from time ti where ti.cont_kind='schedule' and ti.cont_no=sh.schd_no and ti.time_kind='e')as time_end_date,
+		sh.schd_loc,
+		sh.schd_memo,
+		(select mem_name from member where mem_no=#{mem_no})as mem_nick,
+		tl.pro_no
+		from timeline tl,schedule sh
+		where 1=1
+		and tl.cont_kind='schedule'
+		and tl.cont_no=sh.schd_no
+		and tl.mem_no=#{mem_no}
+	</select>
+	<select id="getInvited_Schd" resultType="SchdDTO" parameterType="INTEGER">
+		select 
+		sh.schd_no,
+		tl.tim_cont,
+		(select ti.time_date from time ti where ti.cont_kind='schedule' and ti.cont_no=sh.schd_no and ti.time_kind='s')as time_start_date,
+		(select ti.time_date from time ti where ti.cont_kind='schedule' and ti.cont_no=sh.schd_no and ti.time_kind='e')as time_end_date,
+		sh.schd_loc,
+		sh.schd_memo,
+		(select mem_name from member where mem_no=#{mem_no})as mem_nick,
+		tl.pro_no
+		from timeline tl,schedule sh,participants pp
+		where 1=1
+		and tl.cont_kind='schedule'
+		and pp.cont_kind=tl.cont_kind
+		and pp.cont_no=sh.schd_no
+		and tl.cont_no=sh.schd_no
+		and pp.mem_no=#{mem_no}
+	</select>
+	<select id="getSchdList" resultType="SchdDTO" parameterType="INTEGER">
+		select 
+		(select ti.time_date from time ti where ti.cont_kind='schedule' and ti.cont_no=sh.schd_no and ti.time_kind='s')as time_start_date,
+		(select ti.time_date from time ti where ti.cont_kind='schedule' and ti.cont_no=sh.schd_no and ti.time_kind='e')as time_end_date,
+		tl.tim_cont,
+		sh.schd_no,
+		sh.schd_loc,
+		sh.schd_memo
+		from timeline tl,schedule sh
+		where 1=1
+		and tl.cont_kind='schedule'
+		and tl.cont_no=sh.schd_no
+		and sh.schd_no=#{schd_no}
+	</select>
 </mapper>
