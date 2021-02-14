@@ -1028,7 +1028,7 @@ function fn_addTodo(el) {
 		cloneItem.clone().appendTo(todoBox);
 
 		// input name ++
-		todoBox.find("dl").last().find(".todo-input").attr('name', 'tiList[' + length + '].ti_cont');
+		todoBox.find("dl").last().find(".todo-input").attr('name', 'tiList[' + length + '].todo_item_content');
 		todoBox.find("dl").last().find(".todo-date").attr('name', 'tiList[' + length + '].ti_date');
 		todoBox.find("dl").last().find(".todo-mem").attr('name', 'tiList[' + length + '].ti_mem_id');
 
@@ -1112,7 +1112,7 @@ function fn_keyDown(event, el) {
 			if (inputBox.hasClass("todo-box")) {
 
 				// input name ++
-				inputBox.find("dl").last().find(".todo-input").attr('name', 'tiList[' + length + '].ti_cont');
+				inputBox.find("dl").last().find(".todo-input").attr('name', 'tiList[' + length + '].todo_item_content');
 				inputBox.find("dl").last().find(".todo-chk").val('n').attr('name', 'tiList[' + length + '].ti_chk');
 				inputBox.find("dl").last().find(".todo-date").attr('name', 'tiList[' + length + '].ti_date');
 				inputBox.find("dl").last().find(".todo-mem").attr('name', 'tiList[' + length + '].ti_mem_id');
@@ -1366,14 +1366,14 @@ function fn_checkBoxLabel(el) {
 		// update 시에 필요한 값 가져오기
 		var ti_no = item.attr('data-no');
 		var ti_chk = 'y';
-		var ti_cont = todoItem.text();
+		var todo_item_content = todoItem.text();
 		var todo_no = todoNo.val();
 		var todo_rate = resultPcnt;
 
 		$.ajax({
 			url: "/flowolf/todoItem/update",
 			method: "post",
-			data: { ti_no: ti_no, ti_chk: ti_chk, ti_cont: ti_cont, todo_no: todo_no, todo_rate: todo_rate },
+			data: { ti_no: ti_no, ti_chk: ti_chk, todo_item_content: todo_item_content, todo_no: todo_no, todo_rate: todo_rate },
 			dataType: "json",					// server로 부터 받을 data type
 			success: function(data) {
 				if (data == 1) {
@@ -1403,7 +1403,7 @@ function fn_checkBoxLabel(el) {
 
 		var ti_no = item.attr('data-no');
 		var ti_chk = 'n';
-		var ti_cont = todoItem.text();
+		var todo_item_content = todoItem.text();
 		var todo_no = todoNo.val();
 		var todo_title = todoTitle.text();
 		var todo_rate = resultPcnt;
@@ -1412,7 +1412,7 @@ function fn_checkBoxLabel(el) {
 		$.ajax({
 			url: "/flowolf/todoItem/update",
 			method: "post",
-			data: { ti_no: ti_no, ti_chk: ti_chk, ti_cont: ti_cont, todo_no: todo_no, todo_title: todo_title, todo_rate: todo_rate, todo_fix_chk: todo_fix_chk },
+			data: { ti_no: ti_no, ti_chk: ti_chk, todo_item_content: todo_item_content, todo_no: todo_no, todo_title: todo_title, todo_rate: todo_rate, todo_fix_chk: todo_fix_chk },
 			dataType: "json",					// server로 부터 받을 data type
 			success: function(data) {
 				if (data == 1) {

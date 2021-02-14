@@ -16,6 +16,11 @@ public class TaskDAOImple implements TaskDAO {
 	@Autowired
 	private SqlSessionTemplate sqlMap;
 	
+	public TaskDAOImple(SqlSessionTemplate sqlMap) {
+		super();
+		this.sqlMap = sqlMap;
+	}
+
 	@Override
 	public int getTaskSeq() {
 		return sqlMap.selectOne("getTaskSeq");
@@ -72,10 +77,40 @@ public class TaskDAOImple implements TaskDAO {
 		return result;
 	}
 	
+	/*업무글 수정(task table)*/
+	@Override
+	public int updateTaskDAO(TaskDTO taskDTO) {
+		int result = sqlMap.update("updateTask", taskDTO);
+		return result;
+	}
+	/*업무글 등록(담당자)*/
+	@Override
+	public int updateTaskPiDAO(TaskDTO taskDTO) {
+		int result = sqlMap.update("updateTaskPi", taskDTO);
+		return result;
+	}
+	/*업무글 수정(시작일)*/
+	@Override
+	public int updateTaskStartDateDAO(TaskDTO taskDTO) {
+		int result = sqlMap.update("updateTaskStartDate", taskDTO);
+		return result;
+	}
+	/*업무글 수정(마감일)*/
+	@Override
+	public int updateTaskEndDateDAO(TaskDTO taskDTO) {
+		int result = sqlMap.update("updateTaskEndDate", taskDTO);
+		return result;
+	}
+	/*업무글 수정(타임라인테이블)*/
+	@Override
+	public int updateTaskTimDAO(TaskDTO taskDTO) {
+		int result = sqlMap.update("updateTaskTim", taskDTO);
+		return result;
+	}
+	
 	/*전체업무 조회*/
 	@Override
 	public List<TaskDTO> selectAllTask() {
-		// TODO Auto-generated method stub
 		return sqlMap.selectList("selectAllTask");
 	}
 	
@@ -85,14 +120,16 @@ public class TaskDAOImple implements TaskDAO {
 		return sqlMap.delete("deleteTask", taskDTO);
 	}
 	
+
 	@Override
 	public int updateTask(TaskDTO taskDTO) {
 		return sqlMap.update("updateTask", taskDTO);
 	}
-	//기웅 수정
+	
 	@Override
 	public TaskDTO getTaskDTO(int task_no) {
 		// TODO Auto-generated method stub
 		return sqlMap.selectOne("selectTaskByNo", task_no);
 	}
+
 }

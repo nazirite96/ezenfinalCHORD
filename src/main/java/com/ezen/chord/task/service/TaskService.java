@@ -9,7 +9,7 @@ public interface TaskService {
 	public int getTaskSeq();
 	
 	////////////////////////////////////////////////////////	
-	/*업무글 등록(tasktable)*/
+	/*업무글 등록(task table)*/
 	public int insertTaskService(TaskDTO taskDTO);
 	/*업무글 등록(담당자)*/
 	public int insertTaskPiService(TaskDTO taskDTO);
@@ -23,12 +23,23 @@ public interface TaskService {
 	public int insertTaskTimService(TaskDTO taskDTO);
 	////////////////////////////////////////////////////////
 	
+	////////////////////////////////////////////////////////
+	/*업무글 수정(task table)*/
+	public int updateTaskService(TaskDTO taskDTO);
+	/*업무글 수정(담당자)*/
+	public int updateTaskPiService(TaskDTO taskDTO);
+	/*업무글 수정(시작일)*/
+	public int updateTaskStartDateService(TaskDTO taskDTO);
+	/*업무글 수정(마감일)*/
+	public int updateTaskEndDateService(TaskDTO taskDTO);
+	/*업무글 수정(타임라인테이블)*/
+	public int updateTaskTimService(TaskDTO taskDTO);	
+	////////////////////////////////////////////////////////	
+	
+	
 	/*전체업무 조회*/
-	List<TaskDTO> selectAllTask();
+	public List<TaskDTO> selectAllTask();
 	
-	
-	/*업무글 수정*/
-	public int updateTask(TaskDTO taskDTO);
 	
 	/*업무글 삭제*/
 	public int deleteTask(TaskDTO taskDTO);

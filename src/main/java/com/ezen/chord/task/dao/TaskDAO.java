@@ -23,12 +23,22 @@ public interface TaskDAO {
 	public int insertTaskTimDAO(TaskDTO taskDTO);
 	////////////////////////////////////////////////////////
 	
+	////////////////////////////////////////////////////////
+	/*업무글 수정(task table)*/
+	public int updateTaskDAO(TaskDTO taskDTO);
+	/*업무글 수정(담당자)*/
+	public int updateTaskPiDAO(TaskDTO taskDTO);
+	/*업무글 수정(시작일)*/
+	public int updateTaskStartDateDAO(TaskDTO taskDTO);
+	/*업무글 수정(마감일)*/
+	public int updateTaskEndDateDAO(TaskDTO taskDTO);
+	/*업무글 수정(타임라인테이블)*/
+	public int updateTaskTimDAO(TaskDTO taskDTO);	
+	////////////////////////////////////////////////////////	
+	
 	/*전체업무 조회*/
-	List<TaskDTO> selectAllTask();
+	public List<TaskDTO> selectAllTask();
 	
-	
-	/*업무글 수정*/
-	public int updateTask(TaskDTO taskDTO);
 	
 	/*업무글 삭제*/
 	public int deleteTask(TaskDTO taskDTO);
