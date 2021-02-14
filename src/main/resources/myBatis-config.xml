@@ -8,6 +8,8 @@
  		<typeAlias type="com.ezen.chord.member.dto.MemberDTO" alias="MemberDTO"/>
  		<typeAlias type="com.ezen.chord.company.dto.CompanyDTO" alias="CompanyDTO"/>
  		<typeAlias type="com.ezen.chord.task.dto.TaskDTO" alias="taskDTO"/>
+ 		<typeAlias type="com.ezen.chord.todo.dto.TodoDTO" alias="todoDTO"/>
+ 		<typeAlias type="com.ezen.chord.todo_item.dto.TodoItemDTO" alias="todoItemDTO"/>
  		<typeAlias type="com.ezen.chord.project.dto.ProjectDTO" alias="projectDTO"/>
  		<typeAlias type="com.ezen.chord.files.dto.FilesDTO" alias="filesDTO"/>
  		<typeAlias type="com.ezen.chord.project_user.dto.ProjectUserDTO" alias="projectUserDTO"/>

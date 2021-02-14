@@ -27,13 +27,6 @@ public class TaskServiceImple implements TaskService {
 	@Inject
 	private TaskUserDAO taskUserDAO;
 	
-//	
-//	private SqlSessionTemplate sqlMap;
-//	
-//	public TaskServiceImple(SqlSessionTemplate sqlMap) {
-//		super();
-//		this.sqlMap = sqlMap;
-//	}
 
 	/*업무 시퀀스 조회*/
 	@Override
@@ -63,7 +56,7 @@ public class TaskServiceImple implements TaskService {
 		System.out.println(taskDTO.getTask_start_date()+"시작일");
 		if(taskDTO.getTask_start_date() == null || taskDTO.getTask_start_date().equals("")) {
 			taskDTO.setTask_start_date("1990-01-01");
-			System.out.println(taskDTO.getTask_start_date()+" 시작일 바꾼거");
+			System.out.println(taskDTO.getTask_start_date()+" 시작일 바꾼거(insert)");
 		}
 		int result = taskDAO.insertTaskStartDateDAO(taskDTO);
 		return result;
@@ -75,7 +68,7 @@ public class TaskServiceImple implements TaskService {
 		System.out.println(taskDTO.getTask_end_date()+"마감일");
 		if(taskDTO.getTask_end_date() == null || taskDTO.getTask_end_date().equals("")) {
 			taskDTO.setTask_end_date("1990-01-01");
-			System.out.println(taskDTO.getTask_end_date()+" 마감일 바꾼거");
+			System.out.println(taskDTO.getTask_end_date()+" 마감일 바꾼거(insert)");
 		}		
 		int result = taskDAO.insertTaskEndDateDAO(taskDTO);
 		
@@ -105,6 +98,46 @@ public class TaskServiceImple implements TaskService {
 		return result;
 	}
 	
+	/*업무글 수정(task table)*/
+	@Override
+	public int updateTaskService(TaskDTO taskDTO) {
+		int result = taskDAO.updateTaskDAO(taskDTO);
+		return result;
+	}
+	/*업무글 등록(담당자)*/
+	@Override
+	public int updateTaskPiService(TaskDTO taskDTO) {
+		int result = taskDAO.updateTaskPiDAO(taskDTO);
+		return result;
+	}
+	/*업무글 수정(시작일)*/
+	@Override
+	public int updateTaskStartDateService(TaskDTO taskDTO) {
+		
+		if(taskDTO.getTask_start_date() == null || taskDTO.getTask_start_date().equals("")) {
+			taskDTO.setTask_start_date("1990-01-01");
+			System.out.println(taskDTO.getTask_start_date()+" 시작일 바꾼거(update)");
+		}		
+		int result = taskDAO.updateTaskStartDateDAO(taskDTO);
+		return result;
+	}
+	/*업무글 수정(마감일)*/
+	@Override
+	public int updateTaskEndDateService(TaskDTO taskDTO) {
+		if(taskDTO.getTask_end_date() == null || taskDTO.getTask_end_date().equals("")) {
+			taskDTO.setTask_end_date("1990-01-01");
+			System.out.println(taskDTO.getTask_end_date()+" 마감일 바꾼거(update)");
+		}		
+		int result = taskDAO.updateTaskEndDateDAO(taskDTO);
+		return result;
+	}
+	/*업무글 수정(타임라인테이블)*/
+	@Override
+	public int updateTaskTimService(TaskDTO taskDTO) {
+		int result = taskDAO.updateTaskTimDAO(taskDTO);
+		return result;
+	}
+	
 	/*전체업무 조회*/
 	@Override
 	public List<TaskDTO> selectAllTask() {
@@ -116,12 +149,8 @@ public class TaskServiceImple implements TaskService {
 		List<TaskDTO> taskList = taskDAO.selectAllTask();
 		
 		for (TaskDTO taskDTO : taskList) {
-			System.out.println(taskDTO.getTask_start_date()+"업무조회데이터");
-			System.out.println(taskDTO.getTask_end_date()+"업무조회데이터");
 			String task_start_date = taskDTO.getTask_start_date().substring(0, 10);
 			String task_end_date = taskDTO.getTask_end_date().substring(0, 10);
-			System.out.println(task_start_date+"업무조회데이터2");
-			System.out.println(task_end_date+"업무조회데이터2");			
 			if(task_start_date.equals("1990-01-01")) {
 				taskDTO.setTask_start_date("");
 				taskDTO.setTask_end_date(task_end_date);
@@ -139,11 +168,6 @@ public class TaskServiceImple implements TaskService {
 		return resultList;
 	}
 	
-	/*업무글 수정*/
-	@Override
-	public int updateTask(TaskDTO taskDTO) {
-		return taskDAO.updateTask(taskDTO);
-	}
 	
 	/*업무글 삭제*/
 	@Override

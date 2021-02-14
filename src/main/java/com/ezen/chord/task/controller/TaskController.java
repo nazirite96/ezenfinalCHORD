@@ -60,6 +60,9 @@ public class TaskController {
 		mav.addObject("proUserDTO", proUserDTO);
 		//프로젝트 정보를 받기
 		int page = 0; 
+		// 전체 업무 리스트 조회
+		List<TaskDTO> taskList = taskService.selectAllTask();
+		mav.addObject("taskList", taskList);
 		
 		List<TimelineDTO> list = timService.getTimelineByProNo(pro_no, page);
 		mav.addObject("list", list);
@@ -158,6 +161,41 @@ public class TaskController {
 //		else if (s) {
 //			//4-3. 둘다 있을때
 //		}
+		
+		mav.setViewName("taskView.do");
+		
+		return mav;
+		
+	}
+	
+	@RequestMapping("/taskupdate.do")
+	public ModelAndView taskUpdate(HttpSession session
+			,@ModelAttribute TaskDTO taskDTO) throws IllegalStateException, IOException{
+		
+		ModelAndView mav = new ModelAndView();
+		
+		int task_no = taskService.getTaskSeq();
+		
+		taskDTO.setCont_kind("task");
+		taskDTO.setTask_no(task_no);
+		taskDTO.setCont_no(task_no);
+		taskDTO.setMem_no(11);
+		taskDTO.setPro_no(49);
+		
+		/*task테이블관련*/
+		int resultTask = taskService.updateTaskService(taskDTO);
+		
+		/*parti테이블관련*/
+		int resultTaskPi = taskService.updateTaskPiService(taskDTO);
+		
+		/*시작일*/
+		int resultTaskStart = taskService.updateTaskStartDateService(taskDTO);
+		
+		/*마감일*/
+		int resultTaskEnd = taskService.updateTaskEndDateService(taskDTO);
+		
+		/*타임라인관련*/
+		int resultTaskTim = taskService.updateTaskTimService(taskDTO);
 		
 		mav.setViewName("taskView.do");
 		

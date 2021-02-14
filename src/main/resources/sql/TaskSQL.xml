@@ -7,8 +7,7 @@
 
 	<!-- 업무 시퀀스 조회 -->
 	<select id="getTaskSeq" resultType="int">
-		select task_SEQ.nextval from
-		dual
+		select task_SEQ.nextval from dual
 	</select>
 
 	<!-- 업무 등록 -->
@@ -25,7 +24,7 @@
 		insert into
 		participants(cont_kind,cont_no,mem_no)
 		values(
-		#{cont_kind},#{cont_no},#{mem_no}
+		#{cont_kind},#{task_no},#{mem_no}
 		)
 	</insert>
 
@@ -55,12 +54,12 @@
 		into
 		time(cont_kind,cont_no,time_kind,time_date)
 		values(
-		#{cont_kind},#{cont_no},'s',TO_DATE(#{task_start_date},'YYYY/MM/DD
+		#{cont_kind},#{task_no},'s',TO_DATE(#{task_start_date},'YYYY/MM/DD
 		HH24:MI')
 		)
 		into time(cont_kind,cont_no,time_kind,time_date)
 		values(
-		#{cont_kind},#{cont_no},'e',TO_DATE(#{task_end_date},'YYYY/MM/DD
+		#{cont_kind},#{task_no},'e',TO_DATE(#{task_end_date},'YYYY/MM/DD
 		HH24:MI')
 		)
 		select * from dual
@@ -74,8 +73,7 @@
 		(timeline_seq.nextval,#{cont_kind},#{task_no},#{task_title},sysdate,#{pro_no},#{mem_no})
 	</insert>
 
-	<select id="selectAllTask" parameterType="String"
-		resultType="taskDTO">
+	<select id="selectAllTask" parameterType="String" resultType="taskDTO">
 		select A.*,timeline.*,member.mem_name
 		from (select
 		A.task_no,A.task_state,A.task_content,A.task_priority,(A.time_date) as
@@ -98,7 +96,7 @@
 	</select>
 
 	<!-- 업무 수정 -->
-	<update id="UpdateTask" parameterType="taskDTO">
+	<update id="updateTask" parameterType="taskDTO">
 		update task 
 			set task_no = #{task_no}
 			,task_state = #{task_state}
@@ -107,15 +105,50 @@
 		where task_no = #{task_no}	
 	</update>
 
-	<!-- 업무 등록(담당자) 
-	<insert id="insertTaskPi" parameterType="taskDTO">
+	<!-- 업무 수정(담당자)--> 
+	<update id="updateTaskPi" parameterType="taskDTO">
 		update participants
 			set cont_kind = #{cont_kind}
 			,cont_no = #{task_no}
 			,mem_no = #{mem_no}
 		where cont_no = #{task_no}	
-	</insert>
-	-->
+	</update>
+
+	
+	<!-- 업무 수정(시작일) -->
+	<update id="updateTaskStartDate" parameterType="taskDTO">
+		update time
+			set cont_kind = #{cont_kind}
+			,cont_no = #{task_no}
+			,time_kind = 's'
+			,time_datea = TO_DATE(#{task_start_date},'YYYY/MM/DD HH24:MI')
+		where cont_no = #{task_no}	
+	</update>
+
+	<!-- 업무 수정(마감일) -->
+	<update id="updateTaskEndDate" parameterType="taskDTO">
+		update time
+			set cont_kind = #{cont_kind}
+			,cont_no = #{task_no}
+			,time_kind = 'e'
+			,time_datea = TO_DATE(#{task_end_date},'YYYY/MM/DD HH24:MI')
+		where cont_no = #{task_no}
+	</update>	
+	
+	<!-- 업무 등록에 쓰는거 TIM_NO, CONT_KIND, CONT_NO, TIM_CONT, TIM_DATE, PRO_NO, 
+		MEM_NO -->
+	<update id="updateTaskTim" parameterType="taskDTO">
+		update timeline
+			set tim_no = timeline_seq.nextval
+			,cont_kind = #{cont_kind}
+			,cont_no = #{task_no}
+			,tim_cont = #{task_title}
+			,tim_date = sysdate
+			,pro_no = #{pro_no}
+			,mem_no = #{mem_no}
+		where cont_no = #{task_no} and cont_kind = 'task'
+	</update>	
+	
 	<!-- 업무 삭제 -->
 	<delete id="deleteTask" parameterType="taskDTO">
 		delete from task where
