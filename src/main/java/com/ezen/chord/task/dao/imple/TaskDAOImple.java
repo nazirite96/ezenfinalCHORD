@@ -89,4 +89,10 @@ public class TaskDAOImple implements TaskDAO {
 	public int updateTask(TaskDTO taskDTO) {
 		return sqlMap.update("updateTask", taskDTO);
 	}
+	//기웅 수정
+	@Override
+	public TaskDTO getTaskDTO(int task_no) {
+		// TODO Auto-generated method stub
+		return sqlMap.selectOne("selectTaskByNo", task_no);
+	}
 }
