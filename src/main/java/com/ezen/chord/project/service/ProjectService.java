@@ -3,6 +3,7 @@ package com.ezen.chord.project.service;
 import java.util.List;
 
 import com.ezen.chord.project.dto.ProjectDTO;
+import com.ezen.chord.project_user.dto.ProjectUserDTO;
 
 public interface ProjectService {
 	
@@ -17,7 +18,7 @@ public interface ProjectService {
 	ProjectDTO getProDetail(int pro_no);
 	
 	//전체 프로젝트 조회
-	List<ProjectDTO> getProAllList(int mem_no);
+	List<ProjectUserDTO> getProAllList(int mem_no);
 	
 	int chkProUser(int mem_no,int pro_no);
 	

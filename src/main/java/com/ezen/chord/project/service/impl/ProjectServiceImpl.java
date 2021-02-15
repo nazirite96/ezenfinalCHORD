@@ -59,9 +59,9 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public List<ProjectDTO> getProAllList(int mem_no) {
+	public List<ProjectUserDTO> getProAllList(int mem_no) {
 		// TODO Auto-generated method stub
-		List<ProjectDTO> list = proUserDAO.getListByMemNo(mem_no);
+		List<ProjectUserDTO> list = proUserDAO.getListByMemNo(mem_no);
 		
 		return list;
 	}

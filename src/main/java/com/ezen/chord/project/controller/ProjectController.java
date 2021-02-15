@@ -44,7 +44,7 @@ public class ProjectController {
 		
 		
 		ModelAndView mav = new ModelAndView();
-		List<ProjectDTO> proList = proService.getProAllList(mem_no);
+		List<ProjectUserDTO> proList = proService.getProAllList(mem_no);
 		mav.addObject("mem_no", mem_no);
 		
 		mav.addObject("proList", proList);

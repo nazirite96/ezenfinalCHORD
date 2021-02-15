@@ -14,8 +14,19 @@
     
     
 <title>Insert title here</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous">
+<!-- jQuery 3.3.1 -->
+<script
+	src="/chord/resources/js/jquery-3.1.1.min.js"></script>
+<!-- custom -->
+<link rel="stylesheet" href="/chord/resources/css/style_margin.css">
+<link rel="stylesheet" href="/chord/resources/css/style_padding.css">
 
-
+<link rel="stylesheet" href="/chord/resources/css/GwCss.css">
 </head>
 
     <style>
@@ -37,7 +48,7 @@
 
     
     <!-- Custom styles for this template -->
-    <link href="/chord/resources/css/dashboard.css" rel="stylesheet">
+    
   </head>
   <body>
     
@@ -131,7 +142,7 @@
         </div>
       </div>
 		
-      <div id="addProject">
+     <%--  <div id="addProject">
 		<form action="insertPro.do" method="post">
     			<h1>프로젝트 만들기</h1>
 		
@@ -179,24 +190,197 @@
 				<input type="submit" class="pop-btn submit-btn marleft-5 back-color-pupple-l" value="만들기">
 			</footer>
 		</form>
-	</div>
+	</div> 
 	<c:forEach var="dto" items="${proList }">
 		<div><a href="timeLine.do?pro_no=${dto.pro_no }&mem_no=${mem_no}&pro_name=${dto.pro_name}">${dto.pro_no } ${dto.pro_name } </a></div>
 	</c:forEach>
-      
+      --%>
 
       <h2>Section title</h2>
       <div class="table-responsive">
         
       </div>
+     <div class="container">
+     <div class="body-right-panel">
+      <section class="content main">
+
+	<!-- alertCustom -->
+	<input type="hidden" class="alert-msg" value="${msg }">
+	<input type="hidden" class="alert-className" value="${className }">
+	<script type="text/javascript">
+		$(function(){
+			var msg = $(".alert-msg").val();
+			var className = $(".alert-className").val();
+			
+			if(msg.length != 0){
+				alertCustom(msg, className);
+				<%
+					session.setAttribute("msg", "");
+					session.setAttribute("className", "");
+				%>
+			}
+		});
+	</script>
+
+	<!-- total count -->
+	<h1>전체(${proList.size() })</h1>
+	
+	<!-- project list:s -->
+	<div class="project-wrap">
+		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+			<a href="#addProject" class="project-box add-project add-pro-link">
+				<i class="flow-icon icon-plus"></i>
+				<strong class="dis-block martop-10 size-24 color-blue-l text-center">프로젝트 만들기</strong>
+			</a>
+		</div>
+		
+		<c:forEach items="${proList }" var="dto">
+			<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 float-left">
+				<div class="project-box">
+					<!-- project title box -->
+					<div class="pro-tit-box ${dto.pro_user_color }">
+						<c:choose>
+							<c:when test="${dto.pro_user_man_chk = 'manager' }">
+								<div class="check-import" data-prono="${dto.pro_no }" data-proname="${dto.pro_name }"><i class="fas fa-star size-20 color-yellow cursor-point"></i></div>
+							</c:when>
+							<c:otherwise>
+								<div class="check-import" data-prono="${dto.pro_no }" data-proname="${dto.pro_name }"><i class="fas fa-star size-20 color-gray-l cursor-point"></i></div>
+							</c:otherwise>
+						</c:choose>
+						<span class="dis-block size-24 color-white text-center cursor-point pro-click">${dto.pro_name }</span>
+					</div>
+					
+					<!-- project member list -->
+					<div class="pro-mem-list-box dis-block cursor-point pro-click-mem">
+						<ul class="pro-mem-photo">
+								<li>
+									<i class="icon-circle circle-s"></i>
+									<img src="/chord/resources/img/user-pic-sample.png" width="40">
+								</li>								
+						</ul>
+						<div class="pro-mem-info">
+							<c:choose>
+								<c:when test="${proList.size()-1 == 0 }">
+									<strong>${memNo }번</strong>님 참여중
+								</c:when>
+								
+								<c:otherwise>
+									<strong>${memNo }번</strong>님 외 ${proList.size()-1 }명
+								</c:otherwise>								
+							</c:choose>
+						</div>
+					</div>
+				</div>
+			</div>
+		</c:forEach>
+	</div>
+	
+	<form id="detailFom" action="timeLine.do" method="get">
+		<input type="hidden" id="prono" name="pro_no" value="" >
+		<input type="hidden" id="memno" name="mem_no" value="${memNo }" >
+		<input type="hidden" id="proname" name="pro_name" value="" >
+		
+	</form>
+	
+	<script type="text/javascript">
+	$(function(){
+		
+		// 프로젝트 타이틀 길이에 따라 위치 다르게 적용하기
+		$(".pro-click").each(function(){
+			var height = $(this).height();
+			var result = -(height / 2) + 10;
+			$(this).css("margin-top", result+"px");
+		});
+		
+		// project import check(main page)
+		$(".check-import").on("click", function(){
+			if($(this).find("i").hasClass("color-gray-l")){
+				$(this).find("i").removeClass("color-gray-l");
+				$(this).find("i").addClass("color-yellow");				
+				
+				var pro_no = $(this).data("prono");		
+				
+				$.ajax({					
+					
+					url : "/flowolf/imp/insert",
+					method : "get",
+					data : {pro_no:pro_no},
+					dataType : "json",
+					success : function(data){
+						if(data==1){
+							alertCustom("변경되었습니다.", "alert-warning");
+						}
+					}
+				});
+			} else {
+				$(this).find("i").removeClass("color-yellow");
+				$(this).find("i").addClass("color-gray-l");
+				
+				var pro_no = $(this).data("prono");			
+				
+				$.ajax({					
+					
+					url : "flowolf/imp/delete",
+					method : "get",
+					data : {pro_no:pro_no},
+					dataType : "json",
+					success : function(data){
+						if(data==1){
+							alertCustom("변경되었습니다.", "alert-warning");
+						}
+					}
+				});
+			}
+		});
+		
+		// pro-click 클릭이벤트
+		$(".pro-click").click(function(){
+			var pro_no = $(this).siblings(".check-import").data("prono");
+			var pro_name = $(this).siblings(".check-import").data("proname");
+			$("#prono").val(pro_no);
+			$("#proname").val(pro_name);
+			$("#detailFom").submit();
+		});
+		
+		// pro-click-mem 클릭이벤트
+		$(".pro-click-mem").click(function(){
+			var item = $(this);
+			var proClick = item.siblings(".pro-tit-box").children(".pro-click");
+			proClick.click();
+		});
+		
+	});
+	</script>
+	<!-- project list:f -->
+	
+</section>
+<%@include file="layerPopCon.jsp"%>
+      </div>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
     </main>
   </div>
 </div>
 
-
+<link href="/chord/resources/css/dashboard.css" rel="stylesheet">
      <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+   <script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+	integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+	crossorigin="anonymous"></script>
+<script src="/chord/resources/js/dashboard.js"></script>
     <script src="/chord/resources/js/dashboard.js"></script>
+    <script type="text/javascript" src="/chord/resources/js/Gw.js"></script>
   </body>
 </html>

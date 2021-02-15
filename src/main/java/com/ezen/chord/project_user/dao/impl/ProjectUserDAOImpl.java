@@ -22,9 +22,9 @@ public class ProjectUserDAOImpl implements ProjectUserDAO {
 	
 	
 	@Override
-	public List<ProjectDTO> getListByMemNo(int mem_no) {
+	public List<ProjectUserDTO> getListByMemNo(int mem_no) {
 		// TODO Auto-generated method stub
-		List<ProjectDTO> list = sqlMap.selectList("getListByMemNo", mem_no);
+		List<ProjectUserDTO> list = sqlMap.selectList("getListByMemNo", mem_no);
 		return list;
 	}
 	
