@@ -27,7 +27,7 @@
 		width:200px;
 		height:38px;
 		border: 1px solid #ccc;
-		background-color:#e4e4e4;	
+		background-color:#e4e4e4;
 	}
 	.txt2_css{
 		width:300px;

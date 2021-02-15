@@ -272,6 +272,10 @@ $('.add-pro-link').click(function() {
 	var $href = $(this).attr('href');
 	layer_popup($href);
 });
+$('.updateCont').click(function() {
+	var $href = $(this).attr('href');
+	layer_popup($href);
+});
 
 // 프로젝트 보관함 설정
 $('.pro-folder-edit-btn').click(function() {

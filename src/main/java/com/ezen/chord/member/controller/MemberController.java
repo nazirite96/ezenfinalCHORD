@@ -275,8 +275,10 @@ public class MemberController {
 	/*마이페이지*/
 	@RequestMapping("/goMyPage.do")
 	public ModelAndView myPage(int mem_no) {
+		
 		MemberDTO memResult = msvc.myPageService(mem_no);
 		
+		//System.out.println("controller: "+memResult.toString());
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("memResult",memResult);
 		mav.setViewName("member/myPageForm");
@@ -289,8 +291,19 @@ public class MemberController {
 	@RequestMapping("/memUpdate.do")
 	public ModelAndView myPageUpdate(MemberDTO mdto) {
 		
-		int result = msvc.myPageUpdateService(mdto);
-		String msg = result>0?"성공적으로 업데이트 되었습니다.":"업데이트에 실패했습니다.";
+	
+		int member_result = msvc.myPageUpdateService(mdto); // member update 
+		
+		int info_result = 0;
+		if(mdto.getMem_info_no()==0) {
+			
+			info_result = msvc.myPageInfoInsertService(mdto); //member info insert
+		}else if(mdto.getMem_info_no()!=0) {
+			info_result = msvc.myPageInfoUpdateService(mdto); //member info update 
+		}
+		
+		
+		String msg = member_result>0?"성공적으로 업데이트 되었습니다.":"업데이트에 실패했습니다.";
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg",msg);
@@ -300,7 +313,5 @@ public class MemberController {
 		
 		return mav;
 	}
-
-	
 }
 
