@@ -68,8 +68,8 @@ public class SchdController {
 	@RequestMapping("/listCal.do")
 	public ModelAndView listCalender () {
 		ModelAndView mav=new ModelAndView();
-		List<SchdDTO> members = schdService.getSchdList(43);
-		mav.addObject("members",members);
+		SchdDTO schdDto=schdService.getSchdOne(43);
+		mav.addObject("schdDto",schdDto);
 		mav.setViewName("schedule/listCal");
 		return mav;
 	}

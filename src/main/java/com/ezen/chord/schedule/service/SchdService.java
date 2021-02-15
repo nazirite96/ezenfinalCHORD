@@ -23,6 +23,6 @@ public interface SchdService {
 	List<SchdDTO> getInvited_Schd(int mem_no);
 	// 등록된거랑 초대된거랑 합친거 (위에거 두개)
 	Map<String, Object> groupCalendarList(int mem_no);
-	// 인덱스번호로 스케줄 리스트 뿌려주는거
-	List<SchdDTO> getSchdList(int schd_no);
+	// 인덱스번호로 해당스케줄 뿌려주는거
+	SchdDTO getSchdOne(int schd_no);
 }

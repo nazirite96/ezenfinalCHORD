@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da2da3e53b6d01f803242012ae94fba6&libraries=services"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet"  href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
      <link href="/chord/resources/css/dashboard.css" rel="stylesheet">
@@ -17,7 +17,6 @@
 	
 <script src="<%=request.getContextPath()%>/resources/js/jquery-3.1.1.min.js"></script>
 <!-- jQuery 3.3.1 -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		
 <!-- custom -->
 <link rel="stylesheet" href="/chord/resources/css/style_margin.css">
@@ -156,7 +155,7 @@
       </div>
       <section class="content full-calendar" style="padding-left: 7%;
     padding-right: 7%;">
-	<div class="project-wrap">
+    <div class="project-wrap">
 		<div class='modal fade' id='successModal' tabindex='-1' role='dialog' aria-labelledby='successModalLabel' aria-hidden='true'>
 			<div class='modal-dialog' role='document'>
 				<div class='modal-content'>
@@ -169,7 +168,7 @@
 					<a id ='pno' class="coll-head-link">
 						&nbsp;       &nbsp;&nbsp;&nbsp;       &nbsp;   프로젝트 바로가기<i class="fas fa-angle-double-right marleft-10"></i>
 					</a>
-						<div class="timeline-article con-schedule" style="width:auto;">
+						<div class="timeline-article con-schedule" style="">
 							<div class="container">
 								<div class="schedule-header">
 									<dl>
@@ -185,7 +184,9 @@
 								<div id="viewResolver" class="input-box martop-15">
 									<i class="fas fa-map-marker-alt"></i>
 									<span id="rlocation"></span>
-									<span class="dis-block" id="rmap"></span>
+									<div>
+									<div id="map" style="width:100%; height: 250px;"></div>
+									</div>
 								</div>
 								<!-- 메모:s -->
 								<div class="input-box martop-15">
@@ -407,6 +408,7 @@ $.ajax({
 		}
 		
 		function calendarRendering(test){
+			
 			$('#calendar').fullCalendar({
 				header:{ //헤더부분에 뜨는 메뉴 설정
 					left : "month, agendaWeek agendaDay",
@@ -439,7 +441,7 @@ $.ajax({
 			$('#rday').html(r.st.substr(8,2));
 			$('#rduration').html(getFormatDate(new Date(r.st))+" - "+getFormatDate(new Date(r.ed)));
 			$('#rlocation').html(placeFormatter(r));
-			$('#rmap').html(view(r.lon,r.lat));
+			view(r.schd_loc);
 			$('#rmemo').html('&nbsp &nbsp'+memoBinder(r.memo));
 				
 		}
@@ -477,29 +479,73 @@ $.ajax({
 				day = day >= 10 ? day : '0' + day;
 				return  year + '-' + month + '-' + day;
 			}
+
+
+		function view(loc){
 			
-		function view(lon, lat){
-				if(lon != null && lat !=null){
-					var mapsrc = "<img src=https://maps.googleapis.com/maps/api/staticmap?center="
-				+ lat
-				+ ","
-				+ lon
-				+ "&amp;zoom=15&amp;size=480x300&amp;markers=color:red|"
-				+ lat
-				+ ","
-				+ lon
-				+ "&amp;key=AIzaSyADjbtMn46r9DGFyo_ZRz3c6fOXzuOKWCw>";
-					return mapsrc;
-				}else{
-					return "";
-				}
+			var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+
+			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+			    mapOption = {
+			        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+			        level: 3 // 지도의 확대 레벨
+			    };  
+
+			// 지도를 생성합니다    
+			var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+			// 장소 검색 객체를 생성합니다
+			var ps = new kakao.maps.services.Places(); 
+
+			// 키워드로 장소를 검색합니다
+			ps.keywordSearch(loc, placesSearchCB); 
+
+			// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+			function placesSearchCB (data, status, pagination) {
+			    if (status === kakao.maps.services.Status.OK) {
+
+			        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+			        // LatLngBounds 객체에 좌표를 추가합니다
+			        var bounds = new kakao.maps.LatLngBounds();
+
+			        for (var i=0; i<data.length; i++) {
+			            displayMarker(data[i]);    
+			            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+			        }       
+
+			        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+			        map.setBounds(bounds);
+			    } 
+			}
+
+			// 지도에 마커를 표시하는 함수입니다
+			function displayMarker(place) {
+			    
+			    // 마커를 생성하고 지도에 표시합니다
+			    var marker = new kakao.maps.Marker({
+			        map: map,
+			        position: new kakao.maps.LatLng(place.y, place.x) 
+			    });
+
+			    // 마커에 클릭이벤트를 등록합니다
+			    kakao.maps.event.addListener(marker, 'click', function() {
+			        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+			        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+			        infowindow.open(map, marker);
+			    });
 		}
-		</script>
+		}
 		
+		</script>
 		
     </main>
   </div>
 </div>
+<script>
+
+var shcd_loc='신촌 이젠아카데미';
+</script>
+
 <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
   </body>

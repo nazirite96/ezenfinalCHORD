@@ -22,24 +22,46 @@
 		<div class="schedule-header">
 			<dl>
 				<dt class="maright-15">
-					<span class="dis-block font-thin size-20 color-red text-center">${fn:substring(members.time_start_date, 5, 7) }월</span>
-					<strong class="dis-block font-bold size-40 color-black text-center">${fn:substring(members.time_start_date, 8, 10) }</strong>
+					<span class="dis-block font-thin size-20 color-red text-center">${fn:substring(schdDto.time_start_date, 5, 7) }월</span>
+					<strong class="dis-block font-bold size-40 color-black text-center">${fn:substring(schdDto.time_start_date, 8, 10) }</strong>
 				</dt>
-				<dd class="font-bold size-20 color-black">${members.tim_cont }</dd>
-				<dd class="martop-10 font-bold size-16 color-black">${members.time_start_date }   -   ${members.time_end_date }</dd>
+				<dd class="font-bold size-20 color-black">${schdDto.tim_cont }</dd>
+				<dd class="martop-10 font-bold size-16 color-black">${schdDto.time_start_date }   -   ${schdDto.time_end_date }</dd>
 			</dl>
+		</div>
+		
+		<div class="input-box martop-15" style="height:inherit">
+			<dl>
+				<dt class="maright-20"><i class="fas fa-user-plus"></i></dt>
+				<dd class="posi-re">
+					
+					<!-- 담당자 리스트 -->
+					<div class="task-user-list">
+						<c:if test="${timeLine.tuList.size() == 0 }">
+							<p class="mar-0 pad-0">담당자 없음</p>
+						</c:if>
+						<c:forEach items="${timeLine.tuList }" var="tuVo">
+							<div class="name-tag">
+								<img src="/mem/pic?mem_id=${tuVo.tu_mem_id }" width="24">
+								<strong class="marleft-10">${tuVo.mem_nick }</strong>
+								<i class="fas fa-times-circle marleft-15" style="display:none"></i>
+								<input type="hidden" name="tu_mem_id" value="${tuVo.tu_mem_id }">
+							</div>
+						</c:forEach>
+					</div>
+				</dd>
+			</dl>	
 		</div>
 		
 		<!-- 위치 검색:s -->
 		<c:choose>
-			<c:when test="${members.schd_loc != null }">
+			<c:when test="${schdDto.schd_loc != null }">
 				<div class="input-box">
 					<dl>
 						<dt class="maright-20"><i class="fas fa-map-marker-alt"></i></dt>
 						<dd>
-							<div class="dis-block marbtm-15">${members.schd_loc }<a href="https://maps.google.com?q=${members.schd_loc }" target="google_blank" class="marleft-15">지도보기</a></div>
-							<div id="googleMap" class="dis-block" >
-								<img src="https://maps.googleapis.com/maps/api/staticmap?center=${members.schd_lat },${members.schd_lon }&amp;zoom=15&amp;size=800x200&amp;markers=color:red|${members.schd_lat },${members.schd_lon }&amp;key=AIzaSyAmxDFvVfjjBQ0eWrQ2Pgv8odc0L8rbJU4" style="height:100%; width:100%">
+							<div class="dis-block marbtm-15">${schdDto.schd_loc }<a href="https://maps.google.com?q=${schdDto.schd_loc }" target="google_blank" class="marleft-15">지도보기</a></div>
+							<div id="map" class="dis-block" style="height: 300px">
 							</div>
 						</dd>
 					</dl>
@@ -50,12 +72,12 @@
 		
 		<!-- 메모:s -->
 		<c:choose>
-			<c:when test="${members.schd_memo != null}">
+			<c:when test="${schdDto.schd_memo != null}">
 				<div class="input-box martop-15">
 					<dl>
 						<dt class="maright-20"><i class="fas fa-sticky-note"></i></dt>
 						<dd>
-							${members.schd_memo }
+							${schdDto.schd_memo }
 						</dd>
 					</dl>
 				</div>
@@ -64,18 +86,7 @@
 		<!-- 메모:f -->
 		
 		<!-- 알람:s -->
-		<c:choose>
-			<c:when test="${members.minute != null}">
-				<div class="input-box martop-15" style="border:0">
-					<dl>
-						<dt class="maright-20"><i class="fas fa-bell"></i></dt>
-						<dd>
-							${members.minute} 전 미리알림
-						</dd>
-					</dl>
-				</div>
-			</c:when>
-			<c:otherwise>
+		
 				<div class="input-box martop-15" style="border:0">
 					<dl>
 						<dt class="maright-20"><i class="fas fa-bell"></i></dt>
@@ -84,8 +95,6 @@
 						</dd>
 					</dl>
 				</div>
-			</c:otherwise>
-		</c:choose>
 		<!-- 알람:f -->
 	</div>
 </div>
@@ -93,14 +102,14 @@
 	
 <!-- 일정 수정:s -->
 <form action="/flowolf/schd/update" class="article-edit-form" method="POST">
-<input type="hidden" name="schd_no"value="${members.schd_no }">
+<input type="hidden" name="schd_no"value="${schdDto.schd_no }">
 <input type="hidden" name="pro_no"value="${proVo.pro_no }">
 	<!-- article edit box:s -->
 	<div class="article-edit-box">
 	
 		<!-- 일정제목:s -->
 		<div class="input-box">
-			<input type="text" name="tim_cont" class="font-bold size-18" value=" ${members.tim_cont }" required="required">
+			<input type="text" name="tim_cont" class="font-bold size-18" value=" ${schdDto.tim_cont }" required="required">
 		</div>
 		<!-- 일정제목:f -->
 		
@@ -109,10 +118,10 @@
 			<dl>
 				<dt class="maright-20"><i class="far fa-clock"></i></dt>
 				<dd>
-					<input type="hidden" value="${members.time_start_date }   -   ${members.time_end_date }" name="defaultDate">
+					<input type="hidden" value="${schdDto.time_start_date }   -   ${schdDto.time_end_date }" name="defaultDate">
 					<input type="text"
-<%-- 					placeholder="${members.time_start_date }   -   ${members.time_end_date }" --%>
-					placeholder="${members.time_start_date }   -   ${members.time_end_date }"
+<%-- 					placeholder="${schdDto.time_start_date }   -   ${schdDto.time_end_date }" --%>
+					placeholder="${schdDto.time_start_date }   -   ${schdDto.time_end_date }"
 					data-range="true"
 					data-multiple-dates-separator="   -   "
 					class="datepicker-here"
@@ -129,20 +138,15 @@
 			<dl>
 				<dt class="maright-20"><i class="fas fa-map-marker-alt"></i></dt>
 				<c:choose>
-					<c:when test="${members.schd_loc != null }">
+					<c:when test="${schdDto.schd_loc != null }">
 						<dd>
-							<input id="searchInput2" name ="schd_loc" class="controls" type="text" value="${members.schd_loc }"   style="width:90%">
+							<input id="searchInput2" name ="schd_loc" class="controls" type="text" value="${schdDto.schd_loc }"   style="width:90%">
 							<div id="map" class="dis-block" style="width:100%;"></div>
-<%-- 							<img src="https://maps.googleapis.com/maps/api/staticmap?center=${members.schd_lat },${members.schd_lon }&amp;zoom=15&amp;size=630x300&amp;markers=color:red|${members.schd_lat },${members.schd_lon }&amp;key=AIzaSyADjbtMn46r9DGFyo_ZRz3c6fOXzuOKWCw" style="width:100%; height:100%;"> --%>
-							<input type="hidden" id="schd_lat2" class="schd_lat2"name="schd_lat" value="${members.schd_lat}"> 
-							<input type="hidden" id="schd_lon2" class="schd_lon2"name="schd_lon" value="${members.schd_lon}">
 						</dd>
 					</c:when>
 					<c:otherwise>
 						<dd>
 							<input id="searchInput2" name ="schd_loc" class="controls" type="text" style="width:90%">
-							<input type="hidden" class="schd_lat2" id="schd_lat2" name="schd_lat" value="${members.schd_lat}"> 
-							<input type="hidden" class="schd_lon2" id="schd_lon2" name="schd_lon" value="${members.schd_lon}">
 						</dd>
 					</c:otherwise>
 				</c:choose>
@@ -169,8 +173,8 @@
 				<dt class="maright-20"><i class="fas fa-sticky-note"></i></dt>
 				<dd>
 					<c:choose>
-						<c:when test="${members.schd_memo !=null }">
-							<textarea rows="2" cols="" name="schd_memo" >${members.schd_memo }</textarea>
+						<c:when test="${schdDto.schd_memo !=null }">
+							<textarea rows="2" cols="" name="schd_memo" >${schdDto.schd_memo }</textarea>
 						</c:when>
 						<c:otherwise>
 							<textarea rows="2" cols="" name="schd_memo" ></textarea>
@@ -218,6 +222,8 @@
 </body>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da2da3e53b6d01f803242012ae94fba6&libraries=services"></script>
 <script>
+
+var shcd_loc='${schdDto.schd_loc}';
 var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -233,7 +239,7 @@ var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 	var ps = new kakao.maps.services.Places(); 
 
 	// 키워드로 장소를 검색합니다
-	ps.keywordSearch('', placesSearchCB); 
+	ps.keywordSearch(schd_loc, placesSearchCB); 
 
 	// 키워드 검색 완료 시 호출되는 콜백함수 입니다
 	function placesSearchCB (data, status, pagination) {
