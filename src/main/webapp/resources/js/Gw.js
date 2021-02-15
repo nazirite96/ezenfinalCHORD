@@ -1030,7 +1030,7 @@ function fn_addTodo(el) {
 		// input name ++
 		todoBox.find("dl").last().find(".todo-input").attr('name', 'tiList[' + length + '].todo_item_content');
 		todoBox.find("dl").last().find(".todo-date").attr('name', 'tiList[' + length + '].todo_item_date');
-		todoBox.find("dl").last().find(".todo-mem").attr('name', 'tiList[' + length + '].ti_mem_id');
+		todoBox.find("dl").last().find(".todo-mem").attr('name', 'tiList[' + length + '].');
 
 		// 내용 reset
 		todoBox.find("dl").last().find("input[type=text]").val('');
@@ -1115,7 +1115,7 @@ function fn_keyDown(event, el) {
 				inputBox.find("dl").last().find(".todo-input").attr('name', 'tiList[' + length + '].todo_item_content');
 				inputBox.find("dl").last().find(".todo-chk").val('n').attr('name', 'tiList[' + length + '].ti_chk');
 				inputBox.find("dl").last().find(".todo-date").attr('name', 'tiList[' + length + '].todo_item_date');
-				inputBox.find("dl").last().find(".todo-mem").attr('name', 'tiList[' + length + '].ti_mem_id');
+				inputBox.find("dl").last().find(".todo-mem").attr('name', 'tiList[' + length + '].ti_mem_no');
 
 				// user(manager) select button reset
 				inputBox.find("dl").last().find(".user-add-btn i.icon-circle").addClass("dis-none");
@@ -1212,8 +1212,10 @@ function userSelect(el) {
 	var userList = item.parents(".todo-pro-user-list");
 	var iconCircle = userList.siblings("div.user-add-btn").children("i.icon-circle");
 	var userImgPlace = iconCircle.siblings("i");
+	
 	var userImgSrc = item.children(".pro-user-photo").children("img").attr("src");
-	var uesrId = item.find(".user-id");
+	var userId = item.find(".user-no").data("memno");
+	window.alert(userId);
 	var userIdInput = userImgPlace.siblings("input");
 
 	iconCircle.removeClass("dis-none");	// 사진 이미지 원형으로 보이게 해주는 태그를 보이게 한 후,
