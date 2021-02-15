@@ -45,7 +45,6 @@ public class MemberDAOImpl implements MemberDAO {
 		if(result==0 || result.toString()==null || result.toString().equals("")) {
 			result = 0;
 		}
-		System.out.println("이메일 확인: "+result);
 		return result;
 	}
 	
@@ -56,7 +55,6 @@ public class MemberDAOImpl implements MemberDAO {
 		if(result==0 || result.toString()==null || result.toString().equals("")) {
 			result = 0;
 		}
-		System.out.println("비밀번호 확인: "+result);
 		return result;
 	}
 	
@@ -70,7 +68,7 @@ public class MemberDAOImpl implements MemberDAO {
 			e.printStackTrace();
 			System.out.println(e.getLocalizedMessage());
 		}
-		System.out.println(result);
+
 		return result;
 	}
 	
@@ -102,19 +100,20 @@ public class MemberDAOImpl implements MemberDAO {
 	public MemberDTO myPageDAO(int mem_no) {
 		MemberDTO result = null;
 		try {
-			result = sqlMap.selectOne("chord.member.myPageSQL",mem_no);
+			result = sqlMap.selectOne("chord.member.myPage_contents",mem_no);
+			System.out.println("마이페이지 dao imple : "+result.toString());
 		} catch (Exception e) {
-			e.getLocalizedMessage();
+			System.out.println(e.getLocalizedMessage());
 		}
 		return result;
 	}
 	
-	/*마이페이지 내 정보 수정*/
+	/*마이페이지 member 정보 수정*/
 	@Override
 	public int myPageUpdateDAO(MemberDTO mdto) {
 		int result = 0;
 		try {
-			result = sqlMap.update("chord.member.myPageUpdateSQL",mdto);
+			result = sqlMap.update("chord.member.myPage_member_update",mdto);
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
 			result = 0;
@@ -123,5 +122,27 @@ public class MemberDAOImpl implements MemberDAO {
 		return result;
 	}
 	
-
+	/*마이페이지 member_info 설정*/
+	@Override
+	public int myPage_memInfoInsertDAO(MemberDTO mdto) {
+		int result = 0;
+		try {
+			result = sqlMap.insert("chord.member.myPage_memInfo_insert",mdto);
+		} catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
+		return result;
+	}
+	
+	/*마이페이지 member_info update*/
+	@Override
+	public int myPage_memInfoUpdateDAO(MemberDTO mdto) {
+		int result = 0;
+		try {
+			result = sqlMap.update("chord.member.myPage_memInfo_update",mdto);
+		} catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
+		return result;
+	}
 }

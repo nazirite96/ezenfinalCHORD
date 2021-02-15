@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ezen.chord.admin.dao.AdminDAO;
 import com.ezen.chord.admin.service.AdminService;
 import com.ezen.chord.company.dto.CompanyDTO;
+import com.ezen.chord.member.dto.MemberDTO;
 
 @Service
 public class AdminServiceImple implements AdminService {
@@ -77,6 +78,22 @@ public class AdminServiceImple implements AdminService {
 		int result = adao.adminPositionDeleteDAO(mem_no);
 		return result;
 	}
+	
+	
+	/*회원 정보 직책,부서 수정*/
+	@Override
+	public int adminMemInfoInsertService(MemberDTO mdto) {
+		int result = adao.adminMemInfoInsertDAO(mdto);
+		return result;
+	}
+	
+	/*회원 정보 직책,부서 업데이트*/
+	@Override
+	public int adminMemInfoUpdateService(MemberDTO mdto) {
+		int result = adao.adminMemInfoUpdateDAO(mdto);
+		return result;
+	}
+	
 	
 	/*회사 관리자_프로젝트 리스트*/
 	@Override

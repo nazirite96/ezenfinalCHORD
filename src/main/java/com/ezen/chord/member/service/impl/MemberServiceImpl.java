@@ -90,5 +90,22 @@ public class MemberServiceImpl implements MemberService {
 		int result = mdao.myPageUpdateDAO(mdto);
 		return result;
 	}
+	
+	/*마이페이지 member_info 설정*/
+	@Override
+	public int myPageInfoInsertService(MemberDTO mdto) {
+		int result = mdao.myPage_memInfoInsertDAO(mdto);
+		return result;
+	}
+	
+	
+	/*마이페이지 member_info update*/
+	@Override
+	public int myPageInfoUpdateService(MemberDTO mdto) {
+		int result = mdao.myPage_memInfoUpdateDAO(mdto);
+		return result;
+	}
+	
+	
 
 }
