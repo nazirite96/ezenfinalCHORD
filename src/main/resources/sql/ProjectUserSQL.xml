@@ -7,8 +7,8 @@
 			insert into project_user
 			values(#{pro_no},#{mem_no},#{pro_user_man_chk},sysdate,'default-back-color')
 		</insert>
-		<select id="getListByMemNo" resultType="projectDTO" parameterType="Integer">
-			SELECT A.pro_no,pro_name,pro_cont,pro_date,kind_no,A.mem_no FROM project_user A
+		<select id="getListByMemNo" resultType="projectUserDTO" parameterType="Integer">
+			SELECT A.pro_no,pro_name,pro_cont,pro_date,kind_no,A.mem_no,A.pro_user_color,a.pro_user_man_chk FROM project_user A
 			LEFT JOIN project B ON
 				A.pro_no = B.pro_no
 			where A.mem_no = #{mem_no}

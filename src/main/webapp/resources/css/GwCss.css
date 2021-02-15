@@ -220,7 +220,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 
 /*********** project wrap ***********/
 @media screen and (max-width:750px) {
-	.content {padding-left:50px;padding-right:50px}
+	.content {padding-left:0px;padding-right:0px}
 	.content .project-wrap {margin-left:-3.6%;margin-right:-3.6%}
 	.content.main .project-wrap div:nth-child(n+2) {margin-top:5%}
 }

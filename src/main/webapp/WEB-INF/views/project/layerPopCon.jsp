@@ -214,21 +214,15 @@
 <div class="dim-layer">
 	<div class="dimBg"></div>
 	
-	<div id="addProject" class="pop-layer pop-add-project">
-		<form action="/flowolf/pro/insert" method="post">
-    		<!-- pop header -->
-    		<header class="pop-top border-box">
-    			프로젝트 만들기
-    			<a href="#" class="posi-ab dis-block over-hidden icon-close btn-close">close</a>
-    		</header>
-		
+	<div id="addProject" class="pop-layer">
+		<form action="insertPro.do" method="post">
 			<!-- pop con -->
-	   		<section class="pop-con border-box">
+	   		<section class="border-box">
 	   		
 	   			<!-- 프로젝트 명 -->
    				<div class="dis-block">
 		   			<h3>프로젝트명</h3>
-		   			<input type="text" name="pro_name" class="pop-input input-line" placeholder="프로젝트명 입력(최대 50자)" required="required">
+		   			<input type="text" name="pro_name" placeholder="프로젝트명 입력(최대 50자)" required="required">
 	   			</div>
 	   			
 	   			<!-- 프로젝트 분류 -->
@@ -236,22 +230,30 @@
 		   			<h3>프로젝트 분류</h3>
 		   			<div class="pro-kind-box">
 						<!-- 분류 종료 List -->
-		   				<c:forEach items="${kindList }" var="kindVo">
 		   					<label class="maright-15">
-			   					<input type="radio" name="kind_no" value="${kindVo.kind_no }">
-			   					${kindVo.kind_name }
+			   					<input type="radio" name="kind_no" value="1">
+			   					1
 			   				</label>
-		   				</c:forEach>
+			   				<label class="maright-15">
+			   					<input type="radio" name="kind_no" value="2">
+			   					2
+			   				</label>
+			   				<label class="maright-15">
+			   					<input type="radio" name="kind_no" value="3">
+			   					3
+			   				</label>
 		   			</div>
+		   			<input type="hidden" name="pro_no" value="2">
 	   			</div>
-	   			
 	   			<!-- 프로젝트 개요 -->
    				<div class="dis-block martop-20">
 		   			<h3>프로젝트 개요</h3>
 		   			<textarea name="pro_cont" rows="" cols="" placeholder="프로젝트 목표 및 개요 입력"></textarea>
 	   			</div>
 			</section>
-			
+			<!-- input hidden 회사번호 -->
+			<input type="hidden" name="com_no" value="${sessionScope.comNo }">
+			<input type="hidden" name="mem_no" value="${sessionScope.memNo }">
 			<!-- pop footer -->
 			<footer class="pop-footer border-box">
 				<input type="button" class="pop-btn default-btn btn-close" value="취소">

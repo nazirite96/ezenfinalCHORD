@@ -10,7 +10,7 @@ public interface ProjectUserDAO {
 	
 	public int insertProUser(ProjectUserDTO proUserDTO);	
 	
-	public List<ProjectDTO> getListByMemNo(int mem_no);
+	public List<ProjectUserDTO> getListByMemNo(int mem_no);
 	
 	public int updateProUserColor(ProjectUserDTO proUserDTO);
 	

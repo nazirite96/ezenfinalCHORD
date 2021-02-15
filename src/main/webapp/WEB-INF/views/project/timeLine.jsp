@@ -16,7 +16,7 @@
 	crossorigin="anonymous">
 <!-- jQuery 3.3.1 -->
 <script
-	src="<%=request.getContextPath()%>/resources/js/jquery-3.1.1.min.js"></script>
+	src="/chord/resources/js/jquery-3.1.1.min.js"></script>
 <!-- custom -->
 <link rel="stylesheet" href="/chord/resources/css/style_margin.css">
 <link rel="stylesheet" href="/chord/resources/css/style_padding.css">
