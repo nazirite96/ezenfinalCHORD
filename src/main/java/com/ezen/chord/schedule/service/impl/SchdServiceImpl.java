@@ -65,9 +65,9 @@ public class SchdServiceImpl implements SchdService {
 		return returnMap;
 	}
 	@Override
-	public List<SchdDTO> getSchdList(int schd_no) {
+	public SchdDTO getSchdOne(int schd_no) {
 		// TODO Auto-generated method stub
-		return dao.getSchdList(schd_no);
+		return dao.getSchdOne(schd_no);
 	}
 
 }

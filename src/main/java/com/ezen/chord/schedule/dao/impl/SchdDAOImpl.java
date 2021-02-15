@@ -59,9 +59,9 @@ public class SchdDAOImpl implements SchdDAO {
 		return getInvited_Schd;
 	}
 	@Override
-	public List<SchdDTO> getSchdList(int schd_no) {
+	public SchdDTO getSchdOne(int schd_no) {
 		// TODO Auto-generated method stub
-		List<SchdDTO> getSchdList=sqlMap.selectList("getSchdList", schd_no);
-		return getSchdList;
+		SchdDTO getSchdOne=sqlMap.selectOne("getSchdList", schd_no);
+		return getSchdOne;
 	}
 }
