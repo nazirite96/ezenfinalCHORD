@@ -5,6 +5,7 @@ import java.util.List;
 import com.ezen.chord.reply.dto.ReplyDTO;
 import com.ezen.chord.schedule.dto.SchdDTO;
 import com.ezen.chord.task.dto.TaskDTO;
+import com.ezen.chord.todo.dto.TodoDTO;
 
 public class TimelineDTO {
 	
@@ -18,6 +19,7 @@ public class TimelineDTO {
 	private List<ReplyDTO> repList; //리플
 	private TaskDTO taskDTO;		//task
 	private SchdDTO SchdDTO;
+	public  TodoDTO todoDTO;
 	
 	public SchdDTO getSchdDTO() {
 		return SchdDTO;

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +17,7 @@
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous">
 <!-- jQuery 3.3.1 -->
-<script
-	src="/chord/resources/js/jquery-3.1.1.min.js"></script>
+<script src="/chord/resources/js/jquery-3.1.1.min.js"></script>
 <!-- custom -->
 <link rel="stylesheet" href="/chord/resources/css/style_margin.css">
 <link rel="stylesheet" href="/chord/resources/css/style_padding.css">
@@ -57,7 +58,28 @@
 	src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
 <link href="<%=request.getContextPath()%>/resources/css/JeCss2.css"
 	rel="stylesheet" type="text/css">
+<!-- tak -->
+<script>
+function show(){
+	var schd_name = $('.font-bold').val();
+	var schd_date = $('.datepicker-here').val();
+	var searchInput = $('#searchInput').val();
+	var content = $('#content').val();
+	if(schd_date.length<=16){
+		alert('일정의 마감시간을 설정해주삼 :>')
+	}else{
+		alert('제목   '+schd_name+'\n'+
+				'날짜   '+schd_date+'\n'+
+				'검색   '+searchInput+'\n'+
+				'좌표 x   '+loc_x+'\n'+
+				'좌표 y   '+loc_y+'\n'+
+				'내용   '+content)
+	}
+	document.frm.subit();
+}
+</script>
 <!-- 떠다니는 메뉴 -->
+
 <script type="text/javascript">
  var stmnLEFT = 10; // 오른쪽 여백 
  var stmnGAP1 = 0; // 위쪽 여백 
@@ -132,7 +154,6 @@
 <link rel="stylesheet" href="/chord/resources/css/GwCss.css">
 </head>
 <body id="contentBody" onload="InitializeStaticMenu();">
-	>
 
 	<nav
 		class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -575,12 +596,12 @@
 										<!-- 일정:s -->
 										<div id="tab-3" class="tabs-content con-schedule">
 
-											<form action="taktest.do" name="frm" method="post">
+											<form action="insertTimWithSchd.do" name="frm" method="post"
+												enctype="multipart/form-data">
 												<input type="hidden" name="schd_no" value="1"> <input
 													type="hidden" name="cont_no" value="schd"> <input
 													type="hidden" name="pro_no" value="${proUserDTO.pro_no }">
-												<input type="hidden" name="mem_no"
-													value="${sessionScope.memNo }">
+												<input type="hidden" name="mem_no" value="${memNo }">
 												<!-- tab-con-box:s -->
 												<!-- <input type="hidden" name="pro_no" value="${proVo.pro_no }">-->
 
@@ -624,13 +645,16 @@
 
 																<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
 																<div class="pro-user-list">
-																	<c:forEach items="${members }" var="mbs">
+																	<c:forEach items="${invitedProUserList }" var="mbs">
 																		<div class="pro-user-info"
 																			onclick="fn_taskManagerSelect(this)">
 																			<div class="pro-user-photo maright-10">
-																				<i class="icon-circle circle-s"></i>
+																				<i class="icon-circle circle-s"></i> <img
+																					src="/chord/resources/img/user-pic-sample.png"
+																					style="width: 40px">
 																			</div>
-																			<span class="user-id" data-id="${mbs }">${mbs }</span>
+																			<span class="user-no" data-no="${mbs.mem_no }">${mbs.mem_no }번
+																				이름</span>
 																		</div>
 																	</c:forEach>
 																</div>
@@ -652,8 +676,7 @@
 														</dl>
 													</div>
 													<!-- 위치 검색:f -->
-													<div id="map"
-														style="width: 100%; height: 300px; display: none;"></div>
+													<div id="mapf" style="width: 100%; height: 300px;"></div>
 
 													<!-- 메모:s -->
 													<div class="input-box martop-15">
@@ -685,14 +708,17 @@
 										<!-- 일정:f -->
 										<!-- 할일:s -->
 										<div id="tab-4" class="tabs-content con-todo">
-											<form action="/flowolf/todo/insert" method="post">
-
+											<form action="timInsertwithTodo.do" method="get">
+<input type="hidden" name="mem_no" value="${memNo }">
+												<input type="hidden" name="pro_no"
+													value="${proUserDTO.pro_no }"> <input type="hidden"
+													name="cont_kind" value="todo">
 												<!-- tab-con-box:s -->
 												<div class="tab-con-box">
 													<!-- 할일제목:s -->
 													<div class="input-box">
 														<input type="text" name="todo_title"
-															class="font-bold size-18" placeholder="할일 제목을 입력하세요.(선택)">
+															class="font-bold size-18" placeholder="할일 제목을 입력하세요.(선택)" required="required">
 													</div>
 													<!-- 할일제목:f -->
 
@@ -705,7 +731,7 @@
 															</dt>
 															<dd class="posi-re">
 																<!-- 할일 내용 입력 input -->
-																<input type="text" name="texe" class="todo-input"
+																<input type="text" name="tiList[0].todo_item_content" class="todo-input"
 																	placeholder="할일 입력(Enter or Tab 입력시 아래에 할일 입력 추가됨)"
 																	onkeydown="fn_keyDown(event, this)" required="required">
 
@@ -720,7 +746,7 @@
 																			data-toggle="dropdown" aria-haspopup="true"
 																			aria-expanded="false" onclick="datePick(this)"></i>
 																		<!-- 							<input type="hidden" name="tiList[0].ti_date" class="todo-date"> -->
-																		<input type="hidden" name="tiList[0].ti_date"
+																		<input type="hidden" name="tiList[0].todo_item_date"
 																			class="todo-date">
 
 																		<!-- date-picker box -->
@@ -782,317 +808,313 @@
 														class="article-submit-btn float-right font-bold size-18 color-white text-center default-back-color">
 												</div>
 												<!-- tab-dn-box:f -->
+
+
 											</form>
 										</div>
-										<!-- 할일:f -->
+								<!-- 할일:f -->
 
-									</div>
-								</div>
 							</div>
+						</div>
+					</div>
 
-							<div class="table-responsive"></div>
-							<!-- 타임라인 : start -->
-							<c:forEach var="dto" items="${list }">
-								<!-- 타임라인 : start -->
-								<div class="timeline-box martop-20">
+					<div class="table-responsive"></div>
+					<!-- 타임라인 : start -->
+					<c:forEach var="dto" items="${list }">
+						<!-- 타임라인 : start -->
+						<div class="timeline-box martop-20">
 
-									<input type="hidden" class="col-no" data-no="${dto.tim_no }">
-									<input type="hidden" class="col-kind"
-										data-kind="${dto.cont_kind }"> <input type="hidden"
-										class="col-kindno" data-kindno="${dto.cont_no }"> <input
-										type="hidden" class="col-prono" data-prono="${dto.pro_no }">
-									<input type="hidden" class="col-memno"
-										data-memno="${dto.mem_no }">
-									<!-- timeline header:s -->
-									<div class="timeline-header back-color-white">
-										<!-- article writer info -->
-										<div class="article-writer-info">
-											<dl>
-												<dt class="posi-re maright-15 cursor-point"
-													onclick="fn_openPopup(this)" data-id="${timeLine.mem_id }"
-													data-nick="${timeLine.mem_no }" data-my="${memVo.mem_id }">
-													<i class="flow-icon icon-circle circle-s"></i> <img
-														src="/chord/resources/img/user-pic-sample.png" width="40">
-												</dt>
-												<dd>
-													<strong class="dis-block size-18 color-black">작성자
-														: ${dto.mem_no }</strong> <span
-														class="dis-block size-14 color-gray-l"> 작성시간
-														${dto.tim_date } </span>
-												</dd>
-											</dl>
-										</div>
-										<!-- article icon : s -->
-										<ul class="article-top-icon">
-											<c:if test="${proUserDTO.pro_user_man_chk =='manager'}">
-												<!-- article pick button -->
-												<li><a href="#fixCheck" class="pick-check-btn"> <c:choose>
-															<c:when
-																test="${ProUserDTO.pro_user_man_chk == 'manager' }">
-																<i
-																	class="fas fa-map-pin size-24 cursor-point pick-active"></i>
-															</c:when>
-															<c:otherwise>
-																<i class="fas fa-map-pin size-24 cursor-point"></i>
-															</c:otherwise>
-														</c:choose>
-												</a></li>
-											</c:if>
-											<!-- article edit : s -->
-											<c:if test="${proUserDTO.mem_no == dto.mem_no }">
-												<li class="posi-re float-left">
-													<button id="articleEdit" type="button"
-														data-toggle="dropdown" aria-haspopup="true"
-														aria-expanded="false">
-														<i class="fas fa-ellipsis-v size-24 color-gray"></i>
-													</button>
-													<ul class="dropdown-menu" role="menu"
-														aria-labelledby="articleEdit">
+							<input type="hidden" class="col-no" data-no="${dto.tim_no }">
+							<input type="hidden" class="col-kind"
+								data-kind="${dto.cont_kind }"> <input type="hidden"
+								class="col-kindno" data-kindno="${dto.cont_no }"> <input
+								type="hidden" class="col-prono" data-prono="${dto.pro_no }">
+							<input type="hidden" class="col-memno"
+								data-memno="${dto.mem_no }">
+							<!-- timeline header:s -->
+							<div class="timeline-header back-color-white">
+								<!-- article writer info -->
+								<div class="article-writer-info">
+									<dl>
+										<dt class="posi-re maright-15 cursor-point"
+											onclick="fn_openPopup(this)" data-id="${timeLine.mem_id }"
+											data-nick="${timeLine.mem_no }" data-my="${memVo.mem_id }">
+											<i class="flow-icon icon-circle circle-s"></i> <img
+												src="/chord/resources/img/user-pic-sample.png" width="40">
+										</dt>
+										<dd>
+											<strong class="dis-block size-18 color-black">작성자 :
+												${dto.mem_no }</strong> <span class="dis-block size-14 color-gray-l">
+												작성시간 ${dto.tim_date } </span>
+										</dd>
+									</dl>
+								</div>
+								<!-- article icon : s -->
+								<ul class="article-top-icon">
+									<c:if test="${proUserDTO.pro_user_man_chk =='manager'}">
+										<!-- article pick button -->
+										<li><a href="#fixCheck" class="pick-check-btn"> <c:choose>
+													<c:when test="${ProUserDTO.pro_user_man_chk == 'manager' }">
+														<i class="fas fa-map-pin size-24 cursor-point pick-active"></i>
+													</c:when>
+													<c:otherwise>
+														<i class="fas fa-map-pin size-24 cursor-point"></i>
+													</c:otherwise>
+												</c:choose>
+										</a></li>
+									</c:if>
+									<!-- article edit : s -->
+									<c:if test="${proUserDTO.mem_no == dto.mem_no }">
+										<li class="posi-re float-left">
+											<button id="articleEdit" type="button" data-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false">
+												<i class="fas fa-ellipsis-v size-24 color-gray"></i>
+											</button>
+											<ul class="dropdown-menu" role="menu"
+												aria-labelledby="articleEdit">
 
-														<li class="cursor-point" onclick="fn_editArticle(this)">글
-															수정</li>
-														<li class="cursor-point timeline-delete-btn">글 삭제</li>
-													</ul>
-												</li>
-											</c:if>
-											<!--  article edit : f -->
-										</ul>
-										<!-- article icon : f -->
-									</div>
-									<!-- timeline header:f -->
-									<div class="timeline-content">
+												<li class="cursor-point" onclick="fn_editArticle(this)">글
+													수정</li>
+												<li class="cursor-point timeline-delete-btn">글 삭제</li>
+											</ul>
+										</li>
+									</c:if>
+									<!--  article edit : f -->
+								</ul>
+								<!-- article icon : f -->
+							</div>
+							<!-- timeline header:f -->
+							<div class="timeline-content">
 
-										<c:choose>
-											<c:when test="${dto.cont_kind eq 'post' }">
-												<!-- 기본글 : start -->
-												<div class="timeline-article con-article">
-													<!-- 내용:s -->
-													<div class="article-txt">
-														<pre>${dto.tim_cont}</pre>
-													</div>
-													<!-- 내용:f -->
+								<c:choose>
+									<c:when test="${dto.cont_kind eq 'post' }">
+										<!-- 기본글 : start -->
+										<div class="timeline-article con-article">
+											<!-- 내용:s -->
+											<div class="article-txt">
+												<pre>${dto.tim_cont}</pre>
+											</div>
+											<!-- 내용:f -->
 
-													<!-- 이미지:s -->
-													<div class="article-img martop-20">
+											<!-- 이미지:s -->
+											<div class="article-img martop-20">
 
-														<div class="swiper-container-img">
-															<div class="swiper-wrapper">
-																<!-- 
+												<div class="swiper-container-img">
+													<div class="swiper-wrapper">
+														<!-- 
 																<c:forEach items="${timeLine.filesList }" var="filesVo">
 																<c:if test="${filesVo.files_kind == 'img' }">
 														<div class="swiper-slide img-con"
 															style="background-image:url('/files/view?files_no=${filesVo.files_no}')"></div>
 														 	</c:if>
 															</c:forEach>-->
-															</div>
-															Add Arrows
-															<div class="swiper-button-next"></div>
-															<div class="swiper-button-prev"></div>
-														</div>
-
 													</div>
-													<!-- 이미지:f -->
-
-													<!-- 파일리스트:s -->
-													<div class="article-file float-left" style="width: 100%;">
-														<!-- 
-													<c:forEach items="${timeLine.filesList }" var="filesVo">
-														<c:if test="${filesVo.files_kind == 'fil' }">-->
-														<div class="upload-file-info float-left martop-20">
-															<dl>
-																<dt>
-																	<i class="dis-inblock file-icon"
-																		data-name="${filesVo.files_name }"></i>
-																</dt>
-																<dd>
-																	<span class="dis-block size-18 color-black">${filesVo.files_name }</span>
-																	<span class="dis-block martop-5 size-14 color-gray">${filesVo.files_size }</span>
-																</dd>
-															</dl>
-															<a href="/files/download?files_no=${filesVo.files_no }"
-																class="file-down-btn"><i
-																class="fas fa-download maright-10"></i> 다운로드</a>
-														</div>
-														<!-- </c:if>
-													</c:forEach>-->
-
-													</div>
-													<!-- 파일리스트:f -->
+													Add Arrows
+													<div class="swiper-button-next"></div>
+													<div class="swiper-button-prev"></div>
 												</div>
 
+											</div>
+											<!-- 이미지:f -->
 
-												<!-- 일반 게시글 수정:s -->
-												<form action="updateTim.do" method="post"
-													class="article-edit-form" enctype="multipart/form-data">
-													<input type="hidden" name="tim_no" value="${dto.tim_no }">
-													<input type="hidden" name="pro_no" value="${dto.pro_no }">
-													<!-- article edit box:s -->
-													<div class="article-edit-box">
-														<textarea rows="5" cols="50" placeholder="글을 작성하세요."
-															name="tim_cont" onkeyup="autoTextarea(this, 120, 500)"
-															required="required">${dto.tim_cont}</textarea>
+											<!-- 파일리스트:s -->
+											<div class="article-file float-left" style="width: 100%;">
+												<!-- 
+													<c:forEach items="${timeLine.filesList }" var="filesVo">
+														<c:if test="${filesVo.files_kind == 'fil' }">-->
+												<div class="upload-file-info float-left martop-20">
+													<dl>
+														<dt>
+															<i class="dis-inblock file-icon"
+																data-name="${filesVo.files_name }"></i>
+														</dt>
+														<dd>
+															<span class="dis-block size-18 color-black">${filesVo.files_name }</span>
+															<span class="dis-block martop-5 size-14 color-gray">${filesVo.files_size }</span>
+														</dd>
+													</dl>
+													<a href="/files/download?files_no=${filesVo.files_no }"
+														class="file-down-btn"><i
+														class="fas fa-download maright-10"></i> 다운로드</a>
+												</div>
+												<!-- </c:if>
+													</c:forEach>-->
 
-														<!-- 이미지 목록이 나올부분 -->
-														<div class="upload-img-list">
-															<!-- <c:forEach items="${timeLine.filesList }" var="filesVo">
+											</div>
+											<!-- 파일리스트:f -->
+										</div>
+
+
+										<!-- 일반 게시글 수정:s -->
+										<form action="updateTim.do" method="post"
+											class="article-edit-form" enctype="multipart/form-data">
+											<input type="hidden" name="tim_no" value="${dto.tim_no }">
+											<input type="hidden" name="pro_no" value="${dto.pro_no }">
+											<!-- article edit box:s -->
+											<div class="article-edit-box">
+												<textarea rows="5" cols="50" placeholder="글을 작성하세요."
+													name="tim_cont" onkeyup="autoTextarea(this, 120, 500)"
+													required="required">${dto.tim_cont}</textarea>
+
+												<!-- 이미지 목록이 나올부분 -->
+												<div class="upload-img-list">
+													<!-- <c:forEach items="${timeLine.filesList }" var="filesVo">
 															<c:if test="${filesVo.files_kind == 'img' }"> -->
-															<div class="upload-img-info martop-20"
-																data-no="${filesVo.files_no }">
-																<div class="upload-img"
-																	style="background-image:url('/files/view?files_no=${filesVo.files_no}')"></div>
-																<i class="fas fa-times-circle img-close-btn"
-																	onclick="fileDelete(this)"></i>
-															</div>
-															<!--</c:if>
+													<div class="upload-img-info martop-20"
+														data-no="${filesVo.files_no }">
+														<div class="upload-img"
+															style="background-image:url('/files/view?files_no=${filesVo.files_no}')"></div>
+														<i class="fas fa-times-circle img-close-btn"
+															onclick="fileDelete(this)"></i>
+													</div>
+													<!--</c:if>
 														</c:forEach>-->
-														</div>
-														-->
-														<!-- 첨부파일 목록이 나올부분  -->
-														<div class="upload-file-list">
-															<!-- <c:forEach items="${timeLine.filesList }" var="filesVo">
+												</div>
+												-->
+												<!-- 첨부파일 목록이 나올부분  -->
+												<div class="upload-file-list">
+													<!-- <c:forEach items="${timeLine.filesList }" var="filesVo">
 															<c:if test="${filesVo.files_kind == 'fil' }"> -->
-															<div class="upload-file-info martop-20"
-																data-no="${filesVo.files_no }">
-																<dl>
-																	<dt>
-																		<i class="dis-inblock file-icon"
-																			data-name="${filesVo.files_name }"></i>
-																	</dt>
-																	<dd>
-																		<span class="dis-block size-18 color-black">파일이름</span>
-																		<span class="dis-block martop-5 size-14 color-gray">파일크기</span>
-																	</dd>
-																</dl>
-																<i class="far fa-times-circle file-close-btn"
-																	onclick="fileDelete(this)"></i>
-															</div>
-															<!--</c:if>
-														</c:forEach>-->
-														</div>
-
-													</div>
-
-													<!-- article edit box:f -->
-
-													<!-- article edit dn:s -->
-													<div class="article-edit-dn">
-														<!-- 파일첨부 -->
-														<label for="articleEditFile_b${dto.tim_no }"
-															class="float-left maright-20 marbtm-0 font-thin size-18">
-															<i class="fas fa-paperclip maright-10"></i>파일첨부
-														</label> <input type="file" name="articleFile"
-															id="articleEditFile_b${dto.tim_no }" class="dis-none">
-
-														<!-- 이미지첨부 -->
-														<label for="articleEditImg_b${dto.tim_no }"
-															class="float-left marbtm-0 font-thin size-18"> <i
-															class="fas fa-camera maright-10"></i>이미지첨부
-														</label> <input type="file" name="imageFile"
-															id="articleEditImg_b${dto.tim_no }" class="dis-none"
-															accept="image/*">
-
-														<!-- submit & cancel 버튼 -->
-														<input type="submit" value="수정하기"
-															class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
-														<input type="button" value="취소"
-															onclick="fn_editCancel(this)"
-															class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
-															style="border: 1px solid #ddd">
-													</div>
-													<!-- article edit dn:f -->
-												</form>
-												<!-- 일반 게시글 수정:f -->
-												<!-- 기본글 : finsh -->
-
-											</c:when>
-											<c:when test="${dto.cont_kind eq 'task' }">
-												<!-- 업무글 : start -->
-												<div class="timeline-article con-task">
-
-													<!-- 업무명:s -->
-													<div class="input-box">
-														<input type="text" class="font-bold size-18"
-															placeholder="업무명을 입력하세요." value="${dto.tim_cont }"
-															readonly>
-													</div>
-													<!-- 업무명:f -->
-
-													<!-- 업무상태:s -->
-													<div class="input-box martop-15">
+													<div class="upload-file-info martop-20"
+														data-no="${filesVo.files_no }">
 														<dl>
-															<dt class="maright-20">
-																<i class="fas fa-user-clock"></i>
+															<dt>
+																<i class="dis-inblock file-icon"
+																	data-name="${filesVo.files_name }"></i>
 															</dt>
 															<dd>
-																<input type="hidden" class="edit-confirm"
-																	data-taskno="${dto.taskDTO.task_no }">
-																<div class="task-state-list">
-
-																	<c:set var="sReq" value="" />
-																	<c:set var="sPro" value="" />
-																	<c:set var="sFee" value="" />
-																	<c:set var="sCom" value="" />
-																	<c:set var="sHol" value="" />
-
-																	<c:choose>
-																		<c:when test="${dto.taskDTO.task_state == '요청' }">
-																			<c:set var="sReq" value="checked" />
-																		</c:when>
-																		<c:when test="${dto.taskDTO.task_state == '진행' }">
-																			<c:set var="sPro" value="checked" />
-																		</c:when>
-																		<c:when test="${dto.taskDTO.task_state == '피드백' }">
-																			<c:set var="sFee" value="checked" />
-																		</c:when>
-																		<c:when test="${dto.taskDTO.task_state == '완료' }">
-																			<c:set var="sCom" value="checked" />
-																		</c:when>
-																		<c:when test="${dto.taskDTO.task_state == '보류' }">
-																			<c:set var="sHol" value="checked" />
-																		</c:when>
-																	</c:choose>
-																	<label class="${sReq }"
-																		onchange="fn_editTaskState(this)"> 요청<input
-																		type="radio" name="edit-task-state" value="요청"
-																		class="dis-none task-re">
-																	</label> <label class="${sPro }"
-																		onchange="fn_editTaskState(this)"> 진행<input
-																		type="radio" name="edit-task-state" value="진행"
-																		class="dis-none task-pr">
-																	</label> <label class="${sFee }"
-																		onchange="fn_editTaskState(this)"> 피드백<input
-																		type="radio" name="edit-task-state" value="피드백"
-																		class="dis-none task-fb">
-																	</label> <label class="${sCom }"
-																		onchange="fn_editTaskState(this)"> 완료<input
-																		type="radio" name="edit-task-state" value="완료"
-																		class="dis-none task-sc">
-																	</label> <label class="${sHol }"
-																		onchange="fn_editTaskState(this)"> 보류<input
-																		type="radio" name="edit-task-state" value="보류"
-																		class="dis-none task-hd">
-																	</label>
-																</div>
-
+																<span class="dis-block size-18 color-black">파일이름</span>
+																<span class="dis-block martop-5 size-14 color-gray">파일크기</span>
 															</dd>
 														</dl>
+														<i class="far fa-times-circle file-close-btn"
+															onclick="fileDelete(this)"></i>
 													</div>
-													<!-- 업무상태:f -->
+													<!--</c:if>
+														</c:forEach>-->
+												</div>
 
-													<!-- 담당자:s -->
-													<div class="input-box martop-15" style="height: inherit">
-														<dl>
-															<dt class="maright-20">
-																<i class="fas fa-user-plus"></i>
-															</dt>
-															<dd class="posi-re">
+											</div>
 
-																<!-- 담당자 리스트 -->
-																<div class="task-user-list">
-																	<c:if test="${dto eq 'null' }">
-																		<p class="mar-0 pad-0">담당자 없음</p>
-																	</c:if>
-																	<%-- <c:forEach items="${dto.tuList }" var="tuVo">
+											<!-- article edit box:f -->
+
+											<!-- article edit dn:s -->
+											<div class="article-edit-dn">
+												<!-- 파일첨부 -->
+												<label for="articleEditFile_b${dto.tim_no }"
+													class="float-left maright-20 marbtm-0 font-thin size-18">
+													<i class="fas fa-paperclip maright-10"></i>파일첨부
+												</label> <input type="file" name="articleFile"
+													id="articleEditFile_b${dto.tim_no }" class="dis-none">
+
+												<!-- 이미지첨부 -->
+												<label for="articleEditImg_b${dto.tim_no }"
+													class="float-left marbtm-0 font-thin size-18"> <i
+													class="fas fa-camera maright-10"></i>이미지첨부
+												</label> <input type="file" name="imageFile"
+													id="articleEditImg_b${dto.tim_no }" class="dis-none"
+													accept="image/*">
+
+												<!-- submit & cancel 버튼 -->
+												<input type="submit" value="수정하기"
+													class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
+												<input type="button" value="취소"
+													onclick="fn_editCancel(this)"
+													class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
+													style="border: 1px solid #ddd">
+											</div>
+											<!-- article edit dn:f -->
+										</form>
+										<!-- 일반 게시글 수정:f -->
+										<!-- 기본글 : finsh -->
+
+									</c:when>
+									<c:when test="${dto.cont_kind eq 'task' }">
+										<!-- 업무글 : start -->
+										<div class="timeline-article con-task">
+
+											<!-- 업무명:s -->
+											<div class="input-box">
+												<input type="text" class="font-bold size-18"
+													placeholder="업무명을 입력하세요." value="${dto.tim_cont }" readonly>
+											</div>
+											<!-- 업무명:f -->
+
+											<!-- 업무상태:s -->
+											<div class="input-box martop-15">
+												<dl>
+													<dt class="maright-20">
+														<i class="fas fa-user-clock"></i>
+													</dt>
+													<dd>
+														<input type="hidden" class="edit-confirm"
+															data-taskno="${dto.taskDTO.task_no }">
+														<div class="task-state-list">
+
+															<c:set var="sReq" value="" />
+															<c:set var="sPro" value="" />
+															<c:set var="sFee" value="" />
+															<c:set var="sCom" value="" />
+															<c:set var="sHol" value="" />
+
+															<c:choose>
+																<c:when test="${dto.taskDTO.task_state == '요청' }">
+																	<c:set var="sReq" value="checked" />
+																</c:when>
+																<c:when test="${dto.taskDTO.task_state == '진행' }">
+																	<c:set var="sPro" value="checked" />
+																</c:when>
+																<c:when test="${dto.taskDTO.task_state == '피드백' }">
+																	<c:set var="sFee" value="checked" />
+																</c:when>
+																<c:when test="${dto.taskDTO.task_state == '완료' }">
+																	<c:set var="sCom" value="checked" />
+																</c:when>
+																<c:when test="${dto.taskDTO.task_state == '보류' }">
+																	<c:set var="sHol" value="checked" />
+																</c:when>
+															</c:choose>
+															<label class="${sReq }" onchange="fn_editTaskState(this)">
+																요청<input type="radio" name="edit-task-state" value="요청"
+																class="dis-none task-re">
+															</label> <label class="${sPro }"
+																onchange="fn_editTaskState(this)"> 진행<input
+																type="radio" name="edit-task-state" value="진행"
+																class="dis-none task-pr">
+															</label> <label class="${sFee }"
+																onchange="fn_editTaskState(this)"> 피드백<input
+																type="radio" name="edit-task-state" value="피드백"
+																class="dis-none task-fb">
+															</label> <label class="${sCom }"
+																onchange="fn_editTaskState(this)"> 완료<input
+																type="radio" name="edit-task-state" value="완료"
+																class="dis-none task-sc">
+															</label> <label class="${sHol }"
+																onchange="fn_editTaskState(this)"> 보류<input
+																type="radio" name="edit-task-state" value="보류"
+																class="dis-none task-hd">
+															</label>
+														</div>
+
+													</dd>
+												</dl>
+											</div>
+											<!-- 업무상태:f -->
+
+											<!-- 담당자:s -->
+											<div class="input-box martop-15" style="height: inherit">
+												<dl>
+													<dt class="maright-20">
+														<i class="fas fa-user-plus"></i>
+													</dt>
+													<dd class="posi-re">
+
+														<!-- 담당자 리스트 -->
+														<div class="task-user-list">
+															<c:if test="${dto eq 'null' }">
+																<p class="mar-0 pad-0">담당자 없음</p>
+															</c:if>
+															<%-- <c:forEach items="${dto.tuList }" var="tuVo">
 						<div class="name-tag">
 							<img src="/mem/pic?mem_id=${tuVo.tu_mem_id }" width="24">
 							<strong class="marleft-10">${tuVo.mem_nick }</strong>
@@ -1100,106 +1122,106 @@
 							<input type="hidden" name="tu_mem_id" value="${tuVo.tu_mem_id }">
 						</div>
 					</c:forEach> --%>
-																</div>
-															</dd>
-														</dl>
-													</div>
-													<!-- 담당자:f -->
+														</div>
+													</dd>
+												</dl>
+											</div>
+											<!-- 담당자:f -->
 
-													<!-- 시작일:s -->
-													<div class="input-box martop-15 add-item-box">
-														<dl>
-															<dt class="maright-20">
-																<i class="flow-icon icon-task icon-sDate"></i>
-															</dt>
-															<dd class="posi-re">
-																<input type="text" placeholder="시작일"
-																	value="${dto.taskDTO.task_start_date }" readonly />
-															</dd>
-														</dl>
-													</div>
-													<!-- 시작일:f -->
+											<!-- 시작일:s -->
+											<div class="input-box martop-15 add-item-box">
+												<dl>
+													<dt class="maright-20">
+														<i class="flow-icon icon-task icon-sDate"></i>
+													</dt>
+													<dd class="posi-re">
+														<input type="text" placeholder="시작일"
+															value="${dto.taskDTO.task_start_date }" readonly />
+													</dd>
+												</dl>
+											</div>
+											<!-- 시작일:f -->
 
-													<!-- 마감일:s -->
-													<div class="input-box martop-15 add-item-box">
-														<dl>
-															<dt class="maright-20">
-																<i class="flow-icon icon-task icon-fDate"></i>
-															</dt>
-															<dd class="posi-re">
-																<input type="text" placeholder="마감일"
-																	value="${dto.taskDTO.task_end_date }" readonly />
-															</dd>
-														</dl>
-													</div>
-													<!-- 마감일:f -->
+											<!-- 마감일:s -->
+											<div class="input-box martop-15 add-item-box">
+												<dl>
+													<dt class="maright-20">
+														<i class="flow-icon icon-task icon-fDate"></i>
+													</dt>
+													<dd class="posi-re">
+														<input type="text" placeholder="마감일"
+															value="${dto.taskDTO.task_end_date }" readonly />
+													</dd>
+												</dl>
+											</div>
+											<!-- 마감일:f -->
 
-													<!-- 우선순위:s -->
-													<div class="input-box martop-15 add-item-box">
-														<dl>
-															<dt class="maright-20">
-																<i class="fas fa-flag"></i>
-															</dt>
-															<dd class="posi-re">
-																<span class="task-rank"> <c:choose>
-																		<c:when test="${dto.taskDTO.task_priority == null}">
-																			<p class="mar-0 pad-0 color-gray">우선순위</p>
-																		</c:when>
-																		<c:otherwise>
-																			<c:choose>
-																				<c:when test="${dto.taskDTO.task_priority == '낮음'}">
-																					<i class="flow-icon rank-icon icon-low"></i>${dto.taskDTO.task_priority }
+											<!-- 우선순위:s -->
+											<div class="input-box martop-15 add-item-box">
+												<dl>
+													<dt class="maright-20">
+														<i class="fas fa-flag"></i>
+													</dt>
+													<dd class="posi-re">
+														<span class="task-rank"> <c:choose>
+																<c:when test="${dto.taskDTO.task_priority == null}">
+																	<p class="mar-0 pad-0 color-gray">우선순위</p>
+																</c:when>
+																<c:otherwise>
+																	<c:choose>
+																		<c:when test="${dto.taskDTO.task_priority == '낮음'}">
+																			<i class="flow-icon rank-icon icon-low"></i>${dto.taskDTO.task_priority }
 								</c:when>
-																				<c:when test="${dto.taskDTO.task_priority == '보통'}">
-																					<i class="flow-icon rank-icon icon-basic"></i>${dto.taskDTO.task_priority }
+																		<c:when test="${dto.taskDTO.task_priority == '보통'}">
+																			<i class="flow-icon rank-icon icon-basic"></i>${dto.taskDTO.task_priority }
 								</c:when>
-																				<c:when test="${dto.taskDTO.task_priority == '높음'}">
-																					<i class="flow-icon rank-icon icon-high"></i>${dto.taskDTO.task_priority }
+																		<c:when test="${dto.taskDTO.task_priority == '높음'}">
+																			<i class="flow-icon rank-icon icon-high"></i>${dto.taskDTO.task_priority }
 								</c:when>
-																				<c:when test="${dto.taskDTO.task_priority == '긴급'}">
-																					<i class="flow-icon rank-icon icon-emer"></i>${dto.taskDTO.task_priority }
+																		<c:when test="${dto.taskDTO.task_priority == '긴급'}">
+																			<i class="flow-icon rank-icon icon-emer"></i>${dto.taskDTO.task_priority }
 								</c:when>
-																			</c:choose>
-																		</c:otherwise>
 																	</c:choose>
-																</span>
-															</dd>
-														</dl>
-													</div>
-													<!-- 우선순위:f -->
+																</c:otherwise>
+															</c:choose>
+														</span>
+													</dd>
+												</dl>
+											</div>
+											<!-- 우선순위:f -->
 
-													<button type="button" class="add-item-btn"
-														onclick="fn_addItem(this)">
-														<i class="fas fa-angle-down maright-10"></i> 추가 항목 입력
-													</button>
+											<button type="button" class="add-item-btn"
+												onclick="fn_addItem(this)">
+												<i class="fas fa-angle-down maright-10"></i> 추가 항목 입력
+											</button>
 
-													<!-- 내용:s -->
-													<div class="article-txt martop-50">
-														<pre>${dto.taskDTO.task_content }</pre>
-													</div>
-													<!-- 내용:f -->
+											<!-- 내용:s -->
+											<div class="article-txt martop-50">
+												<pre>${dto.taskDTO.task_content }</pre>
+											</div>
+											<!-- 내용:f -->
 
-													<!-- 이미지:s -->
-													<div class="article-img martop-20">
-														<div class="swiper-container-img">
-															<div class="swiper-wrapper">
-																<%-- <c:forEach items="${dto.filesList }" var="filesVo"> 
+											<!-- 이미지:s -->
+											<div class="article-img martop-20">
+												<div class="swiper-container-img">
+													<div class="swiper-wrapper">
+														<%-- <c:forEach items="${dto.filesList }" var="filesVo"> 
 					<c:if test="${filesVo.files_kind == 'img' }">
 						<div class="swiper-slide img-con" style="background-image:url('/files/view?files_no=${filesVo.files_no}')"></div>
 					</c:if>
 				</c:forEach>
 				--%>
-															</div>
-															<!-- Add Arrows -->
-															<div class="swiper-button-next"></div>
-															<div class="swiper-button-prev"></div>
-														</div>
 													</div>
-													<!-- 이미지:f -->
+													<!-- Add Arrows -->
+													<div class="swiper-button-next"></div>
+													<div class="swiper-button-prev"></div>
+												</div>
+											</div>
+											<!-- 이미지:f -->
 
-													<!-- 파일리스트:s -->
-													<div class="article-file martop-20">
-														<%-- <c:forEach items="${dto.filesList }" var="filesVo">
+											<!-- 파일리스트:s -->
+											<div class="article-file martop-20">
+												<%-- <c:forEach items="${dto.filesList }" var="filesVo">
 			<c:if test="${filesVo.files_kind == 'fil' }">
 				<div class="upload-file-info float-left martop-20">
 					<dl>
@@ -1215,88 +1237,88 @@
 				</div>
 			</c:if>
 		</c:forEach> --%>
-													</div>
-													<!-- 파일리스트:f -->
+											</div>
+											<!-- 파일리스트:f -->
 
+										</div>
+
+										<!-- 업무 수정:s -->
+										<form action="taskUpdate.do" method="post"
+											enctype="multipart/form-data" class="article-edit-form">
+
+											<input type="hidden" name="task_no"
+												value="${dto.taskDTO.task_no }">
+
+											<!-- article edit box:s -->
+											<div class="article-edit-box con-task">
+
+												<!-- 업무명:s -->
+												<div class="input-box">
+													<input type="text" name="task_title"
+														class="font-bold size-18" placeholder="업무명을 입력하세요."
+														value="${dto.tim_cont }">
 												</div>
+												<!-- 업무명:f -->
 
-												<!-- 업무 수정:s -->
-												<form action="taskUpdate.do" method="post"
-													enctype="multipart/form-data" class="article-edit-form">
+												<!-- 업무상태:s -->
+												<div class="input-box martop-15">
+													<dl>
+														<dt class="maright-20">
+															<i class="fas fa-user-clock"></i>
+														</dt>
+														<dd>
+															<div class="task-state-list">
+																<label class="${sReq }"
+																	onchange="fn_checkTaskState(this)"> 요청<input
+																	type="radio" name="task_state" value="요청"
+																	class="dis-none">
+																</label> <label class="${sPro }"
+																	onchange="fn_checkTaskState(this)"> 진행<input
+																	type="radio" name="task_state" value="진행"
+																	class="dis-none">
+																</label> <label class="${sFee }"
+																	onchange="fn_checkTaskState(this)"> 피드백<input
+																	type="radio" name="task_state" value="피드백"
+																	class="dis-none">
+																</label> <label class="${sCom }"
+																	onchange="fn_checkTaskState(this)"> 완료<input
+																	type="radio" name="task_state" value="완료"
+																	class="dis-none">
+																</label> <label class="${sHol }"
+																	onchange="fn_checkTaskState(this)"> 보류<input
+																	type="radio" name="task_state" value="보류"
+																	class="dis-none">
+																</label>
+															</div>
+														</dd>
+													</dl>
+												</div>
+												<!-- 업무상태:f -->
 
-													<input type="hidden" name="task_no"
-														value="${dto.taskDTO.task_no }">
+												<!-- 담당자:s -->
+												<div class="input-box martop-15" style="height: inherit">
+													<dl>
+														<dt class="maright-20">
+															<i class="fas fa-user-plus"></i>
+														</dt>
+														<dd class="posi-re">
+															<input type="text" id="taskUser" placeholder="담당자 추가"
+																onfocus="fn_taskManagerFocus(this)">
 
-													<!-- article edit box:s -->
-													<div class="article-edit-box con-task">
-
-														<!-- 업무명:s -->
-														<div class="input-box">
-															<input type="text" name="task_title"
-																class="font-bold size-18" placeholder="업무명을 입력하세요."
-																value="${dto.tim_cont }">
-														</div>
-														<!-- 업무명:f -->
-
-														<!-- 업무상태:s -->
-														<div class="input-box martop-15">
-															<dl>
-																<dt class="maright-20">
-																	<i class="fas fa-user-clock"></i>
-																</dt>
-																<dd>
-																	<div class="task-state-list">
-																		<label class="${sReq }"
-																			onchange="fn_checkTaskState(this)"> 요청<input
-																			type="radio" name="task_state" value="요청"
-																			class="dis-none">
-																		</label> <label class="${sPro }"
-																			onchange="fn_checkTaskState(this)"> 진행<input
-																			type="radio" name="task_state" value="진행"
-																			class="dis-none">
-																		</label> <label class="${sFee }"
-																			onchange="fn_checkTaskState(this)"> 피드백<input
-																			type="radio" name="task_state" value="피드백"
-																			class="dis-none">
-																		</label> <label class="${sCom }"
-																			onchange="fn_checkTaskState(this)"> 완료<input
-																			type="radio" name="task_state" value="완료"
-																			class="dis-none">
-																		</label> <label class="${sHol }"
-																			onchange="fn_checkTaskState(this)"> 보류<input
-																			type="radio" name="task_state" value="보류"
-																			class="dis-none">
-																		</label>
-																	</div>
-																</dd>
-															</dl>
-														</div>
-														<!-- 업무상태:f -->
-
-														<!-- 담당자:s -->
-														<div class="input-box martop-15" style="height: inherit">
-															<dl>
-																<dt class="maright-20">
-																	<i class="fas fa-user-plus"></i>
-																</dt>
-																<dd class="posi-re">
-																	<input type="text" id="taskUser" placeholder="담당자 추가"
-																		onfocus="fn_taskManagerFocus(this)">
-
-																	<!-- 담당자 리스트 -->
-																	<div class="task-user-list">
-																		<%-- <c:forEach items="${dto.tuList }" var="tuVo">
+															<!-- 담당자 리스트 -->
+															<div class="task-user-list">
+																<%-- <c:forEach items="${dto.tuList }" var="tuVo">
 							<div class="name-tag">
 								<img src="/mem/pic?mem_id=${tuVo.tu_mem_id }" width="24">
 								<strong class="marleft-10">${tuVo.mem_nick }</strong>
 								<i class="fas fa-times-circle marleft-15" data-no="${tuVo.task_user_no }" onclick="fn_taskUserDelete(this)"></i>
 							</div>
 						</c:forEach> --%>
-																	</div>
+															</div>
 
-																	<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
-																	<div class="pro-user-list">
-																		<%-- <c:forEach items="${proUserList }" var="proUserVo">
+															<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
+															<div class="pro-user-list">
+																<%-- <c:forEach items="${proUserList }" var="proUserVo">
 							<div class="pro-user-info" onclick="fn_taskManagerSelect(this)">
 								<div class="pro-user-photo maright-10">
 									<i class="icon-circle circle-s"></i>
@@ -1305,104 +1327,104 @@
 								<span class="user-id" data-id="${proUserVo.mem_id }">${proUserVo.mem_nick }</span>
 							</div>						
 						</c:forEach> --%>
-																	</div>
-																	<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):f -->
-																</dd>
-															</dl>
-														</div>
-														<!-- 담당자:f -->
+															</div>
+															<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):f -->
+														</dd>
+													</dl>
+												</div>
+												<!-- 담당자:f -->
 
-														<!-- 시작일:s -->
-														<div class="input-box martop-15 add-item-box">
-															<dl>
-																<dt class="maright-20">
-																	<i class="flow-icon icon-task icon-sDate"></i>
-																</dt>
-																<dd class="posi-re">
-																	<input type="text" name="task_start_date"
-																		placeholder="시작일설정" data-language='ko'
-																		class="datepicker-here"
-																		value="${dto.taskDTO.task_start_date }" /> <i
-																		class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
-																		onclick="fn_dateReset(this)"></i>
-																</dd>
-															</dl>
-														</div>
-														<!-- 시작일:f -->
+												<!-- 시작일:s -->
+												<div class="input-box martop-15 add-item-box">
+													<dl>
+														<dt class="maright-20">
+															<i class="flow-icon icon-task icon-sDate"></i>
+														</dt>
+														<dd class="posi-re">
+															<input type="text" name="task_start_date"
+																placeholder="시작일설정" data-language='ko'
+																class="datepicker-here"
+																value="${dto.taskDTO.task_start_date }" /> <i
+																class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
+																onclick="fn_dateReset(this)"></i>
+														</dd>
+													</dl>
+												</div>
+												<!-- 시작일:f -->
 
-														<!-- 마감일:s -->
-														<div class="input-box martop-15 add-item-box">
-															<dl>
-																<dt class="maright-20">
-																	<i class="flow-icon icon-task icon-fDate"></i>
-																</dt>
-																<dd class="posi-re">
-																	<input type="text" name="task_end_date"
-																		placeholder="마감일설정" data-language='ko'
-																		class="datepicker-here"
-																		value="${dto.taskDTO.task_end_date }" /> <i
-																		class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
-																		onclick="fn_dateReset(this)"></i>
-																</dd>
-															</dl>
-														</div>
-														<!-- 마감일:f -->
+												<!-- 마감일:s -->
+												<div class="input-box martop-15 add-item-box">
+													<dl>
+														<dt class="maright-20">
+															<i class="flow-icon icon-task icon-fDate"></i>
+														</dt>
+														<dd class="posi-re">
+															<input type="text" name="task_end_date"
+																placeholder="마감일설정" data-language='ko'
+																class="datepicker-here"
+																value="${dto.taskDTO.task_end_date }" /> <i
+																class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
+																onclick="fn_dateReset(this)"></i>
+														</dd>
+													</dl>
+												</div>
+												<!-- 마감일:f -->
 
-														<!-- 우선순위:s -->
-														<div class="input-box martop-15 add-item-box">
-															<dl>
-																<dt class="maright-20">
-																	<i class="fas fa-flag"></i>
-																</dt>
-																<dd class="posi-re">
-																	<c:choose>
-																		<c:when test="${dto.taskDTO.task_priority == null }">
-																			<input type="text" name="task_priority"
-																				class="task-rank-input" placeholder="우선순위 선택"
-																				onfocus="fn_taskRankFocus(this)" readonly>
-																			<span class="task-rank"
-																				onclick="fn_taskRankClick(this)"> </span>
-																		</c:when>
-																		<c:otherwise>
-																			<input type="text" name="task_priority"
-																				class="task-rank-input" style="display: none"
-																				placeholder="우선순위 선택"
-																				onfocus="fn_taskRankFocus(this)" readonly>
-																			<span class="task-rank"
-																				onclick="fn_taskRankClick(this)"> <i
-																				class="flow-icon rank-icon icon-low"></i>${dto.taskDTO.task_priority }
-																			</span>
-																		</c:otherwise>
-																	</c:choose>
+												<!-- 우선순위:s -->
+												<div class="input-box martop-15 add-item-box">
+													<dl>
+														<dt class="maright-20">
+															<i class="fas fa-flag"></i>
+														</dt>
+														<dd class="posi-re">
+															<c:choose>
+																<c:when test="${dto.taskDTO.task_priority == null }">
+																	<input type="text" name="task_priority"
+																		class="task-rank-input" placeholder="우선순위 선택"
+																		onfocus="fn_taskRankFocus(this)" readonly>
+																	<span class="task-rank"
+																		onclick="fn_taskRankClick(this)"> </span>
+																</c:when>
+																<c:otherwise>
+																	<input type="text" name="task_priority"
+																		class="task-rank-input" style="display: none"
+																		placeholder="우선순위 선택" onfocus="fn_taskRankFocus(this)"
+																		readonly>
+																	<span class="task-rank"
+																		onclick="fn_taskRankClick(this)"> <i
+																		class="flow-icon rank-icon icon-low"></i>${dto.taskDTO.task_priority }
+																	</span>
+																</c:otherwise>
+															</c:choose>
 
-																	<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
-																	<ul class="task-rank-list">
-																		<li onclick="fn_taskRankSelect(this)"><i
-																			class="flow-icon rank-icon icon-low"></i>낮음</li>
-																		<li onclick="fn_taskRankSelect(this)"><i
-																			class="flow-icon rank-icon icon-basic"></i>보통</li>
-																		<li onclick="fn_taskRankSelect(this)"><i
-																			class="flow-icon rank-icon icon-high"></i>높음</li>
-																		<li onclick="fn_taskRankSelect(this)"><i
-																			class="flow-icon rank-icon icon-emer"></i>긴급</li>
-																	</ul>
-																</dd>
-															</dl>
-														</div>
-														<!-- 우선순위:f -->
+															<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
+															<ul class="task-rank-list">
+																<li onclick="fn_taskRankSelect(this)"><i
+																	class="flow-icon rank-icon icon-low"></i>낮음</li>
+																<li onclick="fn_taskRankSelect(this)"><i
+																	class="flow-icon rank-icon icon-basic"></i>보통</li>
+																<li onclick="fn_taskRankSelect(this)"><i
+																	class="flow-icon rank-icon icon-high"></i>높음</li>
+																<li onclick="fn_taskRankSelect(this)"><i
+																	class="flow-icon rank-icon icon-emer"></i>긴급</li>
+															</ul>
+														</dd>
+													</dl>
+												</div>
+												<!-- 우선순위:f -->
 
-														<button type="button" class="add-item-btn"
-															onclick="fn_addItem(this)">
-															<i class="fas fa-angle-down maright-10"></i> 추가 항목 입력
-														</button>
+												<button type="button" class="add-item-btn"
+													onclick="fn_addItem(this)">
+													<i class="fas fa-angle-down maright-10"></i> 추가 항목 입력
+												</button>
 
-														<textarea rows="5" name="task_cont" cols="50"
-															placeholder="글을 작성하세요." class="martop-30"
-															onkeyup="autoTextarea(this, 120, 500)">${dto.taskDTO.task_content }</textarea>
+												<textarea rows="5" name="task_cont" cols="50"
+													placeholder="글을 작성하세요." class="martop-30"
+													onkeyup="autoTextarea(this, 120, 500)">${dto.taskDTO.task_content }</textarea>
 
-														<!-- 이미지 목록이 나올부분 -->
-														<div class="upload-img-list">
-															<%-- <c:forEach items="${dto.filesList }" var="filesVo">
+												<!-- 이미지 목록이 나올부분 -->
+												<div class="upload-img-list">
+													<%-- <c:forEach items="${dto.filesList }" var="filesVo">
 				<c:if test="${filesVo.files_kind == 'img' }">
 					<div class="upload-img-info martop-20" data-no="${filesVo.files_no }">
 						<div class="upload-img" style="background-image:url('/files/view?files_no=${filesVo.files_no}')"></div>
@@ -1410,11 +1432,11 @@
 					</div>
 				</c:if>
 			</c:forEach> --%>
-														</div>
+												</div>
 
-														<!-- 첨부파일 목록이 나올부분 -->
-														<div class="upload-file-list">
-															<%-- <c:forEach items="${dto.filesList }" var="filesVo">
+												<!-- 첨부파일 목록이 나올부분 -->
+												<div class="upload-file-list">
+													<%-- <c:forEach items="${dto.filesList }" var="filesVo">
 				<c:if test="${filesVo.files_kind == 'fil' }">
 					<div class="upload-file-info martop-20" data-no="${filesVo.files_no }">
 						<dl>
@@ -1430,177 +1452,207 @@
 					</div>
 				</c:if>
 			</c:forEach> --%>
-														</div>
-
-													</div>
-													<!-- article edit box:f -->
-
-													<!-- article eidt dn:s -->
-													<div class="article-edit-dn">
-														<!-- 파일첨부 -->
-														<label for="articleEditFile_t${dto.tim_no }"
-															class="float-left maright-20 marbtm-0 font-thin size-18">
-															<i class="fas fa-paperclip maright-10"></i>파일첨부
-														</label> <input type="file" name="articleFile"
-															id="articleEditFile_t${dto.taskDTO.task_no }"
-															class="dis-none" onchange="fileUpload(this)">
-
-														<!-- 이미지첨부 -->
-														<label for="articleEditImg_t${dto.taskDTO.task_no }"
-															class="float-left marbtm-0 font-thin size-18"> <i
-															class="fas fa-camera maright-10"></i>이미지첨부
-														</label> <input type="file" name="imageFile"
-															id="articleEditImg_t${dto.taskDTO.task_no }"
-															class="dis-none" onchange="imgUpload(this)"
-															accept="image/*">
-
-														<!-- submit & cancel 버튼 -->
-														<input type="submit" value="수정하기"
-															class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
-														<input type="button" value="취소"
-															onclick="fn_editCancel(this)"
-															class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
-															style="border: 1px solid #ddd">
-													</div>
-													<!-- article eidt dn:f -->
-												</form>
-												<!-- 업무 수정:f -->
-
-
-												<!-- 업무글 : finsh -->
-											</c:when>
-											<c:when test="${dto.cont_kind eq 'schd' }">
-												<!-- 스케쥴글 : start -->
-												<div class="timeline-article con-schedule">
-													<div class="container">
-														<div class="schedule-header">
-															<dl>
-																<dt class="maright-15">
-																	<span class="dis-block font-thin size-20 color-red text-center">123월</span>
-																	<strong class="dis-block font-bold size-40 color-black text-center">123</strong>
-																</dt>
-																<dd class="font-bold size-20 color-black">${timeLine.schdVo.schd_title }123</dd>
-																<dd class="martop-10 font-bold size-16 color-black">${timeLine.schdVo.schd_start_time }
-																	- ${timeLine.schdVo.schd_end_time }123-123</dd>
-															</dl>
-														</div>
-
-														<!-- 위치 검색:s -->
-														<c:choose>
-															<c:when test="${timeLine.schdVo.schd_loc != null }">
-																<div class="input-box">
-																	<dl>
-																		<dt class="maright-20">
-																			<i class="fas fa-map-marker-alt"></i>
-																		</dt>
-																		<dd>
-																			<div class="dis-block marbtm-15">${timeLine.schdVo.schd_loc }123<a
-																					href="https://maps.google.com?q=${timeLine.schdVo.schd_loc }"
-																					target="google_blank" class="marleft-15">지도보기</a>
-																			</div>
-																			<div id="googleMap" class="dis-block">
-																				<img
-																					src="https://maps.googleapis.com/maps/api/staticmap?center=${timeLine.schdVo.schd_lat },${timeLine.schdVo.schd_lon }&amp;zoom=15&amp;size=800x200&amp;markers=color:red|${timeLine.schdVo.schd_lat },${timeLine.schdVo.schd_lon }&amp;key=AIzaSyAmxDFvVfjjBQ0eWrQ2Pgv8odc0L8rbJU4"
-																					style="height: 100%; width: 100%">
-																			</div>
-																		</dd>
-																	</dl>
-																</div>
-															</c:when>
-														</c:choose>
-														<!-- 위치 검색:f -->
-
-														<!-- 메모:s -->
-														<c:choose>
-															<c:when test="${timeLine.schdVo.schd_memo != null}">
-																<div class="input-box martop-15">
-																	<dl>
-																		<dt class="maright-20">
-																			<i class="fas fa-sticky-note"></i>
-																		</dt>
-																		<dd>${timeLine.schdVo.schd_memo }</dd>
-																	</dl>
-																</div>
-															</c:when>
-														</c:choose>
-														<!-- 메모:f -->
-													</div>
 												</div>
 
+											</div>
+											<!-- article edit box:f -->
 
-												<!-- 일정 수정:s -->
-												<form action="/flowolf/schd/update"
-													class="article-edit-form" method="POST">
-													<input type="hidden" name="schd_no"
-														value="${timeLine.schdVo.schd_no }"> <input
-														type="hidden" name="pro_no" value="${proVo.pro_no }">
+											<!-- article eidt dn:s -->
+											<div class="article-edit-dn">
+												<!-- 파일첨부 -->
+												<label for="articleEditFile_t${dto.tim_no }"
+													class="float-left maright-20 marbtm-0 font-thin size-18">
+													<i class="fas fa-paperclip maright-10"></i>파일첨부
+												</label> <input type="file" name="articleFile"
+													id="articleEditFile_t${dto.taskDTO.task_no }"
+													class="dis-none" onchange="fileUpload(this)">
 
-													<!-- article edit box:s -->
-													<div class="article-edit-box">
+												<!-- 이미지첨부 -->
+												<label for="articleEditImg_t${dto.taskDTO.task_no }"
+													class="float-left marbtm-0 font-thin size-18"> <i
+													class="fas fa-camera maright-10"></i>이미지첨부
+												</label> <input type="file" name="imageFile"
+													id="articleEditImg_t${dto.taskDTO.task_no }"
+													class="dis-none" onchange="imgUpload(this)"
+													accept="image/*">
 
-														<!-- 일정제목:s -->
+												<!-- submit & cancel 버튼 -->
+												<input type="submit" value="수정하기"
+													class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
+												<input type="button" value="취소"
+													onclick="fn_editCancel(this)"
+													class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
+													style="border: 1px solid #ddd">
+											</div>
+											<!-- article eidt dn:f -->
+										</form>
+										<!-- 업무 수정:f -->
+
+
+										<!-- 업무글 : finsh -->
+									</c:when>
+									<c:when test="${dto.cont_kind eq 'schd' }">
+										<!-- 스케쥴글 : start -->
+										<div class="timeline-article con-schedule">
+											<div class="container">
+												<div class="schedule-header">
+													<dl>
+														<dt class="maright-15">
+															<span
+																class="dis-block font-thin size-20 color-red text-center">${fn:substring(dto.schdDTO.time_start_date, 5, 7) }월</span>
+															<strong
+																class="dis-block font-bold size-40 color-black text-center">${fn:substring(dto.schdDTO.time_start_date, 8, 10) }</strong>
+														</dt>
+														<dd class="font-bold size-20 color-black">${dto.schdDTO.tim_cont }</dd>
+														<dd class="martop-10 font-bold size-16 color-black">${schdDto.time_start_date }
+															- ${dto.schdDTO.time_end_date }</dd>
+													</dl>
+												</div>
+
+												<div class="input-box martop-15" style="height: inherit">
+													<dl>
+														<dt class="maright-20">
+															<i class="fas fa-user-plus"></i>
+														</dt>
+														<dd class="posi-re">
+
+															<!-- 담당자 리스트 -->
+															<div class="task-user-list">
+																<c:if test="${dto.schdDTO.participants.size()= 0} ">
+																	<p class="mar-0 pad-0">담당자 없음</p>
+																</c:if>
+																<c:forEach items="${timeLine.tuList }" var="tuVo">
+																	<div class="name-tag">
+																		<img src="/mem/pic?mem_id=${tuVo.tu_mem_id }"
+																			width="24"> <strong class="marleft-10">${tuVo.mem_nick }</strong>
+																		<i class="fas fa-times-circle marleft-15"
+																			style="display: none"></i> <input type="hidden"
+																			name="tu_mem_id" value="${tuVo.tu_mem_id }">
+																	</div>
+																</c:forEach>
+															</div>
+														</dd>
+													</dl>
+												</div>
+
+												<!-- 위치 검색:s -->
+												<c:choose>
+													<c:when test="${dto.schdDTO.schd_loc != null }">
 														<div class="input-box">
-															<input type="text" name="schd_title"
-																class="font-bold size-18"
-																value=" ${timeLine.schdVo.schd_title }"
-																required="required">
-														</div>
-														<!-- 일정제목:f -->
-
-														<!-- 일정 시간 설정:s -->
-														<div class="input-box martop-15">
-															<dl>
-																<dt class="maright-20">
-																	<i class="far fa-clock"></i>
-																</dt>
-																<dd>
-																	<input type="hidden"
-																		value="${timeLine.schdVo.schd_start_time }   -   ${timeLine.schdVo.schd_end_time }"
-																		name="defaultDate"> <input type="text"
-																		<%-- 					placeholder="${timeLine.schdVo.schd_start_time }   -   ${timeLine.schdVo.schd_end_time }" --%>
-					placeholder="${timeLine.schdVo.schd_start_time }   -   ${timeLine.schdVo.schd_end_time }"
-																		data-range="true"
-																		data-multiple-dates-separator="   -   "
-																		class="datepicker-here" id="datetime" name="datetime"
-																		style="width: 100%" />
-																</dd>
-															</dl>
-														</div>
-														<!-- 일정 시간 설정:f -->
-
-														<!-- 위치 검색:f -->
-														<div class="input-box martop-15">
 															<dl>
 																<dt class="maright-20">
 																	<i class="fas fa-map-marker-alt"></i>
 																</dt>
-																<c:choose>
-																	<c:when test="${timeLine.schdVo.schd_loc != null }">
-																		<dd>
-																			<input id="searchInput2" name="schd_loc"
-																				class="controls" type="text"
-																				value="${timeLine.schdVo.schd_loc }"
-																				style="width: 90%">
-																			<div id="map" class="dis-block" style="width: 100%;"></div>
-																			<%-- 							<img src="https://maps.googleapis.com/maps/api/staticmap?center=${timeLine.schdVo.schd_lat },${timeLine.schdVo.schd_lon }&amp;zoom=15&amp;size=630x300&amp;markers=color:red|${timeLine.schdVo.schd_lat },${timeLine.schdVo.schd_lon }&amp;key=AIzaSyADjbtMn46r9DGFyo_ZRz3c6fOXzuOKWCw" style="width:100%; height:100%;"> --%>
-																			<input type="hidden" id="schd_lat2" class="schd_lat2"
-																				name="schd_lat" value="${timeLine.schdVo.schd_lat}">
-																			<input type="hidden" id="schd_lon2" class="schd_lon2"
-																				name="schd_lon" value="${timeLine.schdVo.schd_lon}">
-																		</dd>
-																	</c:when>
-																	<c:otherwise>
-																		<dd>
-																			<input id="searchInput2" name="schd_loc"
-																				class="controls" type="text" style="width: 90%">
-																		</dd>
-																	</c:otherwise>
-																</c:choose>
+																<dd>
+																	<div class="dis-block marbtm-15">${dto.schdDTO.schd_loc }<a
+																			href="https://maps.google.com?q=${dto.schdDTO.schd_loc }"
+																			target="google_blank" class="marleft-15">지도보기</a>
+																	</div>
+																	<div id="map" class="dis-block" style="height: 300px">
+																	</div>
+																</dd>
 															</dl>
 														</div>
+													</c:when>
+												</c:choose>
+												<!-- 위치 검색:f -->
+
+												<!-- 메모:s -->
+												<c:choose>
+													<c:when test="${dto.schdDTO.schd_memo != null}">
+														<div class="input-box martop-15">
+															<dl>
+																<dt class="maright-20">
+																	<i class="fas fa-sticky-note"></i>
+																</dt>
+																<dd>${dto.schdDTO.schd_memo }</dd>
+															</dl>
+														</div>
+													</c:when>
+												</c:choose>
+												<!-- 메모:f -->
+
+												<!-- 알람:s -->
+
+												<div class="input-box martop-15" style="border: 0">
+													<dl>
+														<dt class="maright-20">
+															<i class="fas fa-bell"></i>
+														</dt>
+														<dd>미리알림 없음</dd>
+													</dl>
+												</div>
+												<!-- 알람:f -->
+											</div>
+										</div>
 
 
-														<script>
+										<!-- 일정 수정:s -->
+										<form action="/flowolf/schd/update" class="article-edit-form"
+											method="POST">
+											<input type="hidden" name="schd_no"
+												value="${dto.schdDTO.schd_no }"> <input
+												type="hidden" name="pro_no" value="${proVo.pro_no }">
+											<!-- article edit box:s -->
+											<div class="article-edit-box">
+
+												<!-- 일정제목:s -->
+												<div class="input-box">
+													<input type="text" name="tim_cont"
+														class="font-bold size-18"
+														value=" ${dto.schdDTO.tim_cont }" required="required">
+												</div>
+												<!-- 일정제목:f -->
+
+												<!-- 일정 시간 설정:s -->
+												<div class="input-box martop-15">
+													<dl>
+														<dt class="maright-20">
+															<i class="far fa-clock"></i>
+														</dt>
+														<dd>
+															<input type="hidden"
+																value="${dto.schdDTO.time_start_date }   -   ${dto.schdDTO.time_end_date }"
+																name="defaultDate"> <input type="text"
+																<%-- 					placeholder="${dto.schdDTO.time_start_date }   -   ${dto.schdDTO.time_end_date }" --%>
+					placeholder="${dto.schdDTO.time_start_date }   -   ${dto.schdDTO.time_end_date }"
+																data-range="true"
+																data-multiple-dates-separator="   -   "
+																class="datepicker-here" id="datetime" name="datetime"
+																style="width: 100%" />
+														</dd>
+													</dl>
+												</div>
+												<!-- 일정 시간 설정:f -->
+												<!-- 위치 검색:s -->
+												<!-- 위치 검색:f -->
+												<div class="input-box martop-15">
+													<dl>
+														<dt class="maright-20">
+															<i class="fas fa-map-marker-alt"></i>
+														</dt>
+														<c:choose>
+															<c:when test="${dto.schdDTO.schd_loc != null }">
+																<dd>
+																	<input id="searchInput2" name="schd_loc"
+																		class="controls" type="text"
+																		value="${dto.schdDTO.schd_loc }" style="width: 90%">
+																	<div id="map" class="dis-block" style="width: 100%;"></div>
+																</dd>
+															</c:when>
+															<c:otherwise>
+																<dd>
+																	<input id="searchInput2" name="schd_loc"
+																		class="controls" type="text" style="width: 90%">
+																</dd>
+															</c:otherwise>
+														</c:choose>
+													</dl>
+												</div>
+
+
+
+												<script>
 			$('.datepicker-here').datepicker({
 				timepicker : true,
 				language : 'ko',
@@ -1612,131 +1664,130 @@
 		</script>
 
 
-														<!-- 메모:s -->
-														<div class="input-box martop-15">
-															<dl>
-																<dt class="maright-20">
-																	<i class="fas fa-sticky-note"></i>
-																</dt>
-																<dd>
-																	<c:choose>
-																		<c:when test="${timeLine.schdVo.schd_memo !=null }">
-																			<textarea rows="2" cols="" name="schd_memo">${timeLine.schdVo.schd_memo }</textarea>
-																		</c:when>
-																		<c:otherwise>
-																			<textarea rows="2" cols="" name="schd_memo"></textarea>
-																		</c:otherwise>
-																	</c:choose>
-																</dd>
-															</dl>
-														</div>
-														<!-- 메모:f -->
-													</div>
-													<!-- article edit box:f -->
+												<!-- 메모:s -->
+												<div class="input-box martop-15">
+													<dl>
+														<dt class="maright-20">
+															<i class="fas fa-sticky-note"></i>
+														</dt>
+														<dd>
+															<c:choose>
+																<c:when test="${dto.schdDTO.schd_memo !=null }">
+																	<textarea rows="2" cols="" name="schd_memo">${dto.schdDTO.schd_memo }</textarea>
+																</c:when>
+																<c:otherwise>
+																	<textarea rows="2" cols="" name="schd_memo"></textarea>
+																</c:otherwise>
+															</c:choose>
+														</dd>
+													</dl>
+												</div>
+												<!-- 메모:f -->
 
-													<!-- article edit dn:s -->
-													<div class="article-edit-dn">
-														<!-- submit & cancel 버튼 -->
-														<input type="submit" value="수정하기"
-															class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
-														<input type="button" value="취소"
-															onclick="fn_editCancel(this)"
-															class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
-															style="border: 1px solid #ddd">
-													</div>
-													<!-- article edit dn:f -->
-												</form>
-				</section>
-</body>
-<script
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3F6HUmoF9DMA6KsovfusumiMHCDmjKPg&libraries=places&callback=autoComplete"
-	async defer></script>
-<script type="text/javascript">
-			/*******************************************
-			* Google Map Api
-			* 팀명 : #DEV
-			* 최초작성일 : 2018-10-06
-			* 작성자 : TA(Kim jin young)
-			*******************************************/
+												<!-- 알람:s -->
+												<div class="input-box martop-15">
+													<dl>
+														<dt class="maright-20">
+															<i class="fas fa-bell"></i>
+														</dt>
+														<dd>
+															<select name="alert_time"
+																onchange="getSelectValue(this.form);">
+																<option value="0">없음</option>
+																<option value="10">10분전 미리알림</option>
+																<option value="30">30분전 미리알림</option>
+																<option value="60">1시간전 미리알림</option>
+																<option value="120">2시간전 미리알림</option>
+																<option value="180">3시간전 미리알림</option>
+																<option value="1440">1일전</option>
+																<option value="2880">2일전</option>
+																<option value="10080">7일전</option>
+															</select>
+														</dd>
+													</dl>
+												</div>
+												<!-- 알람:f -->
+											</div>
+											<!-- article edit box:f -->
 
-			function autoComplete() {
-				var map = new google.maps.Map(document.getElementById('map'), {
-					center : {
-						lat : -33.8688,
-						lng : 151.2195
-					},
-					zoom : 13
-				});
-				var input = document.getElementById('searchInput2');
-				map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+											<!-- article edit dn:s -->
+											<div class="article-edit-dn">
+												<!-- submit & cancel 버튼 -->
+												<input type="submit" value="수정하기"
+													class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
+												<input type="button" value="취소"
+													onclick="fn_editCancel(this)"
+													class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
+													style="border: 1px solid #ddd">
+											</div>
+											<!-- article edit dn:f -->
+										</form>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da2da3e53b6d01f803242012ae94fba6&libraries=services"></script>
+<script>
 
-				var autocomplete = new google.maps.places.Autocomplete(input);
-				autocomplete.bindTo('bounds', map);
+var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
-				var infowindow = new google.maps.InfoWindow();
-				var marker = new google.maps.Marker({
-					map : map,
-					anchorPoint : new google.maps.Point(0, -29)
-				});
+	var mapContainer = document.getElementById('mapf'), // 지도를 표시할 div 
+	    mapOption = {
+	        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+	        level: 3 // 지도의 확대 레벨
+	    };  
 
-				autocomplete.addListener('place_changed', function() {
-					infowindow.close();
-					marker.setVisible(false);
-					var place = autocomplete.getPlace();
-					if (!place.geometry) {
-						window.alert("장소를 선택해주세요");
-						return;
-					}
+	// 지도를 생성합니다    
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
 
-					// 지역정보가 있으면 맵에 표시하기
-					if (place.geometry.viewport) {
-						map.fitBounds(place.geometry.viewport);
-					} else {
-						map.setCenter(place.geometry.location);
-						map.setZoom(17);
-					}
-					marker.setIcon(({
-						url : place.icon,
-						size : new google.maps.Size(71, 71),
-						origin : new google.maps.Point(0, 0),
-						anchor : new google.maps.Point(17, 34),
-						scaledSize : new google.maps.Size(35, 35)
-					}));
-					marker.setPosition(place.geometry.location);
-					marker.setVisible(true);
+	// 장소 검색 객체를 생성합니다
+	var ps = new kakao.maps.services.Places(); 
 
-					var address = '';
-					if (place.address_components) {
-						address = [
-							(place.address_components[0]
-									&& place.address_components[0].short_name || ''),
-							(place.address_components[1]
-									&& place.address_components[1].short_name || ''),
-							(place.address_components[2]
-									&& place.address_components[2].short_name || '') ]
-							.join(' ');
-					}
+	// 키워드로 장소를 검색합니다
+	ps.keywordSearch(schd_loc, placesSearchCB); 
 
-					infowindow.setContent('<div><strong>' + place.name
-							+ '</strong><br>' + address);
-					infowindow.open(map, marker);
+	// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+	function placesSearchCB (data, status, pagination) {
+	    if (status === kakao.maps.services.Status.OK) {
 
-					$('#schd_lat2').val(place.geometry.location.lat());
-					$('#schd_lon2').val(place.geometry.location.lng());
-					console.log('위도'+place.geometry.location.lat());
-					console.log('경도'+place.geometry.location.lng());
-				});
-			}
-			</script>
+	        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+	        // LatLngBounds 객체에 좌표를 추가합니다
+	        var bounds = new kakao.maps.LatLngBounds();
+
+	        for (var i=0; i<data.length; i++) {
+	            displayMarker(data[i]);    
+	            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+	        }       
+
+	        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+	        map.setBounds(bounds);
+	    } 
+	}
+
+	// 지도에 마커를 표시하는 함수입니다
+	function displayMarker(place) {
+	    
+	    // 마커를 생성하고 지도에 표시합니다
+	    var marker = new kakao.maps.Marker({
+	        map: map,
+	        position: new kakao.maps.LatLng(place.y, place.x) 
+	    });
+
+	    // 마커에 클릭이벤트를 등록합니다
+	    kakao.maps.event.addListener(marker, 'click', function() {
+	        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+	        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+	        infowindow.open(map, marker);
+	    });
+}
+</script>
+
 <!-- 일정 수정:f -->
 <!-- 스케쥴글 : finsh -->
 </c:when>
-<c:when test="${dto.cont_kind eq 'todo' }">
-	<!-- 할일글 : start -->
-
-
-	<!-- 할일글 : finsh -->
-</c:when>
+		<c:when test="${dto.cont_kind eq 'todo' }">
+			<!-- 할일글 : start -->
+		
+		
+			<!-- 할일글 : finsh -->
+		</c:when>
 </c:choose>
 </div>
 <!-- timeline footer:s -->
@@ -2043,8 +2094,8 @@
 </div>
 <!-- timeline footer:f -->
 
-</div>
 
+</div>
 </c:forEach>
 <!-- 타임라인 : finish -->
 
@@ -2247,7 +2298,6 @@ function fn_collCancel(){
 		});
 	</script>
 
-</div>
 <!-- 프로젝트 참여자 리스트 : f -->
 
 
@@ -2425,7 +2475,7 @@ var ps = new kakao.maps.services.Places();
 
 var text = $('#searchInput').val();
 // 키워드로 장소를 검색합니다
-ps.keywordSearch(text, placesSearchCB); 
+ps.keywordSearch('김포시', placesSearchCB); 
 
 // 키워드 검색 완료 시 호출되는 콜백함수 입니다
 function placesSearchCB (data, status, pagination) {

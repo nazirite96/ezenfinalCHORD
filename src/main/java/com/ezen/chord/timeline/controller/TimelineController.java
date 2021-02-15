@@ -22,6 +22,11 @@ import com.ezen.chord.task.dto.TaskDTO;
 import com.ezen.chord.task.service.TaskService;
 import com.ezen.chord.timeline.dto.TimelineDTO;
 import com.ezen.chord.timeline.service.TimelineService;
+import com.ezen.chord.todo.dto.TodoDTO;
+import com.ezen.chord.todo.service.TodoService;
+import com.ezen.chord.todo_item.dto.MultiTodo;
+import com.ezen.chord.todo_item.dto.TodoItemDTO;
+import com.ezen.chord.todo_item.service.TodoItemService;
 
 @Controller
 public class TimelineController {
@@ -34,6 +39,10 @@ public class TimelineController {
 	private TaskService taskService;
 	@Autowired 
 	private SchdService schdService;
+	@Autowired
+	private TodoService todoService;
+	@Autowired
+	private TodoItemService todoItemService;	
 	
 	
 	@RequestMapping("/timeLine.do")
@@ -64,7 +73,10 @@ public class TimelineController {
 				break;
 				
 			case "schd":
-				//list.get(i).setSchdDTO(timService.get);
+				list.get(i).setSchdDTO(schdService.getSchdOne(list.get(i).getCont_no()));
+			case "todo":
+				//
+				break;
 			default:
 				break;
 			}
@@ -220,13 +232,52 @@ public class TimelineController {
 		for(int i = 0 ; i < tu_mem_list.size() ; i++) {
 			System.out.println(tu_mem_list.get(i));
 		}
-		
+		System.out.println(schdService.insertSchd(schdDTO));
+		System.out.println(schdService.insertTime(schdDTO, start, end));
+		System.out.println(schdService.insertTimeLine(schdDTO));
 		
 		
 		
 		
 		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no()+"&mem_no="+mem_no;
 	}
+	
+	
+	@RequestMapping("/timInsertwithTodo.do")
+	public String todoInsert(TimelineDTO timDTO,
+			TodoDTO todoDTO,
+			MultiTodo multiTodo,
+			HttpSession session){
+		
+		int tim_no = timService.getTimSeq();
+		int todo_no = todoService.getTodoSeq();
+		timDTO.setCont_no(todo_no);
+		timDTO.setTim_no(tim_no);
+		
+		
+		todoDTO.setCont_kind("todo");
+		todoDTO.setTodo_no(todo_no);
+		todoDTO.setCont_no(todo_no);
+		todoDTO.setMem_no(timDTO.getMem_no());
+		todoDTO.setPro_no(timDTO.getPro_no());		
+		int result = timService.insertTim(timDTO);
+		System.out.println(result);
+		int insertCnt = todoService.insertTodoService(todoDTO);
+		
+		List<TodoItemDTO> tiList = multiTodo.getTiList();
+		
+		for(TodoItemDTO tiDTO : tiList) {
+			System.out.println(todo_no+"컨트롤러");
+			tiDTO.setTodo_no(todo_no);
+			System.out.println(tiDTO.getTodo_item_content());
+			
+			todoItemService.insertTodoItemService(tiDTO);
+		}
+		
+		
+		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no()+"&mem_no="+timDTO.getMem_no();
+	}
+	
 	
 	
 	
@@ -246,6 +297,9 @@ public class TimelineController {
 		int mem_no = (int)sess.getAttribute("memNo");
 		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no()+"&mem_no="+mem_no;
 	}
+	
+	
+	
 	
 	
 }
