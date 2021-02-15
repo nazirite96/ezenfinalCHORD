@@ -63,8 +63,8 @@ public class TimelineController {
 				list.get(i).setTaskDTO(timService.getTask(list.get(i).getCont_no()));
 				break;
 				
-			case "schd":
-				//list.get(i).setSchdDTO(timService.get);
+			case "schedule":
+				list.get(i).setSchdDTO(schdService.getSchdOne(list.get(i).getCont_no()));
 			default:
 				break;
 			}
@@ -151,6 +151,7 @@ public class TimelineController {
 		taskDTO.setTask_no(task_no);
 		taskDTO.setCont_no(task_no);
 		taskDTO.setTask_title(timDTO.getTim_cont());
+		
 		/*task테이블관련*/
 		int resultTask = taskService.insertTaskService(taskDTO);
 		
@@ -174,58 +175,34 @@ public class TimelineController {
 	}
 	
 	@RequestMapping("/insertTimWithSchd.do")
-	public String insertTimWithSchd(TimelineDTO timDTO ,
-							FilesDTO filesDTO ,
+	public String insertTimWithSchd(
 							SchdDTO schdDTO,
 							@RequestParam(value = "datetime",defaultValue = "")String datetime,
 							@RequestParam("tu_mem_list")List<Integer> tu_mem_list,
 							@RequestParam("articleFile")List<MultipartFile> files,
-							HttpServletRequest request) {
+							@RequestParam(value = "pro_no",defaultValue = "1")int pro_no,
+							@RequestParam(value = "mem_no",defaultValue = "1")int mem_no ) {
 		
-		HttpSession sess=request.getSession();
-		int mem_no = (Integer) sess.getAttribute("memNo");
 		int schd_no = schdService.getSchdSeq();
-		
-		String serv =request.getSession().getServletContext().getRealPath("/");
-		int tim_no = timService.getTimSeq();
-		timDTO.setTim_no(tim_no);
-		timDTO.setCont_no(schd_no);
-		
-		filesDTO.setCont_kind("tim");
-		
-		filesDTO.setCont_no(tim_no);
-		filesDTO.setPro_no(timDTO.getPro_no());
-		filesDTO.getFile();
-		if(files != null) {
-			for(MultipartFile file : files) {
-				if(!file.isEmpty()) {
-					String name=fileService.checkName(file);
-					String original=file.getOriginalFilename();
-					Long number=file.getSize();
-					String size=fileService.returnFileSize(number);
-					fileService.copyInto(file, name,serv);
-					fileService.insertFile(filesDTO, original, name, size, mem_no);
-				}
-			}
-		}
-		int result = timService.insertTim(timDTO);
-		
+
 		schdDTO.setSchd_no(schd_no);
+		schdDTO.setCont_kind("schd");
+		schdDTO.setCont_no(schd_no);
+		schdDTO.setPro_no(pro_no);
+		
 		String start=datetime.substring(0,16);
 		String end=datetime.substring(21,37);
-		schdDTO.setCont_kind("schedul");
-		schdDTO.setCont_no(schd_no);
 	
+		schdService.insertSchd(schdDTO);
+		schdService.insertTime(schdDTO, start, end);
+		schdService.insertTimeLine(schdDTO);
 		
-		for(int i = 0 ; i < tu_mem_list.size() ; i++) {
-			System.out.println(tu_mem_list.get(i));
+		for(int i=0;i<tu_mem_list.size();i++) {
+			schdDTO.setMem_no(tu_mem_list.get(i));
+			schdService.insertParti(schdDTO); 
 		}
 		
-		
-		
-		
-		
-		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no()+"&mem_no="+mem_no;
+		return "redirect:/timeLine.do?pro_no="+pro_no+"&mem_no="+mem_no;
 	}
 	
 	

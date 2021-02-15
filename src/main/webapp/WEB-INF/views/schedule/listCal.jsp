@@ -276,5 +276,5 @@ var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 	    });
 }
 </script>
-}
+
 <!-- 일정 수정:f -->

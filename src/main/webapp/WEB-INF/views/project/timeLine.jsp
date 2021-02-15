@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,8 +17,7 @@
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous">
 <!-- jQuery 3.3.1 -->
-<script
-	src="/chord/resources/js/jquery-3.1.1.min.js"></script>
+<script src="/chord/resources/js/jquery-3.1.1.min.js"></script>
 <!-- custom -->
 <link rel="stylesheet" href="/chord/resources/css/style_margin.css">
 <link rel="stylesheet" href="/chord/resources/css/style_padding.css">
@@ -57,7 +58,19 @@
 	src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
 <link href="<%=request.getContextPath()%>/resources/css/JeCss2.css"
 	rel="stylesheet" type="text/css">
+<!-- tak -->
+<script>
+function submitgogo(){
+	var schd_date = $('#schdtime').val();
+	if(schd_date.length<=16){
+		alert('일정의 마감시간을 설정해주삼 :>')
+	}else{
+		document.schdfrm.submit();
+	}
+}
+</script>
 <!-- 떠다니는 메뉴 -->
+
 <script type="text/javascript">
  var stmnLEFT = 10; // 오른쪽 여백 
  var stmnGAP1 = 0; // 위쪽 여백 
@@ -132,29 +145,12 @@
 <link rel="stylesheet" href="/chord/resources/css/GwCss.css">
 </head>
 <body id="contentBody" onload="InitializeStaticMenu();">
-	>
-
-	<nav
-		class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-		<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Company
-			name</a>
-		<button class="navbar-toggler position-absolute d-md-none collapsed"
-			type="button" data-toggle="collapse" data-target="#sidebarMenu"
-			aria-controls="sidebarMenu" aria-expanded="false"
-			aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<input class="form-control form-control-dark w-100" type="text"
-			placeholder="Search" aria-label="Search">
-		<ul class="navbar-nav px-3">
-			<li class="nav-item text-nowrap"><a class="nav-link" href="#">Sign
-					out</a></li>
-		</ul>
-	</nav>
+<jsp:include page="/WEB-INF/views/header.jsp"/>
+	
 
 	<div class="container-fluid">
 		<div class="row">
-			<nav id="sidebarMenu"
+			<nav id="sidebarMenu" style="z-index:-1"
 				class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
 				<div class="sidebar-sticky pt-3">
 					<ul class="nav flex-column">
@@ -575,12 +571,12 @@
 										<!-- 일정:s -->
 										<div id="tab-3" class="tabs-content con-schedule">
 
-											<form action="taktest.do" name="frm" method="post">
+											<form action="insertTimWithSchd.do" name="schdfrm" method="post"
+												enctype="multipart/form-data">
 												<input type="hidden" name="schd_no" value="1"> <input
-													type="hidden" name="cont_no" value="schd"> <input
 													type="hidden" name="pro_no" value="${proUserDTO.pro_no }">
-												<input type="hidden" name="mem_no"
-													value="${sessionScope.memNo }">
+												<input type="hidden" name="mem_no" value="${memNo }">
+												<input type="hidden" name="cont_no" value="1">
 												<!-- tab-con-box:s -->
 												<!-- <input type="hidden" name="pro_no" value="${proVo.pro_no }">-->
 
@@ -603,7 +599,7 @@
 																<input type="text" required="required"
 																	readonly="readonly" placeholder="시작날짜 - 종료날짜"
 																	data-range="true" data-multiple-dates-separator="  -  "
-																	class="datepicker-here" id="datetime" name="datetime"
+																	class="datepicker-here " id="schdtime" name="datetime"
 																	data-timepicker="true" data-time-format='hh:ii'
 																	style="width: 100%" />
 															</dd>
@@ -624,13 +620,16 @@
 
 																<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
 																<div class="pro-user-list">
-																	<c:forEach items="${members }" var="mbs">
+																	<c:forEach items="${invitedProUserList }" var="mbs">
 																		<div class="pro-user-info"
 																			onclick="fn_taskManagerSelect(this)">
 																			<div class="pro-user-photo maright-10">
-																				<i class="icon-circle circle-s"></i>
+																				<i class="icon-circle circle-s"></i> <img
+																					src="/chord/resources/img/user-pic-sample.png"
+																					style="width: 40px">
 																			</div>
-																			<span class="user-id" data-id="${mbs }">${mbs }</span>
+																			<span class="user-no" data-no="${mbs.mem_no }">${mbs.mem_no }번
+																				이름</span>
 																		</div>
 																	</c:forEach>
 																</div>
@@ -646,15 +645,74 @@
 															</dt>
 															<dd>
 																<input id="searchInput" name="schd_loc" class="controls"
-																	onkeyup="show1();" type="text" placeholder="장소를입력하세요"
+																	onkeyup="mapServise();" type="text" placeholder="장소를입력하세요"
 																	style="width: 90%;">
 															</dd>
 														</dl>
 													</div>
 													<!-- 위치 검색:f -->
-													<div id="map"
-														style="width: 100%; height: 300px; display: none;"></div>
-
+													<div id="mapSe" style="width: 100%; height: 300px; display: none;"></div>
+		<script type="text/javascript"
+			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da2da3e53b6d01f803242012ae94fba6&libraries=services"></script>
+		<script>
+			function mapServise(){
+				$('#mapSe').show();
+				
+				var serch = $('#searchInput').val();
+				
+				var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+			
+				var mapContainer = document.getElementById('mapSe'), // 지도를 표시할 div 
+				    mapOption = {
+				        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+				        level: 3 // 지도의 확대 레벨
+				    };  
+			
+				// 지도를 생성합니다    
+				var map = new kakao.maps.Map(mapContainer, mapOption); 
+			
+				// 장소 검색 객체를 생성합니다
+				var ps = new kakao.maps.services.Places(); 
+			
+				// 키워드로 장소를 검색합니다
+				ps.keywordSearch(serch, placesSearchCB); 
+			
+				// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+				function placesSearchCB (data, status, pagination) {
+				    if (status === kakao.maps.services.Status.OK) {
+			
+				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+				        // LatLngBounds 객체에 좌표를 추가합니다
+				        var bounds = new kakao.maps.LatLngBounds();
+			
+				        for (var i=0; i<data.length; i++) {
+				            displayMarker(data[i]);    
+				            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+				        }       
+			
+				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+				        map.setBounds(bounds);
+				    } 
+				}
+			
+				// 지도에 마커를 표시하는 함수입니다
+				function displayMarker(place) {
+				    
+				    // 마커를 생성하고 지도에 표시합니다
+				    var marker = new kakao.maps.Marker({
+				        map: map,
+				        position: new kakao.maps.LatLng(place.y, place.x) 
+				    });
+			
+				    // 마커에 클릭이벤트를 등록합니다
+				    kakao.maps.event.addListener(marker, 'click', function() {
+				        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+				        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+				        infowindow.open(map, marker);
+				    });
+			}
+			}
+		</script>
 													<!-- 메모:s -->
 													<div class="input-box martop-15">
 														<dl>
@@ -675,7 +733,7 @@
 												<div class="tab-dn-box">
 													<!-- 올리기(submit) 버튼 -->
 
-													<input type="button" value="올리기" onclick="show();"
+													<input type="button" value="올리기" onclick="submitgogo();"
 														class="article-submit-btn float-right font-bold size-18 color-white text-center default-back-color">
 												</div>
 												<!-- tab-dn-box:f -->
@@ -685,14 +743,18 @@
 										<!-- 일정:f -->
 										<!-- 할일:s -->
 										<div id="tab-4" class="tabs-content con-todo">
-											<form action="/flowolf/todo/insert" method="post">
-
+											<form action="timInsertwithTodo.do" method="get">
+												<input type="hidden" name="mem_no" value="${memNo }">
+												<input type="hidden" name="pro_no"
+													value="${proUserDTO.pro_no }"> <input type="hidden"
+													name="cont_kind" value="todo">
 												<!-- tab-con-box:s -->
 												<div class="tab-con-box">
 													<!-- 할일제목:s -->
 													<div class="input-box">
 														<input type="text" name="todo_title"
-															class="font-bold size-18" placeholder="할일 제목을 입력하세요.(선택)">
+															class="font-bold size-18" placeholder="할일 제목을 입력하세요.(선택)"
+															required="required">
 													</div>
 													<!-- 할일제목:f -->
 
@@ -705,7 +767,8 @@
 															</dt>
 															<dd class="posi-re">
 																<!-- 할일 내용 입력 input -->
-																<input type="text" name="texe" class="todo-input"
+																<input type="text" name="tiList[0].todo_item_content"
+																	class="todo-input"
 																	placeholder="할일 입력(Enter or Tab 입력시 아래에 할일 입력 추가됨)"
 																	onkeydown="fn_keyDown(event, this)" required="required">
 
@@ -720,7 +783,7 @@
 																			data-toggle="dropdown" aria-haspopup="true"
 																			aria-expanded="false" onclick="datePick(this)"></i>
 																		<!-- 							<input type="hidden" name="tiList[0].ti_date" class="todo-date"> -->
-																		<input type="hidden" name="tiList[0].ti_date"
+																		<input type="hidden" name="tiList[0].todo_item_date"
 																			class="todo-date">
 
 																		<!-- date-picker box -->
@@ -741,19 +804,24 @@
 																			aria-expanded="false">
 																			<i class="icon-circle circle-xs dis-none"></i> <i
 																				class="flow-icon todo-icon icon-user-plus"></i> <input
-																				type="hidden" name="tiList[0].ti_mem_id"
-																				class="todo-mem" value="${memVo.mem_id }">
+																				type="hidden" name="tiList[0].ti_mem_no"
+																				class="todo-mem" value="">
 																		</div>
 
 																		<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
 																		<div class="dropdown-menu todo-pro-user-list"
 																			role="menu" aria-labelledby="todoManager">
-																			<div class="pro-user-info" onclick="userSelect(this)">
-																				<div class="pro-user-photo maright-10">
-																					<i class="icon-circle circle-s"></i>
+																			<c:forEach items="${invitedProUserList}"
+																				var="proUserVo" end="2">
+																				<div class="pro-user-info"
+																					onclick="userSelect(this)" >
+																					<div class="pro-user-photo maright-10">
+																						<i class="icon-circle circle-s"></i> <img
+																src="/chord/resources/img/user-pic-sample.png" style="width:40px">
+																					</div>
+																					<span class="user-no" data-memno="${proUserVo.mem_no }">${proUserVo.mem_no }</span>
 																				</div>
-																				<span class="user-id">${proUserVo.mem_id }</span>
-																			</div>
+																			</c:forEach>
 																		</div>
 																		<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):f -->
 
@@ -782,6 +850,8 @@
 														class="article-submit-btn float-right font-bold size-18 color-white text-center default-back-color">
 												</div>
 												<!-- tab-dn-box:f -->
+
+
 											</form>
 										</div>
 										<!-- 할일:f -->
@@ -1476,32 +1546,57 @@
 														<div class="schedule-header">
 															<dl>
 																<dt class="maright-15">
-																	<span class="dis-block font-thin size-20 color-red text-center">123월</span>
-																	<strong class="dis-block font-bold size-40 color-black text-center">123</strong>
+																	<span
+																		class="dis-block font-thin size-20 color-red text-center">${fn:substring(dto.schdDTO.time_start_date, 5, 7) }월</span>
+																	<strong
+																		class="dis-block font-bold size-40 color-black text-center">${fn:substring(dto.schdDTO.time_start_date, 8, 10) }</strong>
 																</dt>
-																<dd class="font-bold size-20 color-black">${timeLine.schdVo.schd_title }123</dd>
-																<dd class="martop-10 font-bold size-16 color-black">${timeLine.schdVo.schd_start_time }
-																	- ${timeLine.schdVo.schd_end_time }123-123</dd>
+																<dd class="font-bold size-20 color-black">${dto.schdDTO.tim_cont }</dd>
+																<dd class="martop-10 font-bold size-16 color-black">${schdDto.time_start_date }
+																	- ${dto.schdDTO.time_end_date }</dd>
+															</dl>
+														</div>
+
+														<div class="input-box martop-15" style="height: inherit">
+															<dl>
+																<dt class="maright-20">
+																	<i class="fas fa-user-plus"></i>
+																</dt>
+																<dd class="posi-re">
+
+																	<!-- 담당자 리스트 -->
+																	<div class="task-user-list">
+																		<c:if test="${dto.schdDTO.participants.size()= 0} ">
+																			<p class="mar-0 pad-0">담당자 없음</p>
+																		</c:if>
+																		<c:forEach items="${timeLine.tuList }" var="tuVo">
+																			<div class="name-tag">
+																				<img src="/mem/pic?mem_id=${tuVo.tu_mem_id }"
+																					width="24"> <strong class="marleft-10">${tuVo.mem_nick }</strong>
+																				<i class="fas fa-times-circle marleft-15"
+																					style="display: none"></i> <input type="hidden"
+																					name="tu_mem_id" value="${tuVo.tu_mem_id }">
+																			</div>
+																		</c:forEach>
+																	</div>
+																</dd>
 															</dl>
 														</div>
 
 														<!-- 위치 검색:s -->
 														<c:choose>
-															<c:when test="${timeLine.schdVo.schd_loc != null }">
+															<c:when test="${dto.schdDTO.schd_loc != null }">
 																<div class="input-box">
 																	<dl>
 																		<dt class="maright-20">
 																			<i class="fas fa-map-marker-alt"></i>
 																		</dt>
 																		<dd>
-																			<div class="dis-block marbtm-15">${timeLine.schdVo.schd_loc }123<a
-																					href="https://maps.google.com?q=${timeLine.schdVo.schd_loc }"
+																			<div class="dis-block marbtm-15">${dto.schdDTO.schd_loc }<a
+																					href="https://maps.google.com?q=${dto.schdDTO.schd_loc }"
 																					target="google_blank" class="marleft-15">지도보기</a>
 																			</div>
-																			<div id="googleMap" class="dis-block">
-																				<img
-																					src="https://maps.googleapis.com/maps/api/staticmap?center=${timeLine.schdVo.schd_lat },${timeLine.schdVo.schd_lon }&amp;zoom=15&amp;size=800x200&amp;markers=color:red|${timeLine.schdVo.schd_lat },${timeLine.schdVo.schd_lon }&amp;key=AIzaSyAmxDFvVfjjBQ0eWrQ2Pgv8odc0L8rbJU4"
-																					style="height: 100%; width: 100%">
+																			<div id="map" class="dis-block" style="height: 300px">
 																			</div>
 																		</dd>
 																	</dl>
@@ -1512,18 +1607,30 @@
 
 														<!-- 메모:s -->
 														<c:choose>
-															<c:when test="${timeLine.schdVo.schd_memo != null}">
+															<c:when test="${dto.schdDTO.schd_memo != null}">
 																<div class="input-box martop-15">
 																	<dl>
 																		<dt class="maright-20">
 																			<i class="fas fa-sticky-note"></i>
 																		</dt>
-																		<dd>${timeLine.schdVo.schd_memo }</dd>
+																		<dd>${dto.schdDTO.schd_memo }</dd>
 																	</dl>
 																</div>
 															</c:when>
 														</c:choose>
 														<!-- 메모:f -->
+
+														<!-- 알람:s -->
+
+														<div class="input-box martop-15" style="border: 0">
+															<dl>
+																<dt class="maright-20">
+																	<i class="fas fa-bell"></i>
+																</dt>
+																<dd>미리알림 없음</dd>
+															</dl>
+														</div>
+														<!-- 알람:f -->
 													</div>
 												</div>
 
@@ -1532,18 +1639,16 @@
 												<form action="/flowolf/schd/update"
 													class="article-edit-form" method="POST">
 													<input type="hidden" name="schd_no"
-														value="${timeLine.schdVo.schd_no }"> <input
+														value="${dto.schdDTO.schd_no }"> <input
 														type="hidden" name="pro_no" value="${proVo.pro_no }">
-
 													<!-- article edit box:s -->
 													<div class="article-edit-box">
 
 														<!-- 일정제목:s -->
 														<div class="input-box">
-															<input type="text" name="schd_title"
+															<input type="text" name="tim_cont"
 																class="font-bold size-18"
-																value=" ${timeLine.schdVo.schd_title }"
-																required="required">
+																value=" ${dto.schdDTO.tim_cont }" required="required">
 														</div>
 														<!-- 일정제목:f -->
 
@@ -1555,10 +1660,10 @@
 																</dt>
 																<dd>
 																	<input type="hidden"
-																		value="${timeLine.schdVo.schd_start_time }   -   ${timeLine.schdVo.schd_end_time }"
+																		value="${dto.schdDTO.time_start_date }   -   ${dto.schdDTO.time_end_date }"
 																		name="defaultDate"> <input type="text"
-																		<%-- 					placeholder="${timeLine.schdVo.schd_start_time }   -   ${timeLine.schdVo.schd_end_time }" --%>
-					placeholder="${timeLine.schdVo.schd_start_time }   -   ${timeLine.schdVo.schd_end_time }"
+																		<%-- 					placeholder="${dto.schdDTO.time_start_date }   -   ${dto.schdDTO.time_end_date }" --%>
+					placeholder="${dto.schdDTO.time_start_date }   -   ${dto.schdDTO.time_end_date }"
 																		data-range="true"
 																		data-multiple-dates-separator="   -   "
 																		class="datepicker-here" id="datetime" name="datetime"
@@ -1567,7 +1672,7 @@
 															</dl>
 														</div>
 														<!-- 일정 시간 설정:f -->
-
+														<!-- 위치 검색:s -->
 														<!-- 위치 검색:f -->
 														<div class="input-box martop-15">
 															<dl>
@@ -1575,18 +1680,12 @@
 																	<i class="fas fa-map-marker-alt"></i>
 																</dt>
 																<c:choose>
-																	<c:when test="${timeLine.schdVo.schd_loc != null }">
+																	<c:when test="${dto.schdDTO.schd_loc != null }">
 																		<dd>
 																			<input id="searchInput2" name="schd_loc"
 																				class="controls" type="text"
-																				value="${timeLine.schdVo.schd_loc }"
-																				style="width: 90%">
+																				value="${dto.schdDTO.schd_loc }" style="width: 90%">
 																			<div id="map" class="dis-block" style="width: 100%;"></div>
-																			<%-- 							<img src="https://maps.googleapis.com/maps/api/staticmap?center=${timeLine.schdVo.schd_lat },${timeLine.schdVo.schd_lon }&amp;zoom=15&amp;size=630x300&amp;markers=color:red|${timeLine.schdVo.schd_lat },${timeLine.schdVo.schd_lon }&amp;key=AIzaSyADjbtMn46r9DGFyo_ZRz3c6fOXzuOKWCw" style="width:100%; height:100%;"> --%>
-																			<input type="hidden" id="schd_lat2" class="schd_lat2"
-																				name="schd_lat" value="${timeLine.schdVo.schd_lat}">
-																			<input type="hidden" id="schd_lon2" class="schd_lon2"
-																				name="schd_lon" value="${timeLine.schdVo.schd_lon}">
 																		</dd>
 																	</c:when>
 																	<c:otherwise>
@@ -1598,6 +1697,7 @@
 																</c:choose>
 															</dl>
 														</div>
+
 
 
 														<script>
@@ -1620,8 +1720,8 @@
 																</dt>
 																<dd>
 																	<c:choose>
-																		<c:when test="${timeLine.schdVo.schd_memo !=null }">
-																			<textarea rows="2" cols="" name="schd_memo">${timeLine.schdVo.schd_memo }</textarea>
+																		<c:when test="${dto.schdDTO.schd_memo !=null }">
+																			<textarea rows="2" cols="" name="schd_memo">${dto.schdDTO.schd_memo }</textarea>
 																		</c:when>
 																		<c:otherwise>
 																			<textarea rows="2" cols="" name="schd_memo"></textarea>
@@ -1631,248 +1731,204 @@
 															</dl>
 														</div>
 														<!-- 메모:f -->
-													</div>
-													<!-- article edit box:f -->
 
-													<!-- article edit dn:s -->
-													<div class="article-edit-dn">
-														<!-- submit & cancel 버튼 -->
-														<input type="submit" value="수정하기"
-															class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
-														<input type="button" value="취소"
-															onclick="fn_editCancel(this)"
-															class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
-															style="border: 1px solid #ddd">
-													</div>
-													<!-- article edit dn:f -->
-												</form>
-				</section>
-</body>
-<script
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3F6HUmoF9DMA6KsovfusumiMHCDmjKPg&libraries=places&callback=autoComplete"
-	async defer></script>
-<script type="text/javascript">
-			/*******************************************
-			* Google Map Api
-			* 팀명 : #DEV
-			* 최초작성일 : 2018-10-06
-			* 작성자 : TA(Kim jin young)
-			*******************************************/
+												<!-- 알람:s -->
+												<div class="input-box martop-15">
+													<dl>
+														<dt class="maright-20">
+															<i class="fas fa-bell"></i>
+														</dt>
+														<dd>
+															<select name="alert_time"
+																onchange="getSelectValue(this.form);">
+																<option value="0">없음</option>
+																<option value="10">10분전 미리알림</option>
+																<option value="30">30분전 미리알림</option>
+																<option value="60">1시간전 미리알림</option>
+																<option value="120">2시간전 미리알림</option>
+																<option value="180">3시간전 미리알림</option>
+																<option value="1440">1일전</option>
+																<option value="2880">2일전</option>
+																<option value="10080">7일전</option>
+															</select>
+														</dd>
+													</dl>
+												</div>
+												<!-- 알람:f -->
+											</div>
+											<!-- article edit box:f -->
 
-			function autoComplete() {
-				var map = new google.maps.Map(document.getElementById('map'), {
-					center : {
-						lat : -33.8688,
-						lng : 151.2195
-					},
-					zoom : 13
-				});
-				var input = document.getElementById('searchInput2');
-				map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-				var autocomplete = new google.maps.places.Autocomplete(input);
-				autocomplete.bindTo('bounds', map);
-
-				var infowindow = new google.maps.InfoWindow();
-				var marker = new google.maps.Marker({
-					map : map,
-					anchorPoint : new google.maps.Point(0, -29)
-				});
-
-				autocomplete.addListener('place_changed', function() {
-					infowindow.close();
-					marker.setVisible(false);
-					var place = autocomplete.getPlace();
-					if (!place.geometry) {
-						window.alert("장소를 선택해주세요");
-						return;
-					}
-
-					// 지역정보가 있으면 맵에 표시하기
-					if (place.geometry.viewport) {
-						map.fitBounds(place.geometry.viewport);
-					} else {
-						map.setCenter(place.geometry.location);
-						map.setZoom(17);
-					}
-					marker.setIcon(({
-						url : place.icon,
-						size : new google.maps.Size(71, 71),
-						origin : new google.maps.Point(0, 0),
-						anchor : new google.maps.Point(17, 34),
-						scaledSize : new google.maps.Size(35, 35)
-					}));
-					marker.setPosition(place.geometry.location);
-					marker.setVisible(true);
-
-					var address = '';
-					if (place.address_components) {
-						address = [
-							(place.address_components[0]
-									&& place.address_components[0].short_name || ''),
-							(place.address_components[1]
-									&& place.address_components[1].short_name || ''),
-							(place.address_components[2]
-									&& place.address_components[2].short_name || '') ]
-							.join(' ');
-					}
-
-					infowindow.setContent('<div><strong>' + place.name
-							+ '</strong><br>' + address);
-					infowindow.open(map, marker);
-
-					$('#schd_lat2').val(place.geometry.location.lat());
-					$('#schd_lon2').val(place.geometry.location.lng());
-					console.log('위도'+place.geometry.location.lat());
-					console.log('경도'+place.geometry.location.lng());
-				});
-			}
-			</script>
-<!-- 일정 수정:f -->
-<!-- 스케쥴글 : finsh -->
-</c:when>
-<c:when test="${dto.cont_kind eq 'todo' }">
-	<!-- 할일글 : start -->
+											<!-- article edit dn:s -->
+											<div class="article-edit-dn">
+												<!-- submit & cancel 버튼 -->
+												<input type="submit" value="수정하기"
+													class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
+												<input type="button" value="취소"
+													onclick="fn_editCancel(this)"
+													class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
+													style="border: 1px solid #ddd">
+											</div>
+											<!-- article edit dn:f -->
+										</form>
 
 
-	<!-- 할일글 : finsh -->
-</c:when>
-</c:choose>
-</div>
-<!-- timeline footer:s -->
-<div class="timeline-footer">
+												<!-- 일정 수정:f -->
+												<!-- 스케쥴글 : finsh -->
+											</c:when>
+											<c:when test="${dto.cont_kind eq 'todo' }">
+												<!-- 할일글 : start -->
 
-	<!-- 좋아요 / 댓글 개수:s -->
-	<div class="article-etc-info">
+
+												<!-- 할일글 : finsh -->
+											</c:when>
+										</c:choose>
+									</div>
+									<!-- timeline footer:s -->
+									<div class="timeline-footer">
+
+										<!-- 좋아요 / 댓글 개수:s -->
+										<div class="article-etc-info">
 
 
 
-		<!-- 좋아요 선택 시 이모티콘 나올 부분 -->
-		<div class="like-result cursor-point"
-			onclick="fn_emoUserPop(${start.index })">
-			<c:forEach items="${timeLine.emoUserList }" var="emoUserVo" end="2">
-				<img src="/emo/view?emo_no=${emoUserVo.emo_no }"
-					data-no="${emoUserVo.emo_user_no }" width="20" class="maright-10">
-			</c:forEach>
-			<div class="like-mem dis-inblock"
-				data-size="${timeLine.emoUserList.size() }">
-				<c:choose>
-					<c:when test="${emo_user_chk}">
-						<strong class="me">${memVo.mem_no }</strong>	님
+											<!-- 좋아요 선택 시 이모티콘 나올 부분 -->
+											<div class="like-result cursor-point"
+												onclick="fn_emoUserPop(${start.index })">
+												<c:forEach items="${timeLine.emoUserList }" var="emoUserVo"
+													end="2">
+													<img src="/emo/view?emo_no=${emoUserVo.emo_no }"
+														data-no="${emoUserVo.emo_user_no }" width="20"
+														class="maright-10">
+												</c:forEach>
+												<div class="like-mem dis-inblock"
+													data-size="${timeLine.emoUserList.size() }">
+													<c:choose>
+														<c:when test="${emo_user_chk}">
+															<strong class="me">${memVo.mem_no }</strong>	님
 										<c:if test="${timeLine.emoUserList.size()-1 != 0 }">
 											  외 ${timeLine.emoUserList.size()-1 }명
 										</c:if>
-					</c:when>
-					<c:otherwise>
-						<c:if test="${timeLine.emoUserList.size() != 0 }">
+														</c:when>
+														<c:otherwise>
+															<c:if test="${timeLine.emoUserList.size() != 0 }">
 											${timeLine.emoUserList.size() }명
 										</c:if>
-					</c:otherwise>
-				</c:choose>
-			</div>
-		</div>
+														</c:otherwise>
+													</c:choose>
+												</div>
+											</div>
 
-		<!-- 이모티콘 사용자 리스트 팝업:f -->
+											<!-- 이모티콘 사용자 리스트 팝업:f -->
 
-		<!-- 댓글 개수 -->
-		<div class="comment-count default-back-color color-white">
-			<i class="fas fa-comment maright-10"></i> ${dto.repList.size()}개
-		</div>
+											<!-- 댓글 개수 -->
+											<div class="comment-count default-back-color color-white">
+												<i class="fas fa-comment maright-10"></i>
+												${dto.repList.size()}개
+											</div>
 
-		<!-- 좋아요 / 댓글작성 / 담아두기 버튼 -->
-		<ul class="article-etc-menu martop-10 marbtm-0">
-			<li class="posi-re cursor-point"><c:choose>
-					<c:when test="${emo_user_chk }">
-						<!-- like button : s -->
-						<div id="emoticonToggle" class="emoticon-btn cursor-point"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-							style="display: none">
-							<i class="fas fa-thumbs-up maright-10"></i>좋아요
-						</div>
-						<!-- like button : f -->
+											<!-- 좋아요 / 댓글작성 / 담아두기 버튼 -->
+											<ul class="article-etc-menu martop-10 marbtm-0">
+												<li class="posi-re cursor-point"><c:choose>
+														<c:when test="${emo_user_chk }">
+															<!-- like button : s -->
+															<div id="emoticonToggle"
+																class="emoticon-btn cursor-point" data-toggle="dropdown"
+																aria-haspopup="true" aria-expanded="false"
+																style="display: none">
+																<i class="fas fa-thumbs-up maright-10"></i>좋아요
+															</div>
+															<!-- like button : f -->
 
-						<!-- Chagned like button : s -->
-						<div class="emoticon-after-btn cursor-point"
-							data-emouser="${my_emo_user_no }" style="display: block">
-							<img src="/emo/view?emo_no=${my_emo_no }" width="20"
-								class="maright-10"> <span class="size-14 default-color">${my_emo_name }</span>
-						</div>
-						<!-- Chagned like button : f -->
-					</c:when>
-					<c:otherwise>
-						<!-- like button : s -->
-						<div id="emoticonToggle" class="emoticon-btn cursor-point"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<i class="fas fa-thumbs-up maright-10"></i>좋아요
-						</div>
-						<!-- like button : f -->
+															<!-- Chagned like button : s -->
+															<div class="emoticon-after-btn cursor-point"
+																data-emouser="${my_emo_user_no }" style="display: block">
+																<img src="/emo/view?emo_no=${my_emo_no }" width="20"
+																	class="maright-10"> <span
+																	class="size-14 default-color">${my_emo_name }</span>
+															</div>
+															<!-- Chagned like button : f -->
+														</c:when>
+														<c:otherwise>
+															<!-- like button : s -->
+															<div id="emoticonToggle"
+																class="emoticon-btn cursor-point" data-toggle="dropdown"
+																aria-haspopup="true" aria-expanded="false">
+																<i class="fas fa-thumbs-up maright-10"></i>좋아요
+															</div>
+															<!-- like button : f -->
 
-						<!-- Chagned like button : s -->
-						<div class="emoticon-after-btn cursor-point" data-emouser="">
-							<img src="" width="20" class="maright-10"> <span
-								class="size-14 default-color"></span>
-						</div>
-						<!-- Chagned like button : f -->
-					</c:otherwise>
-				</c:choose> <!-- Emoticon list box -->
-				<div class="dropdown-menu emoticon-box"
-					aria-labelledby="emoticonToggle">
-					<ul>
-						<c:forEach items="${emoList }" var="emo">
-							<li class="posi-re" data-emono="${emo.emo_no }"><img
-								src="/emo/view?emo_no=${emo.emo_no }"> <span>${emo.emo_name }</span>
-							</li>
-						</c:forEach>
-					</ul>
-				</div></li>
-			<li class="cursor-point" onclick="fn_commentFocus(this)"><i
-				class="fas fa-comment-alt maright-10"></i> 댓글작성</li>
-			<c:choose>
-				<c:when test="${timeLine.coll_chk != 0 }">
-					<li class="cursor-point coll-btn default-color"
-						data-collno="${timeLine.coll_chk }"><i
-						class="fas fa-bookmark maright-10"></i> <span>담아두기 취소</span></li>
-				</c:when>
-				<c:otherwise>
-					<li class="cursor-point coll-btn"
-						data-collno="${timeLine.coll_chk }"><i
-						class="fas fa-bookmark maright-10"></i> <span>담아두기</span></li>
-				</c:otherwise>
-			</c:choose>
+															<!-- Chagned like button : s -->
+															<div class="emoticon-after-btn cursor-point"
+																data-emouser="">
+																<img src="" width="20" class="maright-10"> <span
+																	class="size-14 default-color"></span>
+															</div>
+															<!-- Chagned like button : f -->
+														</c:otherwise>
+													</c:choose> <!-- Emoticon list box -->
+													<div class="dropdown-menu emoticon-box"
+														aria-labelledby="emoticonToggle">
+														<ul>
+															<c:forEach items="${emoList }" var="emo">
+																<li class="posi-re" data-emono="${emo.emo_no }"><img
+																	src="/emo/view?emo_no=${emo.emo_no }"> <span>${emo.emo_name }</span>
+																</li>
+															</c:forEach>
+														</ul>
+													</div></li>
+												<li class="cursor-point" onclick="fn_commentFocus(this)"><i
+													class="fas fa-comment-alt maright-10"></i> 댓글작성</li>
+												<c:choose>
+													<c:when test="${timeLine.coll_chk != 0 }">
+														<li class="cursor-point coll-btn default-color"
+															data-collno="${timeLine.coll_chk }"><i
+															class="fas fa-bookmark maright-10"></i> <span>담아두기
+																취소</span></li>
+													</c:when>
+													<c:otherwise>
+														<li class="cursor-point coll-btn"
+															data-collno="${timeLine.coll_chk }"><i
+															class="fas fa-bookmark maright-10"></i> <span>담아두기</span></li>
+													</c:otherwise>
+												</c:choose>
 
-		</ul>
-	</div>
-	<!-- 좋아요 / 댓글 개수:f -->
+											</ul>
+										</div>
+										<!-- 좋아요 / 댓글 개수:f -->
 
-	<!-- 댓글:s -->
-	<div class="timeline-comment-wrap">
-		<c:forEach items="${dto.repList }" var="repDTO" varStatus="status">
-			<!-- 댓글 리스트:s -->
-			<div class="comment-list-box" data-repno="${repDTO.rep_no}"
-				data-prono="${dto.pro_no }">
-				<dl>
-					<dt class="posi-re cursor-point" onclick="fn_openPopup(this)"
-						data-id="id" data-nick="nick" data-my="manager">
-						<i class="flow-icon icon-circle circle-s-re"></i> <img
-							src="/chord/resources/img/user-pic-sample.png" width="40">
-					</dt>
-					<dd class="posi-re">
+										<!-- 댓글:s -->
+										<div class="timeline-comment-wrap">
+											<c:forEach items="${dto.repList }" var="repDTO"
+												varStatus="status">
+												<!-- 댓글 리스트:s -->
+												<div class="comment-list-box" data-repno="${repDTO.rep_no}"
+													data-prono="${dto.pro_no }">
+													<dl>
+														<dt class="posi-re cursor-point"
+															onclick="fn_openPopup(this)" data-id="id"
+															data-nick="nick" data-my="manager">
+															<i class="flow-icon icon-circle circle-s-re"></i> <img
+																src="/chord/resources/img/user-pic-sample.png"
+																width="40">
+														</dt>
+														<dd class="posi-re">
 
-						<!-- 댓글 작성자 정보 -->
-						<div class="comment-user-info">
-							<div class="dis-inblock font-bold size-15 color-black maright-10">${repDTO.mem_no }</div>
-							<div class="dis-inblock size-15 color-gray maright-20"></div>
-							<!-- 												<div class="dis-inblock size-15 color-gray cursor-point" onclick="fn_likeChange(this)"> -->
-							<!-- 													<i class="fas fa-thumbs-up maright-10"></i><span>좋아요</span> -->
-							<!-- 												</div> -->
-						</div>
+															<!-- 댓글 작성자 정보 -->
+															<div class="comment-user-info">
+																<div
+																	class="dis-inblock font-bold size-15 color-black maright-10">${repDTO.mem_no }</div>
+																<div class="dis-inblock size-15 color-gray maright-20"></div>
+																<!-- 												<div class="dis-inblock size-15 color-gray cursor-point" onclick="fn_likeChange(this)"> -->
+																<!-- 													<i class="fas fa-thumbs-up maright-10"></i><span>좋아요</span> -->
+																<!-- 												</div> -->
+															</div>
 
-						<!-- 댓글내용 -->
-						<div class="article-txt martop-5">
-							<pre class="font-thin size-16 color-gray">${repDTO.rep_cont }</pre>
-						</div>
+															<!-- 댓글내용 -->
+															<div class="article-txt martop-5">
+																<pre class="font-thin size-16 color-gray">${repDTO.rep_cont }</pre>
+															</div>
 
-						<!-- 댓글 이미지 목록 : s 
+															<!-- 댓글 이미지 목록 : s 
 															<div class="comment-img-list">
 																<c:forEach items="${repList['filesList'] }" var="filesVo">
 																	<c:if test="${filesVo.files_kind == 'img' }">
@@ -1884,9 +1940,9 @@
 																</c:forEach>
 															</div>
 															-->
-						<!-- 댓글 이미지 목록 : f -->
+															<!-- 댓글 이미지 목록 : f -->
 
-						<!-- 댓글 첨부파일 목록 : s 
+															<!-- 댓글 첨부파일 목록 : s 
 															<div class="comment-file-list">
 																<c:forEach items="${repList['filesList'] }"
 																	var="filesVo">
@@ -1913,34 +1969,36 @@
 																</c:forEach>
 															</div>
 															-->
-						<!-- 댓글 첨부파일 목록 : f -->
+															<!-- 댓글 첨부파일 목록 : f -->
 
-						<!-- 댓글 수정 박스 -->
-						<div class="comment-edit-box">
-							<form action="updateRep.do" method="get"
-								class="comment-edit-form" enctype="multipart/form-data">
-								<input type="hidden" name="rep_no" value="${repDTO.rep_no }">
-								<input type="hidden" name="pro_no" value="${dto.pro_no }">
-								<div class="comment-textarea">
-									<textarea rows="5" cols="50" class="rep_cont" name="rep_cont"
-										onkeyup="autoTextarea(this, 40, 300)"
-										onkeydown="fn_keyDownEsc(event, this)" required>${repDTO.rep_cont }</textarea>
-								</div>
-								<div
-									class="dis-block float-left martop-5 marbtm-10 size-13 color-gray"
-									style="width: 100%">
-									<span class="default-color">취소</span> 하실려면 <span
-										class="color-red">Esc</span>키를 누르세요.
-								</div>
+															<!-- 댓글 수정 박스 -->
+															<div class="comment-edit-box">
+																<form action="updateRep.do" method="get"
+																	class="comment-edit-form" enctype="multipart/form-data">
+																	<input type="hidden" name="rep_no"
+																		value="${repDTO.rep_no }"> <input
+																		type="hidden" name="pro_no" value="${dto.pro_no }">
+																	<div class="comment-textarea">
+																		<textarea rows="5" cols="50" class="rep_cont"
+																			name="rep_cont" onkeyup="autoTextarea(this, 40, 300)"
+																			onkeydown="fn_keyDownEsc(event, this)" required>${repDTO.rep_cont }</textarea>
+																	</div>
+																	<div
+																		class="dis-block float-left martop-5 marbtm-10 size-13 color-gray"
+																		style="width: 100%">
+																		<span class="default-color">취소</span> 하실려면 <span
+																			class="color-red">Esc</span>키를 누르세요.
+																	</div>
 
-								<!-- 파일첨부 -->
-								<label for="commentEditFile_${status.count }" class="marbtm-0">
-									<i
-									class="fas fa-paperclip martop-10 size-24 color-gray cursor-point"></i>
-								</label> <input type="file" id="commentEditFile_${status.count }"
-									class="dis-none" onchange="commentFileUpload(this)">
+																	<!-- 파일첨부 -->
+																	<label for="commentEditFile_${status.count }"
+																		class="marbtm-0"> <i
+																		class="fas fa-paperclip martop-10 size-24 color-gray cursor-point"></i>
+																	</label> <input type="file"
+																		id="commentEditFile_${status.count }" class="dis-none"
+																		onchange="commentFileUpload(this)">
 
-								<!-- 이미지 목록이 나올부분 
+																	<!-- 이미지 목록이 나올부분 
 																	<div class="comment-upload-img-list">
 																		<c:forEach items="${repList['filesList'] }"
 																			var="filesVo">
@@ -1956,7 +2014,7 @@
 																		</c:forEach>
 																	</div>
 																			-->
-								<!-- 첨부파일 목록이 나올부분 
+																	<!-- 첨부파일 목록이 나올부분 
 																	<div class="comment-upload-file-list">
 																		<c:forEach items="${repList['filesList'] }"
 																			var="filesVo">
@@ -1983,113 +2041,118 @@
 																		</c:forEach>
 																	</div>
 																	-->
-							</form>
-						</div>
-						<c:if test="${repDTO.mem_no == dto.mem_no }">
-							<!-- 댓글 수정,삭제 버튼 -->
-							<ul class="comment-edit-btn">
-								<li class="cursor-point" onclick="fn_commentEdit(this)">수정</li>
-								<li class="cursor-point reply-delete">삭제</li>
-							</ul>
-						</c:if>
-					</dd>
-				</dl>
-			</div>
-			<!-- 댓글 리스트:f -->
-		</c:forEach>
+																</form>
+															</div>
+															<c:if test="${repDTO.mem_no == dto.mem_no }">
+																<!-- 댓글 수정,삭제 버튼 -->
+																<ul class="comment-edit-btn">
+																	<li class="cursor-point" onclick="fn_commentEdit(this)">수정</li>
+																	<li class="cursor-point reply-delete">삭제</li>
+																</ul>
+															</c:if>
+														</dd>
+													</dl>
+												</div>
+												<!-- 댓글 리스트:f -->
+											</c:forEach>
 
-		<!-- 댓글 입력:s -->
-		<form action="insertRep.do" method="get" enctype="multipart/form-data">
-			<input type="hidden" class="timeline_mem_no" name="mem_no"
-				value="${proUserDTO.mem_no }"> <input type="hidden"
-				class="timeline_no" name="tim_no" value=""> <input
-				type="hidden" class="timeline_pro_no" name="pro_no"
-				value="${proUserDTO.pro_no }">
-			<div class="comment-insert-box">
-				<dl>
-					<dt class="posi-re">
-						<i class="flow-icon icon-circle circle-s-re"></i> <img
-							src="/chord/resources/img/user-pic-sample.png" width="40">
-					</dt>
-					<dd>
-						<div class="comment-textarea">
-							<textarea rows="5" cols="50" class="rep_cont" name="rep_cont"
-								placeholder="댓글을 입력하세요.(Enter는 입력, shift + Enter는 줄바꿈)"
-								onkeyup="autoTextarea(this, 36, 300)"
-								onkeydown="fn_commentKeyDown(event, this)" required></textarea>
-						</div>
+											<!-- 댓글 입력:s -->
+											<form action="insertRep.do" method="get"
+												enctype="multipart/form-data">
+												<input type="hidden" class="timeline_mem_no" name="mem_no"
+													value="${proUserDTO.mem_no }"> <input type="hidden"
+													class="timeline_no" name="tim_no" value=""> <input
+													type="hidden" class="timeline_pro_no" name="pro_no"
+													value="${proUserDTO.pro_no }">
+												<div class="comment-insert-box">
+													<dl>
+														<dt class="posi-re">
+															<i class="flow-icon icon-circle circle-s-re"></i> <img
+																src="/chord/resources/img/user-pic-sample.png"
+																width="40">
+														</dt>
+														<dd>
+															<div class="comment-textarea">
+																<textarea rows="5" cols="50" class="rep_cont"
+																	name="rep_cont"
+																	placeholder="댓글을 입력하세요.(Enter는 입력, shift + Enter는 줄바꿈)"
+																	onkeyup="autoTextarea(this, 36, 300)"
+																	onkeydown="fn_commentKeyDown(event, this)" required></textarea>
+															</div>
 
-						<!-- 파일첨부 -->
-						<label for="commentFile_${start.count }" class="marbtm-0">
-							<i
-							class="fas fa-paperclip martop-10 size-24 color-gray cursor-point"></i>
-						</label> <input type="file" id="commentFile_${start.count }"
-							class="dis-none" onchange="commentFileUpload(this)">
+															<!-- 파일첨부 -->
+															<label for="commentFile_${start.count }" class="marbtm-0">
+																<i
+																class="fas fa-paperclip martop-10 size-24 color-gray cursor-point"></i>
+															</label> <input type="file" id="commentFile_${start.count }"
+																class="dis-none" onchange="commentFileUpload(this)">
 
-						<!-- 이미지 목록이 나올부분 -->
-						<div class="comment-upload-img-list"></div>
+															<!-- 이미지 목록이 나올부분 -->
+															<div class="comment-upload-img-list"></div>
 
-						<!-- 첨부파일 목록이 나올부분 -->
-						<div class="comment-upload-file-list"></div>
+															<!-- 첨부파일 목록이 나올부분 -->
+															<div class="comment-upload-file-list"></div>
 
-					</dd>
-				</dl>
-			</div>
-		</form>
-		<!-- 댓글 입력:f -->
-	</div>
-	<!-- 댓글:f -->
+														</dd>
+													</dl>
+												</div>
+											</form>
+											<!-- 댓글 입력:f -->
+										</div>
+										<!-- 댓글:f -->
 
-</div>
-<!-- timeline footer:f -->
-
-</div>
-
-</c:forEach>
-<!-- 타임라인 : finish -->
+									</div>
+									<!-- timeline footer:f -->
 
 
-<script>
+								</div>
+							</c:forEach>
+							<!-- 타임라인 : finish -->
+
+
+							<script>
 											function getSelectValue(frm) {
 												frm.textValue.value = frm.selectBox.options[frm.selectBox.selectedIndex].text;
 												frm.optionValue.value = frm.selectBox.options[frm.selectBox.selectedIndex].value;
 											}
 									</script>
 
-</div>
-<!-- project left : finish -->
-<!-- project right : start -->
+						</div>
+						<!-- project left : finish -->
+						<!-- project right : start -->
 
-<!-- 이전화면으로 -->
-<div id="STATICMENU"
-	class="col-xs-12 col-sm-12 col-md-3 col-lg-3 padright-0">
-	<div class="pro-right-box">
-		<a href="proList.do?mem_no=${memNo } "
-			class="pro-prev-btn size-18 default-color"> <i
-			class="fas fa-angle-left maright-15"></i> 이전화면
-		</a>
-	</div>
+						<!-- 이전화면으로 -->
+						<div id="STATICMENU"
+							class="col-xs-12 col-sm-12 col-md-3 col-lg-3 padright-0">
+							<div class="pro-right-box">
+								<a href="proList.do?mem_no=${memNo } "
+									class="pro-prev-btn size-18 default-color"> <i
+									class="fas fa-angle-left maright-15"></i> 이전화면
+								</a>
+							</div>
 
-	<!-- 파일함,업무,일정,할일,투표 -->
-	<div class="pro-right-box martop-15">
-		<ul class="pro-gather-nav">
-			<li><a href="#"> <i class="fas fa-download color-blue-l"></i>
-					<span class="dis-block size-17 color-gray">파일함</span>
-			</a></li>
-			<li><a href="#"> <i class="fas fa-laptop colo-green-l"></i>
-					<span class="dis-block size-17 color-gray">업무</span>
-			</a></li>
-			<li><a href="#"> <i class="far fa-calendar-alt color-red"></i>
-					<span class="dis-block size-17 color-gray">일정</span>
-			</a></li>
-			<li><a href="#todoOnly" class="pro-todo-only"> <i
-					class="fas fa-list-ul color-pupple"></i> <span
-					class="dis-block size-17 color-gray">할일</span>
-			</a></li>
-		</ul>
-	</div>
+							<!-- 파일함,업무,일정,할일,투표 -->
+							<div class="pro-right-box martop-15">
+								<ul class="pro-gather-nav">
+									<li><a href="#"> <i
+											class="fas fa-download color-blue-l"></i> <span
+											class="dis-block size-17 color-gray">파일함</span>
+									</a></li>
+									<li><a href="#"> <i class="fas fa-laptop colo-green-l"></i>
+											<span class="dis-block size-17 color-gray">업무</span>
+									</a></li>
+									<li><a href="#"> <i
+											class="far fa-calendar-alt color-red"></i> <span
+											class="dis-block size-17 color-gray">일정</span>
+									</a></li>
+									<li><a href="#todoOnly" class="pro-todo-only"> <i
+											class="fas fa-list-ul color-pupple"></i> <span
+											class="dis-block size-17 color-gray">할일</span>
+									</a></li>
+								</ul>
+							</div>
 
-	<script type="text/javascript">
+							<script type="text/javascript">
 $(function(){
 	// 우측 '할일'모아보기 아이콘 클릭 시
 	$(".pro-todo-only").on("click", function(){
@@ -2151,93 +2214,95 @@ function fn_collCancel(){
 }
 </script>
 
-	<!-- 초대하기 button : s -->
-	<div class="pro-right-box martop-15">
-		<a href="#invitePop"
-			class="right-link-btn invite-btn default-back-color color-white">
-			<i class="fas fa-user-plus maright-10"></i>초대하기
-		</a>
-	</div>
-	<!-- 초대하기 button : f -->
+							<!-- 초대하기 button : s -->
+							<div class="pro-right-box martop-15">
+								<a href="#invitePop"
+									class="right-link-btn invite-btn default-back-color color-white">
+									<i class="fas fa-user-plus maright-10"></i>초대하기
+								</a>
+							</div>
+							<!-- 초대하기 button : f -->
 
 
 
-	<!-- 프로젝트 채팅 button : s -->
-	<div class="pro-right-box martop-15">
-		<a class="right-link-btn back-color-green-l color-white" id="proChat"
-			style="cursor: pointer;"> <i class="fas fa-comments maright-10"></i>프로젝트
-			채팅
-		</a>
-	</div>
-	<!-- 프로젝트 채팅 button : f -->
+							<!-- 프로젝트 채팅 button : s -->
+							<div class="pro-right-box martop-15">
+								<a class="right-link-btn back-color-green-l color-white"
+									id="proChat" style="cursor: pointer;"> <i
+									class="fas fa-comments maright-10"></i>프로젝트 채팅
+								</a>
+							</div>
+							<!-- 프로젝트 채팅 button : f -->
 
-	<!-- 프로젝트 참여자 리스트 : s -->
-	<div class="pro-right-box pro-right-user-list" data-simplebar>
-		<!-- 프로젝트 관리자 : s -->
-		<ul class="nav flex-column block">
-			<li class="nav-item"><span
-				class="dis-block marbtm-5 padleft-15 padright-15 color-gray size-16">프로젝트
-					관리자</span></li>
-			<li class="nav-item"><c:forEach items="${invitedProUserList }"
-					var="manager">
-					<c:if test="${manager.pro_user_man_chk == 'manager' }">
-						<dl class="marbtm-0 cursor-point" onclick="fn_openPopup(this)"
-							data-id="${manager.mem_no }" data-nick="${manager.mem_no }"
-							data-my="${manager.mem_no }">
-							<dt class="posi-re">
-								<i class="icon-circle circle-xs cursor-point"></i> <img
-									src="/chord/resources/img/sample.png" width="24"
-									class="cursor-point">
-							</dt>
-							<dd>
-								<span class="size-18 color-gray">${manager.mem_no }번 이름</span>
-								<!-- <i class="far fa-comment size-18 cursor-point"></i> -->
-							</dd>
-						</dl>
-					</c:if>
-				</c:forEach></li>
-			<!-- 프로젝트 관리자 : f -->
-			<!-- 프로젝트 참여자 : s -->
-			<li class="nav-item"><span
-				class="dis-block float-left martop-15 marbtm-5 padleft-15 padright-15 color-gray size-16">프로젝트
-					참여자(${invitedProUserList.size()-1 })</span></li>
-			<li class="nav-item"><c:forEach items="${invitedProUserList }"
-					var="invitedUser">
-					<c:if test="${invitedUser.pro_user_man_chk == 'normal' }">
-						<dl class="marbtm-0 cursor-point" onclick="fn_openPopup(this)"
-							data-id="${invitedUser.mem_no }번 id"
-							data-nick="${invitedUser.mem_no }"
-							data-my="${invitedUser.mem_no }">
-							<dt class="posi-re">
-								<i class="icon-circle circle-xs cursor-point"></i> <img
-									src="/chord/resources/img/sample.png" width="24"
-									class="cursor-point">
-							</dt>
-							<dd>
-								<span class="size-18 color-gray">${invitedUser.mem_no }번
-									이름</span>
-								<!-- <i class="far fa-comment size-18 cursor-point"></i> -->
-							</dd>
-						</dl>
-					</c:if>
-				</c:forEach></li>
-		</ul>
+							<!-- 프로젝트 참여자 리스트 : s -->
+							<div class="pro-right-box pro-right-user-list" data-simplebar>
+								<!-- 프로젝트 관리자 : s -->
+								<ul class="nav flex-column block">
+									<li class="nav-item"><span
+										class="dis-block marbtm-5 padleft-15 padright-15 color-gray size-16">프로젝트
+											관리자</span></li>
+									<li class="nav-item"><c:forEach
+											items="${invitedProUserList }" var="manager">
+											<c:if test="${manager.pro_user_man_chk == 'manager' }">
+												<dl class="marbtm-0 cursor-point"
+													onclick="fn_openPopup(this)" data-id="${manager.mem_no }"
+													data-nick="${manager.mem_no }" data-my="${manager.mem_no }">
+													<dt class="posi-re">
+														<i class="icon-circle circle-xs cursor-point"></i> <img
+															src="/chord/resources/img/sample.png" width="24"
+															class="cursor-point">
+													</dt>
+													<dd>
+														<span class="size-18 color-gray">${manager.mem_no }번
+															이름</span>
+														<!-- <i class="far fa-comment size-18 cursor-point"></i> -->
+													</dd>
+												</dl>
+											</c:if>
+										</c:forEach></li>
+									<!-- 프로젝트 관리자 : f -->
+									<!-- 프로젝트 참여자 : s -->
+									<li class="nav-item"><span
+										class="dis-block float-left martop-15 marbtm-5 padleft-15 padright-15 color-gray size-16">프로젝트
+											참여자(${invitedProUserList.size()-1 })</span></li>
+									<li class="nav-item"><c:forEach
+											items="${invitedProUserList }" var="invitedUser">
+											<c:if test="${invitedUser.pro_user_man_chk == 'normal' }">
+												<dl class="marbtm-0 cursor-point"
+													onclick="fn_openPopup(this)"
+													data-id="${invitedUser.mem_no }번 id"
+													data-nick="${invitedUser.mem_no }"
+													data-my="${invitedUser.mem_no }">
+													<dt class="posi-re">
+														<i class="icon-circle circle-xs cursor-point"></i> <img
+															src="/chord/resources/img/sample.png" width="24"
+															class="cursor-point">
+													</dt>
+													<dd>
+														<span class="size-18 color-gray">${invitedUser.mem_no }번
+															이름</span>
+														<!-- <i class="far fa-comment size-18 cursor-point"></i> -->
+													</dd>
+												</dl>
+											</c:if>
+										</c:forEach></li>
+								</ul>
 
-	</div>
-</div>
-<!-- 프로젝트 참여자 : f -->
+							</div>
+						</div>
+						<!-- 프로젝트 참여자 : f -->
 
-<form action="/flowolf/chat/insertMulti" method="get"
-	id="chatInsertMulti" name="chatInsertMulti">
-	<c:forEach items="${proUserList }" var="list">
-		<c:if test="${list.mem_id ne memVo.mem_id }">
-			<input type="hidden" value="${list.mem_id }" name="ptn">
-		</c:if>
-	</c:forEach>
-	<input type="hidden" value="${memVo.mem_id }" name="mem_id">
-</form>
+						<form action="/flowolf/chat/insertMulti" method="get"
+							id="chatInsertMulti" name="chatInsertMulti">
+							<c:forEach items="${proUserList }" var="list">
+								<c:if test="${list.mem_id ne memVo.mem_id }">
+									<input type="hidden" value="${list.mem_id }" name="ptn">
+								</c:if>
+							</c:forEach>
+							<input type="hidden" value="${memVo.mem_id }" name="mem_id">
+						</form>
 
-<script type="text/javascript">
+						<script type="text/javascript">
 		$("#proChat").on("click", function() {
 			var check =document.chatInsertMulti;
 			window.open('', 'new', "width=467,height=640,top=100,left=100");
@@ -2247,116 +2312,120 @@ function fn_collCancel(){
 		});
 	</script>
 
-</div>
-<!-- 프로젝트 참여자 리스트 : f -->
+						<!-- 프로젝트 참여자 리스트 : f -->
 
 
 
-<!-- 초대하기  layer pop up : s -->
-<div class="dim-layer">
-	<div class="dimBg"></div>
+						<!-- 초대하기  layer pop up : s -->
+						<div class="dim-layer">
+							<div class="dimBg"></div>
 
-	<div id="invitePop" class="pop-layer">
+							<div id="invitePop" class="pop-layer">
 
-		<!-- pop header -->
-		<header class="pop-top border-box text-center">
-			<a href="#"
-				class="posi-ab dis-block over-hidden icon-close btn-close">close</a>
-			<strong class="dis-block size-28 color-black text-center">${proUserDTO.pro_name }</strong>
-		</header>
+								<!-- pop header -->
+								<header class="pop-top border-box text-center">
+									<a href="#"
+										class="posi-ab dis-block over-hidden icon-close btn-close">close</a>
+									<strong class="dis-block size-28 color-black text-center">${proUserDTO.pro_name }</strong>
+								</header>
 
-		<!-- pop con -->
-		<section class="pop-con border-box">
+								<!-- pop con -->
+								<section class="pop-con border-box">
 
-			<div class="invite-kind-box back-color-white cursor-point"
-				data-id="invitePartner" onclick="fn_subPopOpen(this)">
-				<dl>
-					<dt class="maright-20 padtop-5 back-color-green-l">
-						<i class="fas fa-building size-30 color-white"></i>
-					</dt>
-					<dd>
-						<strong class="dis-block size-24 color-black">동료 초대</strong> <strong
-							class="dis-block size-18 color-gray-l">동료를 초대할 수 있습니다.</strong>
-					</dd>
-				</dl>
-			</div>
-
-
-
-
-		</section>
-
-		<!-- 동료초대 :s -->
-		<div id="invitePartner" class="popup-sub-box">
-			<form action="insertProUser.do" method="get">
-				<input type="hidden" name="pro_no" value="${proUserDTO.pro_no }">
-
-
-				<!-- top : pop invite partner : s -->
-				<div class="pop-top-sub">
-					<i class="fas fa-arrow-left size-20 cursor-point"
-						onclick="fn_popupBack(this)"></i> 동료 초대하기 <i
-						class="flow-icon icon-close cursor-point"
-						onclick="fn_popSubClose(this)"></i>
-				</div>
-				<!-- top : pop invite partner : f -->
-
-				<!-- content : pop invite partner : s -->
-				<div class="pop-con-sub">
-
-					<!-- 추가된 동료 리스트가 나올 부분 -->
-					<div class="select-user-list">
-						<span class="user-all-del" onclick="fn_userListDelete(this)">전체
-							삭제</span>
-					</div>
-
-					<!-- user list:s -->
-					<div class="invite-user-list over-y-scroll">
-						<c:forEach items="${notInvitedProUserList }" var="notInvitedUser">
-							<dl class="pop-user-list" data-memno="${notInvitedUser.mem_no }"
-								data-no="${proUserDTO.pro_no }" onclick="fn_inviteUserAdd(this)">
-								<dt class="maright-10">
-									<i class="icon-circle circle-s"></i> <img
-										src="/chord/resources/img/sample.png" width="40">
-								</dt>
-								<dd>
-									<strong class="dis-block size-20 color-black">${notInvitedUser.mem_no }</strong>
-									<span class="dis-block size-14 color-gray-l">${notIinvitedUser.mem_no }</span>
-									<button type="button" class="invite-add-btn">
-										<i class="fas fa-plus maright-15"></i> <span>추가</span>
-									</button>
-								</dd>
-							</dl>
-						</c:forEach>
-					</div>
-					<!-- user list:f -->
-
-				</div>
-				<!-- content : pop invite partner : f -->
-
-				<!-- footer : pop invite partner : s -->
-				<div class="pop-footer-sub">
-					<input type="button"
-						class="invate-frm-submit submit-btn color-white default-back-color "
-						value="초대">
-				</div>
-				<!-- footer : pop invite partner : f -->
-
-			</form>
-
-		</div>
-		<!-- 동료초대 :f -->
+									<div class="invite-kind-box back-color-white cursor-point"
+										data-id="invitePartner" onclick="fn_subPopOpen(this)">
+										<dl>
+											<dt class="maright-20 padtop-5 back-color-green-l">
+												<i class="fas fa-building size-30 color-white"></i>
+											</dt>
+											<dd>
+												<strong class="dis-block size-24 color-black">동료 초대</strong>
+												<strong class="dis-block size-18 color-gray-l">동료를
+													초대할 수 있습니다.</strong>
+											</dd>
+										</dl>
+									</div>
 
 
 
 
-	</div>
-	<!-- 초대하기 List pop : f -->
+								</section>
 
-</div>
-<!-- 초대하기  layer pop up : f -->
+								<!-- 동료초대 :s -->
+								<div id="invitePartner" class="popup-sub-box">
+									<form action="insertProUser.do" method="get">
+										<input type="hidden" name="pro_no"
+											value="${proUserDTO.pro_no }">
 
-<script type="text/javascript">
+
+										<!-- top : pop invite partner : s -->
+										<div class="pop-top-sub">
+											<i class="fas fa-arrow-left size-20 cursor-point"
+												onclick="fn_popupBack(this)"></i> 동료 초대하기 <i
+												class="flow-icon icon-close cursor-point"
+												onclick="fn_popSubClose(this)"></i>
+										</div>
+										<!-- top : pop invite partner : f -->
+
+										<!-- content : pop invite partner : s -->
+										<div class="pop-con-sub">
+
+											<!-- 추가된 동료 리스트가 나올 부분 -->
+											<div class="select-user-list">
+												<span class="user-all-del" onclick="fn_userListDelete(this)">전체
+													삭제</span>
+											</div>
+
+											<!-- user list:s -->
+											<div class="invite-user-list over-y-scroll">
+												<c:forEach items="${notInvitedProUserList }"
+													var="notInvitedUser">
+													<dl class="pop-user-list"
+														data-memno="${notInvitedUser.mem_no }"
+														data-no="${proUserDTO.pro_no }"
+														onclick="fn_inviteUserAdd(this)">
+														<dt class="maright-10">
+															<i class="icon-circle circle-s"></i> <img
+																src="/chord/resources/img/sample.png" width="40">
+														</dt>
+														<dd>
+															<strong class="dis-block size-20 color-black">${notInvitedUser.mem_no }</strong>
+															<span class="dis-block size-14 color-gray-l">${notIinvitedUser.mem_no }</span>
+															<button type="button" class="invite-add-btn">
+																<i class="fas fa-plus maright-15"></i> <span>추가</span>
+															</button>
+														</dd>
+													</dl>
+												</c:forEach>
+											</div>
+											<!-- user list:f -->
+
+										</div>
+										<!-- content : pop invite partner : f -->
+
+										<!-- footer : pop invite partner : s -->
+										<div class="pop-footer-sub">
+											<input type="button"
+												class="invate-frm-submit submit-btn color-white default-back-color "
+												value="초대">
+										</div>
+										<!-- footer : pop invite partner : f -->
+
+									</form>
+
+								</div>
+								<!-- 동료초대 :f -->
+
+
+
+
+							</div>
+							<!-- 초대하기 List pop : f -->
+
+						</div>
+						<!-- 초대하기  layer pop up : f -->
+
+						<script type="text/javascript">
 $(function(){
 
 	// 초대하기 layerPop 띄우기
@@ -2391,78 +2460,16 @@ $(function(){
 
 });
 </script>
-</div>
-<!-- project right : finish -->
-</div>
-</section>
-<div>
-	<%@include file="layerPopCon.jsp"%>
-</div>
-</main>
-</div>
+					</div>
+					<!-- project right : finish -->
+		</div>
+		</section>
+		<div>
+			<%@include file="layerPopCon.jsp"%>
+		</div>
+		</main>
+	</div>
 
-</div>
-<div class="alert flowolf-alert"></div>
-
-<script>
-function show1(){
-	$('.participants').hide();
-	$('#map').show();
-//마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
-var infowindow = new kakao.maps.InfoWindow({zIndex:1});
-
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = {
-        center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };  
-
-// 지도를 생성합니다    
-var map = new kakao.maps.Map(mapContainer, mapOption); 
-
-// 장소 검색 객체를 생성합니다
-var ps = new kakao.maps.services.Places(); 
-
-var text = $('#searchInput').val();
-// 키워드로 장소를 검색합니다
-ps.keywordSearch(text, placesSearchCB); 
-
-// 키워드 검색 완료 시 호출되는 콜백함수 입니다
-function placesSearchCB (data, status, pagination) {
-    if (status === kakao.maps.services.Status.OK) {
-
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
-        var bounds = new kakao.maps.LatLngBounds();
-
-        for (var i=0; i<data.length; i++) {
-            displayMarker(data[i]);    
-            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-        }       
-
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        map.setBounds(bounds);
-    } 
-}
-
-	// 지도에 마커를 표시하는 함수입니다
-	function displayMarker(place) {
-	    
-	    // 마커를 생성하고 지도에 표시합니다
-	    var marker = new kakao.maps.Marker({
-	        map: map,
-	        position: new kakao.maps.LatLng(place.y, place.x) 
-	    });
-	
-	    // 마커에 클릭이벤트를 등록합니다
-	    kakao.maps.event.addListener(marker, 'click', function() {
-	        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-	        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-	        infowindow.open(map, marker);
-	    });
-	}
-}
-</script>
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
@@ -2474,5 +2481,6 @@ function placesSearchCB (data, status, pagination) {
 <script src="/chord/resources/js/dashboard.js"></script>
 <!-- jjpicker -->
 <script type="text/javascript" src="/chord/resources/js/jjpicker.js"></script>
+
 </body>
 </html>

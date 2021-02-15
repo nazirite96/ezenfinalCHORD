@@ -1,6 +1,7 @@
 package com.ezen.chord.schedule.dto;
 
 import java.sql.Date;
+import java.util.List;
 
 public class SchdDTO {
 	
@@ -19,14 +20,18 @@ public class SchdDTO {
 	private int mem_no;			//// 해당 맴버 번호
 	private String mem_nick;
 	
+	private List<Integer> tu_mem_list; /// 참가자들 리스트 
 	
 	public SchdDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
 
+
+
 	public SchdDTO(int schd_no, String schd_loc, String schd_memo, String time_start_date, String time_end_date,
-			String cont_kind, int cont_no, String tim_cont, Date tim_date, int pro_no, int mem_no, String mem_nick) {
+			String cont_kind, int cont_no, String tim_cont, Date tim_date, int pro_no, int mem_no, String mem_nick,
+			List<Integer> tu_mem_list) {
 		super();
 		this.schd_no = schd_no;
 		this.schd_loc = schd_loc;
@@ -40,7 +45,24 @@ public class SchdDTO {
 		this.pro_no = pro_no;
 		this.mem_no = mem_no;
 		this.mem_nick = mem_nick;
+		this.tu_mem_list = tu_mem_list;
 	}
+
+
+
+
+	public List<Integer> getTu_mem_list() {
+		return tu_mem_list;
+	}
+
+
+
+
+	public void setTu_mem_list(List<Integer> tu_mem_list) {
+		this.tu_mem_list = tu_mem_list;
+	}
+
+
 
 
 	public int getSchd_no() {
