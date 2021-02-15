@@ -31,7 +31,7 @@ public class SchdDAOImpl implements SchdDAO {
 	@Override
 	public int insertParti(SchdDTO dto) {
 		// TODO Auto-generated method stub
-		int result = sqlMap.insert("insertParti");
+		int result = sqlMap.insert("insertParti",dto);
 		return result;
 	}
 	@Override

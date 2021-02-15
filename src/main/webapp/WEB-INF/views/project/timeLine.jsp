@@ -571,12 +571,12 @@ function submitgogo(){
 										<!-- 일정:s -->
 										<div id="tab-3" class="tabs-content con-schedule">
 
-											<form action="insertTimWithSchd.do" name="schdfrm" method="get"
+											<form action="insertTimWithSchd.do" name="schdfrm" method="post"
 												enctype="multipart/form-data">
 												<input type="hidden" name="schd_no" value="1"> <input
-													type="hidden" name="cont_no" value="schd"> <input
 													type="hidden" name="pro_no" value="${proUserDTO.pro_no }">
 												<input type="hidden" name="mem_no" value="${memNo }">
+												<input type="hidden" name="cont_no" value="1">
 												<!-- tab-con-box:s -->
 												<!-- <input type="hidden" name="pro_no" value="${proVo.pro_no }">-->
 
