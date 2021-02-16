@@ -16,6 +16,7 @@
 <link rel="canonical"
 	href="https://getbootstrap.com/docs/4.6/examples/dashboard/">
 
+
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -36,6 +37,7 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
 		integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
 		crossorigin="anonymous"></script>
+
 <style type="text/css">
 /* 네비바 */
 .navbar-default{
@@ -232,3 +234,4 @@
 		</c:otherwise>
 	</c:choose>
 </body>
+</html>

@@ -32,13 +32,13 @@ public class TaskController {
 	@Autowired
 	private TaskService taskService;
 	
-	
+
 	@RequestMapping("/taskTest.do")
 	public ModelAndView getProList(int mem_no,HttpSession session) {
 		
 		
 		ModelAndView mav = new ModelAndView();
-		List<ProjectDTO> proList = proService.getProAllList(mem_no);
+		List<ProjectUserDTO> proList = proService.getProAllList(mem_no);
 		mav.addObject("mem_no", mem_no);
 		
 		mav.addObject("proList", proList);
@@ -46,6 +46,7 @@ public class TaskController {
 		
 		return mav;
 	}
+
 	
 	@RequestMapping("/taskTest_1.do")
 	public ModelAndView getTimeline(int pro_no,HttpSession sess) {

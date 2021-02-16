@@ -26,6 +26,8 @@ public interface MemberDAO {
 	
 	/*마이페이지*/
 	public MemberDTO myPageDAO(int mem_no);
-	public int myPageUpdateDAO(MemberDTO mdto);	
+	public int myPageUpdateDAO(MemberDTO mdto);
+	public int myPage_memInfoInsertDAO(MemberDTO mdto);
+	public int myPage_memInfoUpdateDAO(MemberDTO mdto);
 	
 }

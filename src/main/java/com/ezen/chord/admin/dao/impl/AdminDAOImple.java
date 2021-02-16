@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ezen.chord.admin.dao.AdminDAO;
 import com.ezen.chord.company.dto.CompanyDTO;
+import com.ezen.chord.member.dto.MemberDTO;
 
 @Repository
 public class AdminDAOImple implements AdminDAO {
@@ -109,9 +110,39 @@ public class AdminDAOImple implements AdminDAO {
 			System.out.println(e.getLocalizedMessage());
 			result = 0;
 		}
-		System.out.println("회원관리_adminDAO: 관리자 삭제 "+result);
 		return result;
 	}
+	
+	
+	/*회원정보 직책,부서insert*/
+	@Override
+	public int adminMemInfoInsertDAO(MemberDTO mdto) {
+		
+		int result = 0;
+		try {
+			result = sqlMap.insert("chord.member.myPage_memInfo_insert",mdto);
+		} catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
+		
+		return result;
+	}
+	
+	/*회원정보 직책,부서 update*/
+	@Override
+	public int adminMemInfoUpdateDAO(MemberDTO mdto) {
+		
+		int result = 0;
+		try {
+			result = sqlMap.update("chord.member.myPage_memInfo_update",mdto);
+		} catch (Exception e) {
+			System.out.println(e.getLocalizedMessage());
+		}
+		
+		return result;
+	}
+	
+	
 
 	/*회사관리자_프로젝트 리스트*/
 	@Override
@@ -148,6 +179,12 @@ public class AdminDAOImple implements AdminDAO {
 			System.out.println(e.getLocalizedMessage());
 		}
 		return list;
-	}	
+	}
+	
+	/*회사관리자_프로젝트 삭제*/
+//	@Override
+//	public int adminProDeleteDAO(int pro_no) {
+
+//	}
 	
 }

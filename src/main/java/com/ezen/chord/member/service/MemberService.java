@@ -29,6 +29,8 @@ public interface MemberService {
 	/*마이페이지*/
 	public MemberDTO myPageService(int mem_no);
 	public int myPageUpdateService(MemberDTO mdto);
+	public int myPageInfoInsertService(MemberDTO mdto);
+	public int myPageInfoUpdateService(MemberDTO mdto);
 	
 	
 }

@@ -6,18 +6,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous">
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/header.jsp" />
-	<div class="adminCom_firstDiv">
-		<jsp:include page="/WEB-INF/views/adminCom/adminComLeftList.jsp" />
-		<div class="adminCom_SecDiv">
-			<h1>회사 프로젝트 상세페이지</h1>
-			<c:forEach var="name" items="${name }">
-			<div>${name.PNO }번 프로젝트 명 :&nbsp;${name.PNAME }</div>
-			</c:forEach>
-			<form action="">
-				<table>
+
+	<main role="main" class="ml-3 mt-3">
+		<form action="adminProDelete.do">
+			<div
+				class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+				<c:forEach var="name" items="${name }">
+					<h1 class="h2">
+						[No.<input type="text" name="pro_no" value="${name.PNO }">]
+						|<input type="text" name="pro_name" value="${name.PNAME }">
+					</h1>
+				</c:forEach>
+			</div>
+			<div class="table-responsive">
+				<table class="table table-hover">
 					<thead>
 						<tr>
 							<th>이메일</th>
@@ -28,7 +37,7 @@
 					<tbody>
 						<c:if test="${empty proContents}">
 							<tr>
-								<td>해당 프로젝트 사용자 없음~</td>
+								<td>해당 프로젝트 사용자 없습니다.</td>
 							</tr>
 						</c:if>
 						<c:forEach var="list" items="${proContents }">
@@ -41,12 +50,15 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<td><input type="submit" value="삭제"></td>
+							<td colspan="3" align="right"><input type="submit"
+								value="삭제" class="btn btn-dark btn-sm"></td>
 						</tr>
 					</tfoot>
 				</table>
-			</form>
-		</div>
-	</div>
+
+			</div>
+		</form>
+	</main>
+
 </body>
 </html>

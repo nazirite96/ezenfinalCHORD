@@ -45,14 +45,35 @@
 	<select id="login_getComPwd" parameterType="Integer" resultType="CompanyDTO">
 		select * from company where com_no=#{com_no}
 	</select>
-	<select id="myPageSQL" parameterType="Integer" resultType="MemberDTO">
-		select * from member where mem_no=#{mem_no}
+	<select id="myPage_contents" parameterType="Integer" resultType="MemberDTO">
+		select *
+		from member
+		left join member_info
+		on member.mem_no = member_info.mem_no
+		where member.mem_no =#{mem_no}
 	</select>
-	<update id="myPageUpdateSQL" parameterType="MemberDTO">
+	<update id="myPage_member_update" parameterType="MemberDTO">
 		update member
 		set mem_name=#{mem_name},
 		mem_pwd=#{mem_pwd}
 		where mem_no=#{mem_no}
+	</update>
+	<insert id="myPage_memInfo_insert" parameterType="MemberDTO">
+		insert into member_info values(
+		member_info_seq.nextval,
+		#{mem_no},
+		'',
+		'',
+		#{mem_info_phone},
+		#{mem_info_position},
+		#{mem_info_dept})
+	</insert>
+	<update id="myPage_memInfo_update" parameterType="MemberDTO">
+		update member_info set 
+			mem_info_phone=#{mem_info_phone},
+			mem_info_position=#{mem_info_position},
+			mem_info_dept=#{mem_info_dept}
+			where mem_no=#{mem_no}
 	</update>
 </mapper>
   
