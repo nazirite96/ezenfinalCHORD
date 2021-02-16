@@ -2,6 +2,7 @@ package com.ezen.chord.project.service;
 
 import java.util.List;
 
+import com.ezen.chord.box.dto.BoxDTO;
 import com.ezen.chord.project.dto.ProjectDTO;
 import com.ezen.chord.project_user.dto.ProjectUserDTO;
 
@@ -23,5 +24,10 @@ public interface ProjectService {
 	int chkProUser(int mem_no,int pro_no);
 	
 	int deletePro(int pro_no);
+	
+	int insertBoxPro(BoxDTO boxDTO);
+	
+	int deleteBoxPro(BoxDTO boxDTO);
+	
 	
 }

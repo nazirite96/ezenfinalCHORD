@@ -4,6 +4,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ezen.chord.box.dto.BoxDTO;
 import com.ezen.chord.project.dao.ProjectDAO;
 import com.ezen.chord.project.dto.ProjectDTO;
 
@@ -40,5 +41,17 @@ public class ProjectDAOImpl implements ProjectDAO{
 	public int updatePro(ProjectDTO proDTO) {
 		// TODO Auto-generated method stub
 		return sqlMap.update("updatePro", proDTO);
+	}
+	
+	@Override
+	public int deleteBoxPro(BoxDTO boxDTO) {
+		// TODO Auto-generated method stub
+		return sqlMap.insert("deleteBoxPro", boxDTO);
+	}
+	
+	@Override
+	public int insertBoxPro(BoxDTO boxDTO) {
+		// TODO Auto-generated method stub
+		return sqlMap.insert("insertBoxPro", boxDTO);
 	}
 }

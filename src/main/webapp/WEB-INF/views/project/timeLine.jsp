@@ -11,64 +11,8 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
-	crossorigin="anonymous">
-<!-- jQuery 3.3.1 -->
-<script src="/chord/resources/js/jquery-3.1.1.min.js"></script>
-<!-- custom -->
-<link rel="stylesheet" href="/chord/resources/css/style_margin.css">
-<link rel="stylesheet" href="/chord/resources/css/style_padding.css">
-<!-- icon  -->
-<script src="https://kit.fontawesome.com/1a984316ef.js"
-	crossorigin="anonymous"></script>
-<!-- gwjs -->
-<script type="text/javascript" src="/chord/resources/js/Gw.js"></script>
-<!-- taksFilesjs -->
-<script type="text/javascript" src="/chord/resources/js/taksFiles.js"></script>
 
-<!-- Air datepicker css -->
-<link
-	href="<%=request.getContextPath()%>/resources/css/datepicker.min.css"
-	rel="stylesheet" type="text/css" media="all">
-<!-- Air datepicker js -->
-<script src="<%=request.getContextPath()%>/resources/js/datepicker.js"></script>
-<!-- 달력 한글 추가를 위해 커스텀 -->
-<script
-	src="<%=request.getContextPath()%>/resources/js/datepicker.ko.js"></script>
-<!-- fontawesome -->
-<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-<!-- font-awesome CSS -->
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
-<!-- textArea 자동 높이 설정 -->
-<script
-	src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
-<!-- Air datepicker css -->
-<link href="<%=request.getContextPath()%>/resources/css/JeCss.css"
-	rel="stylesheet" type="text/css">
-<!-- sungtak -->
-<!-- kakaomap -->
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da2da3e53b6d01f803242012ae94fba6&libraries=services"></script>
-<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-<script
-	src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
-<link href="<%=request.getContextPath()%>/resources/css/JeCss2.css"
-	rel="stylesheet" type="text/css">
-<!-- tak -->
-<script>
-function submitgogo(){
-	var schd_date = $('#schdtime').val();
-	if(schd_date.length<=16){
-		alert('일정의 마감시간을 설정해주삼 :>')
-	}else{
-		document.schdfrm.submit();
-	}
-}
-</script>
+
 <!-- 떠다니는 메뉴 -->
 
 <script type="text/javascript">
@@ -127,6 +71,14 @@ function submitgogo(){
 	}
 }
 </style>
+
+<!-- Custom styles for this template -->
+<link href="/chord/resources/css/dashboard.css" rel="stylesheet">
+
+</head>
+<body id="contentBody" onload="InitializeStaticMenu();">
+<jsp:include page="/WEB-INF/views/header.jsp"/>
+
 <script type="text/javascript">
 	$(function() {
 		// 탭메뉴 설정 : 탭메뉴(li)에 설정된 data-id 값과 같은 id값을 가진 content box 노출
@@ -139,18 +91,72 @@ function submitgogo(){
 			$("#" + tab_id).addClass("active");
 		});
 	});
-</script>
-<!-- Custom styles for this template -->
-<link href="/chord/resources/css/dashboard.css" rel="stylesheet">
-<link rel="stylesheet" href="/chord/resources/css/GwCss.css">
-</head>
-<body id="contentBody" onload="InitializeStaticMenu();">
-<jsp:include page="/WEB-INF/views/header.jsp"/>
-	
+</script>	
 
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+	integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+	crossorigin="anonymous"></script>
+<!-- custom -->
+<link href="<%=request.getContextPath()%>/resources/css/JeCss2.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/chord/resources/css/style_margin.css">
+<link rel="stylesheet" href="/chord/resources/css/style_padding.css">
+<!-- icon  -->
+<script src="https://kit.fontawesome.com/1a984316ef.js"
+	crossorigin="anonymous"></script>
+
+<!-- taksFilesjs -->
+<script type="text/javascript" src="/chord/resources/js/taksFiles.js"></script>
+
+<!-- Air datepicker css -->
+<link
+	href="<%=request.getContextPath()%>/resources/css/datepicker.min.css"
+	rel="stylesheet" type="text/css" media="all">
+<!-- Air datepicker js -->
+<script src="<%=request.getContextPath()%>/resources/js/datepicker.js"></script>
+<!-- 달력 한글 추가를 위해 커스텀 -->
+<script
+	src="<%=request.getContextPath()%>/resources/js/datepicker.ko.js"></script>
+<!-- fontawesome -->
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<!-- font-awesome CSS -->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+<!-- textArea 자동 높이 설정 -->
+<script
+	src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
+<!-- Air datepicker css -->
+<link href="<%=request.getContextPath()%>/resources/css/JeCss.css"
+	rel="stylesheet" type="text/css">
+	
+<!-- sungtak -->
+<!-- kakaomap -->
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da2da3e53b6d01f803242012ae94fba6&libraries=services"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script
+	src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
+
+<link rel="stylesheet" href="/chord/resources/css/GwCss.css">
+<!-- gwjs -->
+<script type="text/javascript" src="/chord/resources/js/Gw.js"></script>
+<script>
+function submitgogo(){
+	var schd_date = $('#schdtime').val();
+	if(schd_date.length<=16){
+		alert('일정의 마감시간을 설정해주삼 :>')
+	}else{
+		document.schdfrm.submit();
+	}
+}
+</script>
 	<div class="container-fluid">
 		<div class="row">
-			<nav id="sidebarMenu" style="z-index:-1"
+			<nav id="sidebarMenu" style="z-index : 2"
 				class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
 				<div class="sidebar-sticky pt-3">
 					<ul class="nav flex-column">
@@ -743,7 +749,7 @@ function submitgogo(){
 										<!-- 일정:f -->
 										<!-- 할일:s -->
 										<div id="tab-4" class="tabs-content con-todo">
-											<form action="timInsertwithTodo.do" method="get">
+											<form action="todoInsert.do" method="get">
 												<input type="hidden" name="mem_no" value="${memNo }">
 												<input type="hidden" name="pro_no"
 													value="${proUserDTO.pro_no }"> <input type="hidden"
@@ -1016,7 +1022,6 @@ function submitgogo(){
 															<!--</c:if>
 														</c:forEach>-->
 														</div>
-														-->
 														<!-- 첨부파일 목록이 나올부분  -->
 														<div class="upload-file-list">
 															<!-- <c:forEach items="${timeLine.filesList }" var="filesVo">
@@ -1073,7 +1078,6 @@ function submitgogo(){
 												</form>
 												<!-- 일반 게시글 수정:f -->
 												<!-- 기본글 : finsh -->
-
 											</c:when>
 											<c:when test="${dto.cont_kind eq 'task' }">
 												<!-- 업무글 : start -->
@@ -1086,7 +1090,6 @@ function submitgogo(){
 															readonly>
 													</div>
 													<!-- 업무명:f -->
-
 													<!-- 업무상태:s -->
 													<div class="input-box martop-15">
 														<dl>
@@ -1143,7 +1146,6 @@ function submitgogo(){
 																		class="dis-none task-hd">
 																	</label>
 																</div>
-
 															</dd>
 														</dl>
 													</div>
@@ -1566,18 +1568,21 @@ function submitgogo(){
 
 																	<!-- 담당자 리스트 -->
 																	<div class="task-user-list">
-																		<c:if test="${dto.schdDTO.tu_mem_list.size()= 0} ">
+																		<c:if test="${empty dto.schdDTO.tu_mem_list} ">
 																			<p class="mar-0 pad-0">담당자 없음</p>
 																		</c:if>
-																		<c:forEach items="${dto.schdDTO.tu_mem_list }" var="tu_mem">
-																			<div class="name-tag">
 																				<img src="/chord/resources/img/sample.png" width="24"
 																						class="cursor-point"> <strong class="marleft-10">${tu_mem }</strong>
+																		<c:if test="${not empty dto.schdDTO.tu_mem_list} ">
+																		<c:forEach items="${dto.schdDTO.tu_mem_list }" var="tu_mem">
+																			<div class="name-tag">
+																				 <strong class="marleft-10">${tuVo.mem_no }</strong>
 																				<i class="fas fa-times-circle marleft-15"
 																					style="display: none"></i> <input type="hidden"
 																					name="tu_mem_id" value="${tu_mem }">
 																			</div>
 																		</c:forEach>
+																		</c:if>
 																	</div>
 																</dd>
 															</dl>
@@ -2470,14 +2475,7 @@ $(function(){
 		</main>
 	</div>
 
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
-	integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
-	crossorigin="anonymous"></script>
+
 <script src="/chord/resources/js/dashboard.js"></script>
 <!-- jjpicker -->
 <script type="text/javascript" src="/chord/resources/js/jjpicker.js"></script>

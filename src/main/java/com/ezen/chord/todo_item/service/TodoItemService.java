@@ -7,5 +7,6 @@ import com.ezen.chord.todo_item.dto.TodoItemDTO;
 public interface TodoItemService {
 	
 	public int insertTodoItemService(TodoItemDTO tiDTO);
+	public int insertTodoItemPiService(TodoItemDTO tiDTO);
 	public List<TodoItemDTO> getTodoItemListService(int todo_no);
 }

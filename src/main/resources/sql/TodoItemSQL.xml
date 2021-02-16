@@ -10,6 +10,11 @@
 		insert into todo_item(todo_item_no,todo_item_content,todo_item_chk,todo_no,todo_item_date) 
 		values(todo_item_SEQ.nextval, #{todo_item_content}, 'n', #{todo_no},#{todo_item_date})
 	</insert>
+	
+	<insert id="insertTodoItemPi" parameterType="todoItemDTO">
+		insert into participants(cont_kind,cont_no,mem_no)
+		values('todo',#{todo_no},#{ti_mem_no})
+	</insert>
 
 	<!-- 할일 항목 수정 -->
 	<update id="updateTodoItem" parameterType="todoItemDTO">

@@ -6,6 +6,7 @@
 <head>
 	<title>Home</title>
 </head>
+<script src="/chord/resources/js/jquery-3.1.1.min.js"></script>
 <body>
 <jsp:include page="/WEB-INF/views/header.jsp"/>
 <h1>

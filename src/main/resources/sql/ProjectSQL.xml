@@ -35,5 +35,12 @@
     		pro_cont = #{pro_cont}
     		where pro_no = #{pro_no}
     	</update>
-    	
+    	<insert id="insertBoxPro" parameterType="boxDTO">
+    		insert into box_project
+    		values(#{box_no},sysdate,#{pro_no})
+    	</insert>
+    	<delete id="deleteBoxPro" parameterType="boxDTO">
+    		delete box_project
+    		where box_no = #{box_no} and pro_no =#{pro_no}
+    	</delete>
     </mapper>
