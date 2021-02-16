@@ -1295,7 +1295,7 @@ function submitgogo(){
 															</dt>
 															<dd class="posi-re">
 																<input type="text" placeholder="시작일"
-																	value="${dto.taskDTO.task_start_date }" readonly />
+																	value="${fn:substring(dto.taskDTO.task_start_date, 0, 16) }" readonly />
 															</dd>
 														</dl>
 													</div>
@@ -1309,7 +1309,7 @@ function submitgogo(){
 															</dt>
 															<dd class="posi-re">
 																<input type="text" placeholder="마감일"
-																	value="${dto.taskDTO.task_end_date }" readonly />
+																	value="${fn:substring(dto.taskDTO.task_end_date, 0, 16) }" readonly />
 															</dd>
 														</dl>
 													</div>
@@ -1402,12 +1402,11 @@ function submitgogo(){
 												</div>
 
 												<!-- 업무 수정:s -->
-												<form action="taskUpdate.do" method="post"
+												<form action="taskUpdate.do" method="get"
 													enctype="multipart/form-data" class="article-edit-form">
 
-													<input type="hidden" name="task_no"
-														value="${dto.taskDTO.task_no }">
-
+													<input type="hidden" name="tim_no" value="${dto.tim_no }">
+													<input type="hidden" name="pro_no" value="${dto.pro_no }">
 													<!-- article edit box:s -->
 													<div class="article-edit-box con-task">
 
@@ -1488,6 +1487,8 @@ function submitgogo(){
 						</c:forEach> --%>
 																	</div>
 																	<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):f -->
+																	
+																	
 																</dd>
 															</dl>
 														</div>
@@ -1497,15 +1498,13 @@ function submitgogo(){
 														<div class="input-box martop-15 add-item-box">
 															<dl>
 																<dt class="maright-20">
-																	<i class="flow-icon icon-task icon-sDate"></i>
+																	<i class="far fa-calendar-plus"></i>
 																</dt>
 																<dd class="posi-re">
 																	<input type="text" name="task_start_date"
-																		placeholder="시작일설정" data-language='ko'
-																		class="datepicker-here"
-																		value="${dto.taskDTO.task_start_date }" /> <i
-																		class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
-																		onclick="fn_dateReset(this)"></i>
+																		placeholder="시작일설정" id="datepicker3"
+																		class="datepicker-here" data-timepicker="true" data-time-format='hh:ii'
+																		value="${fn:substring(dto.taskDTO.task_start_date, 0, 16) }" />
 																</dd>
 															</dl>
 														</div>
@@ -1515,20 +1514,18 @@ function submitgogo(){
 														<div class="input-box martop-15 add-item-box">
 															<dl>
 																<dt class="maright-20">
-																	<i class="flow-icon icon-task icon-fDate"></i>
+																	<i class="far fa-calendar-minus"></i>
 																</dt>
 																<dd class="posi-re">
 																	<input type="text" name="task_end_date"
-																		placeholder="마감일설정" data-language='ko'
-																		class="datepicker-here"
-																		value="${dto.taskDTO.task_end_date }" /> <i
-																		class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
-																		onclick="fn_dateReset(this)"></i>
+																		placeholder="마감일설정" id="datepicker4"
+																		class="datepicker-here" data-timepicker="true" data-time-format='hh:ii'
+																		value="${fn:substring(dto.taskDTO.task_end_date, 0, 16) }" /> 
 																</dd>
 															</dl>
 														</div>
 														<!-- 마감일:f -->
-
+	
 														<!-- 우선순위:s -->
 														<div class="input-box martop-15 add-item-box">
 															<dl>
@@ -1571,7 +1568,7 @@ function submitgogo(){
 															</dl>
 														</div>
 														<!-- 우선순위:f -->
-
+			
 														<button type="button" class="add-item-btn"
 															onclick="fn_addItem(this)">
 															<i class="fas fa-angle-down maright-10"></i> 추가 항목 입력
@@ -2579,7 +2576,6 @@ $(function(){
 					</div>
 				</section>
 				<!-- project right : finish -->
-
 				<div>
 					<%@include file="layerPopCon.jsp"%>
 				</div>
@@ -2653,9 +2649,9 @@ $(function(){
 		});
 		
 	});
-	</script>
 		<script src="/chord/resources/js/dashboard.js"></script>
 		<!-- jjpicker -->
 		<script type="text/javascript" src="/chord/resources/js/jjpicker.js"></script>
+
 </body>
 </html>

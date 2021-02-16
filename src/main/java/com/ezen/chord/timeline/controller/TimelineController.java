@@ -59,8 +59,9 @@ public class TimelineController {
 		mav.addObject("setBoxList", setBoxList);
 		//프로젝트 정보를 받기
 		int page = 0; 
-		
+		TaskDTO taskDTO = new TaskDTO();
 		List<TimelineDTO> list = timService.getTimelineByProNo(pro_no, page);
+		
 		for(int i = 0 ; i < list.size() ; i++) {
 			switch (list.get(i).getCont_kind()) {
 			case "post":
@@ -161,9 +162,7 @@ public class TimelineController {
 		/*task테이블관련*/
 		int resultTask = taskService.insertTaskService(taskDTO);
 		
-		/*parti테이블관련*/
-		int resultTaskPi = taskService.insertTaskPiService(taskDTO);
-		
+
 		/*시작,마감일*/
 		int resultTaskDate = taskService.insertTaskDateService(taskDTO);
 		/*타임라인관련*/
@@ -171,6 +170,10 @@ public class TimelineController {
 		
 		for(int i = 0 ; i < tu_mem_list.size() ; i++) {
 			System.out.println(tu_mem_list.get(i));
+			taskDTO.setTu_mem_list(tu_mem_list.get(i));
+			/*parti테이블관련(담당자)*/
+			taskService.insertTaskPiService(taskDTO);
+			
 		}
 		
 		

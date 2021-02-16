@@ -1035,7 +1035,7 @@ function fn_addTodo(el) {
 		// input name ++
 		todoBox.find("dl").last().find(".todo-input").attr('name', 'tiList[' + length + '].todo_item_content');
 		todoBox.find("dl").last().find(".todo-date").attr('name', 'tiList[' + length + '].todo_item_date');
-		todoBox.find("dl").last().find(".todo-mem").attr('name', 'tiList[' + length + '].');
+		todoBox.find("dl").last().find(".todo-mem").attr('name', 'tiList[' + length + '].ti_mem_no');
 
 		// 내용 reset
 		todoBox.find("dl").last().find("input[type=text]").val('');
@@ -1118,7 +1118,7 @@ function fn_keyDown(event, el) {
 
 				// input name ++
 				inputBox.find("dl").last().find(".todo-input").attr('name', 'tiList[' + length + '].todo_item_content');
-				inputBox.find("dl").last().find(".todo-chk").val('n').attr('name', 'tiList[' + length + '].ti_chk');
+				inputBox.find("dl").last().find(".todo-chk").val('n').attr('name', 'tiList[' + length + '].todo_item_chk');
 				inputBox.find("dl").last().find(".todo-date").attr('name', 'tiList[' + length + '].todo_item_date');
 				inputBox.find("dl").last().find(".todo-mem").attr('name', 'tiList[' + length + '].ti_mem_no');
 

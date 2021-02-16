@@ -1,6 +1,8 @@
 package com.ezen.chord.task.dao.imple;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -121,15 +123,22 @@ public class TaskDAOImple implements TaskDAO {
 	}
 	
 
-//	@Override
-//	public int updateTask(TaskDTO taskDTO) {
-//		return sqlMap.update("updateTask", taskDTO);
-//	}
+	@Override
+	public int updateTask(TaskDTO taskDTO) {
+		return sqlMap.update("updateTask", taskDTO);
+	}
 	
 	@Override
 	public TaskDTO getTaskDTO(int task_no) {
+		TaskDTO result = sqlMap.selectOne("selectTaskByNo", task_no);
+		
+		return result;
+	}
+	
+	@Override
+	public int deleteTaskUserDAO(int cont_no) {
 		// TODO Auto-generated method stub
-		return sqlMap.selectOne("selectTaskByNo", task_no);
+		return sqlMap.delete("deleteTaskUserR", cont_no);
 	}
 
 }
