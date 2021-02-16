@@ -87,7 +87,7 @@ public class SchdController {
 		String end=datetime.substring(21,37);
 
 		dto.setSchd_no(seq);
-		dto.setCont_kind("schedule");
+		dto.setCont_kind("schd");
 		dto.setCont_no(seq);
 		dto.setPro_no(19);
 		

@@ -1572,14 +1572,14 @@ function submitgogo(){
 																			<p class="mar-0 pad-0">담당자 없음</p>
 																		</c:if>
 																				<img src="/chord/resources/img/sample.png" width="24"
-																						class="cursor-point"> <strong class="marleft-10">${tu_mem }</strong>
+																						class="cursor-point"> <strong class="marleft-10">ss</strong>
 																		<c:if test="${not empty dto.schdDTO.tu_mem_list} ">
 																		<c:forEach items="${dto.schdDTO.tu_mem_list }" var="tu_mem">
 																			<div class="name-tag">
-																				 <strong class="marleft-10">${tuVo.mem_no }</strong>
+																				 <strong class="marleft-10">${tu_mem.SchdDTO.nick_name }</strong>
 																				<i class="fas fa-times-circle marleft-15"
 																					style="display: none"></i> <input type="hidden"
-																					name="tu_mem_id" value="${tu_mem }">
+																					name="tu_mem_id" value="${tu_mem.SchdDTO.mem_no }">
 																			</div>
 																		</c:forEach>
 																		</c:if>
@@ -1775,9 +1775,9 @@ function submitgogo(){
 											</div>
 											<!-- article edit dn:f -->
 										</form>
-
-
 												<!-- 일정 수정:f -->
+												
+												
 												<!-- 스케쥴글 : finsh -->
 											</c:when>
 											<c:when test="${dto.cont_kind eq 'todo' }">

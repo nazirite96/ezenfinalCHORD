@@ -61,13 +61,15 @@ public class SchdDAOImpl implements SchdDAO {
 	@Override
 	public SchdDTO getSchdOne(int schd_no) {
 		// TODO Auto-generated method stub
-		SchdDTO getSchdOne=sqlMap.selectOne("getSchdList", schd_no);
+		SchdDTO getSchdOne=sqlMap.selectOne("getSchdOne", schd_no);
+		List<SchdDTO> tu_list=tu_mem_list(schd_no);
+		getSchdOne.setTu_mem_list(tu_list);
 		return getSchdOne;
 	}
 	@Override
-	public List<Integer> tu_mem_list(int schd_no) {
+	public List<SchdDTO> tu_mem_list(int schd_no) {
 		// TODO Auto-generated method stub
-		List<Integer> tu_mem_list=sqlMap.selectList("tu_mem_list", schd_no);
+		List<SchdDTO> tu_mem_list=sqlMap.selectList("tu_mem_list", schd_no);
 		return tu_mem_list;
 	}
 }
