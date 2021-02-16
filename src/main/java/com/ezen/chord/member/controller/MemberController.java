@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen.chord.box.dao.BoxDAO;
 import com.ezen.chord.company.dto.CompanyDTO;
 import com.ezen.chord.member.dto.MemberDTO;
 import com.ezen.chord.member.service.MemberService;
@@ -29,6 +30,7 @@ public class MemberController {
 	
 	@Autowired
 	JavaMailSender mailSender;
+	
 	
 	private String randomNumber = random();
 	
@@ -76,22 +78,33 @@ public class MemberController {
 	@RequestMapping("/emailCheck.do")
 	public ModelAndView emailCheck(String chkEmail) {
 		
-		System.out.println("controller: "+chkEmail);
-		int result = msvc.join_mailChkService(chkEmail);
 		ModelAndView mav = new ModelAndView();
-	
-		if(result>0) {
-			mav.addObject("msg","사용중인 이메일 입니다.");
+		if(chkEmail==null || chkEmail.equals("")) {
+			
+			mav.addObject("msg","다시 입력해주세요.");
 			mav.addObject("gopage","emailChkForm.do");
 			mav.setViewName("member/memMsg");
-	
-		}else {
-			mav.addObject("msg","사용가능 이메일"); // 빈칸일때도!!
-			mav.addObject("email",chkEmail);
-			mav.setViewName("member/memJoinMsg");
 		
+		}else {
+			int result = msvc.join_mailChkService(chkEmail);
+			
+			
+			if(result>0) {
+				mav.addObject("msg","사용중인 이메일 입니다.");
+				mav.addObject("gopage","emailChkForm.do");
+				mav.setViewName("member/memMsg");
+		
+			}else {
+				mav.addObject("msg","사용가능한 이메일 입니다.");
+				mav.addObject("email",chkEmail);
+				mav.setViewName("member/memJoinMsg");
+			
+			}
 		}
+
 		return mav;
+	
+	
 	}
 	
 	/*인증번호 form*/
@@ -130,6 +143,7 @@ public class MemberController {
 			System.out.println("mailController 에러:"+e.getMessage());
 		}
 		
+		System.out.println("인증번호: "+randomNumber);
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("msg","이메일 보내기 성공");
 		mav.setViewName("member/memJoinEmailMsg");
@@ -145,7 +159,7 @@ public class MemberController {
 		if(randomNumber.equals(checkNum)) {
 			
 			int result = msvc.join_memJoinFunctionService(dto);
-			String msg = result>0?dto.getMem_name()+"님 회원가입 축하합니다!":"회원가입 실패!";
+			String msg = result>0?dto.getMem_name()+"님 회원가입 축하합니다!":"회원가입 중 문제가 생겼습니다.";
 			
 			mav.addObject("msg",msg);
 			mav.addObject("getEmail",dto.getMem_email()); //회원가입 한 사람의 이름
@@ -255,19 +269,10 @@ public class MemberController {
 	
 	/*로그아웃*/
 	@RequestMapping("/logout.do") 
-	public ModelAndView logout(HttpSession session) {
-		
-		String msg = "로그아웃 하시겠습니까?";
-		
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("msg",msg);
-		mav.addObject("gopage","index.do");
-		
+	public String logout(HttpSession session) {
+	
 		session.invalidate();
-		//redirect:index.do
-		mav.setViewName("member/memMsg");
-		
-		return mav;
+		return "home";
 	}
 	
 	/******************************************* 마이 페이지 *******************************************/

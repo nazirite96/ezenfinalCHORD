@@ -39,7 +39,7 @@
 						<tbody>
 							<c:if test="${empty memList}">
 								<tr>
-									<td>회원 없음!</td>
+									<td>해당 회사 회원이 없습니다.</td>
 								</tr>
 							</c:if>
 							<c:forEach var="list" items="${memList }">

@@ -121,10 +121,10 @@ public class TaskDAOImple implements TaskDAO {
 	}
 	
 
-//	@Override
-//	public int updateTask(TaskDTO taskDTO) {
-//		return sqlMap.update("updateTask", taskDTO);
-//	}
+	@Override
+	public int updateTask(TaskDTO taskDTO) {
+		return sqlMap.update("updateTask", taskDTO);
+	}
 	
 	@Override
 	public TaskDTO getTaskDTO(int task_no) {

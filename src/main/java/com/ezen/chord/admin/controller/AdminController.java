@@ -245,6 +245,7 @@ public class AdminController {
 	@RequestMapping("/adminProListForm.do")
 	public ModelAndView adminProjectList(int com_no) {
 		
+		
 		List<Map<String, Object>> list = asvc.adminProjectListService(com_no);
 		
 		ModelAndView mav = new ModelAndView();

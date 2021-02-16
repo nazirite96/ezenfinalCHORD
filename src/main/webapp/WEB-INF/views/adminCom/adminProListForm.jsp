@@ -29,7 +29,7 @@
 		<main role="main" class="ml-3 mt-3 col-lg-10">
 				<div
 					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-					<h1 class="h2">프로젝트 관리</h1>
+					<h1 class="h2">모든 프로젝트 관리</h1>
 				</div>
 				<div class="table-responsive">
 					<table class="table table-striped table-sm">
@@ -44,7 +44,7 @@
 						<tbody>
 							<c:if test="${empty prolist}">
 								<tr>
-									<td>회원 없음!</td>
+									<td colspan="4" align="center">생성된 프로젝트가 없습니다.</td>
 								</tr>
 							</c:if>
 							<c:forEach var="list" items="${prolist }">
