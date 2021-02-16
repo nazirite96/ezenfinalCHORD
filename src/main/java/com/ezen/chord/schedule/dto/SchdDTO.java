@@ -22,6 +22,7 @@ public class SchdDTO {
 	
 	private List<Integer> tu_mem_list; /// 참가자들 리스트 
 	
+	
 	public SchdDTO() {
 		// TODO Auto-generated constructor stub
 	}

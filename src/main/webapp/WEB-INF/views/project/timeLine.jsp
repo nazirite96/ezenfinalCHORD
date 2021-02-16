@@ -1571,14 +1571,15 @@ function submitgogo(){
 																		<c:if test="${empty dto.schdDTO.tu_mem_list} ">
 																			<p class="mar-0 pad-0">담당자 없음</p>
 																		</c:if>
+																				<img src="/chord/resources/img/sample.png" width="24"
+																						class="cursor-point"> <strong class="marleft-10">${tu_mem }</strong>
 																		<c:if test="${not empty dto.schdDTO.tu_mem_list} ">
-																		<c:forEach items="${dto.schdDTO.tu_mem_list }" var="tuVo">
+																		<c:forEach items="${dto.schdDTO.tu_mem_list }" var="tu_mem">
 																			<div class="name-tag">
-																				<img src="/chord/resources/img/sample.png"
-																					width="24"> <strong class="marleft-10">${tuVo.mem_no }</strong>
+																				 <strong class="marleft-10">${tuVo.mem_no }</strong>
 																				<i class="fas fa-times-circle marleft-15"
 																					style="display: none"></i> <input type="hidden"
-																					name="tu_mem_id" value="${tuVo.mem_no  }">
+																					name="tu_mem_id" value="${tu_mem }">
 																			</div>
 																		</c:forEach>
 																		</c:if>

@@ -70,14 +70,12 @@ public class TimelineController {
 				list.get(i).setTaskDTO(timService.getTask(list.get(i).getCont_no()));
 				break;
 				
-			case "schedule":
+			case "schd":
 				list.get(i).setSchdDTO(schdService.getSchdOne(list.get(i).getCont_no()));
 			default:
 				break;
 			}
 		}
-		
-		mav.addObject("list", list);
 		mav.addObject("mem_no", mem_no);
 		mav.setViewName("project/timeLine");
 		
