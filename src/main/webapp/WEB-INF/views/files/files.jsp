@@ -227,7 +227,7 @@
 
 <div class="container-fluid">
   <div class="row">
-    <nav id="sidebarMenu" style="z-index: -1" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <nav id="sidebarMenu" style="z-index : 2" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column" style="padding-bottom: 62%;">
           <li class="nav-item">

@@ -52,6 +52,8 @@
 			<input type="hidden" name="ptn_id" id="user_ptn_id">
 		</form>
 	</div>
+
+	
 	
 	<script type="text/javascript">
 	$(function(){

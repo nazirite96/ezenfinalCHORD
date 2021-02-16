@@ -5,8 +5,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous">
 <script type="text/javascript"> 
 	google.charts.load('current', {'packages':['corechart']}); 
 	google.charts.setOnLoadCallback(drawChart);
@@ -29,22 +36,19 @@ function drawChart() {
 	var chart = new google.visualization.PieChart(document.getElementById('piechart')); 
 	chart.draw(data, options); } 
 </script>
-<style>
-table, th, td {
-	border: solid 1px grey;
-	border-spacing: 0px 0px;
-}
-</style>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/header.jsp" />
 	<div class="adminWeb_firstDiv">
 		<jsp:include page="/WEB-INF/views/adminWeb/adminWebLeftList.jsp" />
-		<div class="adminWeb_SecDiv">
-			<h1>웹사이트 관리자 페이지 입니다~</h1>
-			<div id="piechart" style="width: 600px; height: 300px;"></div>
-			<form>
-				<table>
+		<main role="main" class="ml-3 mt-3 col-lg-10">
+			<div
+				class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+				<h1 class="h2">이용자 로그 이력</h1>
+			</div>	
+			<div id="piechart" style="width: 800px; height: 450px;"></div>
+			<div class="table-responsive">
+				<table class="table table-striped table-sm">
 					<thead>
 						<tr>
 							<th>이메일</th>
@@ -69,8 +73,8 @@ table, th, td {
 						</c:forEach>
 					</tbody>
 				</table>
-			</form>
-		</div>
+			</div>
+		</main>
 	</div>
 </body>
 </html>

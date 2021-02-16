@@ -5,22 +5,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
-<style>
-table, th, td {
-	border: solid 1px grey;
-	border-spacing: 0px 0px;
-}
-</style>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous">
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/header.jsp" />
 	<div class="adminWeb_firstDiv">
 		<jsp:include page="/WEB-INF/views/adminWeb/adminWebLeftList.jsp" />
-		<div class="adminWeb_SecDiv">
-			<h1>웹사이트 관리자 페이지 입니다~</h1>
-			<form>
-				<table>
+		<main role="main" class="ml-3 mt-3 col-lg-10">
+			<div
+				class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+				<h1 class="h2">파일 다운 이력</h1>
+			</div>	
+			<div class="table-responsive">	
+				<table class="table table-striped table-sm">
 					<thead>
 						<tr>
 							<th>이메일</th>
@@ -33,7 +37,7 @@ table, th, td {
 					<tbody>
 						<c:if test="${empty fileList }">
 							<tr>
-								<td colspan="5">다운 파일이 없습니다!</td>
+								<td colspan="5" align="center">다운로드한 파일이 없습니다.</td>
 							</tr>
 						</c:if>
 						<c:forEach var="list" items="${fileList }">
@@ -47,8 +51,8 @@ table, th, td {
 						</c:forEach>
 					</tbody>
 				</table>
-			</form>
-		</div>
+			</div>
+		</main>
 	</div>
 </body>
 </html>

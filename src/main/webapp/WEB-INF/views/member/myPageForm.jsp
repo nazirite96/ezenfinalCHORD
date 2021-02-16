@@ -1,12 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+	crossorigin="anonymous">
 <style type="text/css">
 	.txtTD_css{
 		padding-bottom:12px;
@@ -50,7 +55,7 @@
 				<td><b>회원번호</b></td>
 			</tr>
 			<tr>
-				<td class="txtTD_css"><input type="text" name="mem_no" value="${memResult.mem_no }" readonly="readonly" class="txt1_css"></td>
+				<td class="txtTD_css"><input type="text" name="mem_no" value="${memResult.mem_no}" readonly="readonly" class="txt1_css"></td>
 			</tr>
 			<tr>
 				<td><b>메일</b></td>
@@ -69,6 +74,28 @@
 			</tr>
 			<tr>
 				<td class="txtTD_css"><input type="text" name="mem_pwd" value="${memResult.mem_pwd }" class="txt2_css"></td>
+			</tr>
+			<!-- *************************************** 멤버 인포 ******************************** -->
+			<tr>
+				<td><b>핸드폰 번호</b></td>
+			</tr>
+			<tr>
+				<td class="txtTD_css">
+				<input type="text" name="mem_info_phone" value="${memResult.mem_info_phone }" class="txt2_css">
+				<input type="hidden" name="mem_info_no" value="${memResult.mem_info_no }" class="txt2_css">
+				</td>
+			</tr>
+			<tr>
+				<td><b>직책</b></td>
+			</tr>
+			<tr>
+				<td class="txtTD_css"><input type="text" name="mem_info_position" value="${memResult.mem_info_position }" readonly="readonly" class="txt1_css"></td>
+			</tr>
+			<tr>
+				<td><b>부서</b></td>
+			</tr>
+			<tr>
+				<td class="txtTD_css"><input type="text" name="mem_info_dept" value="${memResult.mem_info_dept }" readonly="readonly" class="txt1_css"></td>
 			</tr>
 			<tr>
 				<td colspan="2" align="center" class="txtTD_css"><input type="submit" value="수정하기" class="btn btn-dark btn-lg"></td>

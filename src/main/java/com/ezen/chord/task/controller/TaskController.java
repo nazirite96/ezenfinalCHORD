@@ -32,7 +32,7 @@ public class TaskController {
 	@Autowired
 	private TaskService taskService;
 	
-	
+
 	@RequestMapping("/taskTest.do")
 	public ModelAndView getProList(int mem_no,HttpSession session) {
 		
@@ -46,6 +46,7 @@ public class TaskController {
 		
 		return mav;
 	}
+
 	
 	@RequestMapping("/taskTest_1.do")
 	public ModelAndView getTimeline(int pro_no,HttpSession sess) {
