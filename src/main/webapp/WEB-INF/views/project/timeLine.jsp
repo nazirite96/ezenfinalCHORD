@@ -1566,16 +1566,16 @@ function submitgogo(){
 
 																	<!-- 담당자 리스트 -->
 																	<div class="task-user-list">
-																		<c:if test="${dto.schdDTO.participants.size()= 0} ">
+																		<c:if test="${dto.schdDTO.tu_mem_list.size()= 0} ">
 																			<p class="mar-0 pad-0">담당자 없음</p>
 																		</c:if>
-																		<c:forEach items="${timeLine.tuList }" var="tuVo">
+																		<c:forEach items="${dto.schdDTO.tu_mem_list }" var="tu_mem">
 																			<div class="name-tag">
-																				<img src="/mem/pic?mem_id=${tuVo.tu_mem_id }"
-																					width="24"> <strong class="marleft-10">${tuVo.mem_nick }</strong>
+																				<img src="/chord/resources/img/sample.png" width="24"
+																						class="cursor-point"> <strong class="marleft-10">${tu_mem }</strong>
 																				<i class="fas fa-times-circle marleft-15"
 																					style="display: none"></i> <input type="hidden"
-																					name="tu_mem_id" value="${tuVo.tu_mem_id }">
+																					name="tu_mem_id" value="${tu_mem }">
 																			</div>
 																		</c:forEach>
 																	</div>

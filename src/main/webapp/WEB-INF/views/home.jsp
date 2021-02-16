@@ -23,6 +23,5 @@
  	<div>번호 : ${dto.idx }</div>
  	<div>아이디 : ${dto.id }</div>
  </c:forEach>
- 
 </body>
 </html>

@@ -36,6 +36,10 @@
 			)
 		select * from dual
 	</insert>
+	<select id="tu_mem_list" parameterType="INTEGER" resultType="INTEGER">
+		select mem_no from participants where cont_no=#{shcd_no}
+	</select>
+	
 	<select id="getSchdMyList" resultType="SchdDTO" parameterType="INTEGER">
 		select 
 		sh.schd_no,
