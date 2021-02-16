@@ -39,9 +39,10 @@ public interface TaskDAO {
 	/*전체업무 조회*/
 	public List<TaskDTO> selectAllTask();
 	
-	
+	public int updateTask(TaskDTO taskDTO);
 	/*업무글 삭제*/
 	public int deleteTask(TaskDTO taskDTO);
 	
 	public TaskDTO getTaskDTO(int task_no);
+	
 }

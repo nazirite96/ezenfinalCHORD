@@ -6,5 +6,6 @@ import java.util.*;
 public interface TodoItemDAO {
 	
 	public int insertTodoItemDAO(TodoItemDTO tiDTO);
+	public int insertTodoItemPiDAO(TodoItemDTO tiDTO);
 	public List<TodoItemDTO> getTodoItemListDAO(int todo_no);
 }

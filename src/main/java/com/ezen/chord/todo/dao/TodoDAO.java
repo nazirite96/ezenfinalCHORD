@@ -8,4 +8,5 @@ public interface TodoDAO {
 	public int getTodoSeq();
 	public int insertTodoDAO(TodoDTO todoDTO);
 	public int insertTodoTimDAO(TodoDTO todoDTO);
+	
 }
