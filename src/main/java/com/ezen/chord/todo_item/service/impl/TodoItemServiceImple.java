@@ -22,6 +22,12 @@ public class TodoItemServiceImple implements TodoItemService {
 	}
 	
 	@Override
+	public int insertTodoItemPiService(TodoItemDTO tiDTO) {
+		int result = tiDAO.insertTodoItemPiDAO(tiDTO);
+		return result;
+	}
+	
+	@Override
 	public List<TodoItemDTO> getTodoItemListService(int todo_no) {
 		return tiDAO.getTodoItemListDAO(todo_no);
 	}

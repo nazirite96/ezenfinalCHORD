@@ -6,6 +6,7 @@ public class TodoItemDTO {
 	private String todo_item_content; 		//할일항목 내용
 	private	String todo_item_chk;			//할일항목 체크
 	private String todo_item_date;			//할힐항목 시간
+	private int ti_mem_no;				//담당자테이블 mem_no 번호
 	private int todo_no;					//할일번호
 	
 	
@@ -52,16 +53,28 @@ public class TodoItemDTO {
 	public void setTodo_no(int todo_no) {
 		this.todo_no = todo_no;
 	}
+	
+	
+
+	public int getTi_mem_no() {
+		return ti_mem_no;
+	}
+
+	public void setTi_mem_no(int ti_mem_no) {
+		this.ti_mem_no = ti_mem_no;
+	}
 
 	public TodoItemDTO(int todo_item_no, String todo_item_content, String todo_item_chk, String todo_item_date,
-			int todo_no) {
+			int ti_mem_no, int todo_no) {
 		super();
 		this.todo_item_no = todo_item_no;
 		this.todo_item_content = todo_item_content;
 		this.todo_item_chk = todo_item_chk;
 		this.todo_item_date = todo_item_date;
+		this.ti_mem_no = ti_mem_no;
 		this.todo_no = todo_no;
 	}
+
 
 
 	

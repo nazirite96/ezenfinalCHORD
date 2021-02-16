@@ -26,7 +26,7 @@ public class TodoDAOImple implements TodoDAO {
 	public int insertTodoDAO(TodoDTO todoDTO) {
 		int result = sqlMap.insert("insertTodo", todoDTO);
 		return result;
-	}	
+	}
 	
 	@Override
 	public int insertTodoTimDAO(TodoDTO todoDTO) {

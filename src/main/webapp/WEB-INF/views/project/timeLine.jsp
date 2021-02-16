@@ -743,7 +743,7 @@ function submitgogo(){
 										<!-- 일정:f -->
 										<!-- 할일:s -->
 										<div id="tab-4" class="tabs-content con-todo">
-											<form action="timInsertwithTodo.do" method="get">
+											<form action="todoInsert.do" method="get">
 												<input type="hidden" name="mem_no" value="${memNo }">
 												<input type="hidden" name="pro_no"
 													value="${proUserDTO.pro_no }"> <input type="hidden"

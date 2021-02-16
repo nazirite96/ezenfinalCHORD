@@ -27,6 +27,12 @@ public class TodoItemDAOImple implements TodoItemDAO {
 	}
 	
 	@Override
+	public int insertTodoItemPiDAO(TodoItemDTO tiDTO) {
+		int result = sqlMap.insert("insertTodoItemPi", tiDTO);
+		return result;
+	}
+	
+	@Override
 	public List<TodoItemDTO> getTodoItemListDAO(int todo_no) {
 		
 		return sqlMap.selectList("getTodoItemList", todo_no);
