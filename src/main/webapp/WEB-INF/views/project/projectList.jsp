@@ -9,24 +9,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     
     
 <title>Insert title here</title>
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
-	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
-	crossorigin="anonymous">
-<!-- jQuery 3.3.1 -->
-<script
-	src="/chord/resources/js/jquery-3.1.1.min.js"></script>
-<!-- custom -->
-<link rel="stylesheet" href="/chord/resources/css/style_margin.css">
-<link rel="stylesheet" href="/chord/resources/css/style_padding.css">
 
-<link rel="stylesheet" href="/chord/resources/css/GwCss.css">
+
 </head>
 
     <style>
@@ -52,10 +39,72 @@
   </head>
   <body>
     <jsp:include page="/WEB-INF/views/header.jsp"/>
+    <script type="text/javascript">
+	$(function() {
+		// 탭메뉴 설정 : 탭메뉴(li)에 설정된 data-id 값과 같은 id값을 가진 content box 노출
+		$("ul.tabs li").on("click", function() {
+			var tab_id = $(this).attr("data-id");
+			$("ul.tabs li").removeClass("active");
+			$(".tabs-content").removeClass("active");
 
+			$(this).addClass("active");
+			$("#" + tab_id).addClass("active");
+		});
+	});
+</script>	
+<script src="/chord/resources/js/jquery-3.1.1.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+	integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+	crossorigin="anonymous"></script>
+<!-- custom -->
+<link rel="stylesheet" href="/chord/resources/css/style_margin.css">
+<link rel="stylesheet" href="/chord/resources/css/style_padding.css">
+<!-- icon  -->
+<script src="https://kit.fontawesome.com/1a984316ef.js"
+	crossorigin="anonymous"></script>
+<!-- gwjs -->
+<script type="text/javascript" src="/chord/resources/js/Gw.js"></script>
+<!-- taksFilesjs -->
+<script type="text/javascript" src="/chord/resources/js/taksFiles.js"></script>
+
+<!-- Air datepicker css -->
+<link
+	href="<%=request.getContextPath()%>/resources/css/datepicker.min.css"
+	rel="stylesheet" type="text/css" media="all">
+<!-- Air datepicker js -->
+<script src="<%=request.getContextPath()%>/resources/js/datepicker.js"></script>
+<!-- 달력 한글 추가를 위해 커스텀 -->
+<script
+	src="<%=request.getContextPath()%>/resources/js/datepicker.ko.js"></script>
+<!-- fontawesome -->
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<!-- font-awesome CSS -->
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+<!-- textArea 자동 높이 설정 -->
+<script
+	src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
+<!-- Air datepicker css -->
+<link href="<%=request.getContextPath()%>/resources/css/JeCss.css"
+	rel="stylesheet" type="text/css">
+<!-- sungtak -->
+<!-- kakaomap -->
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da2da3e53b6d01f803242012ae94fba6&libraries=services"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+<script
+	src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
+<link href="<%=request.getContextPath()%>/resources/css/JeCss2.css"
+	rel="stylesheet" type="text/css">
+<!-- tak -->
 <div class="container-fluid">
   <div class="row">
-    <nav id="sidebarMenu" style="z-index:-1"
+    <nav id="sidebarMenu" style="z-index : 2"
     class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
@@ -66,16 +115,14 @@
             </a>
             <h1 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
           <span>project</span>
-          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="plus-circle"></span>
-          </a>
         </h1>
           </li>
           <li class="nav-item"><a class="nav-link" href="#"><span data-feather="file"></span>전체</a></li>
           <li class="nav-item"><a class="nav-link" href="#"><span data-feather="shopping-cart"></span>중요</a></li>
+          <li class="nav-item"><a class="nav-link" href="#"><span data-feather="star"></span>즐겨찾기</a></li>
           
           
-          <h1 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"><span>collection</span><a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report"><span data-feather="plus-circle"></span></a></h1>
+          <h1 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"><span>collection</span></h1>
           
           <li class="nav-item"><a class="nav-link" href="#"><span data-feather="users"></span>전체업무</a></li>
           <li class="nav-item"><a class="nav-link" href="#"><span data-feather="bar-chart-2"></span>전체일정</a></li>
@@ -84,35 +131,22 @@
           <li class="nav-item"><a class="nav-link" href="#"><span data-feather="layers"></span>내 게시글</a></li>
         </ul>
 
-        <h1 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"><span>Saved reports</span><a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
-            <span data-feather="plus-circle"></span>
-          </a>
+        <h1 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"><span>BOX</span>
+        <a class="d-flex align-items-center text-muted add-folder-pop-btn" href="#addFolder" aria-label="Add a new report">
+           <span data-feather="plus-circle"></span> 
+         </a>
         </h1>
         <ul class="nav flex-column mb-2">
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Current month
+        <c:forEach items="${boxList }" var="dto" >
+          <li class="nav-item" style="height: 35px;">
+            <a class="nav-link col-lg-10 col-md-10" href="#" style="display: inline-block;">
+              <span data-feather="box"></span>
+              ${dto.box_name }
             </a>
+           <span data-feather="minus-circle"></span>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Last quarter
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Social engagement
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span data-feather="file-text"></span>
-              Year-end sale
-            </a>
-          </li>
+        </c:forEach>  
+        
         </ul>
       </div>
     </nav>
@@ -131,7 +165,7 @@
           </button>
         </div>
       </div>
-		
+	<div id="proTitle" class="ccc ddd"></div>
      <%--  <div id="addProject">
 		<form action="insertPro.do" method="post">
     			<h1>프로젝트 만들기</h1>

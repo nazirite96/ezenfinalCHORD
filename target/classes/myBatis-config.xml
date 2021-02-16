@@ -16,5 +16,6 @@
  		<typeAlias type="com.ezen.chord.timeline.dto.TimelineDTO" alias="timelineDTO"/>
  		<typeAlias type="com.ezen.chord.reply.dto.ReplyDTO" alias="replyDTO"/>
  		<typeAlias type="com.ezen.chord.schedule.dto.SchdDTO" alias="SchdDTO"/>
+ 		<typeAlias type="com.ezen.chord.box.dto.BoxDTO" alias="boxDTO"/>
  	</typeAliases>
  </configuration>

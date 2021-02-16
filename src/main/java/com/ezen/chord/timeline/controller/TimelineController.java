@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen.chord.box.dto.BoxDTO;
+import com.ezen.chord.box.service.BoxService;
 import com.ezen.chord.files.dto.FilesDTO;
 import com.ezen.chord.files.service.FilesService;
 import com.ezen.chord.project_user.dto.ProjectUserDTO;
@@ -34,7 +36,8 @@ public class TimelineController {
 	private TaskService taskService;
 	@Autowired 
 	private SchdService schdService;
-	
+	@Autowired
+	private BoxService boxService;
 	
 	@RequestMapping("/timeLine.do")
 	@ResponseBody
@@ -50,6 +53,10 @@ public class TimelineController {
 		mav.addObject("notInvitedProUserList", notInvitedProUserList);
 		mav.addObject("invitedProUserList", invitedProUserList);
 		mav.addObject("proUserDTO", proUserDTO);
+		List<BoxDTO> boxList = boxService.getBoxList(mem_no);
+		List<BoxDTO> setBoxList = boxService.getBoxListJoinPro_no(mem_no,pro_no);
+		mav.addObject("boxList", boxList);
+		mav.addObject("setBoxList", setBoxList);
 		//프로젝트 정보를 받기
 		int page = 0; 
 		
