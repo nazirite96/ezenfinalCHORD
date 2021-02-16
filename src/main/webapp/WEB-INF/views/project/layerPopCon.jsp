@@ -687,9 +687,9 @@
 </div>
 
 <form action="" method="get" class="fix-form">
-	<input type="hidden" class="timeline_col" value="">
-	<input type="hidden" class="timeline_no" value="" name="timeline_no">
-	<input type="hidden" class="fix_chk" value="" name="fix_chk">
+	<input type="hidden" class="timeline_no" value="" name="tim_no">
+	<input type="hidden" name="mem_no" value="${memNo }">
+	<input type="hidden" name="pro_no" value="${proUserDTO.pro_no }">
 </form>
 
 <!-- 상단 고정글 확인 레이어 팝업 : f -->
@@ -909,49 +909,16 @@ $(function(){
 		var fixTextY = item.parent().siblings(".pop-con").children("p.fix-y");
 		
 		// parameter		
-		var col = $(".fix-form .timeline_col");
 		var no = $(".fix-form .timeline_no");
-		var fixChk = $(".fix-form .fix_chk");
 		
 		if(fixTextN.css("display") == 'block'){	// 고정 
 			
-			fixChk.val("y");
 			
-			if(col.val() == 'basic_no'){		// 일반글
-				$(".fix-form").attr("action", "/flowolf/basic/fix");
-			
-			}else if(col.val() == 'schd_no'){	// 일정
-				$(".fix-form").attr("action", "/flowolf/schd/fix");
-			
-			}else if(col.val() == 'task_no'){	// 업무
-				$(".fix-form").attr("action", "/flowolf/task/fix");
-			
-			}else if(col.val() == 'todo_no'){	// 할일
-				$(".fix-form").attr("action", "/flowolf/todo/fix");	
-			
-			}else if(col.val() == 'vote_no'){	// 투표
-				$(".fix-form").attr("action", "/flowolf/vote/fix");				
-			}
+			$(".fix-form").attr("action", "insertFix.do");
 			
 		}else{	// 해제
-			
-			fixChk.val("n");
 		
-			if(col.val() == 'basic_no'){		// 일반글
-				$(".fix-form").attr("action", "/flowolf/basic/fix");
-			
-			}else if(col.val() == 'schd_no'){	// 일정
-				$(".fix-form").attr("action", "/flowolf/schd/fix");
-			
-			}else if(col.val() == 'task_no'){	// 업무
-				$(".fix-form").attr("action", "/flowolf/task/fix");
-			
-			}else if(col.val() == 'todo_no'){	// 할일
-				$(".fix-form").attr("action", "/flowolf/todo/fix");	
-			
-			}else if(col.val() == 'vote_no'){	// 투표
-				$(".fix-form").attr("action", "/flowolf/vote/fix");				
-			}
+			$(".fix-form").attr("action", "deleteFix.do");
 			
 		}
 		

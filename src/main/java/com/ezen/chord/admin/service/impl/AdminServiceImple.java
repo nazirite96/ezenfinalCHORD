@@ -116,5 +116,5 @@ public class AdminServiceImple implements AdminService {
 		List<Map<String, Object>> list = adao.adminProInfoDAO(pro_no);
 		return list;
 	}
-	
+
 }

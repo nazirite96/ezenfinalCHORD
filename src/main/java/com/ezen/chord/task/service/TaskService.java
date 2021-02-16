@@ -40,9 +40,12 @@ public interface TaskService {
 	/*전체업무 조회*/
 	public List<TaskDTO> selectAllTask();
 	
+	/*지정 담당자 삭제*/
+	public int deleteTaskUserService(int cont_no);
 	
 	/*업무글 삭제*/
 	public int deleteTask(TaskDTO taskDTO);
+	
 	
 	
 	

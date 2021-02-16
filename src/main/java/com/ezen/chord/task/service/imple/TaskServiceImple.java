@@ -151,6 +151,7 @@ public class TaskServiceImple implements TaskService {
 		for (TaskDTO taskDTO : taskList) {
 			String task_start_date = taskDTO.getTask_start_date().substring(0, 10);
 			String task_end_date = taskDTO.getTask_end_date().substring(0, 10);
+			
 			if(task_start_date.equals("1990-01-01")) {
 				taskDTO.setTask_start_date("");
 				taskDTO.setTask_end_date(task_end_date);
@@ -166,6 +167,12 @@ public class TaskServiceImple implements TaskService {
 		}
 		
 		return resultList;
+	}
+	
+	@Override
+	public int deleteTaskUserService(int cont_no) {
+		int result = taskDAO.deleteTaskUserDAO(cont_no);
+		return result;
 	}
 	
 	

@@ -46,7 +46,11 @@ public class ProjectServiceImpl implements ProjectService {
 		}
 		return 0;
 	}
-
+	@Override
+	public List<ProjectUserDTO> getSepProList(int mem_no,int box_no) {
+		// TODO Auto-generated method stub
+		return projectDAO.selectBoxPro(mem_no, box_no);
+	}
 	@Override
 	public int updatePro(ProjectDTO proDTO) {
 		// TODO Auto-generated method stub

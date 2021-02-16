@@ -26,6 +26,7 @@ public class TaskDTO {
 	private String mem_email;			//멤버이메일
 	private String mem_name;			//멤버이름
 	private String pro_name;			//프로젝트명
+	private int tu_mem_list;			//담당자받아오는리스트 
 	
 	public TaskDTO() {
 		super();
@@ -170,10 +171,21 @@ public class TaskDTO {
 	public void setPro_name(String pro_name) {
 		this.pro_name = pro_name;
 	}
+	
+	
+
+	public int getTu_mem_list() {
+		return tu_mem_list;
+	}
+
+	public void setTu_mem_list(int tu_mem_list) {
+		this.tu_mem_list = tu_mem_list;
+	}
 
 	public TaskDTO(int task_no, String task_title, String task_content, String task_state, String task_priority,
 			String task_start_date, String task_end_date, int mem_no, int cont_no, String cont_kind, int tim_no,
-			String tim_cont, Date tim_date, int pro_no, String mem_email, String mem_name, String pro_name) {
+			String tim_cont, Date tim_date, int pro_no, String mem_email, String mem_name, String pro_name,
+			int tu_mem_list) {
 		super();
 		this.task_no = task_no;
 		this.task_title = task_title;
@@ -192,7 +204,9 @@ public class TaskDTO {
 		this.mem_email = mem_email;
 		this.mem_name = mem_name;
 		this.pro_name = pro_name;
+		this.tu_mem_list = tu_mem_list;
 	}
+
 
 	
 

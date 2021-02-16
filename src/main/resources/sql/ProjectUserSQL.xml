@@ -8,10 +8,14 @@
 			values(#{pro_no},#{mem_no},#{pro_user_man_chk},sysdate,'default-back-color')
 		</insert>
 		<select id="getListByMemNo" resultType="projectUserDTO" parameterType="Integer">
-			SELECT A.pro_no,pro_name,pro_cont,pro_date,kind_no,A.mem_no,A.pro_user_color,a.pro_user_man_chk FROM project_user A
+			select A.*,(B.pro_no) as imp_chk from 
+(SELECT A.pro_no,pro_name,pro_cont,pro_date,kind_no,A.mem_no,A.pro_user_color,a.pro_user_man_chk FROM project_user A
 			LEFT JOIN project B ON
 				A.pro_no = B.pro_no
-			where A.mem_no = #{mem_no}
+			where A.mem_no = #{mem_no}) A
+left join (select * from box 
+            left join box_project on box.box_no = box_project.box_no 
+            where mem_no = #{mem_no} and box_name='중요') B on A.pro_no =B.pro_no
 		</select>
 		<update id="updateProUserColor">
 			update project_user
@@ -19,11 +23,15 @@
 			where pro_no = #{pro_no} and mem_no = #{mem_no}
 		</update>
 		<select id="selectProUserByProAndMem" parameterType="hashMap" resultType="projectUserDTO">
-			select p_u.PRO_NO, p_u.MEM_NO, p_u.PRO_USER_MAN_CHK, p_u.PRO_USER_DATE, p_u.PRO_USER_COLOR, p.pro_name, p.pro_cont,p.pro_date
-			from project_user p_u 
-			left join project p 
-			on p_u.pro_no = p.pro_no
-			where p_u.pro_no = #{pro_no} and p_u.mem_no = #{mem_no}
+			select A.*,(B.pro_no) as imp_chk from
+    	(select p_u.PRO_NO, p_u.MEM_NO, p_u.PRO_USER_MAN_CHK, p_u.PRO_USER_DATE, p_u.PRO_USER_COLOR, p.pro_name, p.pro_cont,p.pro_date
+                from project_user p_u 
+                left join project p 
+                on p_u.pro_no = p.pro_no
+                where p_u.pro_no = #{pro_no} and p_u.mem_no = #{mem_no}) A
+			left join (select * from box 
+            left join box_project on box.box_no = box_project.box_no 
+            where mem_no = #{mem_no} and box_name='중요') B on A.pro_no =B.pro_no
 		</select>
 		<select id="selectInvitedProUser" resultType="projectUserDTO">
 			select * from project_user

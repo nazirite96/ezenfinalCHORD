@@ -67,11 +67,10 @@ public class SchdServiceImpl implements SchdService {
 	@Override
 	public SchdDTO getSchdOne(int schd_no) {
 		// TODO Auto-generated method stub
-		dao.tu_mem_list(schd_no);
 		return dao.getSchdOne(schd_no);
 	}
 	@Override
-	public List<Integer> tu_mem_list(int schd_no) {
+	public List<SchdDTO> tu_mem_list(int schd_no) {
 		// TODO Auto-generated method stub
 		return dao.tu_mem_list(schd_no);
 	}

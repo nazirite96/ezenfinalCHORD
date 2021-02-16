@@ -3,6 +3,7 @@ package com.ezen.chord.task.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen.chord.files.dto.FilesDTO;
+import com.ezen.chord.files.service.FilesService;
 import com.ezen.chord.project.dto.ProjectDTO;
 import com.ezen.chord.project.service.ProjectService;
 import com.ezen.chord.project_user.dto.ProjectUserDTO;
+import com.ezen.chord.task.dao.TaskDAO;
 import com.ezen.chord.task.dto.TaskDTO;
 import com.ezen.chord.task.service.TaskService;
 import com.ezen.chord.timeline.dto.TimelineDTO;
@@ -31,6 +37,12 @@ public class TaskController {
 	
 	@Autowired
 	private TaskService taskService;
+	
+	@Autowired
+	private FilesService fileService;
+	
+	@Autowired
+	private TaskDAO taskDAO; 
 	
 
 	@RequestMapping("/taskTest.do")
@@ -169,40 +181,106 @@ public class TaskController {
 		
 	}
 	
-	@RequestMapping("/taskupdate.do")
-	public ModelAndView taskUpdate(HttpSession session
-			,@ModelAttribute TaskDTO taskDTO) throws IllegalStateException, IOException{
+	@RequestMapping("/taskUpdate.do")
+	public String updateTimWithTask(TimelineDTO timDTO ,
+							FilesDTO filesDTO ,
+							TaskDTO editDTO,
+							@RequestParam("tu_mem_list")List<Integer> tu_mem_list,
+							@RequestParam("articleFile")List<MultipartFile> files,
+							@RequestParam(value="del_task_user_no", required=false)List<Integer> delTuList,
+							HttpServletRequest request) {
 		
-		ModelAndView mav = new ModelAndView();
+		HttpSession sess=request.getSession();
+		int mem_no = (Integer) sess.getAttribute("memNo");
 		
-		int task_no = taskService.getTaskSeq();
+		TaskDTO taskDTO = taskDAO.getTaskDTO(editDTO.getTask_no());
 		
-		taskDTO.setCont_kind("task");
-		taskDTO.setTask_no(task_no);
-		taskDTO.setCont_no(task_no);
-		taskDTO.setMem_no(11);
-		taskDTO.setPro_no(49);
+		taskDTO.setTask_title(editDTO.getTask_title());
 		
-		/*task테이블관련*/
-		int resultTask = taskService.updateTaskService(taskDTO);
+		// 업무 담당자 삭제
+//		if (delTuList != null) {
+//			for (Integer task_user_no : delTuList) {
+//				taskService.deleteTaskUserService(task_user_no);
+//			}			
+//		}
 		
-		/*parti테이블관련*/
-		int resultTaskPi = taskService.updateTaskPiService(taskDTO);
+		if(editDTO.getTask_state() != null ) {
+			taskDTO.setTask_state(editDTO.getTask_state());
+		}
 		
-		/*시작일*/
-		int resultTaskStart = taskService.updateTaskStartDateService(taskDTO);
+		/*시작일 수정*/
+		if(!editDTO.getTask_start_date().equals("") && editDTO.getTask_start_date() != null) {
+			
+			if(editDTO.getTask_start_date() == null || editDTO.getTask_start_date().equals("")) {
+				taskDTO.setTask_start_date("1990-01-01");
+			}
+			taskDTO.setTask_start_date(editDTO.getTask_start_date());
+			
+			int result = taskDAO.updateTaskStartDateDAO(taskDTO);
+		}
 		
-		/*마감일*/
-		int resultTaskEnd = taskService.updateTaskEndDateService(taskDTO);
+		/*마감일 수정*/
+		if(!editDTO.getTask_end_date().equals("") && editDTO.getTask_end_date() != null) {
+			
+			if(editDTO.getTask_end_date() == null || editDTO.getTask_end_date().equals("")) {
+				taskDTO.setTask_end_date("1990-01-01");
+			}
+			taskDTO.setTask_end_date(editDTO.getTask_end_date());
+			
+			int result = taskDAO.updateTaskEndDateDAO(taskDTO);
+		}
+
+		// 우선순위
+		if (!editDTO.getTask_priority().equals("") && editDTO.getTask_priority() != null) {
+			taskDTO.setTask_priority(editDTO.getTask_priority());
+		}else { 			
+			taskDTO.setTask_priority("");			
+		}
 		
-		/*타임라인관련*/
-		int resultTaskTim = taskService.updateTaskTimService(taskDTO);
+		// 내용
+		if(!editDTO.getTask_content().equals("") && editDTO.getTask_content() != null) {
+			taskDTO.setTask_content(editDTO.getTask_content());
+		}else {
+			taskDTO.setTask_content("");			
+		}		
 		
-		mav.setViewName("taskView.do");
 		
-		return mav;
 		
-	}
+		String serv =request.getSession().getServletContext().getRealPath("/");
+		
+		filesDTO.setCont_kind("tim");
+		
+		filesDTO.setPro_no(timDTO.getPro_no());
+		filesDTO.getFile();
+		if(files != null) {
+			for(MultipartFile file : files) {
+				if(!file.isEmpty()) {
+					String name=fileService.checkName(file);
+					String original=file.getOriginalFilename();
+					Long number=file.getSize();
+					String size=fileService.returnFileSize(number);
+					fileService.copyInto(file, name,serv);
+					fileService.insertFile(filesDTO, original, name, size, mem_no);
+				}
+			}
+		}
+		//int result = timService.insertTim(timDTO);
+		int result2 = taskService.updateTaskTimService(taskDTO);
+		
+		taskDTO.setTask_title(timDTO.getTim_cont());
+		
+		int resultCnt = taskService.updateTaskService(taskDTO);
+		if(resultCnt == 1) {
+			
+			for(int i = 0 ; i < tu_mem_list.size() ; i++) {
+				System.out.println(tu_mem_list.get(i));
+				taskDTO.setTu_mem_list(tu_mem_list.get(i));
+				/*parti테이블관련(담당자)*/
+				taskService.insertTaskPiService(taskDTO);
+				
+			}
+		}
 	
-	
+		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no()+"&mem_no="+mem_no;
+}
 }

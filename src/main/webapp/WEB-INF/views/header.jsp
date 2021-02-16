@@ -38,9 +38,23 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
 		integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
 		crossorigin="anonymous"></script>
+
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
+
+<script type="text/javascript">
+	function exit(){
+		var result = window.confirm('로그아웃하시겠습니까?');
+		if(result){
+			location.href='logout.do';
+		}else{
+			location.history.back;
+		}
+
+	}
+</script>
+
 <style type="text/css">
 /* 네비바 */
 .navbar-default{
@@ -126,7 +140,7 @@
 								<a class="nav-link active"
 									href="adminWebForm.do">사이트 운영자 관리</a></li>
 								<li class="nav-item nav-link text-nowrap">
-								<a class="nav-link active" href="logout.do">로그아웃</a></li>
+								<a class="nav-link active" href="javascript:exit()">로그아웃</a></li>
 							</ul>
 						</div>
 					</nav>
@@ -170,7 +184,7 @@
 								<a class="nav-link" href="${comContentsUrl}">
 								<img alt="admin" src="resources/img/header/admin.png" width="25" height="25"></a></li>
 								<li class="nav-item nav-link text-nowrap">
-								<a class="nav-link active" href="logout.do">
+								<a class="nav-link active" href="javascript:exit()">
 								<img alt="logout" src="resources/img/header/exit.png" width="25" height="25"></a></li>
 							</ul>
 						</div>
@@ -208,7 +222,7 @@
 								<img alt="chat" src="resources/img/header/chat.png" width="25" height="25">
 							</li>
 							<li class="nav-item nav-link text-nowrap">
-								<a class="nav-link active" href="logout.do">
+								<a class="nav-link active" href="javascript:exit()">
 								<img alt="logout" src="resources/img/header/exit.png" width="25" height="25"></a></li>
 						</ul>
 					</div>						

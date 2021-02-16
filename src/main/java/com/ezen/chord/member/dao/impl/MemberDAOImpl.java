@@ -27,6 +27,7 @@ public class MemberDAOImpl implements MemberDAO {
 	/*회원가입 이메일 중복 검사*/
 	@Override
 	public int memJoin_emailChkDAO(String email) {
+
 		int result = sqlMap.selectOne("join_mailChk",email);
 		return result;
 	}

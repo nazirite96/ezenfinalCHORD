@@ -77,9 +77,9 @@
 
 </head>
 <body id="contentBody" onload="InitializeStaticMenu();">
-<jsp:include page="/WEB-INF/views/header.jsp"/>
+	<jsp:include page="/WEB-INF/views/header.jsp" />
 
-<script type="text/javascript">
+	<script type="text/javascript">
 	$(function() {
 		// 탭메뉴 설정 : 탭메뉴(li)에 설정된 data-id 값과 같은 id값을 가진 content box 노출
 		$("ul.tabs li").on("click", function() {
@@ -91,60 +91,61 @@
 			$("#" + tab_id).addClass("active");
 		});
 	});
-</script>	
+</script>
 
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
-	integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
-	crossorigin="anonymous"></script>
-<!-- custom -->
-<link href="<%=request.getContextPath()%>/resources/css/JeCss2.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="/chord/resources/css/style_margin.css">
-<link rel="stylesheet" href="/chord/resources/css/style_padding.css">
-<!-- icon  -->
-<script src="https://kit.fontawesome.com/1a984316ef.js"
-	crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+		integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+		crossorigin="anonymous"></script>
+	<!-- custom -->
+	<link href="<%=request.getContextPath()%>/resources/css/JeCss2.css"
+		rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="/chord/resources/css/style_margin.css">
+	<link rel="stylesheet" href="/chord/resources/css/style_padding.css">
+	<!-- icon  -->
+	<script src="https://kit.fontawesome.com/1a984316ef.js"
+		crossorigin="anonymous"></script>
 
-<!-- taksFilesjs -->
-<script type="text/javascript" src="/chord/resources/js/taksFiles.js"></script>
+	<!-- taksFilesjs -->
+	<script type="text/javascript" src="/chord/resources/js/taksFiles.js"></script>
 
-<!-- Air datepicker css -->
-<link
-	href="<%=request.getContextPath()%>/resources/css/datepicker.min.css"
-	rel="stylesheet" type="text/css" media="all">
-<!-- Air datepicker js -->
-<script src="<%=request.getContextPath()%>/resources/js/datepicker.js"></script>
-<!-- 달력 한글 추가를 위해 커스텀 -->
-<script
-	src="<%=request.getContextPath()%>/resources/js/datepicker.ko.js"></script>
-<!-- fontawesome -->
-<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-<!-- font-awesome CSS -->
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
-<!-- textArea 자동 높이 설정 -->
-<script
-	src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
-<!-- Air datepicker css -->
-<link href="<%=request.getContextPath()%>/resources/css/JeCss.css"
-	rel="stylesheet" type="text/css">
-	
-<!-- sungtak -->
-<!-- kakaomap -->
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da2da3e53b6d01f803242012ae94fba6&libraries=services"></script>
-<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-<script
-	src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
+	<!-- Air datepicker css -->
+	<link
+		href="<%=request.getContextPath()%>/resources/css/datepicker.min.css"
+		rel="stylesheet" type="text/css" media="all">
+	<!-- Air datepicker js -->
+	<script src="<%=request.getContextPath()%>/resources/js/datepicker.js"></script>
+	<!-- 달력 한글 추가를 위해 커스텀 -->
+	<script
+		src="<%=request.getContextPath()%>/resources/js/datepicker.ko.js"></script>
+	<!-- fontawesome -->
+	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+	<!-- font-awesome CSS -->
+	<link rel="stylesheet"
+		href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+	<!-- textArea 자동 높이 설정 -->
+	<script
+		src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
+	<!-- Air datepicker css -->
+	<link href="<%=request.getContextPath()%>/resources/css/JeCss.css"
+		rel="stylesheet" type="text/css">
 
-<link rel="stylesheet" href="/chord/resources/css/GwCss.css">
-<!-- gwjs -->
-<script type="text/javascript" src="/chord/resources/js/Gw.js"></script>
-<script>
+	<!-- sungtak -->
+	<!-- kakaomap -->
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da2da3e53b6d01f803242012ae94fba6&libraries=services"></script>
+	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+	<script
+		src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
+
+	<link rel="stylesheet" href="/chord/resources/css/GwCss.css">
+	<!-- gwjs -->
+	<script type="text/javascript" src="/chord/resources/js/Gw.js"></script>
+	<script>
 function submitgogo(){
 	var schd_date = $('#schdtime').val();
 	if(schd_date.length<=16){
@@ -156,7 +157,7 @@ function submitgogo(){
 </script>
 	<div class="container-fluid">
 		<div class="row">
-			<nav id="sidebarMenu" style="z-index : 2"
+			<nav id="sidebarMenu" style="z-index: 2"
 				class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
 				<div class="sidebar-sticky pt-3">
 					<ul class="nav flex-column">
@@ -171,10 +172,17 @@ function submitgogo(){
 									data-feather="plus-circle"></span>
 								</a>
 							</h1></li>
-						<li class="nav-item"><a class="nav-link" href="#"><span
-								data-feather="file"></span>전체</a></li>
-						<li class="nav-item"><a class="nav-link" href="#"><span
-								data-feather="shopping-cart"></span>중요</a></li>
+						<li class="nav-item"><a class="nav-link"
+							href="proList.do?mem_no=${memNo }"><span data-feather="file"></span>전체</a></li>
+						<c:forEach items="${boxList }" var="dto">
+							<c:if test="${ dto.box_name eq '중요' }">
+								<c:set var="imp_no" value="${dto.box_no }" />
+								<li class="nav-item"><a class="nav-link"
+									href="seperateList.do?box_no=${dto.box_no }&mem_no=${memNo}"><span
+										data-feather="star"></span>중요</a></li>
+							</c:if>
+
+						</c:forEach>
 						<h1
 							class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 							<span>collection</span><a
@@ -203,18 +211,16 @@ function submitgogo(){
 						</a>
 					</h1>
 					<ul class="nav flex-column mb-2">
-						<li class="nav-item"><a class="nav-link" href="#"> <span
-								data-feather="file-text"></span> Current month
-						</a></li>
-						<li class="nav-item"><a class="nav-link" href="#"> <span
-								data-feather="file-text"></span> Last quarter
-						</a></li>
-						<li class="nav-item"><a class="nav-link" href="#"> <span
-								data-feather="file-text"></span> Social engagement
-						</a></li>
-						<li class="nav-item"><a class="nav-link" href="#"> <span
-								data-feather="file-text"></span> Year-end sale
-						</a></li>
+						<c:forEach items="${boxList }" var="dto">
+							<c:if test="${dto.box_name != '중요' }">
+								<li class="nav-item" style="height: 35px;"><a
+									class="nav-link col-lg-10 col-md-10"
+									href="seperateList.do?box_no=${dto.box_no }&mem_no=${memNo}"
+									style="display: inline-block;"> <span data-feather="box"></span>
+										${dto.box_name }
+								</a> <span data-feather="minus-circle"></span></li>
+							</c:if>
+						</c:forEach>
 					</ul>
 				</div>
 			</nav>
@@ -243,22 +249,24 @@ function submitgogo(){
 							<!-- project title(프로젝트 제목):s -->
 							<div id="proTitle"
 								class="pro-detail-box project-title ${proUserDTO.pro_user_color }">
-								<div class="pro-tit">
+								<div class="pro-tit check-import"
+									data-prono="${proUserDTO.pro_no }" data-boxno="${imp_no }">
 
 									<c:choose>
-										<c:when test="${proVo.imp_chk == 1 }">
+										<c:when test="${proUserDTO.imp_chk == proUserDTO.pro_no }">
 											<i
 												class="fas fa-star size-20 color-yellow maright-15 cursor-point"
-												data-prono="22"></i>
+												data-prono="${proUserDTO.pro_no }"></i>
 										</c:when>
 										<c:otherwise>
 											<i
 												class="fas fa-star size-20 color-gray-l maright-15 cursor-point"
-												data-prono="22"></i>
+												data-prono="${proUserDTO.pro_no }"></i>
 										</c:otherwise>
 									</c:choose>
 									<span class="size-20 color-white">${proUserDTO.pro_name }</span>
 								</div>
+
 								<ul class="pro-edit-nav">
 									<li><i
 										class="fas fa-palette size-30 color-white cursor-point edit-color-btn"
@@ -577,8 +585,8 @@ function submitgogo(){
 										<!-- 일정:s -->
 										<div id="tab-3" class="tabs-content con-schedule">
 
-											<form action="insertTimWithSchd.do" name="schdfrm" method="post"
-												enctype="multipart/form-data">
+											<form action="insertTimWithSchd.do" name="schdfrm"
+												method="post" enctype="multipart/form-data">
 												<input type="hidden" name="schd_no" value="1"> <input
 													type="hidden" name="pro_no" value="${proUserDTO.pro_no }">
 												<input type="hidden" name="mem_no" value="${memNo }">
@@ -651,16 +659,17 @@ function submitgogo(){
 															</dt>
 															<dd>
 																<input id="searchInput" name="schd_loc" class="controls"
-																	onkeyup="mapServise();" type="text" placeholder="장소를입력하세요"
-																	style="width: 90%;">
+																	onkeyup="mapServise();" type="text"
+																	placeholder="장소를입력하세요" style="width: 90%;">
 															</dd>
 														</dl>
 													</div>
 													<!-- 위치 검색:f -->
-													<div id="mapSe" style="width: 100%; height: 300px; display: none;"></div>
-		<script type="text/javascript"
-			src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da2da3e53b6d01f803242012ae94fba6&libraries=services"></script>
-		<script>
+													<div id="mapSe"
+														style="width: 100%; height: 300px; display: none;"></div>
+													<script type="text/javascript"
+														src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da2da3e53b6d01f803242012ae94fba6&libraries=services"></script>
+													<script>
 			function mapServise(){
 				$('#mapSe').show();
 				
@@ -820,12 +829,14 @@ function submitgogo(){
 																			<c:forEach items="${invitedProUserList}"
 																				var="proUserVo" end="2">
 																				<div class="pro-user-info"
-																					onclick="userSelect(this)" >
+																					onclick="userSelect(this)">
 																					<div class="pro-user-photo maright-10">
 																						<i class="icon-circle circle-s"></i> <img
-																src="/chord/resources/img/user-pic-sample.png" style="width:40px">
+																							src="/chord/resources/img/user-pic-sample.png"
+																							style="width: 40px">
 																					</div>
-																					<span class="user-no" data-memno="${proUserVo.mem_no }">${proUserVo.mem_no }</span>
+																					<span class="user-no"
+																						data-memno="${proUserVo.mem_no }">${proUserVo.mem_no }</span>
 																				</div>
 																			</c:forEach>
 																		</div>
@@ -867,6 +878,101 @@ function submitgogo(){
 							</div>
 
 							<div class="table-responsive"></div>
+
+
+							<!-- top pick article(상단고정글):s -->
+							<div class="top-fixed-article martop-20">
+								<h5 class="marbtm-10">상단고정글</h5>
+
+								<div class="fix-article-box panel-group" id="accordion"
+									role="tablist" aria-multiselectable="true">
+									<c:forEach items="${list }" var="timeLine" varStatus="fixStart">
+										<c:if test="${timeLine.fix_chk == timeLine.tim_no }">
+											<div class="panel panel-default">
+
+												<!-- accordion title : s -->
+												<div class="article-fix-top" role="tab" id="fixedTop_${fixStart.index }">
+													<a href="#fixedCon_${fixStart.index }"class="collasped size-18 color-black" data-toggle="collapse" data-parent="#accordion" aria-expanded="false"
+														aria-controls="fixedCon_${fixStart.index }" onchange="fn_fixedIconChange(this)"> 
+														<c:set var="articleKind" value="${timeLine.cont_kind }" /> 
+														<c:set var="articleTitle" value="${timeLine.tim_cont }" /> 
+														<input type="hidden" class="col-no" data-col="${articleKind }" data-no="${timeLine.cont_no }"> 
+														<i class="fas fa-map-pin maright-15 default-color"></i> 
+														<span class="font-bold default-color">[${articleKind }]</span>
+														${articleTitle} <i class="fas fa-angle-left size-24 color-gray icon-arrow"></i>
+													</a>
+												</div>
+												<!-- accordion title : f -->
+
+												<!-- accordion content : s -->
+												<div class="panel-collapse collapse" role="tabpanel" aria-labelledby="fixedTop">
+
+													<!-- timeline header:s -->
+													<div class="timeline-header back-color-white">
+														<!-- article writer info -->
+														<div class="article-writer-info">
+															<dl>
+																<dt class="posi-re maright-15 cursor-point"
+																	onclick="fn_openPopup(this)"
+																	data-id="${timeLine.mem_no }"
+																	data-nick="${timeLine.mem_no }" data-my="${memNo }">
+																	<i class="flow-icon icon-circle circle-s"></i> <img
+																		src="/chord/resources/img/sample.png" height="40">
+																</dt>
+																<dd>
+																	<strong class="dis-block size-18 color-black">${timeLine.mem_no }</strong>
+																	<span class="dis-block size-14 color-gray-l"> <fmt:formatDate
+																			value="${timeLine.tim_date }"
+																			pattern="yyyy-MM-dd HH:mm" />
+																	</span>
+																</dd>
+															</dl>
+														</div>
+
+														<!-- article icon : s -->
+														<ul class="article-top-icon">
+
+
+														</ul>
+														<!-- article icon : f -->
+
+													</div>
+													<!-- timeline header:f -->
+
+													<!-- timeline content:s -->
+													<div class="timeline-content">
+														<%-- <c:choose>
+				<c:when test="${timeLine.basicVo != null }">
+					<%@include file="/include/timeline_article.jsp" %>
+				</c:when>
+				<c:when test="${timeLine.taskVo != null }">
+					<%@include file="/include/timeline_task.jsp" %>
+				</c:when>
+				<c:when test="${timeLine.todoVo != null }">
+					<%@include file="/include/timeline_todo.jsp" %>
+				</c:when>
+				<c:when test="${timeLine.voteVo != null }">
+					<%@include file="/include/timeline_vote.jsp" %>
+				</c:when>
+				<c:otherwise>
+					<%@include file="/include/timeline_schedule.jsp" %>
+				</c:otherwise>
+			</c:choose> --%>
+													</div>
+													<!-- timeline content:f -->
+
+												</div>
+												<!-- accordion content : f -->
+											</div>
+										</c:if>
+									</c:forEach>
+								</div>
+							</div>
+
+
+
+
+
 							<!-- 타임라인 : start -->
 							<c:forEach var="dto" items="${list }">
 								<!-- 타임라인 : start -->
@@ -902,16 +1008,19 @@ function submitgogo(){
 										<ul class="article-top-icon">
 											<c:if test="${proUserDTO.pro_user_man_chk =='manager'}">
 												<!-- article pick button -->
-												<li><a href="#fixCheck" class="pick-check-btn"> <c:choose>
-															<c:when
-																test="${ProUserDTO.pro_user_man_chk == 'manager' }">
-																<i
-																	class="fas fa-map-pin size-24 cursor-point pick-active"></i>
-															</c:when>
-															<c:otherwise>
-																<i class="fas fa-map-pin size-24 cursor-point"></i>
-															</c:otherwise>
-														</c:choose>
+												<li><a href="#fixCheck" class="pick-check-btn"
+													style="text-decoration: none"> <c:if
+															test="${ proUserDTO.pro_user_man_chk eq 'manager'}">
+															<c:choose>
+																<c:when test="${dto.fix_chk != 0 }">
+																	<i
+																		class="fas fa-map-pin size-24 cursor-point pick-active"></i>
+																</c:when>
+																<c:otherwise>
+																	<i class="fas fa-map-pin size-24 cursor-point"></i>
+																</c:otherwise>
+															</c:choose>
+														</c:if>
 												</a></li>
 											</c:if>
 											<!-- article edit : s -->
@@ -1161,7 +1270,7 @@ function submitgogo(){
 
 																<!-- 담당자 리스트 -->
 																<div class="task-user-list">
-																	<c:if test="${dto eq 'null' }">
+																	<c:if test="${dto eq null }">
 																		<p class="mar-0 pad-0">담당자 없음</p>
 																	</c:if>
 																	<%-- <c:forEach items="${dto.tuList }" var="tuVo">
@@ -1186,7 +1295,7 @@ function submitgogo(){
 															</dt>
 															<dd class="posi-re">
 																<input type="text" placeholder="시작일"
-																	value="${dto.taskDTO.task_start_date }" readonly />
+																	value="${fn:substring(dto.taskDTO.task_start_date, 0, 16) }" readonly />
 															</dd>
 														</dl>
 													</div>
@@ -1200,7 +1309,7 @@ function submitgogo(){
 															</dt>
 															<dd class="posi-re">
 																<input type="text" placeholder="마감일"
-																	value="${dto.taskDTO.task_end_date }" readonly />
+																	value="${fn:substring(dto.taskDTO.task_end_date, 0, 16) }" readonly />
 															</dd>
 														</dl>
 													</div>
@@ -1293,12 +1402,11 @@ function submitgogo(){
 												</div>
 
 												<!-- 업무 수정:s -->
-												<form action="taskUpdate.do" method="post"
+												<form action="taskUpdate.do" method="get"
 													enctype="multipart/form-data" class="article-edit-form">
 
-													<input type="hidden" name="task_no"
-														value="${dto.taskDTO.task_no }">
-
+													<input type="hidden" name="tim_no" value="${dto.tim_no }">
+													<input type="hidden" name="pro_no" value="${dto.pro_no }">
 													<!-- article edit box:s -->
 													<div class="article-edit-box con-task">
 
@@ -1379,6 +1487,8 @@ function submitgogo(){
 						</c:forEach> --%>
 																	</div>
 																	<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):f -->
+																	
+																	
 																</dd>
 															</dl>
 														</div>
@@ -1388,15 +1498,13 @@ function submitgogo(){
 														<div class="input-box martop-15 add-item-box">
 															<dl>
 																<dt class="maright-20">
-																	<i class="flow-icon icon-task icon-sDate"></i>
+																	<i class="far fa-calendar-plus"></i>
 																</dt>
 																<dd class="posi-re">
 																	<input type="text" name="task_start_date"
-																		placeholder="시작일설정" data-language='ko'
-																		class="datepicker-here"
-																		value="${dto.taskDTO.task_start_date }" /> <i
-																		class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
-																		onclick="fn_dateReset(this)"></i>
+																		placeholder="시작일설정" id="datepicker3"
+																		class="datepicker-here" data-timepicker="true" data-time-format='hh:ii'
+																		value="${fn:substring(dto.taskDTO.task_start_date, 0, 16) }" />
 																</dd>
 															</dl>
 														</div>
@@ -1406,20 +1514,18 @@ function submitgogo(){
 														<div class="input-box martop-15 add-item-box">
 															<dl>
 																<dt class="maright-20">
-																	<i class="flow-icon icon-task icon-fDate"></i>
+																	<i class="far fa-calendar-minus"></i>
 																</dt>
 																<dd class="posi-re">
 																	<input type="text" name="task_end_date"
-																		placeholder="마감일설정" data-language='ko'
-																		class="datepicker-here"
-																		value="${dto.taskDTO.task_end_date }" /> <i
-																		class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
-																		onclick="fn_dateReset(this)"></i>
+																		placeholder="마감일설정" id="datepicker4"
+																		class="datepicker-here" data-timepicker="true" data-time-format='hh:ii'
+																		value="${fn:substring(dto.taskDTO.task_end_date, 0, 16) }" /> 
 																</dd>
 															</dl>
 														</div>
 														<!-- 마감일:f -->
-
+	
 														<!-- 우선순위:s -->
 														<div class="input-box martop-15 add-item-box">
 															<dl>
@@ -1462,7 +1568,7 @@ function submitgogo(){
 															</dl>
 														</div>
 														<!-- 우선순위:f -->
-
+			
 														<button type="button" class="add-item-btn"
 															onclick="fn_addItem(this)">
 															<i class="fas fa-angle-down maright-10"></i> 추가 항목 입력
@@ -1572,16 +1678,17 @@ function submitgogo(){
 																			<p class="mar-0 pad-0">담당자 없음</p>
 																		</c:if>
 																				<img src="/chord/resources/img/sample.png" width="24"
-																						class="cursor-point"> <strong class="marleft-10">${tu_mem }</strong>
+																						class="cursor-point"> <strong class="marleft-10">ss</strong>
 																		<c:if test="${not empty dto.schdDTO.tu_mem_list} ">
 																		<c:forEach items="${dto.schdDTO.tu_mem_list }" var="tu_mem">
 																			<div class="name-tag">
-																				 <strong class="marleft-10">${tuVo.mem_no }</strong>
+																				 <strong class="marleft-10">${tu_mem.SchdDTO.nick_name }</strong>
 																				<i class="fas fa-times-circle marleft-15"
 																					style="display: none"></i> <input type="hidden"
-																					name="tu_mem_id" value="${tu_mem }">
+																					name="tu_mem_id" value="${tu_mem.SchdDTO.mem_no }">
 																			</div>
 																		</c:forEach>
+
 																		</c:if>
 																	</div>
 																</dd>
@@ -1776,8 +1883,9 @@ function submitgogo(){
 											<!-- article edit dn:f -->
 										</form>
 
-
 												<!-- 일정 수정:f -->
+												
+												
 												<!-- 스케쥴글 : finsh -->
 											</c:when>
 											<c:when test="${dto.cont_kind eq 'todo' }">
@@ -2466,19 +2574,84 @@ $(function(){
 });
 </script>
 					</div>
-					<!-- project right : finish -->
+				</section>
+				<!-- project right : finish -->
+				<div>
+					<%@include file="layerPopCon.jsp"%>
+				</div>
+			</main>
 		</div>
-		</section>
-		<div>
-			<%@include file="layerPopCon.jsp"%>
-		</div>
-		</main>
-	</div>
 
-
-<script src="/chord/resources/js/dashboard.js"></script>
-<!-- jjpicker -->
-<script type="text/javascript" src="/chord/resources/js/jjpicker.js"></script>
+		<script type="text/javascript">
+	$(function(){
+		
+		// 프로젝트 타이틀 길이에 따라 위치 다르게 적용하기
+		$(".pro-click").each(function(){
+			var height = $(this).height();
+			var result = -(height / 2) + 10;
+			$(this).css("margin-top", result+"px");
+		});
+		
+		// project import check(main page)
+		$(".check-import").on("click", function(){
+			if($(this).children("svg").hasClass("color-gray-l")){
+				$(this).children("svg").removeClass("color-gray-l");
+				$(this).children("svg").addClass("color-yellow");				
+				
+				var pro_no = $(this).data("prono");	
+				var box_no = $(this).data("boxno");
+				$.ajax({					
+					url : "insertBoxPro.do",
+					method : "get",
+					data : {pro_no:pro_no,box_no:box_no},
+					dataType : "json",
+					success : function(data){
+						if(data==1){
+							alertCustom("변경되었습니다.", "alert-warning");
+						}
+					}
+				});
+			} else {
+				$(this).children("svg").removeClass("color-yellow");
+				$(this).children("svg").addClass("color-gray-l");
+				
+				var pro_no = $(this).data("prono");			
+				var box_no = $(this).data("boxno");
+				$.ajax({					
+					
+					url : "deleteBoxPro.do",
+					method : "get",
+					data : {pro_no:pro_no,box_no:box_no},
+					dataType : "json",
+					success : function(data){
+						if(data==1){
+							alertCustom("변경되었습니다.", "alert-warning");
+						}
+					}
+				});
+			}
+		});
+		
+		// pro-click 클릭이벤트
+		$(".pro-click").click(function(){
+			var pro_no = $(this).siblings(".check-import").data("prono");
+			var pro_name = $(this).siblings(".check-import").data("proname");
+			$("#prono").val(pro_no);
+			$("#proname").val(pro_name);
+			$("#detailFom").submit();
+		});
+		
+		// pro-click-mem 클릭이벤트
+		$(".pro-click-mem").click(function(){
+			var item = $(this);
+			var proClick = item.siblings(".pro-tit-box").children(".pro-click");
+			proClick.click();
+		});
+		
+	});
+		<script src="/chord/resources/js/dashboard.js"></script>
+		<!-- jjpicker -->
+		<script type="text/javascript" src="/chord/resources/js/jjpicker.js"></script>
 
 </body>
 </html>
