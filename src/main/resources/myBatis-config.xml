@@ -17,5 +17,8 @@
  		<typeAlias type="com.ezen.chord.reply.dto.ReplyDTO" alias="replyDTO"/>
  		<typeAlias type="com.ezen.chord.schedule.dto.SchdDTO" alias="SchdDTO"/>
  		<typeAlias type="com.ezen.chord.box.dto.BoxDTO" alias="boxDTO"/>
+ 		<typeAlias type="com.ezen.chord.chat.dto.ChatInfo" alias="chatInfo"/>
+ 		<typeAlias type="com.ezen.chord.chat.dto.ChatMessage" alias="chatMessage"/>
+ 		<typeAlias type="com.ezen.chord.chat.dto.Chatroom" alias="chatroom"/>
  	</typeAliases>
  </configuration>

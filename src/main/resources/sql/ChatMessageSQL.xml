@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chatMessageSql">
+
+	<select id="selectPrivateChatList" parameterType="memberDTO"
+		resultType="ChatMessage">
+		SELECT a.mem_no, a.mem_name, a.chatroom_no, a.chatmessage_content,
+		a.chatmessage_writedate, b.chatmessage_count FROM
+		(SELECT a.mem_no,
+		mem_name, chatroom_no, chatmessage_content, chatmessage_writedate
+		FROM
+		member a LEFT JOIN (
+		SELECT mem_no, a.chatroom_no, chatmessage_content,
+		chatmessage_writedate
+		FROM (SELECT mem_no, chatroom_no FROM chatinfo
+		WHERE chatroom_no IN (SELECT a.chatroom_no FROM chatroom a, chatinfo b
+		WHERE a.chatroom_no = b.chatroom_no
+		AND b.mem_no = #{mem_no} AND
+		a.chatroom_type = 0)
+		AND mem_no != #{mem_no}) a LEFT JOIN (SELECT
+		chatroom_no,
+		MAX(chatmessage_content) KEEP(DENSE_RANK LAST ORDER BY
+		chatmessage_writedate) AS chatmessage_content,
+		MAX(chatmessage_writedate) AS chatmessage_writedate
+		FROM chatmessage
+		WHERE chatroom_no IN (SELECT a.chatroom_no FROM chatroom a, chatinfo b
+		WHERE a.chatroom_no = b.chatroom_no AND b.mem_no = #{mem_no} AND
+		a.chatroom_type = 0)
+		GROUP BY chatroom_no) b ON a.chatroom_no =
+		b.chatroom_no) b ON a.mem_no = b.mem_no
+		WHERE com_no = #{com_no}
+		AND
+		a.mem_no != #{mem_no}) a LEFT JOIN
+		(SELECT a.chatroom_no, count(b.chatmessage_content) AS chatmessage_count
+		FROM
+		chatinfo a, chatmessage b
+		WHERE a.chatroom_no IN (SELECT a.chatroom_no
+		FROM chatroom a, chatinfo b WHERE a.chatroom_no = b.chatroom_no AND
+		b.mem_no = #{mem_no} AND a.chatroom_type = 0)
+		AND b.mem_no != #{mem_no}
+		AND a.mem_no = #{mem_no}
+		AND b.chatmessage_writedate <![CDATA[>]]>
+		a.chatinfo_outtime
+		GROUP BY a.chatroom_no) b ON a.chatroom_no =
+		b.chatroom_no
+		ORDER BY a.mem_no, a.chatmessage_writedate DESC
+	</select>
+
+	<!-- 해당 채팅방의 채팅 메세지를 가져온다. -->
+	<select id="selectChatroomMessage" resultType="chatMessage">
+		SELECT distinct cm.*, m.mem_name as messagewriter
+		FROM chatmessage cm,
+		member m
+		WHERE cm.mem_no = m.mem_no
+		AND cm.chatroom_no = #{chatroom_no}
+		AND (SELECT chatinfo_intime FROM chatinfo WHERE mem_no = #{mem_no} AND
+		chatroom_no = #{chatroom_no})
+      <![CDATA[<=]]>
+		cm.chatmessage_writedate
+		ORDER BY cm.chatmessage_writedate
+	</select>
+
+	<!-- 해당 채팅방의 채팅 메세지를 DB 에 넣는다. -->
+	<insert id="insertChatMessage">
+		<selectKey keyProperty="chatmessage_no" resultType="int"
+			order="AFTER">
+			SELECT chatmessage_SEQ.CURRVAL FROM DUAL
+		</selectKey>
+		INSERT INTO chatmessage VALUES(
+		chatmessage_SEQ.NEXTVAL,
+		#{chatmessage_content},
+		TO_DATE(#{chatmessage_writedate},'yyyy/mm/dd
+		hh24:mi:ss'),
+		#{mem_no},
+		#{chatroom_no}
+		)
+	</insert>
+
+	<!-- 메세지 단일 삭제 -->
+	<update id="updateChatMessage" parameterType="int">
+		UPDATE
+		chatmessage
+		SET
+		chatmessage_content = '삭제된 메세지입니다.'
+		WHERE
+		chatmessage_no = ${value}
+	</update>
+</mapper>

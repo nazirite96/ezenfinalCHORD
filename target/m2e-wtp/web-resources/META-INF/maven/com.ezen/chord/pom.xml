@@ -148,6 +148,28 @@
 		    <version>2.9.8</version>
 		</dependency>   
 		
+		 <!-- Web Socket -->
+      <dependency>
+         <groupId>org.springframework</groupId>
+         <artifactId>spring-websocket</artifactId>
+         <version>${org.springframework-version}</version>
+      </dependency>
+
+      <!-- sockjs-client -->
+      <dependency>
+         <groupId>org.springframework</groupId>
+         <artifactId>spring-messaging</artifactId>
+         <version>${org.springframework-version}</version>
+      </dependency>
+
+      <!-- 스프링의 STOMP 클라이언트 지원 -->
+      <dependency>
+         <groupId>org.springframework.integration</groupId>
+         <artifactId>spring-integration-stomp</artifactId>
+         <version>${org.springframework-version}</version>
+      </dependency>
+		
+		
 		<!-- MyBatis & Oracle -->
       <dependency>
          <groupId>org.springframework</groupId>
