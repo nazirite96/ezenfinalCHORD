@@ -57,6 +57,21 @@ public class ProjectController {
 		
 		return mav;
 	}
+	@RequestMapping("/seperateList.do")
+	public ModelAndView seperateList(int box_no,int mem_no) {
+		
+		ModelAndView mav = new ModelAndView();
+		List<BoxDTO> boxList = boxService.getBoxList(mem_no);
+		mav.addObject("boxList", boxList);
+		mav.addObject("mem_no", mem_no);
+		List<ProjectUserDTO> proList = proService.getSepProList(mem_no, box_no);
+		mav.addObject("proList", proList);
+		mav.setViewName("project/seperList");
+		return mav;
+	}
+	
+	
+	
 	
 	@RequestMapping("/insertPro.do")
 	public String insertPro(ProjectDTO proDTO) {
@@ -155,5 +170,6 @@ public class ProjectController {
 		proService.deleteBoxPro(boxDTO);
 		return "1";
 	}
+	
 	
 }

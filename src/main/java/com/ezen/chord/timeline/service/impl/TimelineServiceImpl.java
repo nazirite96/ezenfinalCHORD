@@ -103,4 +103,15 @@ public class TimelineServiceImpl implements TimelineService {
 		return timDAO.getTimSeq();
 	}
 	
+	@Override
+	public int deleteFix(int mem_no, int tim_no, int pro_no) {
+		// TODO Auto-generated method stub
+		return timDAO.deleteFix(mem_no, tim_no, pro_no);
+	}
+	@Override
+	public int insertFix(int mem_no, int tim_no, int pro_no) {
+		// TODO Auto-generated method stub
+		return timDAO.insertFix(mem_no, tim_no, pro_no);
+	}
+	
 }

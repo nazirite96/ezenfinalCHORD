@@ -1,5 +1,7 @@
 package com.ezen.chord.box.dao.impl;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,5 +38,26 @@ public class BoxDAOImpl implements BoxDAO{
 		map.put("pro_no", pro_no);
 		return sqlMap.selectList("selectBoxJoinBoxPro", map);
 		
+	}
+	
+@Override
+	public int insertBoxWhenMemJoin(int mem_no) {
+		// TODO Auto-generated method stub
+		BoxDTO box = new BoxDTO();
+		java.sql.Date date = new Date(0);
+		box.setBox_no(0);
+		box.setMem_no(mem_no);
+		box.setBox_date(date);
+		List<String> boxList = new ArrayList<String>();
+		boxList.add("디자인팀");
+		boxList.add("개발팀");
+		boxList.add("기획팀");
+		boxList.add("중요");
+		for( String boxName : boxList) {
+			box.setBox_name(boxName);
+			sqlMap.insert("insertBoxWhenMemJoin", box);
+		}
+		
+		return 1;
 	}
 }

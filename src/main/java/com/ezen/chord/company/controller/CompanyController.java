@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen.chord.box.dao.BoxDAO;
 import com.ezen.chord.company.dao.CompanyDAO;
 import com.ezen.chord.company.dto.CompanyDTO;
 import com.ezen.chord.company.service.CompanyService;
@@ -22,9 +23,9 @@ public class CompanyController {
 
 	@Autowired
 	CompanyService csvc;
-
+	
 	@Autowired
-	CompanyDAO dao;
+	BoxDAO boxDao;
 
 
 	/*회사 test form*/
@@ -60,7 +61,8 @@ public class CompanyController {
 			if(com_pwd_result>0) { // 번호+패스워드 모두 맞음
 
 				csvc.exComNoUpdateService(mdto);// com_no 업데이트해주기
-				//인설트 일반
+				
+				//boxDao.insertBoxWhenMemJoin(mdto.getMem_no());
 
 				mav.addObject("msg","입사 성공~");
 				mav.addObject("gopage","testForm.do");
@@ -106,7 +108,7 @@ public class CompanyController {
 	public ModelAndView makeNewCompany(CompanyDTO cdto,String mem_email) {
 
 		int build_com = csvc.buildCompanyService(cdto);
-		
+
 		ModelAndView mav = new ModelAndView();
 		String msg = "";
 		if(build_com>0) {
@@ -133,10 +135,9 @@ public class CompanyController {
 		int getComNo_result = csvc.findComNoService(com_name); //com_no 찾음.
 		mdto.setCom_no(getComNo_result); //com_no setting해주기
 		csvc.exComNoUpdateService(mdto); //해당 멤버에 com_no 업데이트해주기
-			
 		
 		int getMemNo_result = csvc.findMemNoService(mem_email);// 해당멤버position 업데이트해주기 위해 해당 멤버no찾기
-		System.out.println("controller 회사넘버:"+getComNo_result + "/ 멤버넘버: "+getMemNo_result);
+		//boxDao.insertBoxWhenMemJoin(getMemNo_result);
 		
 		
 		Map<String,Integer> map = new HashMap<String,Integer>();
@@ -145,17 +146,10 @@ public class CompanyController {
 		csvc.newPositionInsertService(map); // position 업데이트해주기 grade update
 
 		
-		/*자동 로그인 기능*/
-		String userName = csvc.comGetNameService(mdto.getMem_email()); // 해당 회원 이름 가져오기
-		/*세션 생성*/
-		//session.setAttribute("name",userName);
-		//session.setAttribute("email", mem_email);
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("");
-		
+		//String userName = csvc.comGetNameService(mdto.getMem_email()); // 해당 회원 이름 가져오기
 
 		return "member/loginForm";
-		//return mav;
+
 	}
 	
 	

@@ -10,5 +10,6 @@ public interface BoxDAO {
 	public List<BoxDTO> selectBoxJoinBoxPro(int mem_no,int pro_no);
 	
 	public int insertBox(BoxDTO boxDTO);
+	public int insertBoxWhenMemJoin(int mem_no);
 
 }

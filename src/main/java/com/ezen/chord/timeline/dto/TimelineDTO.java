@@ -16,10 +16,27 @@ public class TimelineDTO {
 	private java.sql.Date tim_date;	//작성일
 	private int pro_no;				//작성 프로젝트
 	private int mem_no;				//작성자
+	private int fix_chk;			//고정글
 	private List<ReplyDTO> repList; //리플
 	private TaskDTO taskDTO;		//task
 	private SchdDTO SchdDTO;
 	public  TodoDTO todoDTO;
+	
+	
+	
+	public int getFix_chk() {
+		return fix_chk;
+	}
+	public void setFix_chk(int fix_chk) {
+		this.fix_chk = fix_chk;
+	}
+	public TodoDTO getTodoDTO() {
+		return todoDTO;
+	}
+	public void setTodoDTO(TodoDTO todoDTO) {
+		this.todoDTO = todoDTO;
+	}
+	
 	
 	public SchdDTO getSchdDTO() {
 		return SchdDTO;

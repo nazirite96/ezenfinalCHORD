@@ -15,10 +15,6 @@
 		insert into todo values(#{todo_no})
 	</insert>
 
-	<!-- 할일 등록(담당자) 
-	<insert id="insertTodoPi" parameterType="todoDTO">
-	</insert>-->
-
 	<!-- 할일 등록에 쓰는거 TIM_NO, CONT_KIND, CONT_NO, TIM_CONT, TIM_DATE, PRO_NO, 
 		MEM_NO -->
 	<insert id="insertTodoTim" parameterType="todoDTO">

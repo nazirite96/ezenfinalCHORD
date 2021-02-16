@@ -152,7 +152,7 @@
           </li>
         </c:if>
         </c:forEach>  
-       
+        
         </ul>
       </div>
     </nav>
@@ -172,6 +172,7 @@
         </div>
       </div>
 	<div id="proTitle" class="ccc ddd"></div>
+     
 
       <h2>Section title</h2>
       <div class="table-responsive">
@@ -204,13 +205,6 @@
 	
 	<!-- project list:s -->
 	<div class="project-wrap">
-		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-			<a href="#addProject" class="project-box add-project add-pro-link">
-				<i class="flow-icon icon-plus"></i>
-				<strong class="dis-block martop-10 size-24 color-blue-l text-center">프로젝트 만들기</strong>
-			</a>
-		</div>
-		
 		<c:forEach items="${proList }" var="dto">
 			<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 float-left">
 				<div class="project-box">

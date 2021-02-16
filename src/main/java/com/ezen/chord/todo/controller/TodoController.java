@@ -63,7 +63,8 @@ public class TodoController {
 			
 			todoItemService.insertTodoItemService(tiDTO);
 			todoItemService.insertTodoItemPiService(tiDTO);
-			System.out.println(tiDTO.getTi_mem_no()+"컨트롤러 mem테스트");
+			System.out.println(tiDTO.getTi_mem_no()+"컨트롤러 값테스트");
+			
 		}
 		
 		

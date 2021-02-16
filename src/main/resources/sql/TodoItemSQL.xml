@@ -11,6 +11,7 @@
 		values(todo_item_SEQ.nextval, #{todo_item_content}, 'n', #{todo_no},#{todo_item_date})
 	</insert>
 	
+	<!-- 할일 등록(담당자)--> 
 	<insert id="insertTodoItemPi" parameterType="todoItemDTO">
 		insert into participants(cont_kind,cont_no,mem_no)
 		values('todo',#{todo_no},#{ti_mem_no})

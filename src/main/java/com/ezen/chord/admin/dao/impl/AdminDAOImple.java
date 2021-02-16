@@ -1,5 +1,6 @@
 package com.ezen.chord.admin.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -147,6 +148,7 @@ public class AdminDAOImple implements AdminDAO {
 	/*회사관리자_프로젝트 리스트*/
 	@Override
 	public List<Map<String, Object>> adminProjectListDAO(int com_no) {
+		
 		List<Map<String, Object>> list = null;
 		try {
 			list = sqlMap.selectList("chord.admin.admin_projectList",com_no);
@@ -181,10 +183,6 @@ public class AdminDAOImple implements AdminDAO {
 		return list;
 	}
 	
-	/*회사관리자_프로젝트 삭제*/
-//	@Override
-//	public int adminProDeleteDAO(int pro_no) {
 
-//	}
 	
 }

@@ -19,9 +19,10 @@
 			<div
 				class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 				<c:forEach var="name" items="${name }">
-					<h1 class="h2">
-						[No.<input type="text" name="pro_no" value="${name.PNO }">]
-						|<input type="text" name="pro_name" value="${name.PNAME }">
+					<h1 class="h4">
+						[No.${name.PNO }] &nbsp; ${name.PNAME }
+						<input type="hidden" name="pro_no" value="${name.PNO }" class="input_css">
+						<input type="hidden" name="pro_name" value="${name.PNAME }" class="input_css">
 					</h1>
 				</c:forEach>
 			</div>

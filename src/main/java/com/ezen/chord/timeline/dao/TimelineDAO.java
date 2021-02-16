@@ -17,6 +17,9 @@ public interface TimelineDAO {
 	
 	public int getTimSeq();
 	
+	public int insertFix(int mem_no,int tim_no,int pro_no);
+	
+	public int deleteFix(int mem_no,int tim_no,int pro_no);
 	
 	
 	
