@@ -17,10 +17,11 @@ public class SchdDTO {
 	private String tim_cont;	//// 제목
 	private Date tim_date;  	////등록시간
 	private int pro_no;			//// 해당프로젝트 번호
-	private int mem_no;			//// 해당 맴버 번호
-	private String mem_nick;
 	
-	private List<Integer> tu_mem_list; /// 참가자들 리스트 
+	private int mem_no;			//// 해당 맴버 번호
+	private String nick_name;			//// 해당 맴버
+	
+	public List<SchdDTO> tu_mem_list; /// 참가자들 리스트 
 	
 	
 	public SchdDTO() {
@@ -28,11 +29,9 @@ public class SchdDTO {
 	}
 
 
-
-
 	public SchdDTO(int schd_no, String schd_loc, String schd_memo, String time_start_date, String time_end_date,
-			String cont_kind, int cont_no, String tim_cont, Date tim_date, int pro_no, int mem_no, String mem_nick,
-			List<Integer> tu_mem_list) {
+			String cont_kind, int cont_no, String tim_cont, Date tim_date, int pro_no, int mem_no, String nick_name,
+			List<SchdDTO> tu_mem_list) {
 		super();
 		this.schd_no = schd_no;
 		this.schd_loc = schd_loc;
@@ -45,25 +44,9 @@ public class SchdDTO {
 		this.tim_date = tim_date;
 		this.pro_no = pro_no;
 		this.mem_no = mem_no;
-		this.mem_nick = mem_nick;
+		this.nick_name = nick_name;
 		this.tu_mem_list = tu_mem_list;
 	}
-
-
-
-
-	public List<Integer> getTu_mem_list() {
-		return tu_mem_list;
-	}
-
-
-
-
-	public void setTu_mem_list(List<Integer> tu_mem_list) {
-		this.tu_mem_list = tu_mem_list;
-	}
-
-
 
 
 	public int getSchd_no() {
@@ -176,15 +159,24 @@ public class SchdDTO {
 	}
 
 
-	public String getMem_nick() {
-		return mem_nick;
+	public String getNick_name() {
+		return nick_name;
 	}
 
 
-	public void setMem_nick(String mem_nick) {
-		this.mem_nick = mem_nick;
+	public void setNick_name(String nick_name) {
+		this.nick_name = nick_name;
 	}
-	
+
+
+	public List<SchdDTO> getTu_mem_list() {
+		return tu_mem_list;
+	}
+
+
+	public void setTu_mem_list(List<SchdDTO> tu_mem_list) {
+		this.tu_mem_list = tu_mem_list;
+	}
 	
 	
 	

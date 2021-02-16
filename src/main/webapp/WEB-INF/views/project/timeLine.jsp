@@ -1677,19 +1677,18 @@ function submitgogo(){
 																		<c:if test="${empty dto.schdDTO.tu_mem_list} ">
 																			<p class="mar-0 pad-0">담당자 없음</p>
 																		</c:if>
-																		<img src="/chord/resources/img/sample.png" width="24"
-																			class="cursor-point"> <strong
-																			class="marleft-10">${tu_mem }</strong>
+																				<img src="/chord/resources/img/sample.png" width="24"
+																						class="cursor-point"> <strong class="marleft-10">ss</strong>
 																		<c:if test="${not empty dto.schdDTO.tu_mem_list} ">
-																			<c:forEach items="${dto.schdDTO.tu_mem_list }"
-																				var="tu_mem">
-																				<div class="name-tag">
-																					<strong class="marleft-10">${tuVo.mem_no }</strong>
-																					<i class="fas fa-times-circle marleft-15"
-																						style="display: none"></i> <input type="hidden"
-																						name="tu_mem_id" value="${tu_mem }">
-																				</div>
-																			</c:forEach>
+																		<c:forEach items="${dto.schdDTO.tu_mem_list }" var="tu_mem">
+																			<div class="name-tag">
+																				 <strong class="marleft-10">${tu_mem.SchdDTO.nick_name }</strong>
+																				<i class="fas fa-times-circle marleft-15"
+																					style="display: none"></i> <input type="hidden"
+																					name="tu_mem_id" value="${tu_mem.SchdDTO.mem_no }">
+																			</div>
+																		</c:forEach>
+
 																		</c:if>
 																	</div>
 																</dd>
@@ -1845,47 +1844,48 @@ function submitgogo(){
 														</div>
 														<!-- 메모:f -->
 
-														<!-- 알람:s -->
-														<div class="input-box martop-15">
-															<dl>
-																<dt class="maright-20">
-																	<i class="fas fa-bell"></i>
-																</dt>
-																<dd>
-																	<select name="alert_time"
-																		onchange="getSelectValue(this.form);">
-																		<option value="0">없음</option>
-																		<option value="10">10분전 미리알림</option>
-																		<option value="30">30분전 미리알림</option>
-																		<option value="60">1시간전 미리알림</option>
-																		<option value="120">2시간전 미리알림</option>
-																		<option value="180">3시간전 미리알림</option>
-																		<option value="1440">1일전</option>
-																		<option value="2880">2일전</option>
-																		<option value="10080">7일전</option>
-																	</select>
-																</dd>
-															</dl>
-														</div>
-														<!-- 알람:f -->
-													</div>
-													<!-- article edit box:f -->
+												<!-- 알람:s -->
+												<div class="input-box martop-15">
+													<dl>
+														<dt class="maright-20">
+															<i class="fas fa-bell"></i>
+														</dt>
+														<dd>
+															<select name="alert_time"
+																onchange="getSelectValue(this.form);">
+																<option value="0">없음</option>
+																<option value="10">10분전 미리알림</option>
+																<option value="30">30분전 미리알림</option>
+																<option value="60">1시간전 미리알림</option>
+																<option value="120">2시간전 미리알림</option>
+																<option value="180">3시간전 미리알림</option>
+																<option value="1440">1일전</option>
+																<option value="2880">2일전</option>
+																<option value="10080">7일전</option>
+															</select>
+														</dd>
+													</dl>
+												</div>
+												<!-- 알람:f -->
+											</div>
+											<!-- article edit box:f -->
 
-													<!-- article edit dn:s -->
-													<div class="article-edit-dn">
-														<!-- submit & cancel 버튼 -->
-														<input type="submit" value="수정하기"
-															class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
-														<input type="button" value="취소"
-															onclick="fn_editCancel(this)"
-															class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
-															style="border: 1px solid #ddd">
-													</div>
-													<!-- article edit dn:f -->
-												</form>
-
+											<!-- article edit dn:s -->
+											<div class="article-edit-dn">
+												<!-- submit & cancel 버튼 -->
+												<input type="submit" value="수정하기"
+													class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
+												<input type="button" value="취소"
+													onclick="fn_editCancel(this)"
+													class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
+													style="border: 1px solid #ddd">
+											</div>
+											<!-- article edit dn:f -->
+										</form>
 
 												<!-- 일정 수정:f -->
+												
+												
 												<!-- 스케쥴글 : finsh -->
 											</c:when>
 											<c:when test="${dto.cont_kind eq 'todo' }">
