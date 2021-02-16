@@ -384,7 +384,7 @@ $(function() {
 		var layerWrap = $($href);
 
 		var timeline_col = $(this).parents(".timeline-box").children(".col-no").data("col");
-		var timeline_no = $(this).parents(".timeline-box").children(".col-no").data("no");
+		var timeline_no = $(this).parents(".timeline-box").children(".col-kind").data("kind");
 
 		// 고정되어있는 글
 		if (item.hasClass('fixed')) {

@@ -76,6 +76,7 @@ public class TimelineController {
 				break;
 			}
 		}
+		mav.addObject("list", list);
 		mav.addObject("mem_no", mem_no);
 		mav.setViewName("project/timeLine");
 		
@@ -228,6 +229,23 @@ public class TimelineController {
 		int mem_no = (int)sess.getAttribute("memNo");
 		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no()+"&mem_no="+mem_no;
 	}
+	
+	@RequestMapping("/insertFix.do")
+	public String insertFix(int mem_no,int tim_no,int pro_no) {
+		timService.insertFix(mem_no, tim_no, pro_no);
+		
+		
+		return "redirect:/timeLine.do?pro_no="+pro_no+"&mem_no="+mem_no;
+	}
+	
+	@RequestMapping("/deleteFix.do")
+	public String deleteFix(int mem_no,int tim_no,int pro_no) {
+		
+		timService.deleteFix(mem_no, tim_no, pro_no);
+		
+		return "redirect:/timeLine.do?pro_no="+pro_no+"&mem_no="+mem_no;
+	}
+	
 	
 	
 }

@@ -20,6 +20,8 @@ public interface ProjectService {
 	
 	//전체 프로젝트 조회
 	List<ProjectUserDTO> getProAllList(int mem_no);
+	//분류 조회
+	List<ProjectUserDTO> getSepProList(int mem_no,int box_no);
 	
 	int chkProUser(int mem_no,int pro_no);
 	
@@ -28,6 +30,8 @@ public interface ProjectService {
 	int insertBoxPro(BoxDTO boxDTO);
 	
 	int deleteBoxPro(BoxDTO boxDTO);
+	
+	
 	
 	
 }

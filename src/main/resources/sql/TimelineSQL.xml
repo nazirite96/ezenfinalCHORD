@@ -11,9 +11,11 @@
     	</insert>
     	
     	<select id="getTimelinByProNo" parameterType="hashMap" resultType="timelineDTO">
-			select * from timeline
-			where pro_no = #{pro_no}
-			order by tim_no desc
+			select A.*,(B.tim_no) as fix_chk from
+		    (select * from timeline
+		                where pro_no = #{pro_no}
+		                order by tim_no desc) A
+		left join topfixture B on A.tim_no = B.tim_no
     	</select>
     	<update id="updateTim" parameterType="timelineDTO">
     		update timeline
@@ -27,4 +29,12 @@
     	<select id="getTimSeq" resultType="int">
     		select timeline_SEQ.nextval from dual
     	</select>
+    	<insert id="insertFix">
+    		insert into topfixture
+    		values(0,#{tim_no})
+    	</insert>
+    	<delete id="deleteFix">
+    		delete topfixture
+    		where tim_no = #{tim_no}
+    	</delete>
     </mapper>
