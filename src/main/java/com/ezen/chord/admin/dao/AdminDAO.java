@@ -28,7 +28,8 @@ public interface AdminDAO {
 	public List<Map<String, Object>> adminProjectListDAO(int com_no);
 	public List<Map<String, Object>> adminProContentsDAO(int pro_no);
 	public List<Map<String, Object>> adminProInfoDAO(int pro_no);
-	//public int adminProDeleteDAO(int pro_no);
+
+	
 	
 	
 }

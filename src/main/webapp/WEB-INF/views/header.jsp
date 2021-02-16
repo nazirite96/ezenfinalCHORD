@@ -38,6 +38,18 @@
 		integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
 		crossorigin="anonymous"></script>
 
+<script type="text/javascript">
+	function exit(){
+		var result = window.confirm('로그아웃하시겠습니까?');
+		if(result){
+			location.href='logout.do';
+		}else{
+			location.history.back;
+		}
+
+	}
+</script>
+
 <style type="text/css">
 /* 네비바 */
 .navbar-default{
@@ -123,7 +135,7 @@
 								<a class="nav-link active"
 									href="adminWebForm.do">사이트 운영자 관리</a></li>
 								<li class="nav-item nav-link text-nowrap">
-								<a class="nav-link active" href="logout.do">로그아웃</a></li>
+								<a class="nav-link active" href="javascript:exit()">로그아웃</a></li>
 							</ul>
 						</div>
 					</nav>
@@ -166,7 +178,7 @@
 								<a class="nav-link" href="${comContentsUrl}">
 								<img alt="admin" src="resources/img/header/admin.png" width="25" height="25"></a></li>
 								<li class="nav-item nav-link text-nowrap">
-								<a class="nav-link active" href="logout.do">
+								<a class="nav-link active" href="javascript:exit()">
 								<img alt="logout" src="resources/img/header/exit.png" width="25" height="25"></a></li>
 							</ul>
 						</div>
@@ -203,7 +215,7 @@
 							<li class="nav-item nav-link text-nowrap">
 								<a class="nav-link" href="#"><img src="resources/img/header/chat.png" width="25" height="25"></a></li>
 							<li class="nav-item nav-link text-nowrap">
-								<a class="nav-link active" href="logout.do">
+								<a class="nav-link active" href="javascript:exit()">
 								<img alt="logout" src="resources/img/header/exit.png" width="25" height="25"></a></li>
 						</ul>
 					</div>						
