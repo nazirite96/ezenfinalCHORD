@@ -43,4 +43,18 @@
     		delete box_project
     		where box_no = #{box_no} and pro_no =#{pro_no}
     	</delete>
+    	<select id="selectSepBoxPro" parameterType="hashMap" resultType="projectUserDTO">
+    	select A.*,(B.pro_no) as imp_chk from
+		    (select B.* 
+		    from box_project A
+		    left join (SELECT A.pro_no,pro_name,pro_cont,pro_date,kind_no,A.mem_no,A.pro_user_color,a.pro_user_man_chk FROM project_user A
+		                LEFT JOIN project B ON
+		                    A.pro_no = B.pro_no
+		                    where A.mem_no = #{mem_no}) B
+		                    on A.pro_no = B.pro_no
+		    where box_no = #{box_no}) A
+			left join (select * from box 
+			            left join box_project on box.box_no = box_project.box_no 
+			            where mem_no = #{mem_no} and box_name='중요') B on A.pro_no =B.pro_no
+    	</select>
     </mapper>

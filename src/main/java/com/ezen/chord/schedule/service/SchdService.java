@@ -25,4 +25,6 @@ public interface SchdService {
 	Map<String, Object> groupCalendarList(int mem_no);
 	// 인덱스번호로 해당스케줄 뿌려주는거
 	SchdDTO getSchdOne(int schd_no); 
+	// tu_mem_list
+	List<Integer> tu_mem_list(int schd_no);
 }

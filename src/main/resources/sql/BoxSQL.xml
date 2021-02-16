@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="boxMapper">
+  
   <select id="selectBox" resultType="boxDTO">
   	select * from box
   	where mem_no = #{mem_no}
@@ -17,4 +18,8 @@
 	LEFT JOIN (select * from box_project where pro_no= #{pro_no}) B ON
 	A.box_no = B.box_no WHERE A.mem_no = #{mem_no}
   </select>
+  <insert id="insertBoxWhenMemJoin" parameterType="boxDTO">
+  	insert into box
+  	values(box_seq.nextval,#{box_name},sysdate,#{mem_no})
+  </insert>
   </mapper>

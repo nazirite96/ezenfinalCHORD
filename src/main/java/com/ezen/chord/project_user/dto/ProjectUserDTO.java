@@ -14,6 +14,9 @@ public class ProjectUserDTO {
 	private String pro_cont;		//조인 프로젝트 - 프로젝트 내용
 	private java.sql.Date pro_date; //조인 프로젝트 - 프로젝트 생성
 	
+	private int imp_chk;			//중요 체크
+	
+	
 	public ProjectUserDTO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -75,7 +78,12 @@ public class ProjectUserDTO {
 	public void setPro_user_color(String pro_user_color) {
 		this.pro_user_color = pro_user_color;
 	}
-	
+	public int getImp_chk() {
+		return imp_chk;
+	}
+	public void setImp_chk(int imp_chk) {
+		this.imp_chk = imp_chk;
+	}
 	
 	
 	//PRO_NO, MEM_NO, PRO_USER_MAN_CHK, PRO_USER_DATE, PRO_USER_COLOR

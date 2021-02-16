@@ -51,4 +51,16 @@ public class TimelineDAOImpl implements TimelineDAO{
 		// TODO Auto-generated method stub
 		return sqlmap.selectOne("getTimSeq");
 	}
+	
+	@Override
+	public int deleteFix(int mem_no, int tim_no, int pro_no) {
+		// TODO Auto-generated method stub
+		return sqlmap.delete("deleteFix", tim_no);
+	}
+	
+	@Override
+	public int insertFix(int mem_no, int tim_no, int pro_no) {
+		// TODO Auto-generated method stub
+		return sqlmap.insert("insertFix", tim_no);
+	}
 }

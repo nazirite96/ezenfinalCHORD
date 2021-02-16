@@ -22,4 +22,6 @@ public interface SchdDAO {
 	List<SchdDTO> getInvited_Schd(int mem_no);
 	// 인덱스번호로 스케줄 리스트 뿌려주는거
 	SchdDTO getSchdOne(int schd_no);
+	// tu_mem_list
+	List<Integer> tu_mem_list(int schd_no);
 }
