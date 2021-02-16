@@ -1,5 +1,6 @@
 package com.ezen.chord.project.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ezen.chord.box.dto.BoxDTO;
+import com.ezen.chord.box.service.BoxService;
 import com.ezen.chord.files.service.FilesService;
 import com.ezen.chord.project.dto.ProjectDTO;
 import com.ezen.chord.project.service.ProjectService;
@@ -32,7 +35,8 @@ public class ProjectController {
 	@Autowired
 	private ProjectService proService;
 	//보관함 정보
-	
+	@Autowired
+	private BoxService boxService;
 	//중요한 정보
 	
 	@Autowired
@@ -46,7 +50,8 @@ public class ProjectController {
 		ModelAndView mav = new ModelAndView();
 		List<ProjectUserDTO> proList = proService.getProAllList(mem_no);
 		mav.addObject("mem_no", mem_no);
-		
+		List<BoxDTO> boxList = boxService.getBoxList(mem_no);
+		mav.addObject("boxList", boxList);
 		mav.addObject("proList", proList);
 		mav.setViewName("project/projectList");
 		
@@ -94,6 +99,7 @@ public class ProjectController {
 			proUserDTO.setMem_no(memList.get(i));
 			proUserService.insertProUser(proUserDTO);
 		}
+		
 		int mem_no = (int)sess.getAttribute("memNo");
 		return "redirect:/timeLine.do?pro_no="+pro_no+"&mem_no="+mem_no;
 	}
@@ -120,5 +126,34 @@ public class ProjectController {
 		return "redirect:/timeLine.do?pro_no="+proDTO.getPro_no()+"&mem_no="+proDTO.getMem_no();
 	}
 	
+	@RequestMapping("/insertBox.do")
+	public String insertBox(BoxDTO boxDTO) {
+		java.sql.Date date = new Date(0);
+		boxDTO.setBox_date(date);
+		boxDTO.setBox_no(0);
+		boxService.insertBox(boxDTO);
+		
+		return "redirect:/proList.do?mem_no="+boxDTO.getMem_no();
+	}
+	
+	@RequestMapping("/insertBoxPro.do")
+	@ResponseBody
+	public String insertBoxPro(BoxDTO boxDTO) {
+		java.sql.Date date = new Date(0);
+		boxDTO.setBox_date(date);
+		boxDTO.setBox_name("s");
+		proService.insertBoxPro(boxDTO);
+		return "1";
+	}
+	
+	@RequestMapping("/deleteBoxPro.do")
+	@ResponseBody
+	public String deleteBoxPro(BoxDTO boxDTO) {
+		java.sql.Date date = new Date(0);
+		boxDTO.setBox_date(date);
+		boxDTO.setBox_name("s");
+		proService.deleteBoxPro(boxDTO);
+		return "1";
+	}
 	
 }

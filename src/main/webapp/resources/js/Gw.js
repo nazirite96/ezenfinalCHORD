@@ -124,6 +124,7 @@ function deletePro() {
 	layer_popup("#deletePro");
 }
 
+
 /*******************************************
 *
 * Category : TimeLine 댓글 삭제
@@ -312,7 +313,7 @@ function layer_popup(el) {
 	$el.find('.btn-close').click(function() {
 		$el.find('input[type=text]').val('');
 		$el.find('input[type=password]').val('');
-		$el.find('input[type=checkbox]').prop('checked', false);
+		
 		$el.find('input[type=radio]').prop('checked', false);
 		$el.find('textarea').val('');
 		isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.

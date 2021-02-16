@@ -134,8 +134,9 @@
 	<div class="dimBg"></div>
 	
     <div id="addFolder" class="pop-layer">
-		<form action="/flowolf/box/insert" method="get" class="boxInsert-form">
+		<form action="insertBox.do" method="get" class="boxInsert-form">
     		<!-- pop header -->
+    		<input type="hidden" name="mem_no" value="${memNo }">
     		<header class="pop-top border-box">
     			보관함 만들기
     			<a href="#" class="posi-ab dis-block over-hidden icon-close btn-close">close</a>
@@ -390,12 +391,12 @@
 	
 	<div id="proFolderEdit" class="pop-layer">
 		<form class="proFolderEdit-form">
-			<input type="hidden" id="pro_no" name="pro_no" value="${proVo.pro_no }">
+			<input type="hidden" id="pro_no" name="pro_no" value="${proUserDTO.pro_no }">
 			
     		<!-- pop header -->
     		<header class="pop-top border-box">
     			보관함 설정
-    			<a href="#" class="posi-ab dis-block over-hidden icon-close btn-close">close</a>
+    			<a href="#" class="posi-ab over-hidden btn-close"><span data-feather="x"></span></a>
     		</header>
 		
 			<!-- pop con -->
@@ -405,17 +406,17 @@
 	   		
 	   			<!-- 보관함명 -->
    				<ul class="dis-block martop-20">
-   					<c:forEach items="${proBoxList }" var="box" varStatus="status">
+   					<c:forEach items="${setBoxList }" var="box" varStatus="status">
    						<c:choose>
-   							<c:when test="${box.pro_box_chk == 1 }">
+   							<c:when test="${box.pro_no == proUserDTO.pro_no }">
 			   					<li>
-			   						<input type="checkbox" id="proFolder${status.count }" name="box_no" value="${box.box_no }" class="custom-check-input" checked="checked">
+			   						<input type="checkbox" id="proFolder${status.count }" name="box_no" value="${box.box_no }" data-prono="${proUserDTO.pro_no }" class="custom-check-input" checked="checked">
 			   						<label for="proFolder${status.count }">${box.box_name }</label>
 			   					</li>   								
    							</c:when>
    							<c:otherwise>
 			   					<li>
-			   						<input type="checkbox" id="proFolder${status.count }" name="box_no" value="${box.box_no }" class="custom-check-input">
+			   						<input type="checkbox" id="proFolder${status.count }" name="box_no" value="${box.box_no }" data-prono="${proUserDTO.pro_no }" class="custom-check-input">
 			   						<label for="proFolder${status.count }">${box.box_name }</label>
 			   					</li>   								
    							</c:otherwise>
@@ -872,19 +873,24 @@ $(function(){
 	// 보관함 설정
 	$(".custom-check-input").change(function(){
 		var box_no = $(this).val();
+		var pro_no = $(this).data("prono");
 		
 		if($(this).is(":checked")){
 			$.ajax({
-				url : "/boxPro/insert?box_no="+box_no,
+				url : "insertBoxPro.do",
+				method : "get",
 				dataType : "json",
+				data : {pro_no:pro_no , box_no:box_no},
 				success : function(data){
 					alertCustom("보관함 설정되었습니다.","alert-warning");
 				}
 			});
 		}else{
 			$.ajax({
-				url : "/boxPro/deleteR?box_no="+box_no,
+				url : "deleteBoxPro.do",
+				method : "get",
 				dataType : "json",
+				data : {pro_no:pro_no , box_no:box_no},
 				success : function(data){
 					alertCustom("보관함 설정되었습니다.","alert-warning");
 				}

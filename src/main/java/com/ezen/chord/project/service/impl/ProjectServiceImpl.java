@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ezen.chord.box.dto.BoxDTO;
 import com.ezen.chord.project.dao.ProjectDAO;
 import com.ezen.chord.project.dto.ProjectDTO;
 import com.ezen.chord.project.service.ProjectService;
@@ -80,6 +81,17 @@ public class ProjectServiceImpl implements ProjectService {
 	public int deletePro(int pro_no) {
 		// TODO Auto-generated method stub
 		return projectDAO.deletePro(pro_no);
+	}
+	
+	@Override
+	public int deleteBoxPro(BoxDTO boxDTO) {
+		// TODO Auto-generated method stub
+		return projectDAO.deleteBoxPro(boxDTO);
+	}
+	@Override
+	public int insertBoxPro(BoxDTO boxDTO) {
+		// TODO Auto-generated method stub
+		return projectDAO.insertBoxPro(boxDTO);
 	}
 	
 }
