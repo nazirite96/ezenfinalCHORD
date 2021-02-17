@@ -63,12 +63,41 @@ public class SchdController {
 		return mav;
 	}
 	
+	@RequestMapping("/schdUpdate.do")
+	public ModelAndView schdUpdate (@RequestParam(value = "schd_no",defaultValue = "1")int schd_no,
+			@RequestParam(value = "pro_no",defaultValue = "1") int pro_no,
+			@RequestParam(value = "tu_mem_no",defaultValue = "1")int tu_mem_no,
+			@RequestParam(value = "tim_cont",defaultValue = "")String tim_cont,
+			@RequestParam(value = "datetime",defaultValue = "")String datetime,
+			@RequestParam(value = "schd_loc",defaultValue = "")String schd_loc,
+			@RequestParam(value = "schd_memo",defaultValue = "")String schd_memo,
+			@RequestParam(value = "defaultDate",defaultValue = "")String defaultDate
+			) {
+		String start=null;
+		String end=null;
+		
+		if(datetime.length()+12==defaultDate.length()||datetime.length()+10==defaultDate.length()) {
+			 start=datetime.substring(0,16);
+			 end=datetime.substring(21,37);
+		}else {
+			 start=defaultDate.substring(0,16);
+			 end=defaultDate.substring(28,44);
+		}
+		
 	
+		schdService.updateTitle(schd_no, tim_cont);
+		schdService.updateLocMemo(schd_no, schd_loc, schd_memo);
+		schdService.updateTime(schd_no, start, end);
+		
+		ModelAndView mav=new ModelAndView();
+		mav.setViewName("schedule/listCal");
+		return mav;
+	}
 	
 	@RequestMapping("/listCal.do")
 	public ModelAndView listCalender () {
 		ModelAndView mav=new ModelAndView();
-		SchdDTO schdDto=schdService.getSchdOne(43);
+		SchdDTO schdDto=schdService.getSchdOne(49);
 		mav.addObject("schdDto",schdDto);
 		mav.setViewName("schedule/listCal");
 		return mav;

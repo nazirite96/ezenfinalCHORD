@@ -71,7 +71,7 @@
 
 <div class="container-fluid">
   <div class="row">
-    <nav id="sidebarMenu" style="z-index: -1;" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+    <nav id="sidebarMenu" style="z-index : 2;" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="sidebar-sticky pt-3">
         <ul class="nav flex-column">
           <li class="nav-item">
@@ -137,10 +137,7 @@
         <h1 class="h2">전체 일정</h1>
         <div class="btn-toolbar mb-2 mb-md-0">
 
-          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-            <span data-feather="calendar"></span>
-            닫기
-          </button>
+        
         </div>
       </div>
       <section class="content full-calendar" style="padding-left: 7%;
