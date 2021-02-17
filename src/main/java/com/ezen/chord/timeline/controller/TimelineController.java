@@ -135,13 +135,14 @@ public class TimelineController {
 	public String insertTimWithTask(TimelineDTO timDTO ,
 							FilesDTO filesDTO ,
 							TaskDTO taskDTO,
-							@RequestParam("tu_mem_list")List<Integer> tu_mem_list,
+							@RequestParam(value="tu_mem_list",defaultValue = "1")List<Integer> tu_mem_list,
 							@RequestParam("articleFile")List<MultipartFile> files,
 							HttpServletRequest request) {
 		
 		HttpSession sess=request.getSession();
 		int mem_no = (Integer) sess.getAttribute("memNo");
 		int task_no = taskService.getTaskSeq();
+		
 		
 		String serv =request.getSession().getServletContext().getRealPath("/");
 		int tim_no = timService.getTimSeq();
@@ -174,18 +175,19 @@ public class TimelineController {
 		/*task테이블관련*/
 		int resultTask = taskService.insertTaskService(taskDTO);
 		
-
 		/*시작,마감일*/
 		int resultTaskDate = taskService.insertTaskDateService(taskDTO);
-		/*타임라인관련*/
-		// int resultTaskTim = taskService.insertTaskTimService(taskDTO);
 		
+		if(tu_mem_list.get(0) == 1) {
+			
+		}else {
 		for(int i = 0 ; i < tu_mem_list.size() ; i++) {
 			System.out.println(tu_mem_list.get(i));
 			taskDTO.setTu_mem_list(tu_mem_list.get(i));
 			/*parti테이블관련(담당자)*/
 			taskService.insertTaskPiService(taskDTO);
 			
+		}
 		}
 		
 		

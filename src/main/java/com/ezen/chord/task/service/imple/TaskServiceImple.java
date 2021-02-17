@@ -12,6 +12,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ezen.chord.project_user.dto.ProjectUserDTO;
 import com.ezen.chord.task.dao.TaskDAO;
 import com.ezen.chord.task.dto.TaskDTO;
 import com.ezen.chord.task.service.TaskService;
@@ -175,6 +176,11 @@ public class TaskServiceImple implements TaskService {
 		return result;
 	}
 	
+	@Override
+	public List<ProjectUserDTO> tu_mem_list(int task_no) {
+		List<ProjectUserDTO> tu_mem_list = taskDAO.tu_mem_list(task_no);
+		return tu_mem_list;
+	}
 	
 	/*업무글 삭제*/
 	@Override

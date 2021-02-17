@@ -18,9 +18,9 @@
 		#{task_no},#{task_state},#{task_content},#{task_priority}
 		)
 	</insert>
-
+	
 	<!-- 업무 등록(담당자) -->
-	<insert id="insertTaskPi" parameterType="taskDTO">
+	<insert id="insertTaskPi" parameterType="projectUserDTO">
 		insert into
 		participants(cont_kind,cont_no,mem_no)
 		values(
@@ -167,5 +167,16 @@
 	(select * from time where cont_kind = 'task' and cont_no = #{task_no} and time_kind = 'e') A on
 	A.cont_no = B.cont_no) A ) C on t.task_no = c.s_cont_no or t.task_no = c.e_cont_no
 	where task_no = #{task_no}
+	</select>
+	
+	<select id="selectTaskPiByNo" parameterType="Integer" resultType="projectUserDTO">
+	select 
+	mm.mem_name,
+	pt.mem_no
+	from member mm,participants pt
+	where 1=1
+	and pt.mem_no=mm.mem_no
+	and pt.cont_kind='task'
+	and pt.cont_no=#{task_no}
 	</select>
 </mapper>
