@@ -16,8 +16,15 @@ public class ProjectUserDTO {
 	
 	private int imp_chk;			//중요 체크
 	private int cont_no;
+	private String mem_name;
 	
 	
+	public String getMem_name() {
+		return mem_name;
+	}
+	public void setMem_name(String mem_name) {
+		this.mem_name = mem_name;
+	}
 	public ProjectUserDTO() {
 		super();
 		// TODO Auto-generated constructor stub
