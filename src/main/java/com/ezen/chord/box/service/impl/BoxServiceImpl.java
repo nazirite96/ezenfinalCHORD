@@ -31,4 +31,9 @@ public class BoxServiceImpl implements BoxService {
 		// TODO Auto-generated method stub
 		return boxDAO.insertBox(boxDTO);
 	}
+	@Override
+	public int deleteBox(int box_no) {
+		// TODO Auto-generated method stub
+		return boxDAO.deleteBox(box_no);
+	}
 }

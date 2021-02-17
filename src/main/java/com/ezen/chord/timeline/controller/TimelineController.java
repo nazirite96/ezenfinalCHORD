@@ -24,6 +24,7 @@ import com.ezen.chord.task.dto.TaskDTO;
 import com.ezen.chord.task.service.TaskService;
 import com.ezen.chord.timeline.dto.TimelineDTO;
 import com.ezen.chord.timeline.service.TimelineService;
+import com.ezen.chord.todo.service.TodoService;
 
 @Controller
 public class TimelineController {
@@ -38,6 +39,8 @@ public class TimelineController {
 	private SchdService schdService;
 	@Autowired
 	private BoxService boxService;
+	@Autowired
+	private TodoService todoService;
 	
 	@RequestMapping("/timeLine.do")
 	@ResponseBody
@@ -73,6 +76,9 @@ public class TimelineController {
 				
 			case "schd":
 				list.get(i).setSchdDTO(schdService.getSchdOne(list.get(i).getCont_no()));
+				break;
+			case "todo":
+				list.get(i).setTodoDTO(null);
 			default:
 				break;
 			}
@@ -248,6 +254,9 @@ public class TimelineController {
 		
 		return "redirect:/timeLine.do?pro_no="+pro_no+"&mem_no="+mem_no;
 	}
+	
+	
+	
 	
 	
 	
