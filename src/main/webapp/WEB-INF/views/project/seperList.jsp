@@ -148,7 +148,7 @@
               <span data-feather="box"></span>
               ${dto.box_name }
             </a>
-           <span data-feather="minus-circle"></span>
+           <a href="#deleteFolder" class="folder-delete cursor-point" data-boxno="${dto.box_no}"><span data-feather="minus-circle"></span></a>
           </li>
         </c:if>
         </c:forEach>  

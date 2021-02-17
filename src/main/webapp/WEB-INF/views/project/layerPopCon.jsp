@@ -192,7 +192,7 @@
 	<div class="dimBg"></div>
 	
     <div id="deleteFolder" class="pop-layer">
-		<form action="/flowolf/box/delete" method="get">
+		<form action="deleteBox.do" method="get">
 		<input type="hidden" id="box_no" name="box_no" value="">
     		
     		<!-- pop con -->

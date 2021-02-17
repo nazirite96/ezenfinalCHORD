@@ -11,6 +11,7 @@ public interface BoxService {
 	public List<BoxDTO>getBoxListJoinPro_no(int mem_no,int pro_no);
 	
 	public int insertBox(BoxDTO boxDTO);
+	public int deleteBox(int box_no);
 	
 
 }

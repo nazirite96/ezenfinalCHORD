@@ -265,6 +265,9 @@ $('.folder-edit').click(function() {
 // 보관함 삭제(MY FOLDER > DELETE)
 $('.folder-delete').click(function() {
 	var $href = $(this).attr('href');
+	var box_no = $(this).data("boxno");
+	alert(box_no);
+	$("#deleteFolder").children().children("input[id=box_no]").val(box_no);
 	layer_popup($href);
 });
 
@@ -383,9 +386,8 @@ $(function() {
 		var icon = item.children();
 		var layerWrap = $($href);
 
-		var timeline_col = $(this).parents(".timeline-box").children(".col-no").data("col");
-		var timeline_no = $(this).parents(".timeline-box").children(".col-kind").data("kind");
-
+		var timeline_col = $(this).parents(".timeline-box").children(".col-no").data("no");
+		window.alert(timeline_col);
 		// 고정되어있는 글
 		if (item.hasClass('fixed')) {
 			alert("있다~");
@@ -397,8 +399,7 @@ $(function() {
 			timeline_no = colNo.data("no");
 		}
 
-		$(".fix-form .timeline_col").val(timeline_col);
-		$(".fix-form .timeline_no").val(timeline_no);
+		$(".fix-form .timeline_no").val(timeline_col);
 
 		if (icon.hasClass('pick-active')) {		// 고정되어있음
 			layerWrap.find('p.fix-n').hide();
@@ -534,13 +535,11 @@ $(function() {
 
 		var item = $(this);
 		var coll_no = item.data("collno");
-		var timeline_col = $(this).parents(".timeline-box").children(".col-no").data("col");
 		var timeline_no = $(this).parents(".timeline-box").children(".col-no").data("no");
-
 		if (item.hasClass('default-color')) {		// 취소					
 
 			$.ajax({
-				url: "/coll/delete",
+				url: "deleteColl.do",
 				method: "get",
 				data: { coll_no: coll_no },
 				dataType: "json",
@@ -552,7 +551,7 @@ $(function() {
 		} else {									// 등록
 
 			$.ajax({
-				url: "/coll/insert",
+				url: "insertColl.do",
 				method: "get",
 				data: { timeline_col: timeline_col, timeline_no: timeline_no },
 				dataType: "json",
