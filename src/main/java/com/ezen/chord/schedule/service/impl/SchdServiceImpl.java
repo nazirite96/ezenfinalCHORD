@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ezen.chord.project_user.dto.ProjectUserDTO;
 import com.ezen.chord.schedule.dao.SchdDAO;
 import com.ezen.chord.schedule.dto.SchdDTO;
 import com.ezen.chord.schedule.service.SchdService;
@@ -70,7 +71,7 @@ public class SchdServiceImpl implements SchdService {
 		return dao.getSchdOne(schd_no);
 	}
 	@Override
-	public List<Map<String,String>> tu_mem_list(int schd_no) {
+	public List<ProjectUserDTO> tu_mem_list(int schd_no) {
 		// TODO Auto-generated method stub
 		return dao.tu_mem_list(schd_no);
 	}

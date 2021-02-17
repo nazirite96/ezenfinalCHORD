@@ -19,7 +19,7 @@ public class TimelineDTO {
 	private int fix_chk;			//고정글
 	private List<ReplyDTO> repList; //리플
 	private TaskDTO taskDTO;		//task
-	private SchdDTO SchdDTO;
+	private SchdDTO schdDTO;
 	public  TodoDTO todoDTO;
 	
 	
@@ -39,10 +39,10 @@ public class TimelineDTO {
 	
 	
 	public SchdDTO getSchdDTO() {
-		return SchdDTO;
+		return schdDTO;
 	}
 	public void setSchdDTO(SchdDTO schdDTO) {
-		SchdDTO = schdDTO;
+		this.schdDTO = schdDTO;
 	}
 	public TaskDTO getTaskDTO() {
 		return taskDTO;
