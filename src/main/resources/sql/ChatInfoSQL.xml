@@ -33,13 +33,13 @@
       ) A
    </insert>
 
+   <!-- 변경  -->
    <select id="selectMyChatInfo" parameterType="ChatInfo"
       resultType="ChatInfo">
       SELECT *
       FROM chatinfo
       WHERE mem_no = #{mem_no}
-      AND
-      chatroom_no = #{chatroom_no}
+      AND chatroom_no = #{chatroom_no}
    </select>
 
    <select id="selectChatMemberList" parameterType="int"
@@ -50,16 +50,21 @@
       a.mem_no = b.mem_no
       AND b.chatroom_no = ${value}
    </select>
-
+   
+   <!-- 변경 -->
    <!-- 채팅방 chatinfo_intime 변경 -->
    <update id="updateIntime">
       UPDATE
       chatinfo
       SET
       chatinfo_intime = sysdate
+      <if test='chatInfo_deleted == "y"'>
+      	,chatInfo_deleted = #{chatInfo_deleted}
+      </if>
       WHERE
       chatroom_no = #{chatroom_no}
-      AND mem_no = #{mem_no}
+      AND
+      mem_no = #{mem_no}
    </update>
 
    <!-- 채팅방 chatinfo_outtime 변경 -->
@@ -72,4 +77,13 @@
       chatroom_no = #{chatroom_no}
       AND mem_no = #{mem_no}
    </update>
+   
+   <!-- [temporary code- Additional part] -->
+   <!-- 채팅방 생성을 위한 멤버리스트 출력 -->
+   <select id="selectInvitationMemberList" resultType="memberDTO">
+      SELECT *
+      FROM member
+      WHERE com_no = ${com_no}
+      AND mem_no != ${mem_no}
+   </select>
 </mapper>

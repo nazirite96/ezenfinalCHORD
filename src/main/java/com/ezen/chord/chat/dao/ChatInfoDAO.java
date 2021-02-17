@@ -24,4 +24,8 @@ public interface ChatInfoDAO {
 
 	// 채팅방 종료시간 변경 in chatroom.jsp
 	public void setChatInfo_outtime(ChatInfo input) throws Exception;
+
+	// ** [temporary code- Additional part] ***//
+	// 채팅방 생성을 위한 같은 회사 멤버 조회
+	public List<MemberDTO> getInvitationMemberList(MemberDTO input);
 }

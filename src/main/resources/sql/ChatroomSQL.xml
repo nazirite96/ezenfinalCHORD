@@ -12,4 +12,24 @@
 		VALUES (chatroom_SEQ.NEXTVAL, 'null', 'null',
 		#{chatroom_type})
 	</insert>
+	
+	<!-- 단체 채팅방 불러오기 -->
+	<select id="selectPubChatroomList" parameterType="int" resultType="java.util.HashMap">
+		SELECT distinct
+		TO_CHAR(cm.chatmessage_writedate,'YYYY-MM-DD') as
+		chatmessage_writedate,
+		cm.chatmessage_content,
+		ci.chatroom_no,
+		ci.chatinfo_roomname,
+		ci.chatinfo_no,
+		ci.mem_no,
+		cr.chatroom_type
+
+		FROM
+		(SELECT * FROM chatmessage WHERE chatroom_no IN (SELECT chatroom_no FROM chatinfo WHERE mem_no = #{mem_no})) cm, chatinfo ci, chatroom cr
+		WHERE cm.chatroom_no = ci.chatroom_no
+		AND cr.chatroom_no = cm.chatroom_no
+		AND cm.chatmessage_no IN (SELECT max(chatmessage_no) FROM chatmessage GROUP BY chatroom_no)
+		AND ci.mem_no = #{mem_no}
+	</select>
 </mapper>
