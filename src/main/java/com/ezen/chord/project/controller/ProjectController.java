@@ -3,6 +3,7 @@ package com.ezen.chord.project.controller;
 import java.sql.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -170,6 +171,14 @@ public class ProjectController {
 		proService.deleteBoxPro(boxDTO);
 		return "1";
 	}
-	
+	@RequestMapping("/deleteBox.do")
+	public String deleteBox(int box_no ,
+			HttpServletRequest request) {
+		HttpSession sess=request.getSession();
+		int mem_no = (Integer) sess.getAttribute("memNo");
+		
+		boxService.deleteBox(box_no);
+		return "redirect:/proList.do?mem_no="+mem_no;
+	}
 	
 }

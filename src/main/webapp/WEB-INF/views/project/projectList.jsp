@@ -148,7 +148,7 @@
               <span data-feather="box"></span>
               ${dto.box_name }
             </a>
-           <span data-feather="minus-circle"></span>
+           <a href="#deleteFolder" class="folder-delete cursor-point" data-boxno="${dto.box_no}"><span data-feather="minus-circle"></span></a>
           </li>
         </c:if>
         </c:forEach>  
@@ -156,7 +156,6 @@
         </ul>
       </div>
     </nav>
-
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Dashboard</h1>
@@ -179,7 +178,7 @@
       </div>
      <div class="container">
      <div class="body-right-panel">
-      <section class="content main">
+      <section class="content main" style="padding-left:0px;padding-right:0px;">
 
 	<!-- alertCustom -->
 	<input type="hidden" class="alert-msg" value="${msg }">

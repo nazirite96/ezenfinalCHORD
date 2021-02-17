@@ -40,7 +40,7 @@ public class BoxDAOImpl implements BoxDAO{
 		
 	}
 	
-@Override
+	@Override
 	public int insertBoxWhenMemJoin(int mem_no) {
 		// TODO Auto-generated method stub
 		BoxDTO box = new BoxDTO();
@@ -60,4 +60,11 @@ public class BoxDAOImpl implements BoxDAO{
 		
 		return 1;
 	}
+	@Override
+	public int deleteBox(int box_no) {
+		// TODO Auto-generated method stub
+		return sqlMap.delete("deleteBox", box_no);
+	}
+	
+	
 }

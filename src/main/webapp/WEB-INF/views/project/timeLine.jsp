@@ -74,11 +74,32 @@
 
 <!-- Custom styles for this template -->
 <link href="/chord/resources/css/dashboard.css" rel="stylesheet">
+	<!-- custom -->
+	<link href="<%=request.getContextPath()%>/resources/css/JeCss2.css"
+		rel="stylesheet" type="text/css">
+	<link href="<%=request.getContextPath()%>/resources/css/JeCss.css"
+		rel="stylesheet" type="text/css">
+	
+	
+	<link rel="stylesheet" href="/chord/resources/css/style_margin.css">
+	<link rel="stylesheet" href="/chord/resources/css/style_padding.css">
+	
+	
+	<!-- Air datepicker css -->
+	<link
+		href="<%=request.getContextPath()%>/resources/css/datepicker.min.css"
+		rel="stylesheet" type="text/css" media="all">	
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+	
+	
+	<!-- Air datepicker css -->
+	
+	
 
 </head>
 <body id="contentBody" onload="InitializeStaticMenu();">
 	<jsp:include page="/WEB-INF/views/header.jsp" />
-
+	<link rel="stylesheet" href="/chord/resources/css/GwCss.css">
 	<script type="text/javascript">
 	$(function() {
 		// 탭메뉴 설정 : 탭메뉴(li)에 설정된 data-id 값과 같은 id값을 가진 content box 노출
@@ -93,30 +114,15 @@
 	});
 </script>
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
-		integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
-		crossorigin="anonymous"></script>
-	<!-- custom -->
-	<link href="<%=request.getContextPath()%>/resources/css/JeCss2.css"
-		rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="/chord/resources/css/style_margin.css">
-	<link rel="stylesheet" href="/chord/resources/css/style_padding.css">
+	
+
 	<!-- icon  -->
-	<script src="https://kit.fontawesome.com/1a984316ef.js"
-		crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/1a984316ef.js" crossorigin="anonymous"></script>
 
 	<!-- taksFilesjs -->
 	<script type="text/javascript" src="/chord/resources/js/taksFiles.js"></script>
 
-	<!-- Air datepicker css -->
-	<link
-		href="<%=request.getContextPath()%>/resources/css/datepicker.min.css"
-		rel="stylesheet" type="text/css" media="all">
+
 	<!-- Air datepicker js -->
 	<script src="<%=request.getContextPath()%>/resources/js/datepicker.js"></script>
 	<!-- 달력 한글 추가를 위해 커스텀 -->
@@ -125,15 +131,11 @@
 	<!-- fontawesome -->
 	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 	<!-- font-awesome CSS -->
-	<link rel="stylesheet"
-		href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+	
 	<!-- textArea 자동 높이 설정 -->
 	<script
 		src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
-	<!-- Air datepicker css -->
-	<link href="<%=request.getContextPath()%>/resources/css/JeCss.css"
-		rel="stylesheet" type="text/css">
-
+	
 	<!-- sungtak -->
 	<!-- kakaomap -->
 	<script type="text/javascript"
@@ -142,9 +144,8 @@
 	<script
 		src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
 
-	<link rel="stylesheet" href="/chord/resources/css/GwCss.css">
-	<!-- gwjs -->
-	<script type="text/javascript" src="/chord/resources/js/Gw.js"></script>
+	
+	
 	<script>
 function submitgogo(){
 	var schd_date = $('#schdtime').val();
@@ -168,8 +169,7 @@ function submitgogo(){
 								class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 								<span>project</span> <a
 									class="d-flex align-items-center text-muted" href="#"
-									aria-label="Add a new report"> <span
-									data-feather="plus-circle"></span>
+									aria-label="Add a new report"> 
 								</a>
 							</h1></li>
 						<li class="nav-item"><a class="nav-link"
@@ -181,14 +181,12 @@ function submitgogo(){
 									href="seperateList.do?box_no=${dto.box_no }&mem_no=${memNo}"><span
 										data-feather="star"></span>중요</a></li>
 							</c:if>
-
 						</c:forEach>
 						<h1
 							class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 							<span>collection</span><a
 								class="d-flex align-items-center text-muted" href="#"
-								aria-label="Add a new report"><span
-								data-feather="plus-circle"></span></a>
+								aria-label="Add a new report"></a>
 						</h1>
 						<li class="nav-item"><a class="nav-link" href="#"><span
 								data-feather="users"></span>전체업무</a></li>
@@ -206,8 +204,7 @@ function submitgogo(){
 						class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 						<span>Saved reports</span><a
 							class="d-flex align-items-center text-muted" href="#"
-							aria-label="Add a new report"> <span
-							data-feather="plus-circle"></span>
+							aria-label="Add a new report"> 
 						</a>
 					</h1>
 					<ul class="nav flex-column mb-2">
@@ -218,7 +215,7 @@ function submitgogo(){
 									href="seperateList.do?box_no=${dto.box_no }&mem_no=${memNo}"
 									style="display: inline-block;"> <span data-feather="box"></span>
 										${dto.box_name }
-								</a> <span data-feather="minus-circle"></span></li>
+								</a> <a href="#deleteFolder" class="folder-delete cursor-point" data-boxno="${dto.box_no}"><span data-feather="minus-circle"></span></a></li>
 							</c:if>
 						</c:forEach>
 					</ul>
@@ -1034,8 +1031,7 @@ function submitgogo(){
 													<ul class="dropdown-menu" role="menu"
 														aria-labelledby="articleEdit">
 
-														<li class="cursor-point" onclick="fn_editArticle(this)">글
-															수정</li>
+														<li class="cursor-point" onclick="fn_editArticle(this)">글 수정</li>
 														<li class="cursor-point timeline-delete-btn">글 삭제</li>
 													</ul>
 												</li>
@@ -1295,7 +1291,7 @@ function submitgogo(){
 															</dt>
 															<dd class="posi-re">
 																<input type="text" placeholder="시작일"
-																	value="${fn:substring(dto.taskDTO.task_start_date, 0, 16) }" readonly />
+																	value="${dto.taskDTO.task_start_date }" readonly />
 															</dd>
 														</dl>
 													</div>
@@ -1309,7 +1305,7 @@ function submitgogo(){
 															</dt>
 															<dd class="posi-re">
 																<input type="text" placeholder="마감일"
-																	value="${fn:substring(dto.taskDTO.task_end_date, 0, 16) }" readonly />
+																	value="${dto.taskDTO.task_end_date }" readonly />
 															</dd>
 														</dl>
 													</div>
@@ -1402,11 +1398,12 @@ function submitgogo(){
 												</div>
 
 												<!-- 업무 수정:s -->
-												<form action="taskUpdate.do" method="get"
+												<form action="taskUpdate.do" method="post"
 													enctype="multipart/form-data" class="article-edit-form">
 
-													<input type="hidden" name="tim_no" value="${dto.tim_no }">
-													<input type="hidden" name="pro_no" value="${dto.pro_no }">
+													<input type="hidden" name="task_no"
+														value="${dto.taskDTO.task_no }">
+
 													<!-- article edit box:s -->
 													<div class="article-edit-box con-task">
 
@@ -1487,8 +1484,6 @@ function submitgogo(){
 						</c:forEach> --%>
 																	</div>
 																	<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):f -->
-																	
-																	
 																</dd>
 															</dl>
 														</div>
@@ -1498,13 +1493,15 @@ function submitgogo(){
 														<div class="input-box martop-15 add-item-box">
 															<dl>
 																<dt class="maright-20">
-																	<i class="far fa-calendar-plus"></i>
+																	<i class="flow-icon icon-task icon-sDate"></i>
 																</dt>
 																<dd class="posi-re">
 																	<input type="text" name="task_start_date"
-																		placeholder="시작일설정" id="datepicker3"
-																		class="datepicker-here" data-timepicker="true" data-time-format='hh:ii'
-																		value="${fn:substring(dto.taskDTO.task_start_date, 0, 16) }" />
+																		placeholder="시작일설정" data-language='ko'
+																		class="datepicker-here"
+																		value="${dto.taskDTO.task_start_date }" /> <i
+																		class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
+																		onclick="fn_dateReset(this)"></i>
 																</dd>
 															</dl>
 														</div>
@@ -1514,18 +1511,20 @@ function submitgogo(){
 														<div class="input-box martop-15 add-item-box">
 															<dl>
 																<dt class="maright-20">
-																	<i class="far fa-calendar-minus"></i>
+																	<i class="flow-icon icon-task icon-fDate"></i>
 																</dt>
 																<dd class="posi-re">
 																	<input type="text" name="task_end_date"
-																		placeholder="마감일설정" id="datepicker4"
-																		class="datepicker-here" data-timepicker="true" data-time-format='hh:ii'
-																		value="${fn:substring(dto.taskDTO.task_end_date, 0, 16) }" /> 
+																		placeholder="마감일설정" data-language='ko'
+																		class="datepicker-here"
+																		value="${dto.taskDTO.task_end_date }" /> <i
+																		class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
+																		onclick="fn_dateReset(this)"></i>
 																</dd>
 															</dl>
 														</div>
 														<!-- 마감일:f -->
-	
+
 														<!-- 우선순위:s -->
 														<div class="input-box martop-15 add-item-box">
 															<dl>
@@ -1568,7 +1567,7 @@ function submitgogo(){
 															</dl>
 														</div>
 														<!-- 우선순위:f -->
-			
+
 														<button type="button" class="add-item-btn"
 															onclick="fn_addItem(this)">
 															<i class="fas fa-angle-down maright-10"></i> 추가 항목 입력
@@ -1677,18 +1676,19 @@ function submitgogo(){
 																		<c:if test="${empty dto.schdDTO.tu_mem_list} ">
 																			<p class="mar-0 pad-0">담당자 없음</p>
 																		</c:if>
-																				<img src="/chord/resources/img/sample.png" width="24"
-																						class="cursor-point"> <strong class="marleft-10">ss</strong>
+																		<img src="/chord/resources/img/sample.png" width="24"
+																			class="cursor-point"> <strong
+																			class="marleft-10">${tu_mem }</strong>
 																		<c:if test="${not empty dto.schdDTO.tu_mem_list} ">
-																		<c:forEach items="${dto.schdDTO.tu_mem_list }" var="tu_mem">
-																			<div class="name-tag">
-																				 <strong class="marleft-10">${tu_mem.SchdDTO.nick_name }</strong>
-																				<i class="fas fa-times-circle marleft-15"
-																					style="display: none"></i> <input type="hidden"
-																					name="tu_mem_id" value="${tu_mem.SchdDTO.mem_no }">
-																			</div>
-																		</c:forEach>
-
+																			<c:forEach items="${dto.schdDTO.tu_mem_list }"
+																				var="tu_mem">
+																				<div class="name-tag">
+																					<strong class="marleft-10">${tuVo.mem_no }</strong>
+																					<i class="fas fa-times-circle marleft-15"
+																						style="display: none"></i> <input type="hidden"
+																						name="tu_mem_id" value="${tu_mem }">
+																				</div>
+																			</c:forEach>
 																		</c:if>
 																	</div>
 																</dd>
@@ -1844,48 +1844,47 @@ function submitgogo(){
 														</div>
 														<!-- 메모:f -->
 
-												<!-- 알람:s -->
-												<div class="input-box martop-15">
-													<dl>
-														<dt class="maright-20">
-															<i class="fas fa-bell"></i>
-														</dt>
-														<dd>
-															<select name="alert_time"
-																onchange="getSelectValue(this.form);">
-																<option value="0">없음</option>
-																<option value="10">10분전 미리알림</option>
-																<option value="30">30분전 미리알림</option>
-																<option value="60">1시간전 미리알림</option>
-																<option value="120">2시간전 미리알림</option>
-																<option value="180">3시간전 미리알림</option>
-																<option value="1440">1일전</option>
-																<option value="2880">2일전</option>
-																<option value="10080">7일전</option>
-															</select>
-														</dd>
-													</dl>
-												</div>
-												<!-- 알람:f -->
-											</div>
-											<!-- article edit box:f -->
+														<!-- 알람:s -->
+														<div class="input-box martop-15">
+															<dl>
+																<dt class="maright-20">
+																	<i class="fas fa-bell"></i>
+																</dt>
+																<dd>
+																	<select name="alert_time"
+																		onchange="getSelectValue(this.form);">
+																		<option value="0">없음</option>
+																		<option value="10">10분전 미리알림</option>
+																		<option value="30">30분전 미리알림</option>
+																		<option value="60">1시간전 미리알림</option>
+																		<option value="120">2시간전 미리알림</option>
+																		<option value="180">3시간전 미리알림</option>
+																		<option value="1440">1일전</option>
+																		<option value="2880">2일전</option>
+																		<option value="10080">7일전</option>
+																	</select>
+																</dd>
+															</dl>
+														</div>
+														<!-- 알람:f -->
+													</div>
+													<!-- article edit box:f -->
 
-											<!-- article edit dn:s -->
-											<div class="article-edit-dn">
-												<!-- submit & cancel 버튼 -->
-												<input type="submit" value="수정하기"
-													class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
-												<input type="button" value="취소"
-													onclick="fn_editCancel(this)"
-													class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
-													style="border: 1px solid #ddd">
-											</div>
-											<!-- article edit dn:f -->
-										</form>
+													<!-- article edit dn:s -->
+													<div class="article-edit-dn">
+														<!-- submit & cancel 버튼 -->
+														<input type="submit" value="수정하기"
+															class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
+														<input type="button" value="취소"
+															onclick="fn_editCancel(this)"
+															class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
+															style="border: 1px solid #ddd">
+													</div>
+													<!-- article edit dn:f -->
+												</form>
+
 
 												<!-- 일정 수정:f -->
-												
-												
 												<!-- 스케쥴글 : finsh -->
 											</c:when>
 											<c:when test="${dto.cont_kind eq 'todo' }">
@@ -1899,39 +1898,9 @@ function submitgogo(){
 									<!-- timeline footer:s -->
 									<div class="timeline-footer">
 
-										<!-- 좋아요 / 댓글 개수:s -->
+										<!--댓글 개수:s -->
 										<div class="article-etc-info">
 
-
-
-											<!-- 좋아요 선택 시 이모티콘 나올 부분 -->
-											<div class="like-result cursor-point"
-												onclick="fn_emoUserPop(${start.index })">
-												<c:forEach items="${timeLine.emoUserList }" var="emoUserVo"
-													end="2">
-													<img src="/emo/view?emo_no=${emoUserVo.emo_no }"
-														data-no="${emoUserVo.emo_user_no }" width="20"
-														class="maright-10">
-												</c:forEach>
-												<div class="like-mem dis-inblock"
-													data-size="${timeLine.emoUserList.size() }">
-													<c:choose>
-														<c:when test="${emo_user_chk}">
-															<strong class="me">${memVo.mem_no }</strong>	님
-										<c:if test="${timeLine.emoUserList.size()-1 != 0 }">
-											  외 ${timeLine.emoUserList.size()-1 }명
-										</c:if>
-														</c:when>
-														<c:otherwise>
-															<c:if test="${timeLine.emoUserList.size() != 0 }">
-											${timeLine.emoUserList.size() }명
-										</c:if>
-														</c:otherwise>
-													</c:choose>
-												</div>
-											</div>
-
-											<!-- 이모티콘 사용자 리스트 팝업:f -->
 
 											<!-- 댓글 개수 -->
 											<div class="comment-count default-back-color color-white">
@@ -1941,67 +1910,18 @@ function submitgogo(){
 
 											<!-- 좋아요 / 댓글작성 / 담아두기 버튼 -->
 											<ul class="article-etc-menu martop-10 marbtm-0">
-												<li class="posi-re cursor-point"><c:choose>
-														<c:when test="${emo_user_chk }">
-															<!-- like button : s -->
-															<div id="emoticonToggle"
-																class="emoticon-btn cursor-point" data-toggle="dropdown"
-																aria-haspopup="true" aria-expanded="false"
-																style="display: none">
-																<i class="fas fa-thumbs-up maright-10"></i>좋아요
-															</div>
-															<!-- like button : f -->
-
-															<!-- Chagned like button : s -->
-															<div class="emoticon-after-btn cursor-point"
-																data-emouser="${my_emo_user_no }" style="display: block">
-																<img src="/emo/view?emo_no=${my_emo_no }" width="20"
-																	class="maright-10"> <span
-																	class="size-14 default-color">${my_emo_name }</span>
-															</div>
-															<!-- Chagned like button : f -->
-														</c:when>
-														<c:otherwise>
-															<!-- like button : s -->
-															<div id="emoticonToggle"
-																class="emoticon-btn cursor-point" data-toggle="dropdown"
-																aria-haspopup="true" aria-expanded="false">
-																<i class="fas fa-thumbs-up maright-10"></i>좋아요
-															</div>
-															<!-- like button : f -->
-
-															<!-- Chagned like button : s -->
-															<div class="emoticon-after-btn cursor-point"
-																data-emouser="">
-																<img src="" width="20" class="maright-10"> <span
-																	class="size-14 default-color"></span>
-															</div>
-															<!-- Chagned like button : f -->
-														</c:otherwise>
-													</c:choose> <!-- Emoticon list box -->
-													<div class="dropdown-menu emoticon-box"
-														aria-labelledby="emoticonToggle">
-														<ul>
-															<c:forEach items="${emoList }" var="emo">
-																<li class="posi-re" data-emono="${emo.emo_no }"><img
-																	src="/emo/view?emo_no=${emo.emo_no }"> <span>${emo.emo_name }</span>
-																</li>
-															</c:forEach>
-														</ul>
-													</div></li>
 												<li class="cursor-point" onclick="fn_commentFocus(this)"><i
 													class="fas fa-comment-alt maright-10"></i> 댓글작성</li>
 												<c:choose>
 													<c:when test="${timeLine.coll_chk != 0 }">
-														<li class="cursor-point coll-btn default-color"
+														<li class="cursor-point coll-btn"
 															data-collno="${timeLine.coll_chk }"><i
-															class="fas fa-bookmark maright-10"></i> <span>담아두기
-																취소</span></li>
+															class="fas fa-bookmark maright-10"></i><span>담아두기</span></li>
 													</c:when>
 													<c:otherwise>
 														<li class="cursor-point coll-btn"
 															data-collno="${timeLine.coll_chk }"><i
-															class="fas fa-bookmark maright-10"></i> <span>담아두기</span></li>
+															class="fas fa-bookmark maright-10 default-color"></i> <span>담아두기 취소</span></li>
 													</c:otherwise>
 												</c:choose>
 
@@ -2342,7 +2262,7 @@ function fn_collCancel(){
 							<div class="pro-right-box martop-15">
 								<a class="right-link-btn back-color-green-l color-white"
 									id="proChat" style="cursor: pointer;"> <i
-									class="fas fa-comments maright-10"></i>프로젝트 채팅
+									class="fas fa-comments maright-10"></i>프로젝트 참여자
 								</a>
 							</div>
 							<!-- 프로젝트 채팅 button : f -->
@@ -2405,24 +2325,10 @@ function fn_collCancel(){
 						</div>
 						<!-- 프로젝트 참여자 : f -->
 
-						<form action="/flowolf/chat/insertMulti" method="get"
-							id="chatInsertMulti" name="chatInsertMulti">
-							<c:forEach items="${proUserList }" var="list">
-								<c:if test="${list.mem_id ne memVo.mem_id }">
-									<input type="hidden" value="${list.mem_id }" name="ptn">
-								</c:if>
-							</c:forEach>
-							<input type="hidden" value="${memVo.mem_id }" name="mem_id">
-						</form>
+						
 
 						<script type="text/javascript">
-		$("#proChat").on("click", function() {
-			var check =document.chatInsertMulti;
-			window.open('', 'new', "width=467,height=640,top=100,left=100");
-			check.action='/flowolf/chat/insertMulti';
-			check.target='new';
-			check.submit();
-		});
+		
 	</script>
 
 						<!-- 프로젝트 참여자 리스트 : f -->
@@ -2547,11 +2453,7 @@ $(function(){
 		layer_popup($href);
 	});
 	
-	// 화상회의 layerPop 띄우기
-	$(".face-chat-btn").click(function(){
-		var $href = $(this).attr('href');
-		layer_popup($href);
-	});
+	
 	
 	// 초대하기 버튼 클릭 이벤트
 	$(".invate-frm-submit").click(function(){
@@ -2576,6 +2478,7 @@ $(function(){
 					</div>
 				</section>
 				<!-- project right : finish -->
+
 				<div>
 					<%@include file="layerPopCon.jsp"%>
 				</div>
@@ -2649,9 +2552,19 @@ $(function(){
 		});
 		
 	});
+	</script>
+	<!-- gwjs -->
+	<script type="text/javascript" src="/chord/resources/js/Gw.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+		integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
+		crossorigin="anonymous"></script>
 		<script src="/chord/resources/js/dashboard.js"></script>
 		<!-- jjpicker -->
 		<script type="text/javascript" src="/chord/resources/js/jjpicker.js"></script>
-
 </body>
 </html>

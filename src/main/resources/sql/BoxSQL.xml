@@ -22,4 +22,8 @@
   	insert into box
   	values(box_seq.nextval,#{box_name},sysdate,#{mem_no})
   </insert>
+  <delete id="deleteBox">
+  	delete box
+  	where box_no = #{box_no}
+  </delete>
   </mapper>

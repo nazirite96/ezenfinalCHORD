@@ -15,6 +15,7 @@ public class ProjectUserDTO {
 	private java.sql.Date pro_date; //조인 프로젝트 - 프로젝트 생성
 	
 	private int imp_chk;			//중요 체크
+	private int cont_no;
 	
 	
 	public ProjectUserDTO() {
@@ -84,7 +85,11 @@ public class ProjectUserDTO {
 	public void setImp_chk(int imp_chk) {
 		this.imp_chk = imp_chk;
 	}
+	public int getCont_no() {
+		return cont_no;
+	}
+	public void setCont_no(int cont_no) {
+		this.cont_no = cont_no;
+	}
 	
-	
-	//PRO_NO, MEM_NO, PRO_USER_MAN_CHK, PRO_USER_DATE, PRO_USER_COLOR
 }
