@@ -1,6 +1,8 @@
 package com.ezen.chord.task.service;
 
 import java.util.*;
+
+import com.ezen.chord.project_user.dto.ProjectUserDTO;
 import com.ezen.chord.task.dto.*;
 
 public interface TaskService {
@@ -45,6 +47,8 @@ public interface TaskService {
 	
 	/*업무글 삭제*/
 	public int deleteTask(TaskDTO taskDTO);
+	
+	public List<ProjectUserDTO> tu_mem_list(int task_no);
 	
 	
 	
