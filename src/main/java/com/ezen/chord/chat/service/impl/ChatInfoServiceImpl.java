@@ -56,4 +56,10 @@ public class ChatInfoServiceImpl implements ChatInfoService {
 		chatInfoDAO.setChatInfo_outtime(input);
 	}
 
+	// ** [temporary code- Additional part] ***//
+	// 채팅방 생성을 위한 같은 회사 멤버 조회
+	@Override
+	public List<MemberDTO> getInvitationMemberList(MemberDTO input) throws Exception {
+		return chatInfoDAO.getInvitationMemberList(input);
+	}
 }

@@ -1,5 +1,6 @@
 package com.ezen.chord.chat.socketHelper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,12 +17,49 @@ public class WebSocketHelper {
 	@Autowired 
 	ChatInfoService chatInfoService;
 	
-
+	/** 1
+	 * Description : 해당 채팅방 소속 회원 
+	 * Usage : Map<채팅방PK, List<회원DTO>>
+	 */
 	private Map<Integer, List<MemberDTO>> chatInfoMap = new HashMap<Integer, List<MemberDTO>>();
 
+	/** 2
+	 * Description : 채팅방 실시간 참여 회원 
+	 * Usage : Map<회원PK, Map<Key:Value>>
+	 */
 	private Map<Integer, Map<String, Object>> socketNowChatMap = new HashMap<Integer, Map<String, Object>>();
 
+   	/** 3 
+	 * Description : 실시간 로그인 상태 회원 
+	 * Usage : Map<회원PK, Map<Key:Value>>
+	 */
 	private Map<Integer, Map<String, Object>> socketLoginMap = new HashMap<Integer, Map<String, Object>>();
+
+	/** 4
+	 * Description : 채팅방 타입  확인 (new,'')
+	 * Usage : Map<chatroom_PK, String > 
+	 */
+	private List<Integer> newChatroomList = new ArrayList<Integer>(); 
+	
+	public ChatInfoService getChatInfoService() {
+		return chatInfoService;
+	}
+
+	public void setChatInfoService(ChatInfoService chatInfoService) {
+		this.chatInfoService = chatInfoService;
+	}
+	
+	public void setChatInfoMap(Map<Integer, List<MemberDTO>> chatInfoMap) {
+		this.chatInfoMap = chatInfoMap;
+	}
+
+	public void setSocketNowChatMap(Map<Integer, Map<String, Object>> socketNowChatMap) {
+		this.socketNowChatMap = socketNowChatMap;
+	}
+
+	public void setSocketLoginMap(Map<Integer, Map<String, Object>> socketLoginMap) {
+		this.socketLoginMap = socketLoginMap;
+	}
 
 	// Getter, Setter
 	public Map<Integer, List<MemberDTO>> getChatInfoMap() {
@@ -48,7 +86,19 @@ public class WebSocketHelper {
 		this.socketLoginMap.put(mem_no, loginMap);
 	}
 
+	public List<Integer> getNewChatroomList() {
+		return newChatroomList;
+	}
 
+	public void setNewChatroomList(int chatroom_no) {
+		this.newChatroomList.add(chatroom_no);
+	}
+
+	/**
+	 * 4 
+	 * Description : socketNowChatMap과 socketLoginMap의 Value로 활용되는 휘발성 Map을 생성하여 기존 Map에 Value로 할당하는 메서드
+	 * Parameters : 구독종류(login, chat), 소켓ID, 회원PK, 채팅PK
+	 */
 	public void setSockMap(String subscribe, String socketId, int mem_no, int chatroom_no) {
 
 		chatroom_no = subscribe.equals("login") ? 0 : chatroom_no;
@@ -67,7 +117,10 @@ public class WebSocketHelper {
 		}
 	}
 
-
+	/** 5
+	 * Description : Socket 연결 해제 시, 소켓ID를 대조하여 일치하는 Map에서 해당 회원정보 삭제
+	 *  Parameters : 회원PK, 소켓ID
+	 */
 	public void removeSockMap(int mem_no, String socketId) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		int chatroom_no = 0;

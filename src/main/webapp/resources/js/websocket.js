@@ -1,7 +1,6 @@
 /**
  * 실시간 기능 구현 
  */
-
 // 1. 채팅방 실시간 이벤트
 // 1-1. 채팅방 실시간 메세지 목록 갱신- chatroom.jsp
 function receiveMessage(receiveMsg){
@@ -22,21 +21,25 @@ function receiveMessage(receiveMsg){
 	// 채팅방 퇴장
 	} else if(messageType == 'leave'){
 		leaveMember(receiveMsg);
+	
+	// 단체방 첫 입장 메세지 : messageType의 값은 stomp에서 담아서 온다.
+	} else if(messageType == 'new'){
+		$('#allChatMessage-box').append('<div class="welcomeMessage">'+ receiveMsg.chatmessage_content+'</div>');
 	}
 }
 
 // create message HTML
 function messageHtml(className,receiveMsg){
-	var html = '';
-	html = '<div class="'+className+' message-box" data-chatmessage_no="'+ receiveMsg.chatmessage_no +'" data-chatroom_no="'+ receiveMsg.chatroom_no+'">';
-	html +=  receiveMsg.messageWriter + '<br>';
-    html +=	'<span class="'+ className +'-box chatmessage" data-messageWriter="'+ receiveMsg.mem_no +'">';
-	html +=	 receiveMsg.chatmessage_content;
-	html += '</span>';
-	html += '<span class="mymsg-date">'+receiveMsg.chatmessage_writedate+'</span>';
-	html += '<span class="deleteBtn" data-chatmessage_no="'+ receiveMsg.chatmessage_no+'"><i class="far fa-window-close"></i></span>';
-	html += '</div>';
-	return html;	
+   var html = '';
+   html = ' <div class="'+className+'  message-box" data-chatmessage_no="'+receiveMsg.chatmessage_no+'" data-chatroom_no="'+receiveMsg.chatroom_no+'">';
+   html += '<div class="'+className+'-name">'+receiveMsg.messageWriter+'</div>';
+   html += '<div class="'+className+'-box chatmessage" data-messageWriter="'+receiveMsg.messageWriter+'">'+receiveMsg.chatmessage_content+'</div>';
+   html += '<div class="'+className+'-date">';
+   html +=  receiveMsg.chatmessage_writedate;
+   html += '</div>';
+   html += '<div class="deleteBtn" data-chatmessage_no="'+receiveMsg.chatmessage_no+'"><i class="fas fa-times"></i></div>';
+   html += '</div>';
+   return html;
 }
 
 // 1-2. 메세지 삭제처리 ('삭제된 메세지 입니다.') - chatroom.jsp

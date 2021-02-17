@@ -42,7 +42,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/toast.css">
 <script type="text/javascript">
 	function exit(){
 		var result = window.confirm('로그아웃하시겠습니까?');
@@ -263,46 +263,57 @@
 							<a class="nav-link active" data-toggle="tab" href="#myProjectMemberList"><i class="fas fa-user-tie"></i></a>
 					    </li>
 						<li class="nav-item">
-							<a class="nav-link" data-toggle="tab" href="#myCompanyChat"><i class="fas fa-user-friends"></i></a>
+							<a class="nav-link" data-toggle="tab" href="#myPublicChat"><i class="fas fa-user-friends"></i></a>
+						</li>
+						<!-- 단체방 추가  -->
+						<li class="nav-item">
+							<span class="nav-link" id="invitationPopup"><i class="fas fa-plus-circle"></i></span>
 						</li>
 					</ul>
 
-					<div class="tab-content">
-						<div class="tab-pane active container" id="myProjectMemberList">
-							<script id="handlebars-template-myProjectMemberList" type="text/x-handlebars-template">
-                     			<div class="privateChatList">
-                        		{{#each .}}
-                        			{{{changeTagName chatroom_no}}}
-                           				<div class="private-box" data-mem_no={{mem_no}}>
-                              				<div class="private-img">
-												<img src="${pageContext.request.contextPath}/resources/img/test.png">
-											</div>
-                                        	<div class="private-name">{{mem_name}}</div>
-                              				<span class="private-content">{{chatmessage_content}}</span>
-                                        	<span class="private-writedate">{{{setWritedate chatmessage_writedate}}}</span>
-                                        	<span class="private-unread">{{{setChatmessage_count chatmessage_count chatroom_no}}}</span>
-                              				<span class="create-chat float-right" data-mem_no={{mem_no}} data-mem_name={{mem_name}}><i class="fas fa-comment-medical"></i></span>
-                           				</div>
-                        			</div>
-                        	 {{/each}}
-                     		 </div>   
-                     		</script>
-						</div>
+				   <div class="tab-content">
+				   		<div class="tab-pane active container" id="myProjectMemberList">
+                     			<script id="handlebars-template-myProjectMemberList" type="text/x-handlebars-template">
+                              	<div class="privateChatList">
+                              	{{#each .}}
+								    {{! 변경}}
+                                 	{{{changeTagName chatmessage_content chatroom_no}}}
+										<div class="private-box" data-mem_no={{mem_no}}>
+											<div class="private-img">
+                                    			<img src="${pageContext.request.contextPath}/resources/img/test.png">
+                               				</div>
+                                            <div class="private-name">{{mem_name}}</div>
+                                            <span class="private-content">{{chatmessage_content}}</span>
+                                            <span class="private-writedate">{{{setWritedate chatmessage_writedate}}}</span>
+                                            <span class="private-unread unread-box">{{{setChatmessage_count chatmessage_count chatroom_no}}}</span>
+                                            <span class="create-chat float-right" data-mem_no={{mem_no}} data-mem_name={{mem_name}}><i class="fas fa-comment-medical"></i></span>
+                                       </div>
+                                 	</div>
+                               {{/each}}
+                               </div>   
+                           </script>
+                       </div>
 
-               <div class="tab-pane container" id="myCompanyChat">
-                     <script id="handlebars-template-myCompanyChat" type="text/x-handlebars-template">
-                        <div class="publicChatroom-box {{CHATROOM_NO}}-box">
-                           <span class="chat-img"><i class="fas fa-user"></i></span>
-                           <span class="chat-name">{{CHATINFO_ROOMNAME}}</span>
-                           {{#if CHATMESSAGE_CONTENT}}
-                              <span class="chat-content">{{CHATMESSAGE_CONTENT}}</span>
-                              <span class="chat-writedate">{{CHATMESSAGE_WRITEDATE}}</span>
-                           {{/if}}
-                           <span class="company-chat float-right" data-chatroom_no={{CHATROOM_NO}} data-chatinfo_roomname={{CHATINFO_ROOMNAME}}><i class="fas fa-comments"></i></span>
-                        </div>
-                     </script>
-                  </div>
-               </div>
+		               <div class="tab-pane container" id="myPublicChat">
+		               		<div id="publicChatList">
+								<script id="handlebars-template-myPublicChatroomList" type="text/x-handlebars-template">
+									{{#each .}}
+										<div class="chatroom_ing" data-chatroom_no={{CHATROOM_NO}}>
+											<div class="public-box">			
+												<div class="public-img">
+                                    				<img src="${pageContext.request.contextPath}/resources/img/groupChat.png">
+                               					</div>
+												<div class="public-name">{{CHATINFO_ROOMNAME}}</div>
+                                				<span class="public-content">{{CHATMESSAGE_CONTENT}}</span>
+                                				<span class="public-writedate">{{{setWritedate CHATMESSAGE_WRITEDATE}}}</span>
+                                				<span class="public-unread unread-box"></span>
+											</div>
+										</div>							 
+									{{/each}}
+						 		</script>
+						    </div>
+					  </div>
+		         </div>
             </div>
             <div class="modal-footer">
                <i class="fas fa-angle-right" data-dismiss="modal" aria-label="Close"></i>
@@ -314,14 +325,15 @@
 	<form id="chatroomForm" method="post">
       	<input type="hidden" name="chatroom_no" id="chatroom_no">
     </form>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-	<script src="https://kit.fontawesome.com/58a77f3783.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/websocket.js"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   	<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+   	<script type="text/javascript" src="https://unpkg.com/moment@2.27.0/moment.js"></script>
+   	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/locale/ko.js"></script>
+   	<!-- Toastr-->
+   	<script src="${pageContext.request.contextPath}/resources/js/toast.js"></script>
 
 	<script type="text/javascript">
 		var mem_no = ${memNo};
@@ -329,17 +341,18 @@
 
 	    var chatroomPopupList = []; // 팝업 객체의 이름을 담는 배열
 	    
-		
+		// 로그인 시 웹 소캣 연결
 		if (mem_no != '') {
 			var socket = new SockJS("<c:url value="/socket"/>");
 			stompClient = Stomp.over(socket);
 			stompClient.connect({}, function() {
-			
+				// 구독지 등록
 				stompClient.subscribe('/sub/response/login/' + String(mem_no),function(message) {
 							var data = JSON.parse(message.body);
 							chatListUpdate(data);
+							chatAlarm(data);  // 내가 보낸 메세지일 경우에는 알람을 받지않는다.
 						});
-				stompClient.send('/pub/request/login/' + String(mem_no), {},mem_no);
+				stompClient.send('/pub/request/login/' + String(mem_no),{},mem_no);
 			});
 		}
 
@@ -356,33 +369,49 @@
 						$('#myProjectMemberList').children('.privateChatList').remove();
 						$('#myProjectMemberList').append(html);
 					}, 'json');
+					
+					
+			
+					$.post('getPubChatList.do', function(data) {
+						// 핸들바 템플릿 로드
+						var source = $('#handlebars-template-myPublicChatroomList').html();
+						// 미리 준비한 HTML틀 로드
+						var template = Handlebars.compile(source);
+						// Ajax를 통해서 읽어온 JSON을 템플릿에 병합
+						var html = template(data);
+						// 읽어온 내용 추가
+						$('#publicChatList').empty();
+						$('#publicChatList').append(html);
+					}, 'json');
 					$('#modal_aside_left').modal();
+					
 				});
 
-	
-		Handlebars.registerHelper('changeTagName',function(chatroom_no) {
-							if (chatroom_no != 0) {
-								return '<div class="chatroom_ing" data-chatroom_no="' + chatroom_no + '">';
-							}
-							return '<div class="chatroom_default">';
-		});
+
+	    Handlebars.registerHelper('changeTagName',function(chatmessage_content, chatroom_no) {
+	         if (chatmessage_content != null) {
+	            	return '<div class="chatroom_ing" data-chatroom_no="' + chatroom_no + '">';
+	            }
+	         return '<div class="chatroom_default">';
+	    });
 
 
-		Handlebars.registerHelper('setWritedate', function(chatmessage_writedate) {
-			// 메세지를 나누지 않은 상태일 경우 처리 (ex. 채팅방 생성, 메세지 삭제)
-			if (chatmessage_writedate == null) {
-				return '';
-			}
-			var today = moment().format('YYYY-MM-DD');
-			if (today == moment(chatmessage_writedate).format('YYYY-MM-DD')) {
-				return moment(chatmessage_writedate).format('a h:mm');
-			} else {
-				return moment(chatmessage_writedate).format('YY-MM-DD');
-			}
-		});
+      	Handlebars.registerHelper('setWritedate', function(chatmessage_writedate) {
+         	// 메세지를 나누지 않은 상태일 경우 처리 (ex. 채팅방 생성, 메세지 삭제)
+         	if (chatmessage_writedate == null) {
+            	return '';
+         	}
+         	moment.locale('kr');
+         	var today = moment().format('YYYY-MM-DD');
+         	if (today == moment(chatmessage_writedate).format('YYYY-MM-DD')) {
+            	return moment(chatmessage_writedate).format('a hh:mm');
+         	} else {
+            	return moment(chatmessage_writedate).format('YY-MM-DD');
+         	}
+      	});
 
-		
-		Handlebars.registerHelper('setChatmessage_count', function(chatmessage_count,chatroom_no) {
+
+		Handlebars.registerHelper('setChatmessage_count',function(chatmessage_count,chatroom_no) {
 			// 회원이 해당 채팅방에 들어와있지 않을때 출력한다.
 			if(chatroom_no != 0){
 				if(checkOpenChatroom(chatroom_no)){
@@ -393,27 +422,25 @@
 			return result;
 		});
 
-		// 채팅방 만들기
-		$(document).on('click', '.create-chat', function() {
+
+		$(document).on('click','.create-chat',function() {
 			var mem_no = $(this).data("mem_no");
 			var mem_name = $(this).data("mem_name");
 			$.post('createChatroom.do', {'mem_no' : mem_no,'mem_name' : mem_name}, function(data) {
-				$('#chatroom_no').val(data);
-				setChat_ing(mem_no, data); // 채팅목록 class변경
+	
 				formSubmit(data);
 			});
 		});
 
-		// 기존 채팅방 입장 
-		$(document).on('click', '.chatroom_ing', function() {
-			$(this).find('.private-unread').empty(); // 안읽은 메세지 갯수 초기화
-			$('#chatroom_no').val($(this).data("chatroom_no")); // chatroom.do 컨트롤러로 보내는 값 setting
+
+		$(document).on('click','.chatroom_ing',function() {
+			$(this).find('.private-unread').empty();
 			formSubmit($(this).data("chatroom_no"));
 		});
 
-		// 채팅방 controller 로 전송 
 		function formSubmit(chatroom_no) {
-			
+			// 변경
+			$('#chatroom_no').val(chatroom_no); // chatroom.do 컨트롤러로 보내는 값 setting
 			var targetName = 'chatroom' + String(chatroom_no);
 			var popup = window.open('', targetName, 'width=520, height=750');
 			var form = document.getElementById('chatroomForm');
@@ -431,32 +458,53 @@
 				}
 			}
 		}
-		
+
 		function chatListUpdate(receiveMsg) {
-
-			var $chatBox = setChat_ing(receiveMsg.reciver,receiveMsg.chatroom_no);
-			$chatBox.find('.private-content').html(receiveMsg.chatmessage_content);
 			
-			// messageType이 'talk' 일 경우에만 처리하는 메소드
-			if(receiveMsg.messageType != 'remove'){
-				$chatBox.find('.private-writedate').html(receiveMsg.chatmessage_writedate);
-
-				var unread_count = $chatBox.find('.private-unread').text();
-				// 채팅방에 입장하지 않은 회원은 chatmessage_count 값이 1이다.
-				if (receiveMsg.chatmessage_count != 0) {
-					var count = 0;
-					// 기존의 안읽은 메세지가 있다면, 그 갯수에  +1을 해준다.
-					if (unread_count == ''|| unread_count == null) {
-						count = receiveMsg.chatmessage_count;
-					} else {
-						count = Number(unread_count) + receiveMsg.chatmessage_count;
+			if(receiveMsg.chatroom_type == 'pub'){
+				var $chatBox = publicChatListUpdate(receiveMsg);
+			
+				if(receiveMsg.messageType != 'remove'){
+					$chatBox.find('.public-writedate').html(receiveMsg.chatmessage_writedate);
+	
+					var unread_count = $chatBox.find('.public-unread').text();
+					
+					if (receiveMsg.chatmessage_count != 0) {
+						var count = 0;
+				
+						if (unread_count == ''|| unread_count == null) {
+							count = receiveMsg.chatmessage_count;
+						} else {
+							count = Number(unread_count) + receiveMsg.chatmessage_count;
+						}
+						$chatBox.find('.public-unread').html(count);
 					}
-					$chatBox.find('.private-unread').html(count);
+				}
+				
+			}else if(receiveMsg.chatroom_type == 'pri'){
+				
+				var $chatBox = setChat_ing(receiveMsg.reciver,receiveMsg.chatroom_no);
+				$chatBox.find('.private-content').html(receiveMsg.chatmessage_content);
+				
+				if(receiveMsg.messageType != 'remove'){
+					$chatBox.find('.private-writedate').html(receiveMsg.chatmessage_writedate);
+	
+					var unread_count = $chatBox.find('.private-unread').text();
+					if (receiveMsg.chatmessage_count != 0) {
+						var count = 0;
+						
+						if (unread_count == ''|| unread_count == null) {
+							count = receiveMsg.chatmessage_count;
+						} else {
+							count = Number(unread_count) + receiveMsg.chatmessage_count;
+						}
+						$chatBox.find('.private-unread').html(count);
+					}
 				}
 			}
 		}
 		
-  
+
 		function setChat_ing(reciver, chatroom_no) {
 			var $chatBox = $('div[data-mem_no="' + reciver + '"]').parent('div');
 			if ($chatBox.hasClass('chatroom_default')) {
@@ -469,7 +517,6 @@
 			}
 			return $chatBox;
 		}
-     
 		function setChat_default(chatroom_no) {
  			var $chatBox = $('div[data-chatroom_no="' + chatroom_no + '"]');
  			var reciver = $chatBox.children('private-box').data('mem_no'); 
@@ -483,13 +530,11 @@
 			}
 	       	//** 수정 : chatroom_no가 잇다면,createChatroom.do로 가서 db 조회 하지 말고, 바로  chatroom.do로 가도록 수정한다.**//
         }
-        
 
-        function deleteChatData(chatroom_no) {
-        	var $chatBox = $('div[data-chatroom_no="' + chatroom_no + '"]');
-        	$chatBox.find(".private-content").empty();
-        }
-        
+	    function deleteChatData(chatroom_no) {
+	        var $chatBox = $('div[data-chatroom_no="' + chatroom_no + '"]');
+	        $chatBox.find(".private-content").html("대화 내용이 없습니다.");
+	    }
 
         function checkOpenChatroom(chatroom_no) {
             var check = false; 
@@ -506,14 +551,58 @@
         	return check;
         }
         
-        // 실시간 채팅방 목록 갱신 : 안읽은 메세지 카운트  
-        // 방법 : 채팅방 팝업창이 닫히면, 배열에서 해당 채팅방 이름 삭제
+
         function deleteChatroomPopup(chatroom_no){
 	    	chatroomPopupList = chatroomPopupList.filter(function(item) {
 	    	    return item !== 'chatroom' + String(chatroom_no);
 			});
         }
 
+        $(document).on('click','#invitationPopup',function() {
+        	   window.open('invitationPopup.do', 'invitationPopup', "width=400,height=600");
+        })
+
+        // 실시간 채팅방 목록 갱신 : 단체 채팅방 목록 갱신
+        function publicChatListUpdate(data){ 
+        	// 채팅방 목록에 해당 채팅방이 존재하는지 확인 -> 있다면-> 기존것 지우기
+         	var $chatBox = $('#publicChatList').find('div[data-chatroom_no="' + data.chatroom_no + '"]');
+			if($chatBox){
+				$chatBox.remove();
+				$('#publicChatList').prepend(createPublicChatListHtml(data));
+			}else{
+				$('#publicChatList').append(createPublicChatListHtml(data));
+			}
+			return $chatBox;
+        }
+        
+		// 단체방 추가 시 사용되는 html 템플릿
+        function createPublicChatListHtml(chatmessage){
+	  		var html = '';
+	  		html = '<div class="chatroom_ing" data-chatroom_no="'+chatmessage.chatroom_no+'" >';
+	  		html += '<div class="public-box">'
+	  		html += '<div class="public-img"><img src="${pageContext.request.contextPath}/resources/img/groupChat.png"></div>';
+	  		html += '<div class="public-name">'+chatmessage.chatroomName+'</div>';
+	  		html += '<span class="public-content">'+chatmessage.chatmessage_content+'</span>';
+	  		html += '<span class="public-writedate"></span>';
+	  		html += '<span class="public-unread unread-box"></span>';
+	  		html += '</div>';
+	  		html += '</div>';
+			return html;
+		}
+	
+		// 채팅 알림 toast
+	     $.toastDefaults.position = 'bottom-right';
+	     $.toastDefaults.dismissible = true;
+	     function chatAlarm(chatmessage){
+	    	 if(chatmessage.mem_no != mem_no){
+	    		 $.toast({
+		        	  title: chatmessage.chatroomName,
+		        	  content: chatmessage.chatmessage_content,
+		        	  type: 'info',
+		        	  delay: 5000,
+		        });
+	    	 }
+		}
 	</script>
 </body>
 </html>

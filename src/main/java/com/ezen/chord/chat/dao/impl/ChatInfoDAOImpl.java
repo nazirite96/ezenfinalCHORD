@@ -76,4 +76,13 @@ public class ChatInfoDAOImpl implements ChatInfoDAO {
 			new NullPointerException("result == 0");
 		}
 	}
+	
+	// ** [temporary code- Additional part] ***//
+	// 채팅방 생성을 위한 같은 회사 멤버 조회
+	@Override
+	public List<MemberDTO> getInvitationMemberList(MemberDTO input) {
+		List<MemberDTO> result = null;
+		result = sqlSessionTemplate.selectList("chatInfoSql.selectInvitationMemberList", input);
+		return result;
+	}
 }
