@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ezen.chord.project_user.dto.ProjectUserDTO;
 import com.ezen.chord.schedule.dao.SchdDAO;
 import com.ezen.chord.schedule.dto.SchdDTO;
 
@@ -64,14 +65,14 @@ public class SchdDAOImpl implements SchdDAO {
 	public SchdDTO getSchdOne(int schd_no) {
 		// TODO Auto-generated method stub
 		SchdDTO getSchdOne=sqlMap.selectOne("getSchdOne", schd_no);
-		List<Map<String,String>> tu_mem=tu_mem_list(schd_no); 
-		getSchdOne.setMem_list(tu_mem);
+		List<ProjectUserDTO> tu_mem=tu_mem_list(schd_no);
+		getSchdOne.setPartic(tu_mem);
 		return getSchdOne;
 	}
 	@Override
-	public List<Map<String,String>> tu_mem_list(int schd_no) {
+	public List<ProjectUserDTO> tu_mem_list(int schd_no) {
 		// TODO Auto-generated method stub
-		List<Map<String,String>> tu_mem_list=sqlMap.selectList("tu_mem_list", schd_no);
+		List<ProjectUserDTO> tu_mem_list=sqlMap.selectList("tu_mem_list", schd_no);
 		return tu_mem_list;
 	}
 	@Override

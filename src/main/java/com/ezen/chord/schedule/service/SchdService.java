@@ -3,6 +3,7 @@ package com.ezen.chord.schedule.service;
 import java.util.List;
 import java.util.Map;
 
+import com.ezen.chord.project_user.dto.ProjectUserDTO;
 import com.ezen.chord.schedule.dto.SchdDTO;
 
 public interface SchdService {
@@ -26,7 +27,7 @@ public interface SchdService {
 	// 인덱스번호로 해당스케줄 뿌려주는거
 	SchdDTO getSchdOne(int schd_no); 
 	// tu_mem_list
-	List<Map<String,String>> tu_mem_list(int schd_no);
+	List<ProjectUserDTO> tu_mem_list(int schd_no);
 	//제목
 	int updateTitle(int cont_no,String tim_cont);
 	//장소랑 메모

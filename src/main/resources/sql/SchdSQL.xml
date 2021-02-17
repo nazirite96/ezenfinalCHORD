@@ -36,13 +36,14 @@
 			)
 		select * from dual
 	</insert>
-	<select id="tu_mem_list" parameterType="INTEGER" resultType="map">
+	<select id="tu_mem_list" parameterType="INTEGER" resultType="projectUserDTO">
 		select 
-		mm.mem_name as nick_name,
+		mm.mem_name,
 		pt.mem_no
 		from member mm,participants pt
 		where 1=1
 		and pt.mem_no=mm.mem_no
+		and pt.cont_kind='schd'
 		and pt.cont_no=#{shcd_no}
 	</select>
 	
