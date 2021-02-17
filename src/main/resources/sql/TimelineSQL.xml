@@ -9,13 +9,23 @@
     		insert into timeline
 			values (#{tim_no},#{cont_kind},#{cont_no},#{tim_cont},sysdate,#{pro_no},#{mem_no})
     	</insert>
-    	
+    	<select id="getCollection" resultType="timelineDTO">
+			select A.*,(b.tim_no) as coll_chk from
+			    (select timeline.* from collection left join timeline on collection.tim_no = timeline.tim_no
+			    where collection.mem_no = #{mem_no}) A
+			left join (select * from collection where mem_no = #{mem_no}) B
+			on a.tim_no = b.tim_no
+    	</select>
     	<select id="getTimelinByProNo" parameterType="hashMap" resultType="timelineDTO">
-			select A.*,(B.tim_no) as fix_chk from
-		    (select * from timeline
-		                where pro_no = #{pro_no}
-		                order by tim_no desc) A
-		left join topfixture B on A.tim_no = B.tim_no
+			select A.*,(b.tim_no) as coll_chk from
+				(select A.*,(B.tim_no) as fix_chk from
+						    (select * from timeline
+						                where pro_no = #{pro_no}
+						                order by tim_no desc) A
+							left join topfixture B on A.tim_no = B.tim_no) A
+				left join (select * from collection where mem_no =#{mem_no}) B
+			on a.tim_no = b.tim_no
+
     	</select>
     	<update id="updateTim" parameterType="timelineDTO">
     		update timeline
@@ -37,4 +47,13 @@
     		delete topfixture
     		where tim_no = #{tim_no}
     	</delete>
+    	<insert id="insertColl" parameterType="hashMap">
+    		insert into collection
+    		values(collection_seq.nextval,#{mem_no},#{tim_no})
+    	</insert>
+    	<delete id="deleteColl">
+    		delete collection
+    		where tim_no=#{tim_no} and mem_no = #{mem_no}
+    	</delete>
+    	
     </mapper>

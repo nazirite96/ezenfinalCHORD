@@ -18,6 +18,13 @@ public class TimelineDTO {
 	private int mem_no;				//작성자
 	private int fix_chk;			//고정글
 	private List<ReplyDTO> repList; //리플
+	private int coll_chk;			//담아두기
+	public int getColl_chk() {
+		return coll_chk;
+	}
+	public void setColl_chk(int coll_chk) {
+		this.coll_chk = coll_chk;
+	}
 	private TaskDTO taskDTO;		//task
 	private SchdDTO SchdDTO;
 	public  TodoDTO todoDTO;

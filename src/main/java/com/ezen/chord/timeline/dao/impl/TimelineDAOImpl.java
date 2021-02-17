@@ -25,15 +25,20 @@ public class TimelineDAOImpl implements TimelineDAO{
 	}
 	
 	@Override
-	public List<TimelineDTO> getTimelineByProNo(int pro_no, int page) {
+	public List<TimelineDTO> getTimelineByProNo(int pro_no, int page,int mem_no) {
 		// TODO Auto-generated method stub
 		Map<String,Integer> map = new HashMap();
 		map.put("pro_no", pro_no);
+		map.put("mem_no", mem_no);
 		map.put("page", page);
 		
 		return sqlmap.selectList("getTimelinByProNo", map);
 	}
-	
+	@Override
+	public List<TimelineDTO> getCollection(int mem_no) {
+		// TODO Auto-generated method stub
+		return sqlmap.selectList("getCollection", mem_no);
+	}
 	@Override
 	public int updateTim(TimelineDTO timDTO) {
 		// TODO Auto-generated method stub
@@ -62,5 +67,23 @@ public class TimelineDAOImpl implements TimelineDAO{
 	public int insertFix(int mem_no, int tim_no, int pro_no) {
 		// TODO Auto-generated method stub
 		return sqlmap.insert("insertFix", tim_no);
+	}
+	
+	@Override
+	public int deleteColl(int mem_no, int tim_no, int pro_no) {
+		// TODO Auto-generated method stub
+		Map<String,Integer> map = new HashMap();
+		map.put("tim_no", tim_no);
+		map.put("mem_no", mem_no);
+		return sqlmap.delete("deleteColl", map);
+	}
+	
+	@Override
+	public int insertColl(int mem_no, int tim_no, int pro_no) {
+		// TODO Auto-generated method stub
+		Map<String,Integer> map = new HashMap();
+		map.put("tim_no", tim_no);
+		map.put("mem_no", mem_no);
+		return sqlmap.insert("insertColl", map);
 	}
 }

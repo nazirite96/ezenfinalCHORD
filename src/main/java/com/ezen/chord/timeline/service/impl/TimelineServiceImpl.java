@@ -37,13 +37,23 @@ public class TimelineServiceImpl implements TimelineService {
 		
 	
 	@Override
-	public List<TimelineDTO> getTimelineByProNo(int pro_no, int page) {
+	public List<TimelineDTO> getTimelineByProNo(int pro_no, int page, int mem_no) {
 		// TODO Auto-generated method stub
-		List<TimelineDTO> list = timDAO.getTimelineByProNo(pro_no, page);
+		List<TimelineDTO> list = timDAO.getTimelineByProNo(pro_no, page ,mem_no);
 		for(int i = 0 ; i < list.size() ; i++) {
 			list.get(i).setRepList(repDAO.selcetRepByTim_no(list.get(i).getTim_no()));
 		}
 		return list;
+	}
+	@Override
+	public List<TimelineDTO> getCollection(int mem_no) {
+		// TODO Auto-generated method stub
+		List<TimelineDTO> list = timDAO.getCollection(mem_no);
+		for(int i = 0 ; i < list.size() ; i++) {
+			list.get(i).setRepList(repDAO.selcetRepByTim_no(list.get(i).getTim_no()));
+		}
+		return list;
+
 	}
 	
 	@Override
@@ -113,5 +123,14 @@ public class TimelineServiceImpl implements TimelineService {
 		// TODO Auto-generated method stub
 		return timDAO.insertFix(mem_no, tim_no, pro_no);
 	}
-	
+	@Override
+	public int deleteColl(int mem_no, int tim_no, int pro_no) {
+		// TODO Auto-generated method stub
+		return timDAO.deleteColl(mem_no, tim_no, pro_no);
+	}
+	@Override
+	public int insertColl(int mem_no, int tim_no, int pro_no) {
+		// TODO Auto-generated method stub
+		return timDAO.insertColl(mem_no, tim_no, pro_no);
+	}
 }

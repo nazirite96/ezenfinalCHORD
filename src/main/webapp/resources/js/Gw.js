@@ -534,17 +534,20 @@ $(function() {
 	$(".coll-btn").click(function() {
 
 		var item = $(this);
-		var coll_no = item.data("collno");
-		var timeline_no = $(this).parents(".timeline-box").children(".col-no").data("no");
+		
+		var tim_no = $(this).parents(".timeline-box").children(".col-no").data("no");
+		var mem_no = $(this).data("memno");
+		var pro_no = $(this).data("prono");
+																												
 		if (item.hasClass('default-color')) {		// 취소					
 
 			$.ajax({
 				url: "deleteColl.do",
 				method: "get",
-				data: { coll_no: coll_no },
+				data: { tim_no: tim_no ,mem_no:mem_no,pro_no:pro_no},
 				dataType: "json",
 				success: function(data) {
-
+					
 				}
 			});
 
@@ -553,10 +556,10 @@ $(function() {
 			$.ajax({
 				url: "insertColl.do",
 				method: "get",
-				data: { timeline_col: timeline_col, timeline_no: timeline_no },
+				data: { mem_no : mem_no, tim_no: tim_no,pro_no:pro_no },
 				dataType: "json",
 				success: function(data) {
-					item.data("collno", data);
+					
 				}
 			});
 		}
@@ -1318,7 +1321,7 @@ function fn_commentFocus(el) {
 function fn_likeChange(el) {
 	var item = $(el);
 	var text = item.children('span').text().split(' ')[0];
-
+	
 	if (item.hasClass('default-color')) {		// 취소
 		item.removeClass('default-color');
 		item.children('span').text(text);

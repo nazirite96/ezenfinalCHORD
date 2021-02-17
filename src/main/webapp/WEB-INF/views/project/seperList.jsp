@@ -1,45 +1,84 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
- <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    
-    
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- 떠다니는 메뉴 -->
+<script type="text/javascript">
+ var stmnLEFT = 10; // 오른쪽 여백 
+ var stmnGAP1 = 0; // 위쪽 여백 
+ var stmnGAP2 = 50; // 스크롤시 브라우저 위쪽과 떨어지는 거리 
+ var stmnBASE = 50; // 스크롤 시작위치 
+ var stmnActivateSpeed = 35; //스크롤을 인식하는 딜레이 (숫자가 클수록 느리게 인식)
+ var stmnScrollSpeed = 20; //스크롤 속도 (클수록 느림)
+ var stmnTimer; 
+ 
+ function RefreshStaticMenu() { 
+  var stmnStartPoint, stmnEndPoint; 
+  stmnStartPoint = parseInt(document.getElementById('STATICMENU').style.top, 10); 
+  stmnEndPoint = Math.max(document.documentElement.scrollTop, document.body.scrollTop) + stmnGAP2; 
+  if (stmnEndPoint < stmnGAP1) stmnEndPoint = stmnGAP1; 
+  if (stmnStartPoint != stmnEndPoint) { 
+   stmnScrollAmount = Math.ceil( Math.abs( stmnEndPoint - stmnStartPoint ) / 15 ); 
+   document.getElementById('STATICMENU').style.top = parseInt(document.getElementById('STATICMENU').style.top, 10) + ( ( stmnEndPoint<stmnStartPoint ) ? -stmnScrollAmount : stmnScrollAmount ) + 'px'; 
+   stmnRefreshTimer = stmnScrollSpeed; 
+   }
+  stmnTimer = setTimeout("RefreshStaticMenu();", stmnActivateSpeed); 
+  } 
+ function InitializeStaticMenu() {
+  document.getElementById('STATICMENU').style.right = stmnLEFT + 'px';  //처음에 오른쪽에 위치. left로 바꿔도.
+  document.getElementById('STATICMENU').style.top = document.body.scrollTop + stmnBASE + 'px'; 
+  RefreshStaticMenu();
+  }
+</script>
+<style type="text/css">
+#STATICMENU {
+	margin: 0pt;
+	padding: 0pt;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+</style>
 <title>Insert title here</title>
-
-
 </head>
+<style>
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
 
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-
-    
-    <!-- Custom styles for this template -->
-    
-  </head>
+@media ( min-width : 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
+}
+</style>
+<!-- Custom styles for this template -->
+	
+	<link rel="stylesheet" href="/chord/resources/css/style_margin.css">
+	<link rel="stylesheet" href="/chord/resources/css/style_padding.css">
+	<!-- Air datepicker css -->
+	<link
+		href="<%=request.getContextPath()%>/resources/css/datepicker.min.css"
+		rel="stylesheet" type="text/css" media="all">	
+</head>
   <body>
     <jsp:include page="/WEB-INF/views/header.jsp"/>
-    <script type="text/javascript">
+   <link rel="stylesheet" href="/chord/resources/css/GwCss.css">
+	<script type="text/javascript">
 	$(function() {
 		// 탭메뉴 설정 : 탭메뉴(li)에 설정된 data-id 값과 같은 id값을 가진 content box 노출
 		$("ul.tabs li").on("click", function() {
@@ -51,57 +90,29 @@
 			$("#" + tab_id).addClass("active");
 		});
 	});
-</script>	
-<script src="/chord/resources/js/jquery-3.1.1.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
-	integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
-	crossorigin="anonymous"></script>
-<!-- custom -->
-<link rel="stylesheet" href="/chord/resources/css/style_margin.css">
-<link rel="stylesheet" href="/chord/resources/css/style_padding.css">
-<!-- icon  -->
-<script src="https://kit.fontawesome.com/1a984316ef.js"
-	crossorigin="anonymous"></script>
-<!-- gwjs -->
-<script type="text/javascript" src="/chord/resources/js/Gw.js"></script>
-<!-- taksFilesjs -->
-<script type="text/javascript" src="/chord/resources/js/taksFiles.js"></script>
+</script>
+<script src="https://unpkg.com/feather-icons"></script>
+	
 
-<!-- Air datepicker css -->
-<link
-	href="<%=request.getContextPath()%>/resources/css/datepicker.min.css"
-	rel="stylesheet" type="text/css" media="all">
-<!-- Air datepicker js -->
-<script src="<%=request.getContextPath()%>/resources/js/datepicker.js"></script>
-<!-- 달력 한글 추가를 위해 커스텀 -->
-<script
-	src="<%=request.getContextPath()%>/resources/js/datepicker.ko.js"></script>
-<!-- fontawesome -->
-<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-<!-- font-awesome CSS -->
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
-<!-- textArea 자동 높이 설정 -->
-<script
-	src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
-<!-- Air datepicker css -->
-<link href="<%=request.getContextPath()%>/resources/css/JeCss.css"
-	rel="stylesheet" type="text/css">
-<!-- sungtak -->
-<!-- kakaomap -->
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da2da3e53b6d01f803242012ae94fba6&libraries=services"></script>
-<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-<script
-	src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
-<link href="<%=request.getContextPath()%>/resources/css/JeCss2.css"
-	rel="stylesheet" type="text/css">
-<!-- tak -->
+	<!-- taksFilesjs -->
+	<script type="text/javascript" src="/chord/resources/js/taksFiles.js"></script>
+	<!-- Air datepicker js -->
+	<script src="<%=request.getContextPath()%>/resources/js/datepicker.js"></script>
+	<!-- 달력 한글 추가를 위해 커스텀 -->
+	<script src="<%=request.getContextPath()%>/resources/js/datepicker.ko.js"></script>
+	<!-- textArea 자동 높이 설정 -->
+	<script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
+	<!-- sungtak -->
+	<script>
+function submitgogo(){
+	var schd_date = $('#schdtime').val();
+	if(schd_date.length<=16){
+		alert('일정의 마감시간을 설정해주삼 :>')
+	}else{
+		document.schdfrm.submit();
+	}
+}
+</script>
 <div class="container-fluid">
   <div class="row">
     <nav id="sidebarMenu" style="z-index : 2"
@@ -131,7 +142,7 @@
           <li class="nav-item"><a class="nav-link" href="#"><span data-feather="users"></span>전체업무</a></li>
           <li class="nav-item"><a class="nav-link" href="#"><span data-feather="bar-chart-2"></span>전체일정</a></li>
           <li class="nav-item"><a class="nav-link" href="#"><span data-feather="layers"></span>전체파일</a></li>
-          <li class="nav-item"><a class="nav-link" href="#"><span data-feather="layers"></span>담아둔글</a></li>
+          <li class="nav-item"><a class="nav-link" href="collection.do"><span data-feather="layers"></span>담아둔글</a></li>
           <li class="nav-item"><a class="nav-link" href="#"><span data-feather="layers"></span>내 게시글</a></li>
         </ul>
 
@@ -339,8 +350,7 @@
   </div>
 </div>
 
-<link href="/chord/resources/css/dashboard.css" rel="stylesheet">
-     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+ <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
    <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
@@ -349,8 +359,9 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
 	integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
 	crossorigin="anonymous"></script>
-<script src="/chord/resources/js/dashboard.js"></script>
-    <script src="/chord/resources/js/dashboard.js"></script>
     <script type="text/javascript" src="/chord/resources/js/Gw.js"></script>
+    <script>
+			feather.replace()
+	</script>
   </body>
 </html>

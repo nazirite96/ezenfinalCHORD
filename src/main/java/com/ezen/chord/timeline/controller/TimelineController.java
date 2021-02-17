@@ -63,7 +63,7 @@ public class TimelineController {
 		//프로젝트 정보를 받기
 		int page = 0; 
 		TaskDTO taskDTO = new TaskDTO();
-		List<TimelineDTO> list = timService.getTimelineByProNo(pro_no, page);
+		List<TimelineDTO> list = timService.getTimelineByProNo(pro_no, page,mem_no);
 		
 		for(int i = 0 ; i < list.size() ; i++) {
 			switch (list.get(i).getCont_kind()) {
@@ -92,6 +92,10 @@ public class TimelineController {
 		
 		return mav;
 	}
+	
+	
+	
+	
 	
 	
 	@RequestMapping("/insertTim.do")
@@ -255,7 +259,56 @@ public class TimelineController {
 		return "redirect:/timeLine.do?pro_no="+pro_no+"&mem_no="+mem_no;
 	}
 	
+	@RequestMapping("/insertColl.do")
+	@ResponseBody
+	public String insertColl(int mem_no,int tim_no,int pro_no) {
+		timService.insertColl(mem_no, tim_no, pro_no);
+		return "1";
+	}
+	@RequestMapping("/deleteColl.do")
+	@ResponseBody
+	public String deleteColl(int mem_no,int tim_no,int pro_no) {
+		timService.deleteColl(mem_no, tim_no, pro_no);
+		return "1";
+	}
 	
+	
+	@RequestMapping("/collection.do")
+	public ModelAndView collection(HttpSession sess) {
+		ModelAndView mav = new ModelAndView();
+		int mem_no = (int)(sess.getAttribute("memNo"));
+		//업로드 폴더 변경
+		List<BoxDTO> boxList = boxService.getBoxList(mem_no);
+		mav.addObject("boxList", boxList);
+		//프로젝트 정보를 받기
+		List<TimelineDTO> list = timService.getCollection(mem_no);
+		
+		for(int i = 0 ; i < list.size() ; i++) {
+			switch (list.get(i).getCont_kind()) {
+			case "post":
+				
+				break;
+			case "task":
+				list.get(i).setTaskDTO(timService.getTask(list.get(i).getCont_no()));
+				break;
+				
+			case "schd":
+				list.get(i).setSchdDTO(schdService.getSchdOne(list.get(i).getCont_no()));
+				break;
+			case "todo":
+				//list.get(i).setTodoDTO(null);
+			default:
+				break;
+			}
+		}
+		
+		mav.addObject("list", list);
+		mav.setViewName("project/collection");
+		
+		
+		
+		return mav;
+	}
 	
 	
 	
