@@ -70,8 +70,23 @@ public class SchdServiceImpl implements SchdService {
 		return dao.getSchdOne(schd_no);
 	}
 	@Override
-	public List<SchdDTO> tu_mem_list(int schd_no) {
+	public List<Map<String,String>> tu_mem_list(int schd_no) {
 		// TODO Auto-generated method stub
 		return dao.tu_mem_list(schd_no);
+	}
+	@Override
+	public int updateTitle(int cont_no, String tim_cont) {
+		// TODO Auto-generated method stub
+		return dao.updateTitle(cont_no, tim_cont);
+	}
+	@Override
+	public int updateLocMemo(int schd_no, String schd_loc, String schd_memo) {
+		// TODO Auto-generated method stub
+		return dao.updateLocMemo(schd_no, schd_loc, schd_memo);
+	}
+	@Override
+	public int updateTime(int cont_no, String start, String end) {
+		// TODO Auto-generated method stub
+		return dao.updateTime(cont_no, start, end);
 	}
 }

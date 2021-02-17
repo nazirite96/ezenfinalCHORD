@@ -83,6 +83,7 @@ public class TimelineController {
 				break;
 			}
 		}
+		
 		mav.addObject("list", list);
 		mav.addObject("mem_no", mem_no);
 		mav.setViewName("project/timeLine");
@@ -194,7 +195,6 @@ public class TimelineController {
 							SchdDTO schdDTO,
 							@RequestParam(value = "datetime",defaultValue = "")String datetime,
 							@RequestParam("tu_mem_list")List<Integer> tu_mem_list,
-							@RequestParam("articleFile")List<MultipartFile> files,
 							@RequestParam(value = "pro_no",defaultValue = "1")int pro_no,
 							@RequestParam(value = "mem_no",defaultValue = "1")int mem_no ) {
 		

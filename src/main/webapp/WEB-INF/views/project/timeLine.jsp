@@ -137,9 +137,7 @@
 		src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
 	
 	<!-- sungtak -->
-	<!-- kakaomap -->
-	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da2da3e53b6d01f803242012ae94fba6&libraries=services"></script>
+
 	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 	<script
 		src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
@@ -1673,22 +1671,22 @@ function submitgogo(){
 
 																	<!-- 담당자 리스트 -->
 																	<div class="task-user-list">
-																		<c:if test="${empty dto.schdDTO.tu_mem_list} ">
+																		<c:if test="${!empty dto.schdDTO.mem_list} ">
 																			<p class="mar-0 pad-0">담당자 없음</p>
 																		</c:if>
-																		<img src="/chord/resources/img/sample.png" width="24"
-																			class="cursor-point"> <strong
-																			class="marleft-10">${tu_mem }</strong>
-																		<c:if test="${not empty dto.schdDTO.tu_mem_list} ">
-																			<c:forEach items="${dto.schdDTO.tu_mem_list }"
-																				var="tu_mem">
-																				<div class="name-tag">
-																					<strong class="marleft-10">${tuVo.mem_no }</strong>
-																					<i class="fas fa-times-circle marleft-15"
-																						style="display: none"></i> <input type="hidden"
-																						name="tu_mem_id" value="${tu_mem }">
-																				</div>
-																			</c:forEach>
+
+																				<img src="/chord/resources/img/sample.png" width="24"
+																						class="cursor-point"> <strong class="marleft-10">ss</strong>
+																		<c:if test="${not empty dto.schdDTO.mem_list} ">
+																		<c:forEach items="${dto.schdDTO.mem_list }" var="tu_mem">
+																			<div class="name-tag">
+																				 <strong class="marleft-10">${tu_mem.nick_name}</strong>
+																				<i class="fas fa-times-circle marleft-15"
+																					style="display: none"></i> <input type="hidden"
+																					name="tu_mem_id" value="${tu_mem.mem_no}">
+																			</div>
+																		</c:forEach>
+
 																		</c:if>
 																	</div>
 																</dd>
@@ -1708,7 +1706,7 @@ function submitgogo(){
 																					href="https://maps.google.com?q=${dto.schdDTO.schd_loc }"
 																					target="google_blank" class="marleft-15">지도보기</a>
 																			</div>
-																			<div id="map" class="dis-block" style="height: 300px">
+																				<div id="map" class="dis-block" style="height: 50px">
 																			</div>
 																		</dd>
 																	</dl>
@@ -1748,8 +1746,8 @@ function submitgogo(){
 
 
 												<!-- 일정 수정:s -->
-												<form action="/flowolf/schd/update"
-													class="article-edit-form" method="POST">
+												<form action="schdUpdate.do"
+													class="article-edit-form" method="get">
 													<input type="hidden" name="schd_no"
 														value="${dto.schdDTO.schd_no }"> <input
 														type="hidden" name="pro_no" value="${proVo.pro_no }">
@@ -1773,13 +1771,15 @@ function submitgogo(){
 																<dd>
 																	<input type="hidden"
 																		value="${dto.schdDTO.time_start_date }   -   ${dto.schdDTO.time_end_date }"
-																		name="defaultDate"> <input type="text"
-																		<%-- 					placeholder="${dto.schdDTO.time_start_date }   -   ${dto.schdDTO.time_end_date }" --%>
-					placeholder="${dto.schdDTO.time_start_date }   -   ${dto.schdDTO.time_end_date }"
+																		name="defaultDate" data-range="true"
+																		data-multiple-dates-separator="   -   "
+																		style="width: 100%" data-time-format='hh:ii'/>
+																		 <input type="text"
+																		placeholder="${dto.schdDTO.time_start_date }   -   ${dto.schdDTO.time_end_date }"
 																		data-range="true"
 																		data-multiple-dates-separator="   -   "
 																		class="datepicker-here" id="datetime" name="datetime"
-																		style="width: 100%" />
+																		style="width: 100%" data-time-format='hh:ii'/>
 																</dd>
 															</dl>
 														</div>
@@ -1795,9 +1795,9 @@ function submitgogo(){
 																	<c:when test="${dto.schdDTO.schd_loc != null }">
 																		<dd>
 																			<input id="searchInput2" name="schd_loc"
-																				class="controls" type="text"
+																				class="controls" type="text" onkeyup="mapServise2()"
 																				value="${dto.schdDTO.schd_loc }" style="width: 90%">
-																			<div id="map" class="dis-block" style="width: 100%;"></div>
+																		
 																		</dd>
 																	</c:when>
 																	<c:otherwise>
@@ -1844,44 +1844,36 @@ function submitgogo(){
 														</div>
 														<!-- 메모:f -->
 
-														<!-- 알람:s -->
-														<div class="input-box martop-15">
-															<dl>
-																<dt class="maright-20">
-																	<i class="fas fa-bell"></i>
-																</dt>
-																<dd>
-																	<select name="alert_time"
-																		onchange="getSelectValue(this.form);">
-																		<option value="0">없음</option>
-																		<option value="10">10분전 미리알림</option>
-																		<option value="30">30분전 미리알림</option>
-																		<option value="60">1시간전 미리알림</option>
-																		<option value="120">2시간전 미리알림</option>
-																		<option value="180">3시간전 미리알림</option>
-																		<option value="1440">1일전</option>
-																		<option value="2880">2일전</option>
-																		<option value="10080">7일전</option>
-																	</select>
-																</dd>
-															</dl>
-														</div>
-														<!-- 알람:f -->
-													</div>
-													<!-- article edit box:f -->
+												<!-- 알람:s -->
+												<div class="input-box martop-15">
+													<dl>
+														<dt class="maright-20">
+															<i class="fas fa-bell"></i>
+														</dt>
+														<dd>
+															<select id="alert_time"
+																onchange="getSelectValue(this.form);">
+																<option value="0">없음</option>
+															</select>
+														</dd>
+													</dl>
+												</div>
+												<!-- 알람:f -->
+											</div>
+											<!-- article edit box:f -->
 
-													<!-- article edit dn:s -->
-													<div class="article-edit-dn">
-														<!-- submit & cancel 버튼 -->
-														<input type="submit" value="수정하기"
-															class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
-														<input type="button" value="취소"
-															onclick="fn_editCancel(this)"
-															class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
-															style="border: 1px solid #ddd">
-													</div>
-													<!-- article edit dn:f -->
-												</form>
+											<!-- article edit dn:s -->
+											<div class="article-edit-dn">
+												<!-- submit & cancel 버튼 -->
+												<input type="submit" value="수정하기"
+													class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
+												<input type="button" value="취소"
+													onclick="fn_editCancel(this)"
+													class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
+													style="border: 1px solid #ddd">
+											</div>
+											<!-- article edit dn:f -->
+										</form>
 
 
 												<!-- 일정 수정:f -->

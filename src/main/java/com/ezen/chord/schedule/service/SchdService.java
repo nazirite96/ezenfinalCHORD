@@ -26,5 +26,11 @@ public interface SchdService {
 	// 인덱스번호로 해당스케줄 뿌려주는거
 	SchdDTO getSchdOne(int schd_no); 
 	// tu_mem_list
-	List<SchdDTO> tu_mem_list(int schd_no);
+	List<Map<String,String>> tu_mem_list(int schd_no);
+	//제목
+	int updateTitle(int cont_no,String tim_cont);
+	//장소랑 메모
+	int updateLocMemo(int schd_no,String schd_loc,String schd_memo);
+	//시간
+	int updateTime(int cont_no,String start,String end);
 }
