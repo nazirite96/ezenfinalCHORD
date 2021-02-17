@@ -243,13 +243,23 @@ public class AdminController {
 	
 	/*회사관리자_프로젝트 목록보기*/
 	@RequestMapping("/adminProListForm.do")
-	public ModelAndView adminProjectList(int com_no) {
+	public ModelAndView adminProjectList(@RequestParam(value="cp",defaultValue = "1")int cp,Integer com_no,HttpSession sess) {
+
+		if(com_no==null) {
+			com_no = (Integer)sess.getAttribute("comNo");
+		}
 		
+		int totalCnt = asvc.adminTotalCntService(com_no);
+		int listSize = 5;
+		int pageSize = 3;
 		
-		List<Map<String, Object>> list = asvc.adminProjectListService(com_no);
+		String pageStr = com.ezen.chord.page.PageModule.makePage("adminProListForm.do", cp, totalCnt, listSize, pageSize);
+		
+		List<Map<String, Object>> list = asvc.adminProjectListService(cp,listSize,com_no);
 		
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("prolist",list);
+		mav.addObject("pageStr", pageStr);
 		mav.setViewName("adminCom/adminProListForm");
 
 		

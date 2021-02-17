@@ -25,9 +25,11 @@ public interface AdminDAO {
 	public int adminMemInfoUpdateDAO(MemberDTO mdto);
 	
 	/*회사 관리자_프로젝트*/
-	public List<Map<String, Object>> adminProjectListDAO(int com_no);
+	public List<Map<String, Object>> adminProjectListDAO(int cp,int ls,int com_no);
 	public List<Map<String, Object>> adminProContentsDAO(int pro_no);
 	public List<Map<String, Object>> adminProInfoDAO(int pro_no);
+	
+	public int adminTotalCntDAO(int com_no);
 
 	
 	
