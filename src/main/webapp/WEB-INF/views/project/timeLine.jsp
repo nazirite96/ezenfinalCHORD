@@ -1231,17 +1231,21 @@ function submitgogo(){
 
 																<!-- 담당자 리스트 -->
 																<div class="task-user-list">
-																	<c:if test="${dto eq null }">
+																	<c:if test="${empty dto.taskDTO.partic }">
 																		<p class="mar-0 pad-0">담당자 없음</p>
 																	</c:if>
-																	<%-- <c:forEach items="${dto.tuList }" var="tuVo">
-						<div class="name-tag">
-							<img src="/mem/pic?mem_id=${tuVo.tu_mem_id }" width="24">
-							<strong class="marleft-10">${tuVo.mem_nick }</strong>
-							<i class="fas fa-times-circle marleft-15" style="display:none"></i>
-							<input type="hidden" name="tu_mem_id" value="${tuVo.tu_mem_id }">
-						</div>
-					</c:forEach> --%>
+																	<c:if test="${!empty dto.taskDTO.partic }">
+																	<c:forEach items="${dto.taskDTO.partic }" var="tu_mem">
+				                                                         <div class="name-tag">
+				                                                         <img src="/chord/resources/img/sample.png" width="24"
+				                                                                              class="cursor-point">
+				                                                             <strong class="marleft-10">${tu_mem.mem_name}</strong>
+				                                                            <i class="fas fa-times-circle marleft-15"
+				                                                               style="display: none"></i> <input type="hidden"
+				                                                               name="tu_mem_id" value="${tu_mem.mem_no}">
+				                                                         </div>
+																	</c:forEach>
+																</c:if>
 																</div>
 															</dd>
 														</dl>
@@ -1624,11 +1628,12 @@ function submitgogo(){
 																		class="dis-block font-bold size-40 color-black text-center">${fn:substring(dto.schdDTO.time_start_date, 8, 10) }</strong>
 																</dt>
 																<dd class="font-bold size-20 color-black">${dto.schdDTO.tim_cont }</dd>
-																<dd class="martop-10 font-bold size-16 color-black">${schdDto.time_start_date }
+																<dd class="martop-10 font-bold size-16 color-black">${dto.schdDTO.time_start_date }
 																	- ${dto.schdDTO.time_end_date }</dd>
 															</dl>
 														</div>
-
+											
+									
 														<div class="input-box martop-15" style="height: inherit">
 															<dl>
 																<dt class="maright-20">
@@ -1638,22 +1643,22 @@ function submitgogo(){
 
 																	<!-- 담당자 리스트 -->
 																	<div class="task-user-list">
-																		<c:if test="${!empty dto.schdDTO.mem_list} ">
-																			<p class="mar-0 pad-0">담당자 없음</p>
+																		<c:if test="${empty dto.schdDTO.partic}">
+																			<p>담당자 없음</p>
 																		</c:if>
-
-																				<img src="/chord/resources/img/sample.png" width="24"
-																						class="cursor-point"> <strong class="marleft-10">ss</strong>
-																		<c:if test="${not empty dto.schdDTO.mem_list} ">
-																		<c:forEach items="${dto.schdDTO.mem_list }" var="tu_mem">
+																		
+																		
+																		<c:if test="${!empty dto.schdDTO.partic}">
+																		<c:forEach items="${dto.schdDTO.partic }" var="tu_mem" >
 																			<div class="name-tag">
-																				 <strong class="marleft-10">${tu_mem.nick_name}</strong>
+																			<img src="/chord/resources/img/sample.png" width="24"
+                                                                				  class="cursor-point">
+																				 <strong class="marleft-10">${tu_mem.mem_name}</strong>
 																				<i class="fas fa-times-circle marleft-15"
 																					style="display: none"></i> <input type="hidden"
 																					name="tu_mem_id" value="${tu_mem.mem_no}">
 																			</div>
 																		</c:forEach>
-
 																		</c:if>
 																	</div>
 																</dd>
@@ -1752,6 +1757,30 @@ function submitgogo(){
 														</div>
 														<!-- 일정 시간 설정:f -->
 														<!-- 위치 검색:s -->
+														<div class="input-box martop-15" style="height:inherit">
+															<dl>
+																<dt class="maright-20"><i class="fas fa-user-plus"></i></dt>
+																<dd class="posi-re">
+																	<input type="text" id="taskUser" placeholder="담당자 추가" onfocus="fn_taskManagerFocus(this)">
+																	
+																	<!-- 담당자 리스트 -->
+																	<div class="task-user-list">
+																		<c:forEach items="${dto.schdDTO.partic }" var="tu_mem">
+																			<div class="name-tag">
+																				<img src="/chord/resources/img/sample.png" width="24"
+												                                                                				  class="cursor-point">
+																				<strong class="marleft-10">${tu_mem.mem_name}</strong>
+																				<i class="fas fa-times-circle marleft-15" data-no="${tu_mem.mem_no }" onclick="fn_taskUserDelete(this)"></i>
+																			</div>
+																		</c:forEach>
+																	</div>
+																</dd>
+															</dl>
+														</div>
+														
+														
+														
+														
 														<!-- 위치 검색:f -->
 														<div class="input-box martop-15">
 															<dl>
@@ -1827,6 +1856,7 @@ function submitgogo(){
 												</div>
 												<!-- 알람:f -->
 											</div>
+							
 											<!-- article edit box:f -->
 
 											<!-- article edit dn:s -->

@@ -79,6 +79,7 @@
 			form.submit();
 		}
 	}	
+	
 </script>
 </head>
 <body class="body">
@@ -115,5 +116,6 @@
 			</tr>
 		</table>
 	</form>
+
 </body>
 </html>

@@ -12,6 +12,8 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous">
+	
+
 <style type="text/css">
 	.txtTD_css{
 		padding-bottom:12px;
@@ -21,6 +23,7 @@
 		margin-top: 130px;
     	margin-left: auto;
     	margin-right:auto;
+    	margin-bottom:30px;
     	font-size: 12pt;
 	}
 	/*텍스트창*/
@@ -45,6 +48,7 @@
 	    border: 1px solid black;
 	    color: white;	
 	}
+	
 </style>
 </head>
 <body style="background-color:#FCF6F5;">

@@ -8,6 +8,7 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.stereotype.Component;
+import com.ezen.chord.member.dto.MemberDTO;
 
 /** socket 연결, 비연결 관리 */
 @Component
@@ -18,20 +19,22 @@ public class WebSocketInterceptor implements ChannelInterceptor {
 
    @Override
    public Message<?> preSend(Message<?> message, MessageChannel channel) {
+      // StompHeaderAccessor : message를 감싸주면 STOMP의 헤더에 직접 접근
       StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(message);
       Map<String, Object> httpSession = headerAccessor.getSessionAttributes();
+  
+      int mem_no = (Integer) httpSession.get("memNo");
+
+      String socketId = (String) message.getHeaders().get("simpSessionId");
 
       
-    		  
-      String socketId = (String) message.getHeaders().get("simpSessionId");
-      int mem_no = (Integer)httpSession.get("memNo");
-
+      // socket접속
       if (StompCommand.CONNECT == headerAccessor.getCommand()) {
          System.out.println("## CONNECT ##");
       } else if (StompCommand.SUBSCRIBE == headerAccessor.getCommand()) {
          System.out.println("## SUBSCRIBE ##");
 
-
+         // String subscribe = headerAccessor.getDestination();
          String subscribe = (String) message.getHeaders().get("simpDestination");
          String[] addressList = subscribe.split("/");
          subscribe = addressList[3]; // 회원의 주소 (login OR chat OR out)
@@ -40,7 +43,8 @@ public class WebSocketInterceptor implements ChannelInterceptor {
          webSocketHelper.setSockMap(subscribe, socketId, mem_no, subscribe_key);
          
       } else if (StompCommand.DISCONNECT == headerAccessor.getCommand()) {
-
+    	  // 소켓 접속 끊기는 경우 [1.로그아웃  2.윈도우 창 종료 3.채팅창 종료  4.채팅방 나가기 ]
+    	  // disconnect 를 시도하는 socketID를 이용하여, 접속이끊긴 subscribe 찾기
     	  webSocketHelper.removeSockMap(mem_no,socketId);
 
       }	

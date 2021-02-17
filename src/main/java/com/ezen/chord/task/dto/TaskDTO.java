@@ -1,8 +1,11 @@
 package com.ezen.chord.task.dto;
 
 import java.sql.*;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.ezen.chord.project_user.dto.ProjectUserDTO;
 
 public class TaskDTO {
 	
@@ -27,6 +30,7 @@ public class TaskDTO {
 	private String mem_name;			//멤버이름
 	private String pro_name;			//프로젝트명
 	private int tu_mem_list;			//담당자받아오는리스트 
+	private List<ProjectUserDTO> partic;
 	
 	public TaskDTO() {
 		super();
@@ -72,6 +76,21 @@ public class TaskDTO {
 		this.task_priority = task_priority;
 	}
 
+	public String getTask_start_date() {
+		return task_start_date;
+	}
+
+	public void setTask_start_date(String task_start_date) {
+		this.task_start_date = task_start_date;
+	}
+
+	public String getTask_end_date() {
+		return task_end_date;
+	}
+
+	public void setTask_end_date(String task_end_date) {
+		this.task_end_date = task_end_date;
+	}
 
 	public int getMem_no() {
 		return mem_no;
@@ -80,7 +99,6 @@ public class TaskDTO {
 	public void setMem_no(int mem_no) {
 		this.mem_no = mem_no;
 	}
-
 
 	public int getCont_no() {
 		return cont_no;
@@ -130,24 +148,6 @@ public class TaskDTO {
 		this.pro_no = pro_no;
 	}
 
-	
-
-	public String getTask_start_date() {
-		return task_start_date;
-	}
-
-	public void setTask_start_date(String task_start_date) {
-		this.task_start_date = task_start_date;
-	}
-
-	public String getTask_end_date() {
-		return task_end_date;
-	}
-
-	public void setTask_end_date(String task_end_date) {
-		this.task_end_date = task_end_date;
-	}
-
 	public String getMem_email() {
 		return mem_email;
 	}
@@ -171,8 +171,6 @@ public class TaskDTO {
 	public void setPro_name(String pro_name) {
 		this.pro_name = pro_name;
 	}
-	
-	
 
 	public int getTu_mem_list() {
 		return tu_mem_list;
@@ -182,10 +180,18 @@ public class TaskDTO {
 		this.tu_mem_list = tu_mem_list;
 	}
 
+	public List<ProjectUserDTO> getPartic() {
+		return partic;
+	}
+
+	public void setPartic(List<ProjectUserDTO> partic) {
+		this.partic = partic;
+	}
+
 	public TaskDTO(int task_no, String task_title, String task_content, String task_state, String task_priority,
 			String task_start_date, String task_end_date, int mem_no, int cont_no, String cont_kind, int tim_no,
 			String tim_cont, Date tim_date, int pro_no, String mem_email, String mem_name, String pro_name,
-			int tu_mem_list) {
+			int tu_mem_list, List<ProjectUserDTO> partic) {
 		super();
 		this.task_no = task_no;
 		this.task_title = task_title;
@@ -205,12 +211,8 @@ public class TaskDTO {
 		this.mem_name = mem_name;
 		this.pro_name = pro_name;
 		this.tu_mem_list = tu_mem_list;
+		this.partic = partic;
 	}
 
-
-	
-
-	
-	
-	
+		
 }

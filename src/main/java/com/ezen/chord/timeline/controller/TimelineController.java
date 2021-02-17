@@ -44,7 +44,7 @@ public class TimelineController {
 	
 	@RequestMapping("/timeLine.do")
 	@ResponseBody
-	public ModelAndView getTimeline(int pro_no,String pro_name,HttpSession sess) {
+	public ModelAndView getTimeline(int pro_no,String pro_name,HttpSession sess,SchdDTO schdDTO) {
 		ModelAndView mav = new ModelAndView();
 		int mem_no = (int)(sess.getAttribute("memNo"));
 		int com_no = (int)(sess.getAttribute("comNo"));
@@ -72,10 +72,14 @@ public class TimelineController {
 				break;
 			case "task":
 				list.get(i).setTaskDTO(timService.getTask(list.get(i).getCont_no()));
+				
+				
+				
 				break;
 				
 			case "schd":
 				list.get(i).setSchdDTO(schdService.getSchdOne(list.get(i).getCont_no()));
+				System.out.println(list.get(i).getSchdDTO().partic.size());
 				break;
 			case "todo":
 				list.get(i).setTodoDTO(null);
@@ -83,6 +87,7 @@ public class TimelineController {
 				break;
 			}
 		}
+		
 		
 		mav.addObject("list", list);
 		mav.addObject("mem_no", mem_no);
@@ -134,13 +139,14 @@ public class TimelineController {
 	public String insertTimWithTask(TimelineDTO timDTO ,
 							FilesDTO filesDTO ,
 							TaskDTO taskDTO,
-							@RequestParam("tu_mem_list")List<Integer> tu_mem_list,
+							@RequestParam(value="tu_mem_list",defaultValue = "1")List<Integer> tu_mem_list,
 							@RequestParam("articleFile")List<MultipartFile> files,
 							HttpServletRequest request) {
 		
 		HttpSession sess=request.getSession();
 		int mem_no = (Integer) sess.getAttribute("memNo");
 		int task_no = taskService.getTaskSeq();
+		
 		
 		String serv =request.getSession().getServletContext().getRealPath("/");
 		int tim_no = timService.getTimSeq();
@@ -173,18 +179,19 @@ public class TimelineController {
 		/*task테이블관련*/
 		int resultTask = taskService.insertTaskService(taskDTO);
 		
-
 		/*시작,마감일*/
 		int resultTaskDate = taskService.insertTaskDateService(taskDTO);
-		/*타임라인관련*/
-		// int resultTaskTim = taskService.insertTaskTimService(taskDTO);
 		
+		if(tu_mem_list.get(0) == 1) {
+			
+		}else {
 		for(int i = 0 ; i < tu_mem_list.size() ; i++) {
 			System.out.println(tu_mem_list.get(i));
 			taskDTO.setTu_mem_list(tu_mem_list.get(i));
 			/*parti테이블관련(담당자)*/
 			taskService.insertTaskPiService(taskDTO);
 			
+		}
 		}
 		
 		
@@ -197,8 +204,9 @@ public class TimelineController {
 	@RequestMapping("/insertTimWithSchd.do")
 	public String insertTimWithSchd(
 							SchdDTO schdDTO,
+							
 							@RequestParam(value = "datetime",defaultValue = "")String datetime,
-							@RequestParam("tu_mem_list")List<Integer> tu_mem_list,
+							@RequestParam(value = "tu_mem_list",defaultValue = "1")List<Integer> tu_mem_list,
 							@RequestParam(value = "pro_no",defaultValue = "1")int pro_no,
 							@RequestParam(value = "mem_no",defaultValue = "1")int mem_no ) {
 		
@@ -209,6 +217,7 @@ public class TimelineController {
 		schdDTO.setCont_no(schd_no);
 		schdDTO.setPro_no(pro_no);
 		
+		
 		String start=datetime.substring(0,16);
 		String end=datetime.substring(21,37);
 	
@@ -216,9 +225,13 @@ public class TimelineController {
 		schdService.insertTime(schdDTO, start, end);
 		schdService.insertTimeLine(schdDTO);
 		
-		for(int i=0;i<tu_mem_list.size();i++) {
-			schdDTO.setMem_no(tu_mem_list.get(i));
-			schdService.insertParti(schdDTO); 
+		if(tu_mem_list.get(0)==1) {
+			
+		}else {
+			for(int i=0;i<tu_mem_list.size();i++) {
+				schdDTO.setMem_no(tu_mem_list.get(i));
+				schdService.insertParti(schdDTO); 
+			}
 		}
 		
 		return "redirect:/timeLine.do?pro_no="+pro_no+"&mem_no="+mem_no;

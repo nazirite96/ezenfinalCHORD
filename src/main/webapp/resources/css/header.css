@@ -28,7 +28,7 @@
    display: none;
 }
 
-.private-content {
+.private-content, .public-content {
    font-size: 14px;
    padding-left: 12px;
    width: 215px;
@@ -38,20 +38,20 @@
    text-overflow: ellipsis;
 }
 
-.private-box {
+.private-box, .public-box {
    width: 100%;
    height: 85px;
    border-bottom: 1px solid #eaeaea;
    clear: both;
 }
 
-.private-img {
+.private-img, .public-img{
    width: 74px;
    height: 100%;
    float: left;
 }
 
-.private-img img {
+.private-img img, .public-img img{
    display: block;
    width: 74%;
    height: 65%;
@@ -66,7 +66,7 @@
    float: left;
 }
 
-.chatroom_ing .private-name {
+.chatroom_ing .private-name, .public-name {
    font-weight: bold;
    padding: 8px 30px 5px 30px;
    float: left;
@@ -88,15 +88,24 @@
    display: none;
 }
 
-.private-writedate {
+.private-writedate, .public-writedate{
    color: #949494;
    font-size: 12px;
    float: right;
    padding-right: 14px;
 }
 
-.private-unread {
-   
+.private-unread, .public-unread {
+   color: white;
+   font-weight: bold;
+   float: right;
+   margin: -19px;
+   background-color: red;
+   display: block;
+   width: 19px;
+   text-align: center;
+   border-radius: 9px;
+   font-size: 10px;
 }
 
 .modal-dialog-aside {

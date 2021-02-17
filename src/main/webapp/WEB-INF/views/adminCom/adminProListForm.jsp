@@ -60,6 +60,11 @@
 								</tr>
 							</c:forEach>
 						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="4" align="center">${pageStr }</td>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 			<!-- ***************************************************** -->	

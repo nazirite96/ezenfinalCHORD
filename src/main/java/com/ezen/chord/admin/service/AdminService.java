@@ -28,9 +28,10 @@ public interface AdminService {
 	
 	
 	/*회사관리자_프로젝트 리스트*/
-	public List<Map<String, Object>> adminProjectListService(int com_no);
+	public List<Map<String, Object>> adminProjectListService(int cp,int ls,int com_no);
 	public List<Map<String, Object>> adminProContentsService(int pro_no);
 	public List<Map<String, Object>> adminProInfoService(int pro_no);
 	
+	public int adminTotalCntService(int com_no);	
 	
 }

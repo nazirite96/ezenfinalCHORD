@@ -76,7 +76,7 @@ public class SchdController {
 		String start=null;
 		String end=null;
 		
-		if(datetime.length()+12==defaultDate.length()||datetime.length()+10==defaultDate.length()) {
+		if(datetime.length()+12==defaultDate.length()) {
 			 start=datetime.substring(0,16);
 			 end=datetime.substring(21,37);
 		}else {

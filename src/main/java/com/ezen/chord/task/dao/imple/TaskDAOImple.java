@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ezen.chord.project_user.dto.ProjectUserDTO;
 import com.ezen.chord.task.dao.TaskDAO;
 import com.ezen.chord.task.dto.TaskDTO;
 
@@ -131,6 +132,9 @@ public class TaskDAOImple implements TaskDAO {
 	@Override
 	public TaskDTO getTaskDTO(int task_no) {
 		TaskDTO result = sqlMap.selectOne("selectTaskByNo", task_no);
+		List<ProjectUserDTO> partic = tu_mem_list(task_no);
+		
+		result.setPartic(partic);
 		
 		return result;
 	}
@@ -139,6 +143,12 @@ public class TaskDAOImple implements TaskDAO {
 	public int deleteTaskUserDAO(int cont_no) {
 		// TODO Auto-generated method stub
 		return sqlMap.delete("deleteTaskUserR", cont_no);
+	}
+	
+	@Override
+	public List<ProjectUserDTO> tu_mem_list(int task_no) {
+		List<ProjectUserDTO> partic = sqlMap.selectList("selectTaskPiByNo", task_no);
+		return partic;
 	}
 
 }

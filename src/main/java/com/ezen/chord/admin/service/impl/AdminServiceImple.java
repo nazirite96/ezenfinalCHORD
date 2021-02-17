@@ -97,8 +97,8 @@ public class AdminServiceImple implements AdminService {
 	
 	/*회사 관리자_프로젝트 리스트*/
 	@Override
-	public List<Map<String, Object>> adminProjectListService(int com_no) {
-		List<Map<String, Object>> list = adao.adminProjectListDAO(com_no);
+	public List<Map<String, Object>> adminProjectListService(int cp,int ls,int com_no) {
+		List<Map<String, Object>> list = adao.adminProjectListDAO(cp,ls,com_no);
 		return list;
 	}
 	
@@ -115,6 +115,12 @@ public class AdminServiceImple implements AdminService {
 	public List<Map<String, Object>> adminProInfoService(int pro_no) {
 		List<Map<String, Object>> list = adao.adminProInfoDAO(pro_no);
 		return list;
+	}
+	
+	@Override
+	public int adminTotalCntService(int com_no) {
+		int result = adao.adminTotalCntDAO(com_no);
+		return result;
 	}
 
 }

@@ -1,0 +1,169 @@
+@charset "UTF-8";
+
+ul {
+   padding: 0;
+}
+
+li {
+   list-style: none;
+   padding: 8px;
+   margin: 12px 0;
+}
+
+body {
+   overflow: hidden;
+}
+
+.custom-container {
+   height: 100vh;
+   display: flex;
+   flex-direction: column;
+}
+
+.header {
+   position: fixed;
+   top: 0;
+   width: 100%;
+   height: 68px;
+   background: linear-gradient(to left, #b0ceff, #7b9acc);
+}
+
+.room-title {
+   font-size: 24px;
+   margin: 15px 35px;
+   float: left;
+   color: white;
+   font-weight: bold;
+}
+
+.button-menu {
+   margin: 8px 10px;
+   padding: 0 8px 6px 8px;
+   float: right;
+   font-size: 30px;
+}
+
+.content {
+   margin-top: 68px;
+   padding: 10px 30px;
+   background-color: #f7fbff;
+   width: 100%;
+   overflow: auto;
+   height: 100%;
+}
+
+.footer {
+   background-color: #7b9acc;
+}
+
+.input-wrapper {
+   float: left;
+   width: 100%;
+   margin: 10px -130px 5px 10px;
+   padding-right: 140px;
+   box-sizing: border-box;
+}
+
+.content-input {
+   width: 100%;
+   height: 98px;
+   border-color: #e6e6e6;
+   resize: none;
+}
+
+.button-wrapper {
+   float: right;
+   margin: 10px 10px 0 0;
+   width: 110px;
+}
+
+.button-input {
+   width: 100%;
+   height: 98px;
+}
+
+.modal .modal-dialog-aside {
+   width: 280px;
+   max-width: 80%;
+   height: 100%;
+   margin: 0;
+   transform: translate(0);
+   transition: transform .2s;
+}
+
+.modal .modal-dialog-aside .modal-content {
+   height: inherit;
+   border: 0;
+   border-radius: 0;
+}
+
+.modal .modal-dialog-aside .modal-content .modal-body {
+   overflow-y: auto
+}
+
+.modal.fixed-left .modal-dialog-aside {
+   margin-left: auto;
+   transform: translateX(100%);
+}
+
+.modal.fixed-right .modal-dialog-aside {
+   margin-right: auto;
+   transform: translateX(-100%);
+}
+
+.modal.show .modal-dialog-aside {
+   transform: translateX(0);
+}
+
+.mymsg {
+   clear: both;
+   float: right;
+}
+
+.mymsg>.mymsg-name {
+   display: none;
+}
+
+.mymsg-box {
+   text-align: right;
+   background-color: yellow;
+   padding: 10px 12px;
+   border-radius: 20px;
+   box-shadow: 1px 3px 2px 1px #adacac;
+   font-family: 'Gamja Flower', cursive;
+}
+
+.mymsg-date {
+   margin: 3px 8px;
+   float: right;
+}
+
+.yourmsg-date {
+   margin: 3px 8px;
+   float: left;
+}
+
+.deleteBtn {
+   margin: 4px 0;
+   float: right;
+   cursor: pointer;
+}
+
+.allDeleteBtn {
+   margin: 0 40px;
+   font-size: 20px;
+}
+
+.yourmsg {
+   clear: both;
+   float: left;
+}
+
+.yourmsg-box {
+   text-align: left;
+   background-color: white;
+   padding: 10px 12px;
+   border-radius: 20px;
+   box-shadow: 1px 3px 2px 1px #adacac;
+   font-family: 'Gamja Flower', cursive;
+}

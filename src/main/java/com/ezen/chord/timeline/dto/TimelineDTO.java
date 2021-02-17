@@ -26,7 +26,7 @@ public class TimelineDTO {
 		this.coll_chk = coll_chk;
 	}
 	private TaskDTO taskDTO;		//task
-	private SchdDTO SchdDTO;
+	private SchdDTO schdDTO;
 	public  TodoDTO todoDTO;
 	
 	
@@ -46,10 +46,10 @@ public class TimelineDTO {
 	
 	
 	public SchdDTO getSchdDTO() {
-		return SchdDTO;
+		return schdDTO;
 	}
 	public void setSchdDTO(SchdDTO schdDTO) {
-		SchdDTO = schdDTO;
+		this.schdDTO = schdDTO;
 	}
 	public TaskDTO getTaskDTO() {
 		return taskDTO;

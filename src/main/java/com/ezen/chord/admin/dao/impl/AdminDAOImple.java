@@ -147,11 +147,19 @@ public class AdminDAOImple implements AdminDAO {
 
 	/*회사관리자_프로젝트 리스트*/
 	@Override
-	public List<Map<String, Object>> adminProjectListDAO(int com_no) {
+	public List<Map<String, Object>> adminProjectListDAO(int cp,int ls,int com_no) {
+		
+		int start = (cp-1)*ls+1;
+		int end = cp*ls;
+		
+		Map map = new HashMap();
+		map.put("com_no", com_no);
+		map.put("start", start);
+		map.put("end", end);		
 		
 		List<Map<String, Object>> list = null;
 		try {
-			list = sqlMap.selectList("chord.admin.admin_projectList",com_no);
+			list = sqlMap.selectList("chord.admin.admin_projectList",map);
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
 		}
@@ -183,6 +191,12 @@ public class AdminDAOImple implements AdminDAO {
 		return list;
 	}
 	
+	/*페이지네이션을 위한 count*/
+	@Override
+	public int adminTotalCntDAO(int com_no) {
+		int result = sqlMap.selectOne("chord.admin.admin_pageTotalCnt",com_no);
+		return result;
+	}
 
 	
 }

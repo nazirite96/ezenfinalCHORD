@@ -1,5 +1,6 @@
 package com.ezen.chord.task.dao;
 
+import com.ezen.chord.project_user.dto.ProjectUserDTO;
 import com.ezen.chord.task.dto.TaskDTO;
 import java.util.*;
 
@@ -48,5 +49,7 @@ public interface TaskDAO {
 	public int deleteTaskUserDAO(int cont_no);
 	
 	public TaskDTO getTaskDTO(int task_no);
+	
+	public List<ProjectUserDTO> tu_mem_list(int task_no);
 	
 }
