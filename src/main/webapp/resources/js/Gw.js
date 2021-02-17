@@ -23,48 +23,6 @@ function alertCustom(text, className){
 
 $(function() {
 
-	// 중요프로젝트 체크(icon click)
-	$(".pro-tit > i").on("click", function() {
-		if ($(this).hasClass("color-gray-l")) {
-			$(this).removeClass("color-gray-l");
-			$(this).addClass("color-yellow");
-
-			var pro_no = $(this).data("prono");
-
-			$.ajax({
-
-				url: "imp/insert",
-				method: "get",
-				data: { pro_no: pro_no },
-				dataType: "json",
-				success: function(data) {
-					if (data == 1) {
-						alertCustom("변경되었습니다.", "alert-warning");
-					}
-				}
-			});
-
-		} else {
-			$(this).removeClass("color-yellow");
-			$(this).addClass("color-gray-l");
-
-			var pro_no = $(this).data("prono");
-
-			$.ajax({
-
-				url: "imp/delete",
-				method: "get",
-				data: { pro_no: pro_no },
-				dataType: "json",
-				success: function(data) {
-					if (data == 1) {
-						alertCustom("변경되었습니다.", "alert-warning");
-					}
-				}
-			});
-		}
-	});
-
 	// check color : 현재 프로젝트 색상과 같은 색상리스트를 찾아 체크표시
 	var backColor = $("#proTitle").attr("class").split(' ').pop(); // 현재 적용된 색상명(클래스명)
 	$(".edit-color-box").find("div").each(function(i, e) {

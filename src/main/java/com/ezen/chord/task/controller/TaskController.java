@@ -77,7 +77,7 @@ public class TaskController {
 		List<TaskDTO> taskList = taskService.selectAllTask();
 		mav.addObject("taskList", taskList);
 		
-		List<TimelineDTO> list = timService.getTimelineByProNo(pro_no, page);
+		List<TimelineDTO> list = timService.getTimelineByProNo(pro_no, page,mem_no);
 		mav.addObject("list", list);
 		mav.addObject("mem_no", mem_no);
 		mav.setViewName("task/taskTest_1");

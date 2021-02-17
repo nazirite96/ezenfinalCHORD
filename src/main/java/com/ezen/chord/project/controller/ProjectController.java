@@ -47,7 +47,6 @@ public class ProjectController {
 	@RequestMapping("/proList.do")
 	public ModelAndView getProList(int mem_no,HttpSession session) {
 		
-		
 		ModelAndView mav = new ModelAndView();
 		List<ProjectUserDTO> proList = proService.getProAllList(mem_no);
 		mav.addObject("mem_no", mem_no);

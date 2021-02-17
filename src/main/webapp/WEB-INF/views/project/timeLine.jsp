@@ -2486,9 +2486,9 @@ $(function(){
 		
 		// project import check(main page)
 		$(".check-import").on("click", function(){
-			if($(this).children("svg").hasClass("color-gray-l")){
-				$(this).children("svg").removeClass("color-gray-l");
-				$(this).children("svg").addClass("color-yellow");				
+			if($(this).children("i").hasClass("color-gray-l")){
+				$(this).children("i").removeClass("color-gray-l");
+				$(this).children("i").addClass("color-yellow");				
 				
 				var pro_no = $(this).data("prono");	
 				var box_no = $(this).data("boxno");
@@ -2504,8 +2504,8 @@ $(function(){
 					}
 				});
 			} else {
-				$(this).children("svg").removeClass("color-yellow");
-				$(this).children("svg").addClass("color-gray-l");
+				$(this).children("i").removeClass("color-yellow");
+				$(this).children("i").addClass("color-gray-l");
 				
 				var pro_no = $(this).data("prono");			
 				var box_no = $(this).data("boxno");
