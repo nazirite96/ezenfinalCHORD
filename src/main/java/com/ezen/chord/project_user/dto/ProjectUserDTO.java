@@ -16,6 +16,7 @@ public class ProjectUserDTO {
 	
 	private int imp_chk;			//중요 체크
 	private int cont_no;
+	private String mem_name;
 	
 	
 	public ProjectUserDTO() {
