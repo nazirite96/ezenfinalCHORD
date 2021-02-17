@@ -29,7 +29,7 @@
 	<!--  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script> -->
-	<script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- <script src="../assets/dist/js/bootstrap.bundle.min.js"></script> -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
@@ -106,9 +106,14 @@
     border-bottom-color: #555;
 }
 
+.navbar-nav #modal-chatList{
+	margin:8px auto;
+}
+
 </style>
 </head>
 <body>
+<header>
 	<c:set var="sessionMemNo" value="${sessionScope.memNo}"></c:set>
 	<c:set var="sessionName" value="${sessionScope.name}"></c:set>
 	<c:set var="sessionGrade" value="${sessionScope.grade }"></c:set>
@@ -243,7 +248,7 @@
 					</button>
 				<div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
 					<ul class="navbar-nav">
-						<li class="nav-item nav-link text-nowrap ">
+						<li class="nav-item nav-link text-nowrap " style="margin-left:1050px;">
 							<a class="nav-link float-right" href="memJoinForm.do">회원가입</a></li>
 					 	<li class="nav-item nav-link text-nowrap ">
 					 		<a class="nav-link float-right" href="loginForm.do">로그인</a></li>	
@@ -515,5 +520,6 @@
         }
 
 	</script>
+</header>
 </body>
 </html>
