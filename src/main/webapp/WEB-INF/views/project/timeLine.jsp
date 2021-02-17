@@ -11,8 +11,6 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-
 <!-- 떠다니는 메뉴 -->
 
 <script type="text/javascript">
@@ -73,23 +71,12 @@
 </style>
 
 <!-- Custom styles for this template -->
-<link href="/chord/resources/css/dashboard.css" rel="stylesheet">
-	<!-- custom -->
-	<link href="<%=request.getContextPath()%>/resources/css/JeCss2.css"
-		rel="stylesheet" type="text/css">
-	<link href="<%=request.getContextPath()%>/resources/css/JeCss.css"
-		rel="stylesheet" type="text/css">
-	
 	
 	<link rel="stylesheet" href="/chord/resources/css/style_margin.css">
 	<link rel="stylesheet" href="/chord/resources/css/style_padding.css">
-	
-	
 	<!-- Air datepicker css -->
-	<link
-		href="<%=request.getContextPath()%>/resources/css/datepicker.min.css"
-		rel="stylesheet" type="text/css" media="all">	
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+	<link href="<%=request.getContextPath()%>/resources/css/datepicker.min.css" rel="stylesheet" type="text/css" media="all">	
+	
 	
 	
 	<!-- Air datepicker css -->
@@ -113,37 +100,18 @@
 		});
 	});
 </script>
-
+<script src="https://unpkg.com/feather-icons"></script>
 	
-
-	<!-- icon  -->
-	<script src="https://kit.fontawesome.com/1a984316ef.js" crossorigin="anonymous"></script>
 
 	<!-- taksFilesjs -->
 	<script type="text/javascript" src="/chord/resources/js/taksFiles.js"></script>
-
-
 	<!-- Air datepicker js -->
 	<script src="<%=request.getContextPath()%>/resources/js/datepicker.js"></script>
 	<!-- 달력 한글 추가를 위해 커스텀 -->
-	<script
-		src="<%=request.getContextPath()%>/resources/js/datepicker.ko.js"></script>
-	<!-- fontawesome -->
-	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-	<!-- font-awesome CSS -->
-	
+	<script src="<%=request.getContextPath()%>/resources/js/datepicker.ko.js"></script>
 	<!-- textArea 자동 높이 설정 -->
-	<script
-		src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
-	
+	<script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
 	<!-- sungtak -->
-
-	<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
-	<script
-		src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
-
-	
-	
 	<script>
 function submitgogo(){
 	var schd_date = $('#schdtime').val();
@@ -180,8 +148,7 @@ function submitgogo(){
 										data-feather="star"></span>중요</a></li>
 							</c:if>
 						</c:forEach>
-						<h1
-							class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+						<h1 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
 							<span>collection</span><a
 								class="d-flex align-items-center text-muted" href="#"
 								aria-label="Add a new report"></a>
@@ -192,7 +159,7 @@ function submitgogo(){
 								data-feather="bar-chart-2"></span>전체일정</a></li>
 						<li class="nav-item"><a class="nav-link" href="#"><span
 								data-feather="layers"></span>전체파일</a></li>
-						<li class="nav-item"><a class="nav-link" href="#"><span
+						<li class="nav-item"><a class="nav-link" href="collection.do"><span
 								data-feather="layers"></span>담아둔글</a></li>
 						<li class="nav-item"><a class="nav-link" href="#"><span
 								data-feather="layers"></span>내 게시글</a></li>
@@ -1935,15 +1902,15 @@ function submitgogo(){
 												<li class="cursor-point" onclick="fn_commentFocus(this)"><i
 													class="fas fa-comment-alt maright-10"></i> 댓글작성</li>
 												<c:choose>
-													<c:when test="${timeLine.coll_chk != 0 }">
+													<c:when test="${dto.coll_chk != dto.tim_no}">
 														<li class="cursor-point coll-btn"
-															data-collno="${timeLine.coll_chk }"><i
+															data-prono="${proUserDTO.pro_no }" data-memno="${memNo }"><i
 															class="fas fa-bookmark maright-10"></i><span>담아두기</span></li>
 													</c:when>
 													<c:otherwise>
-														<li class="cursor-point coll-btn"
-															data-collno="${timeLine.coll_chk }"><i
-															class="fas fa-bookmark maright-10 default-color"></i> <span>담아두기 취소</span></li>
+														<li class="cursor-point coll-btn  default-color"
+															data-prono="${proUserDTO.pro_no }" data-memno="${memNo }"><i
+															class="fas fa-bookmark maright-10"></i> <span>담아두기 취소</span></li>
 													</c:otherwise>
 												</c:choose>
 
@@ -2577,16 +2544,16 @@ $(function(){
 	</script>
 	<!-- gwjs -->
 	<script type="text/javascript" src="/chord/resources/js/Gw.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 		integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
 		crossorigin="anonymous"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
 		integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
 		crossorigin="anonymous"></script>
-		<script src="/chord/resources/js/dashboard.js"></script>
 		<!-- jjpicker -->
 		<script type="text/javascript" src="/chord/resources/js/jjpicker.js"></script>
+		<script>
+			feather.replace()
+		</script>
 </body>
 </html>

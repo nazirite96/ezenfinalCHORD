@@ -241,7 +241,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 }
 
 @media screen and (min-width:1301px) {
-	.content {padding-left:125px;padding-right:125px}
+	.content {padding-left:0px;padding-right:50px}
 	.content.main .col-xs-12, .content.main .col-sm-6,
 	.content.main .col-md-3, .content.main .col-lg-2 {padding:0 .5%}
 	.content.main .col-md-3,
