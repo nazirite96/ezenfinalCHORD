@@ -14,31 +14,31 @@
 <!-- 떠다니는 메뉴 -->
 
 <script type="text/javascript">
- var stmnLEFT = 10; // 오른쪽 여백 
- var stmnGAP1 = 0; // 위쪽 여백 
- var stmnGAP2 = 50; // 스크롤시 브라우저 위쪽과 떨어지는 거리 
- var stmnBASE = 50; // 스크롤 시작위치 
- var stmnActivateSpeed = 35; //스크롤을 인식하는 딜레이 (숫자가 클수록 느리게 인식)
- var stmnScrollSpeed = 20; //스크롤 속도 (클수록 느림)
- var stmnTimer; 
- 
- function RefreshStaticMenu() { 
-  var stmnStartPoint, stmnEndPoint; 
-  stmnStartPoint = parseInt(document.getElementById('STATICMENU').style.top, 10); 
-  stmnEndPoint = Math.max(document.documentElement.scrollTop, document.body.scrollTop) + stmnGAP2; 
-  if (stmnEndPoint < stmnGAP1) stmnEndPoint = stmnGAP1; 
-  if (stmnStartPoint != stmnEndPoint) { 
-   stmnScrollAmount = Math.ceil( Math.abs( stmnEndPoint - stmnStartPoint ) / 15 ); 
-   document.getElementById('STATICMENU').style.top = parseInt(document.getElementById('STATICMENU').style.top, 10) + ( ( stmnEndPoint<stmnStartPoint ) ? -stmnScrollAmount : stmnScrollAmount ) + 'px'; 
-   stmnRefreshTimer = stmnScrollSpeed; 
-   }
-  stmnTimer = setTimeout("RefreshStaticMenu();", stmnActivateSpeed); 
-  } 
- function InitializeStaticMenu() {
-  document.getElementById('STATICMENU').style.right = stmnLEFT + 'px';  //처음에 오른쪽에 위치. left로 바꿔도.
-  document.getElementById('STATICMENU').style.top = document.body.scrollTop + stmnBASE + 'px'; 
-  RefreshStaticMenu();
+var stmnLEFT = 10; // 오른쪽 여백 
+var stmnGAP1 = 0; // 위쪽 여백 
+var stmnGAP2 = 50; // 스크롤시 브라우저 위쪽과 떨어지는 거리 
+var stmnBASE = 50; // 스크롤 시작위치 
+var stmnActivateSpeed = 35; //스크롤을 인식하는 딜레이 (숫자가 클수록 느리게 인식)
+var stmnScrollSpeed = 20; //스크롤 속도 (클수록 느림)
+var stmnTimer; 
+
+function RefreshStaticMenu() { 
+ var stmnStartPoint, stmnEndPoint; 
+ stmnStartPoint = parseInt(document.getElementById('STATICMENU').style.top, 10); 
+ stmnEndPoint = Math.max(document.documentElement.scrollTop, document.body.scrollTop) + stmnGAP2; 
+ if (stmnEndPoint < stmnGAP1) stmnEndPoint = stmnGAP1; 
+ if (stmnStartPoint != stmnEndPoint) { 
+  stmnScrollAmount = Math.round( Math.abs( stmnEndPoint - stmnStartPoint ) / 15 ); 
+  document.getElementById('STATICMENU').style.top = parseInt(document.getElementById('STATICMENU').style.top, 10) + ( ( stmnEndPoint<stmnStartPoint ) ? -stmnScrollAmount : stmnScrollAmount ) + 'px'; 
+  stmnRefreshTimer = stmnScrollSpeed; 
   }
+ stmnTimer = setTimeout("RefreshStaticMenu();", stmnActivateSpeed); 
+ } 
+function InitializeStaticMenu() {
+ document.getElementById('STATICMENU').style.right = stmnLEFT + 'px';  //처음에 오른쪽에 위치. left로 바꿔도.
+ document.getElementById('STATICMENU').style.top = document.body.scrollTop + stmnBASE + 'px'; 
+ RefreshStaticMenu();
+ }
 </script>
 
 <style type="text/css">
@@ -124,69 +124,7 @@ function submitgogo(){
 </script>
 	<div class="container-fluid">
 		<div class="row">
-			<nav id="sidebarMenu" style="z-index: 2"
-				class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-				<div class="sidebar-sticky pt-3">
-					<ul class="nav flex-column">
-						<li class="nav-item"><a class="nav-link active" href="#">
-								<span data-feather="home"></span> 목록보기<span class="sr-only">(current)</span>
-						</a>
-							<h1
-								class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-								<span>project</span> <a
-									class="d-flex align-items-center text-muted" href="#"
-									aria-label="Add a new report"> 
-								</a>
-							</h1></li>
-						<li class="nav-item"><a class="nav-link"
-							href="proList.do?mem_no=${memNo }"><span data-feather="file"></span>전체</a></li>
-						<c:forEach items="${boxList }" var="dto">
-							<c:if test="${ dto.box_name eq '중요' }">
-								<c:set var="imp_no" value="${dto.box_no }" />
-								<li class="nav-item"><a class="nav-link"
-									href="seperateList.do?box_no=${dto.box_no }&mem_no=${memNo}"><span
-										data-feather="star"></span>중요</a></li>
-							</c:if>
-						</c:forEach>
-						<h1 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-							<span>collection</span><a
-								class="d-flex align-items-center text-muted" href="#"
-								aria-label="Add a new report"></a>
-						</h1>
-						<li class="nav-item"><a class="nav-link" href="#"><span
-								data-feather="users"></span>전체업무</a></li>
-						<li class="nav-item"><a class="nav-link" href="#"><span
-								data-feather="bar-chart-2"></span>전체일정</a></li>
-						<li class="nav-item"><a class="nav-link" href="#"><span
-								data-feather="layers"></span>전체파일</a></li>
-						<li class="nav-item"><a class="nav-link" href="collection.do"><span
-								data-feather="layers"></span>담아둔글</a></li>
-						<li class="nav-item"><a class="nav-link" href="#"><span
-								data-feather="layers"></span>내 게시글</a></li>
-					</ul>
-
-					<h1
-						class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-						<span>Saved reports</span><a
-							class="d-flex align-items-center text-muted" href="#"
-							aria-label="Add a new report"> 
-						</a>
-					</h1>
-					<ul class="nav flex-column mb-2">
-						<c:forEach items="${boxList }" var="dto">
-							<c:if test="${dto.box_name != '중요' }">
-								<li class="nav-item" style="height: 35px;"><a
-									class="nav-link col-lg-10 col-md-10"
-									href="seperateList.do?box_no=${dto.box_no }&mem_no=${memNo}"
-									style="display: inline-block;"> <span data-feather="box"></span>
-										${dto.box_name }
-								</a> <a href="#deleteFolder" class="folder-delete cursor-point" data-boxno="${dto.box_no}"><span data-feather="minus-circle"></span></a></li>
-							</c:if>
-						</c:forEach>
-					</ul>
-				</div>
-			</nav>
-
+			<%@ include file="../sidebarMenu.jsp" %>
 			<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 				<div
 					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -230,10 +168,8 @@ function submitgogo(){
 								</div>
 
 								<ul class="pro-edit-nav">
-									<li><i
-										class="fas fa-palette size-30 color-white cursor-point edit-color-btn"
-										onclick="fn_editColor(this)"></i>
-										<div class="edit-box edit-color-box"
+									<li><i class="fas fa-palette size-30 color-white cursor-point edit-color-btn"
+										onclick="fn_editColor(this)"></i> <div class="edit-box edit-color-box"
 											data-prono="${proUserDTO.pro_no}"
 											data-memno="${proUserDTO.mem_no }">
 											<div class="color-sample default-back-color">
@@ -277,15 +213,14 @@ function submitgogo(){
 											</div>
 										</div></li>
 									<li>
-										<button id="projectEdit" type="button" data-toggle="dropdown"
-											aria-haspopup="true" aria-expanded="false">
-											<i class="fas fa-ellipsis-v size-30 color-white"></i>
-										</button>
-										<ul class="dropdown-menu" role="menu"
-											aria-labelledby="projectEdit">
-											<li class="drop-tit">프로젝트 설정</li>
-											<li class="cursor-point" onclick="boxProEdit()">보관함 설정</li>
-											<li class="cursor-point" onclick="deleteProUser()">프로젝트
+										<div class="dropdown">
+										  <button class="projectEdit" type="button" id="projectEdit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										    <i class="fas fa-ellipsis-v size-30 color-white"></i>
+										  </button>
+										  <ul class="dropdown-menu" role="menu" aria-labelledby="projectEdit">
+											<li class="dropdown-item drop-tit">프로젝트 설정</li>
+											<li class="dropdown-item cursor-point" onclick="boxProEdit()">보관함 설정</li>
+											<li class="dropdown-item cursor-point" onclick="deleteProUser()">프로젝트
 												나가기</li>
 											<c:choose>
 												<c:when test="${proUserDTO.pro_user_man_chk eq 'manager' }">
@@ -295,6 +230,9 @@ function submitgogo(){
 												</c:when>
 											</c:choose>
 										</ul>
+										  
+										  
+										</div>
 									</li>
 								</ul>
 							</div>
@@ -340,12 +278,6 @@ function submitgogo(){
 															name="articleFile"
 															class="dis-none upload-hidden uploadInputFile">
 
-														<!-- 이미지첨부  -->
-														<label for="article-img"
-															class="float-left marbtm-0 font-thin size-18"> <i
-															class="fas fa-camera maright-10"></i>이미지첨부
-														</label> <input type="file" id="article-img" name="imageFile"
-															class="dis-none" accept="image/*">
 
 														<!-- 올리기(submit) 버튼 -->
 														<input type="button" value="올리기" onclick="uploadFile()"
@@ -528,13 +460,6 @@ function submitgogo(){
 														<i class="fas fa-paperclip maright-10"></i>파일첨부
 													</label> <input type="file" id="articleFileTask" name="articleFile"
 														class="dis-none">
-
-													<!-- 이미지첨부 -->
-													<label class="articleImgTask"
-														class="float-left marbtm-0 font-thin size-18"> <i
-														class="fas fa-camera maright-10"></i>이미지첨부
-													</label> <input type="file" id="articleImgTask" name="imageFile"
-														class="dis-none" accept="image/*">
 
 													<!-- 올리기 버튼 -->
 													<input type="submit" value="올리기"
@@ -1615,6 +1540,7 @@ function submitgogo(){
 
 												<!-- 업무글 : finsh -->
 											</c:when>
+											
 											<c:when test="${dto.cont_kind eq 'schd' }">
 												<!-- 스케쥴글 : start -->
 												<div class="timeline-article con-schedule">
@@ -1876,12 +1802,15 @@ function submitgogo(){
 												<!-- 일정 수정:f -->
 												<!-- 스케쥴글 : finsh -->
 											</c:when>
+											
+											
 											<c:when test="${dto.cont_kind eq 'todo' }">
 												<!-- 할일글 : start -->
 
 
 												<!-- 할일글 : finsh -->
 											</c:when>
+											
 										</c:choose>
 									</div>
 									<!-- timeline footer:s -->

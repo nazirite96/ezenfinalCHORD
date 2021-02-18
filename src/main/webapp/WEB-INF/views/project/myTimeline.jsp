@@ -151,7 +151,7 @@ function submitgogo(){
 							<div id="proTitle" class="pro-detail-box project-title default-back-color">
 								<div class="pro-tit check-import">
 											<i class="fas box-ful size-20 color-gray-l maright-15 cursor-point"></i>
-									<span class="size-20 color-white">담아둔 글</span>
+									<span class="size-20 color-white">내 게시글</span>
 								</div>
 							</div>
 																			<script type="text/javascript"

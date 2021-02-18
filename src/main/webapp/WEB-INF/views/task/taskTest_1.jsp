@@ -46,7 +46,7 @@
   stmnEndPoint = Math.max(document.documentElement.scrollTop, document.body.scrollTop) + stmnGAP2; 
   if (stmnEndPoint < stmnGAP1) stmnEndPoint = stmnGAP1; 
   if (stmnStartPoint != stmnEndPoint) { 
-   stmnScrollAmount = Math.ceil( Math.abs( stmnEndPoint - stmnStartPoint ) / 15 ); 
+   stmnScrollAmount = Math.ceil( Math.abs( ((stmnEndPoint - stmnStartPoint )/2)*2) / 2 ); 
    document.getElementById('STATICMENU').style.top = parseInt(document.getElementById('STATICMENU').style.top, 10) + ( ( stmnEndPoint<stmnStartPoint ) ? -stmnScrollAmount : stmnScrollAmount ) + 'px'; 
    stmnRefreshTimer = stmnScrollSpeed; 
    }
