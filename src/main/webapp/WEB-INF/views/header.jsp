@@ -124,10 +124,10 @@
 			<c:set var="whatGrade" value="${sessionGrade}"></c:set>
 			<c:choose>
 				<c:when test="${whatGrade=='web_ses'}">
-					<!-- 사이트 운영자 -->
+					<!-- ***********************사이트 운영자*********************** -->
 					<nav class="navbar navbar-default navbar-expand-lg">
 						<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
-							href="index.do">[ CHORD ]</a>
+							href="index.do"><b>[ CHORD ]</b></a>
 						<button class="navbar-toggler" 
 						  type="button" 
 						  data-toggle="collapse" 
@@ -151,9 +151,9 @@
 					</nav>
 				</c:when>
 				<c:when test="${whatGrade=='com_ses'}">
-				<!-- 회사 관리자 -->
+				<!-- *************************** 회사 관리자 **************************** -->
 					<nav class="navbar navbar-default navbar-expand-lg">
-						<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="index.do">[ CHORD ]</a>
+						<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="proList.do?mem_no=${sessionScope.memNo }">[ CHORD ]</a>
 						  <button class="navbar-toggler" 
 						  type="button" 
 						  data-toggle="collapse" 
@@ -196,8 +196,9 @@
 					</nav>
 				</c:when>
 				<c:otherwise>
+				<!-- **************************** 일반회원 ********************************* -->
 				<nav class="navbar navbar-default navbar-expand-lg">
-					<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="index.do">[ CHORD ]</a>
+					<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="proList.do?mem_no=${sessionScope.memNo }">[ CHORD ]</a>
 						  <button class="navbar-toggler" 
 						  type="button" 
 						  data-toggle="collapse" 
@@ -236,6 +237,7 @@
 			</c:choose>
 		</c:when>
 		<c:otherwise>
+		  
 			<nav class="navbar navbar-default navbar-expand-lg">
 				<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="index.do">[ CHORD ]</a>
 					<button class="navbar-toggler" 
@@ -246,6 +248,7 @@
 						  aria-label="Toggle navigation">
 						  <span class="navbar-toggler-icon"></span>
 					</button>
+		<!--
 				<div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
 					<ul class="navbar-nav">
 						<li class="nav-item nav-link text-nowrap " style="margin-left:1050px;">
@@ -254,7 +257,9 @@
 					 		<a class="nav-link float-right" href="loginForm.do">로그인</a></li>	
 					</ul>
 				</div>
+		-->
 			</nav>
+		
 		</c:otherwise>
 	</c:choose>
 	

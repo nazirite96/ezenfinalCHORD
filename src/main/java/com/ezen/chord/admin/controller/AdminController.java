@@ -214,18 +214,22 @@ public class AdminController {
 	@RequestMapping("/adminMemInfoChange.do")
 	public ModelAndView adminMemInfoChange(Integer com_no,Integer mem_no,Integer mem_info_no,String mem_info_position,String mem_info_dept) {
 		
+		System.out.println(mem_info_no +"/"+ mem_info_dept +"/" +mem_info_position);
+		
 		int info_result = 0;
 		MemberDTO mdto = new MemberDTO();
-		if(mem_info_no==null || mem_info_no==0) {
+		if(mem_info_no==null || mem_info_no==0 || mem_info_no.equals("")) {
 			mdto.setMem_info_position(mem_info_position);
 			mdto.setMem_info_dept(mem_info_dept);
 			mdto.setMem_no(mem_no);
 			
 			info_result = asvc.adminMemInfoInsertService(mdto);//member info insert
+			
 		}else if(mem_info_no!=0 || mem_info_no!=null) {
 			mdto.setMem_info_position(mem_info_position);
 			mdto.setMem_info_dept(mem_info_dept);
 			mdto.setMem_no(mem_no);
+			
 			info_result = asvc.adminMemInfoUpdateService(mdto);//member info update 
 		}
 		
