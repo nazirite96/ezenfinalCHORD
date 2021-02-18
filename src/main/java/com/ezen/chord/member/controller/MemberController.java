@@ -247,7 +247,7 @@ public class MemberController {
 				session.setAttribute("comPwd", comPwd);
 				
 				mav.addObject("msg",userName+"님 환영합니다!");
-				mav.addObject("gopage","index.do");
+				mav.addObject("gopage","proList.do?mem_no="+session.getAttribute("memNo"));
 				
 				
 			}else { // 이메일은 맞지만, 패스워드 틀림

@@ -38,19 +38,18 @@
 	on grade.mem_no = a.mem_no
 	where a.mem_no=#{mem_no}
 </select>
-<insert id="admin_memInfoInsert" parameterType="Integer">
+<insert id="admin_memInfoInsert" parameterType="MemberDTO">
 	insert into member_info values(
 		member_info_seq.nextval,
 		#{mem_no},
 		'',
 		'',
-		#{mem_info_phone},
+		'',
 		#{mem_info_position},
 		#{mem_info_dept})	
 </insert>
-<update id="admin_memInfoUpdate" parameterType="Integer">
+<update id="admin_memInfoUpdate" parameterType="MemberDTO">
 	update member_info set 
-		mem_info_phone=#{mem_info_phone},
 		mem_info_position=#{mem_info_position},
 		mem_info_dept=#{mem_info_dept}
 		where mem_no=#{mem_no}
