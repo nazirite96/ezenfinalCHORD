@@ -1096,8 +1096,8 @@ function submitgogo(){
 																<i class="fas fa-user-clock"></i>
 															</dt>
 															<dd>
-																<input type="hidden" class="edit-confirm" data-taskno="${dto.taskDTO.task_no }">
-																<input type="hidden" class="edit-confirm" data-prono="${dto.pro_no }">
+																<input type="hidden" class="edit-confirm" data-taskno="${dto.taskDTO.task_no }" data-prono="${dto.pro_no }">
+																<input type="hidden" class="edit-confirm" >
 																
 																<div class="task-state-list">
 

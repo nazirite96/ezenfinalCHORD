@@ -46,8 +46,7 @@ span{
 				<span><img alt="planet" src="resources/img/index/planet.png" width="200" height="200"></span>
 			</div>
 			<p class="lead" style="padding:60px;">
-				<a href="loginForm.do" class="btn btn-lg btn-secondary">Learn
-					more</a>
+				<a href="loginForm.do" class="btn btn-lg btn-secondary">LOGIN</a>
 			</p>
 		</main>
 		<footer class="mastfoot mt-auto"> 

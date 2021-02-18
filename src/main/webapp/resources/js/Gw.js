@@ -314,7 +314,7 @@ function fn_editTaskState(el) {
 	
 	// 값 이동
 	layerPopCon.children('form').children("input[name=task_no]").val(task_no);
-	layerPopCon.children('form').children("input[name=test]").val(pro_no);
+	layerPopCon.children('form').children("input[name=pro_no]").val(pro_no);
 	layerPopCon.children('form').children("input[name=task_state]").val(task_state);
 
 	layer_popup(layerPopCon);
