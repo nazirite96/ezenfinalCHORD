@@ -128,14 +128,14 @@ function returnFileSize(number) {
  //단순 보여줄 리스트 추가
  function addFileList(fileIndex,fileName,fileSize){
     var html = '<div class="fileInfo'+fileIndex+'" style="border: 1px solid gray;padding-left: 3%;color: gray;font-size: 16px;padding-bottom: 8px;padding-top: 8px;">'+
-    		'<img src="resources/img/fileicon.png" width="100" height="100">'+
-       fileName+'&nbsp;&nbsp;&nbsp;&nbsp; 크기("'+fileSize+'")"<input type="button" value="X" onclick="deleteFile('+fileIndex+')"></div>';
+    		'<img src="resources/img/fileicon.png" width="40" height="40">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
+       fileName+'&nbsp;&nbsp;&nbsp;&nbsp; 크기("'+fileSize+'")"&nbsp;&nbsp;&nbsp;<input type="button" value="X" onclick="deleteFile('+fileIndex+')"></div>';
      $('#uploadImgForm').append(html);
  }
  //단순 보여줄 이미지 리시트 추가
  function addFileListImg(fileIndex,file){
 	 reader.onload = function(e){
-  		  var html = '<div class="fileInfo'+fileIndex+'">'+'<img src="'+e.target.result+'" width="200" height="200" /><input type="button" value="X" onclick="deleteFile('+fileIndex+')"></div>';
+  		  var html = '<div class="fileInfo'+fileIndex+'">'+'<img src="'+e.target.result+'" width="200" height="120" />&nbsp;&nbsp;&nbsp;<input type="button" value="X" onclick="deleteFile('+fileIndex+')"></div>';
   		     $('#uploadFileForm').append(html);
   		 }
   	 	 reader.readAsDataURL(file);

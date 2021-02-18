@@ -33,4 +33,6 @@ public interface FilesDAO {
 		int log_fileInsert(Map<String, Integer> map);
 		//세션에 올릴 경로들
 		List<String> pathList();
+		//프로젝트 이름 변경시 해당 경로 전부 변경
+		int proDBPath(String original_name,String rename,String whereinfo);
 }

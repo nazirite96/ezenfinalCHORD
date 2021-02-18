@@ -24,6 +24,11 @@
 	    #{cont_kind},#{cont_no},#{mem_no}
 	    )
 	</insert>
+	<insert id="insertPartic" parameterType="map">
+	    insert into participants values(
+	    'schd',#{cont_no},#{partic_no}
+	    )
+	</insert>
 	<insert id="insertSchdulDate" parameterType="SchdDTO">
 		insert all 
 		into time
@@ -119,4 +124,13 @@
 		and time_kind='e'
 		and cont_no=#{cont_no}
 	</update>
+	<delete id="delpartic" parameterType="INTEGER">
+		delete from participants where cont_kind='schd' and cont_no=#{cont_no}
+	</delete>
+	<delete id="delschd" parameterType="INTEGER">
+		delete from schedule where schd_no=#{cont_no}
+	</delete>
+	<delete id="deltime" parameterType="INTEGER">
+		delete from time where cont_kind='schd' and cont_no=#{cont_no}
+	</delete>
 </mapper>

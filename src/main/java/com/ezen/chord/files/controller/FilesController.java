@@ -93,7 +93,7 @@ public class FilesController {
 				}
 			}
 			
-
+			fileSerImp.reProfor("ㅌ", "주구장창",serv);
 			session.setAttribute("pathList", pathList);
 			
 			

@@ -14,6 +14,7 @@ public interface SchdService {
 	int insertSchd(SchdDTO dto);
 	// 참가자 등록하기
 	int insertParti(SchdDTO dto);
+	int insertPartic(int cont_no,int partic_no);
 	// 시간텡리블 등록하기
 	int insertTime(SchdDTO dto,String start,String end);
 	// 타임라인테이블 등록
@@ -34,4 +35,7 @@ public interface SchdService {
 	int updateLocMemo(int schd_no,String schd_loc,String schd_memo);
 	//시간
 	int updateTime(int cont_no,String start,String end);
+	//수정시 삭제후 바로 인서트 해줄거임
+	int delpartic(int cont_no);
+	
 }

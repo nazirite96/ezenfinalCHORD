@@ -35,6 +35,8 @@ public interface FilesService {
 	void addFolder(String foldername);
 	//폴더 삭제
 	void delFolder(String foldername);
+	//프로젝트 이름 변경시 해당 경로 전부 변경
+	int proDBPath(String original_name,String rename,String whereinfo);
 	
 	//프로젝트 번호 가져오기 
 	int fileNo(String name);

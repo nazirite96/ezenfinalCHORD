@@ -1,5 +1,6 @@
 package com.ezen.chord.files.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -95,5 +96,15 @@ public class FilesDAOImpl implements FilesDAO {
 		// TODO Auto-generated method stub
 		List<String> pathList=sqlMap.selectList("pathList");
 		return pathList;
+	}
+	@Override
+	public int proDBPath(String original_name, String rename, String whereinfo) {
+		// TODO Auto-generated method stub
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("original_name", original_name);
+		map.put("rename", rename);
+		map.put("whereinfo", whereinfo);
+		int result=sqlMap.update("proDBPath", map);
+		return result;
 	}
 }
