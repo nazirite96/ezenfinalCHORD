@@ -751,9 +751,10 @@
 	
     <div id="editTaskState" class="pop-layer">
     
-		<form action="/flowolf/task/state" method="get">
+		<form action="updateTaskState.do" method="get">
 			<input type="hidden" name="task_no" value="">
 			<input type="hidden" name="task_state" value="">
+			<input type="hidden" name="test" value="">
 	   		<!-- pop con -->
 	   		<section class="pop-con border-box">
 	   			상태를 변경하시겠습니까?

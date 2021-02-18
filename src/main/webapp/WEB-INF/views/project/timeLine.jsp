@@ -344,7 +344,7 @@ function submitgogo(){
 															</dt>
 															<dd class="posi-re">
 																<!-- 담당자 추가 input -->
-																<input type="text" id="tu_mem_id" placeholder="담당자 추가"
+																<input type="text" id="tu_mem_id" placeholder="담당자 추가" readonly
 																	onfocus="fn_taskManagerFocus(this)" />
 																<!-- 담당자 리스트 -->
 																<div class="task-user-list"></div>
@@ -1077,7 +1077,7 @@ function submitgogo(){
 											<c:when test="${dto.cont_kind eq 'task' }">
 												<!-- 업무글 : start -->
 												<div class="timeline-article con-task">
-
+												
 													<!-- 업무명:s -->
 													<div class="input-box">
 														<input type="text" class="font-bold size-18"
@@ -1092,8 +1092,9 @@ function submitgogo(){
 																<i class="fas fa-user-clock"></i>
 															</dt>
 															<dd>
-																<input type="hidden" class="edit-confirm"
-																	data-taskno="${dto.taskDTO.task_no }">
+																<input type="hidden" class="edit-confirm" data-taskno="${dto.taskDTO.task_no }">
+																<input type="hidden" class="edit-confirm" data-prono="${dto.pro_no }">
+																
 																<div class="task-state-list">
 
 																	<c:set var="sReq" value="" />
@@ -1184,8 +1185,14 @@ function submitgogo(){
 																<i class="flow-icon icon-task icon-sDate"></i>
 															</dt>
 															<dd class="posi-re">
-																<input type="text" placeholder="시작일"
-																	value="${dto.taskDTO.task_start_date }" readonly />
+															<c:choose>
+																<c:when test="${fn:substring(dto.taskDTO.task_start_date, 0, 4) eq '1990' }">
+																<input type="text" placeholder="시작일" value="" readonly />
+																</c:when>
+																<c:when test="${fn:substring(dto.taskDTO.task_start_date, 0, 4) ne '1990' }">
+																<input type="text" placeholder="시작일" value="${fn:substring(dto.taskDTO.task_start_date, 0, 16) }" readonly />
+																</c:when>
+															</c:choose>	
 															</dd>
 														</dl>
 													</div>
@@ -1198,8 +1205,14 @@ function submitgogo(){
 																<i class="flow-icon icon-task icon-fDate"></i>
 															</dt>
 															<dd class="posi-re">
-																<input type="text" placeholder="마감일"
-																	value="${dto.taskDTO.task_end_date }" readonly />
+															<c:choose>
+																<c:when test="${fn:substring(dto.taskDTO.task_end_date, 0, 4) eq '1990' }">
+																<input type="text" placeholder="마감일" value="" readonly />
+																</c:when>
+																<c:when test="${fn:substring(dto.taskDTO.task_end_date, 0, 4) ne '1990' }">
+																<input type="text" placeholder="마감일" value="${fn:substring(dto.taskDTO.task_end_date, 0, 16) }" readonly />
+																</c:when>																
+															</c:choose>
 															</dd>
 														</dl>
 													</div>
@@ -1294,16 +1307,17 @@ function submitgogo(){
 												<!-- 업무 수정:s -->
 												<form action="taskUpdate.do" method="post"
 													enctype="multipart/form-data" class="article-edit-form">
-
-													<input type="hidden" name="task_no"
-														value="${dto.taskDTO.task_no }">
-
+													<input type="hidden" name="task_no"	value="${dto.taskDTO.task_no }">
+													<input type="hidden" name="tim_no" value="${dto.tim_no }">
+ 													<input type="hidden" name="pro_no" value="${proUserDTO.pro_no }">
+													<input type="hidden" name="mem_no" value="${proUserDTO.mem_no }">													
+													
 													<!-- article edit box:s -->
 													<div class="article-edit-box con-task">
 
 														<!-- 업무명:s -->
 														<div class="input-box">
-															<input type="text" name="task_title"
+															<input type="text" name="tim_cont"
 																class="font-bold size-18" placeholder="업무명을 입력하세요."
 																value="${dto.tim_cont }">
 														</div>
@@ -1356,26 +1370,30 @@ function submitgogo(){
 
 																	<!-- 담당자 리스트 -->
 																	<div class="task-user-list">
-																		<%-- <c:forEach items="${dto.tuList }" var="tuVo">
-							<div class="name-tag">
-								<img src="/mem/pic?mem_id=${tuVo.tu_mem_id }" width="24">
-								<strong class="marleft-10">${tuVo.mem_nick }</strong>
-								<i class="fas fa-times-circle marleft-15" data-no="${tuVo.task_user_no }" onclick="fn_taskUserDelete(this)"></i>
-							</div>
-						</c:forEach> --%>
+																	<c:forEach items="${dto.taskDTO.partic }" var="tu_mem">
+																		<div class="name-tag">
+																			<img src="/chord/resources/img/sample.png" width="24" class="cursor-point">
+																			<strong class="marleft-10">${tu_mem.mem_name }</strong>
+																			<i class="fas fa-times-circle marleft-15" data-no="${tu_mem.mem_no }" onclick="fn_taskUserDelete(this)"></i>
+																			<input type="hidden" name="tu_mem_list" value="${tu_mem.mem_no }">
+																		</div>
+																	</c:forEach>
 																	</div>
-
+																	
 																	<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
 																	<div class="pro-user-list">
-																		<%-- <c:forEach items="${proUserList }" var="proUserVo">
-							<div class="pro-user-info" onclick="fn_taskManagerSelect(this)">
-								<div class="pro-user-photo maright-10">
-									<i class="icon-circle circle-s"></i>
-									<img src="/mem/pic?mem_id=${proUserVo.mem_id }"  width="40px">
-								</div>
-								<span class="user-id" data-id="${proUserVo.mem_id }">${proUserVo.mem_nick }</span>
-							</div>						
-						</c:forEach> --%>
+																		<c:forEach items="${notInvitedProUserList }" var="mbs">
+																			<div class="pro-user-info"
+																				onclick="fn_taskManagerSelect(this)">
+																				<div class="pro-user-photo maright-10">
+																					<i class="icon-circle circle-s"></i> <img
+																						src="/chord/resources/img/user-pic-sample.png"
+																						style="width: 40px">
+																				</div>
+																				<span class="user-no" data-no="${mbs.mem_no }">${mbs.mem_no }번
+																					이름</span>
+																			</div>
+																		</c:forEach>
 																	</div>
 																	<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):f -->
 																</dd>
@@ -1383,19 +1401,29 @@ function submitgogo(){
 														</div>
 														<!-- 담당자:f -->
 
-														<!-- 시작일:s -->
+														<!-- 시작일:s(하는중2) -->
 														<div class="input-box martop-15 add-item-box">
 															<dl>
 																<dt class="maright-20">
 																	<i class="flow-icon icon-task icon-sDate"></i>
 																</dt>
 																<dd class="posi-re">
-																	<input type="text" name="task_start_date"
-																		placeholder="시작일설정" data-language='ko'
-																		class="datepicker-here"
-																		value="${dto.taskDTO.task_start_date }" /> <i
-																		class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
+																<c:choose>
+																<c:when test="${fn:substring(dto.taskDTO.task_start_date, 0, 4) eq '1990' }">
+																	<input type="text" name="task_start_date" placeholder="시작일설정" id="datepicker3"
+																		class="datepicker-here" data-timepicker="true" data-time-format='hh:ii' readonly
+																		value="" /> 
+																		<i class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
 																		onclick="fn_dateReset(this)"></i>
+																</c:when>
+																<c:when test="${fn:substring(dto.taskDTO.task_start_date, 0, 4) ne '1990' }">
+																	<input type="text" name="task_start_date" placeholder="시작일설정" id="datepicker5"
+																		class="datepicker-here" data-timepicker="true" data-time-format='hh:ii' readonly
+																		value="${fn:substring(dto.taskDTO.task_start_date, 0, 16) }" /> 
+																		<i class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
+																		onclick="fn_dateReset(this)"></i>
+																</c:when>																		
+																</c:choose>		
 																</dd>
 															</dl>
 														</div>
@@ -1408,12 +1436,24 @@ function submitgogo(){
 																	<i class="flow-icon icon-task icon-fDate"></i>
 																</dt>
 																<dd class="posi-re">
+																<c:choose>
+																<c:when test="${fn:substring(dto.taskDTO.task_end_date, 0, 4) eq '1990' }">
 																	<input type="text" name="task_end_date"
-																		placeholder="마감일설정" data-language='ko'
-																		class="datepicker-here"
-																		value="${dto.taskDTO.task_end_date }" /> <i
+																		placeholder="마감일설정" id="datepicker4" readonly
+																		class="datepicker-here" data-timepicker="true" data-time-format='hh:ii'
+																		value="" /> <i
 																		class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
 																		onclick="fn_dateReset(this)"></i>
+																</c:when>
+																<c:when test="${fn:substring(dto.taskDTO.task_end_date, 0, 4) ne '1990' }">
+																	<input type="text" name="task_end_date"
+																		placeholder="마감일설정" id="datepicker6" readonly
+																		class="datepicker-here" data-timepicker="true" data-time-format='hh:ii'
+																		value="${fn:substring(dto.taskDTO.task_end_date, 0, 16) }" /> <i
+																		class="fas fa-times-circle martop-8 marleft-15 color-gray cursor-point"
+																		onclick="fn_dateReset(this)"></i>
+																</c:when>
+																</c:choose>		
 																</dd>
 															</dl>
 														</div>
@@ -1437,15 +1477,24 @@ function submitgogo(){
 																		<c:otherwise>
 																			<input type="text" name="task_priority"
 																				class="task-rank-input" style="display: none"
-																				placeholder="우선순위 선택"
-																				onfocus="fn_taskRankFocus(this)" readonly>
-																			<span class="task-rank"
-																				onclick="fn_taskRankClick(this)"> <i
-																				class="flow-icon rank-icon icon-low"></i>${dto.taskDTO.task_priority }
+																				placeholder="우선순위 선택"	onfocus="fn_taskRankFocus(this)" readonly>
+																			<span class="task-rank"	onclick="fn_taskRankClick(this)">
+																			<c:if test="${dto.taskDTO.task_priority == '낮음'}">
+																				<i class="flow-icon rank-icon icon-low"></i>${dto.taskDTO.task_priority }
+																			</c:if>																			
+																			<c:if test="${dto.taskDTO.task_priority == '보통'}">
+																				<i class="flow-icon rank-icon icon-basic"></i>${dto.taskDTO.task_priority }
+																			</c:if>																			 
+																			<c:if test="${dto.taskDTO.task_priority == '높음'}">
+																				<i class="flow-icon rank-icon icon-high"></i>${dto.taskDTO.task_priority }
+																			</c:if>																			
+																			<c:if test="${dto.taskDTO.task_priority == '긴급'}">
+																				<i class="flow-icon rank-icon icon-emer"></i>${dto.taskDTO.task_priority }
+																			</c:if>	
 																			</span>
 																		</c:otherwise>
 																	</c:choose>
-
+																			
 																	<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
 																	<ul class="task-rank-list">
 																		<li onclick="fn_taskRankSelect(this)"><i
@@ -1467,7 +1516,7 @@ function submitgogo(){
 															<i class="fas fa-angle-down maright-10"></i> 추가 항목 입력
 														</button>
 
-														<textarea rows="5" name="task_cont" cols="50"
+														<textarea rows="5" name="task_content" cols="50"
 															placeholder="글을 작성하세요." class="martop-30"
 															onkeyup="autoTextarea(this, 120, 500)">${dto.taskDTO.task_content }</textarea>
 
@@ -1508,15 +1557,15 @@ function submitgogo(){
 
 													<!-- article eidt dn:s -->
 													<div class="article-edit-dn">
-														<!-- 파일첨부 -->
+														<!-- 파일첨부
 														<label for="articleEditFile_t${dto.tim_no }"
 															class="float-left maright-20 marbtm-0 font-thin size-18">
 															<i class="fas fa-paperclip maright-10"></i>파일첨부
 														</label> <input type="file" name="articleFile"
 															id="articleEditFile_t${dto.taskDTO.task_no }"
 															class="dis-none" onchange="fileUpload(this)">
-
-														<!-- 이미지첨부 -->
+														 -->
+														<!-- 이미지첨부 
 														<label for="articleEditImg_t${dto.taskDTO.task_no }"
 															class="float-left marbtm-0 font-thin size-18"> <i
 															class="fas fa-camera maright-10"></i>이미지첨부
@@ -1524,6 +1573,7 @@ function submitgogo(){
 															id="articleEditImg_t${dto.taskDTO.task_no }"
 															class="dis-none" onchange="imgUpload(this)"
 															accept="image/*">
+															-->
 
 														<!-- submit & cancel 버튼 -->
 														<input type="submit" value="수정하기"
@@ -1909,7 +1959,6 @@ function submitgogo(){
 																		<i class="icon-circle circle-xs-re"></i>
 																		<img src="/mem/pic?mem_id=${tiList.ti_mem_no }" class="cursor-point" width="24">
 																	</div>
-
 																		
 																		<c:set var="now" value="<%=new java.util.Date()%>" />
 																		<c:set var="sysYear"><fmt:formatDate value="${now}" pattern="MM/dd" /></c:set> 
