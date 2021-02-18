@@ -30,4 +30,9 @@ public class TodoServiceImple implements TodoService {
 		int result = todoDAO.insertTodoTimDAO(todoDTO);
 		return result;
 	}
+	
+	@Override
+	public TodoDTO getTodoDetail(int todo_no) {
+		return todoDAO.getTodoDetail(todo_no);
+	}
 }

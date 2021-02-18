@@ -5,7 +5,9 @@ import java.util.*;
 
 public interface TodoItemDAO {
 	
+	/*할일항목 시퀀스 조회*/
+	public int getTiSeq();	
 	public int insertTodoItemDAO(TodoItemDTO tiDTO);
 	public int insertTodoItemPiDAO(TodoItemDTO tiDTO);
-	public List<TodoItemDTO> getTodoItemListDAO(int todo_no);
+	public List<TodoItemDTO> getTiList(int todo_no);
 }

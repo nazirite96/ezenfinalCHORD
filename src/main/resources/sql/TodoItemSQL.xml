@@ -5,16 +5,21 @@
 
 <mapper namespace="todoItemMapper">
 
+	<!-- 업무 시퀀스 조회 -->
+	<select id="getTiSeq" resultType="int">
+		select todo_item_SEQ.nextval from dual
+	</select>
+
 	<!-- 할일 항목 등록 -->
 	<insert id="insertTodoItem" parameterType="todoItemDTO">
 		insert into todo_item(todo_item_no,todo_item_content,todo_item_chk,todo_no,todo_item_date) 
-		values(todo_item_SEQ.nextval, #{todo_item_content}, 'n', #{todo_no},#{todo_item_date})
-	</insert>
+		values(#{todo_item_no}, #{todo_item_content}, 'n', #{todo_no},#{todo_item_date})
+	</insert> 
 	
 	<!-- 할일 등록(담당자)--> 
 	<insert id="insertTodoItemPi" parameterType="todoItemDTO">
 		insert into participants(cont_kind,cont_no,mem_no)
-		values('todo',#{todo_no},#{ti_mem_no})
+		values('todo',#{todo_item_no},#{ti_mem_no})
 	</insert>
 
 	<!-- 할일 항목 수정 -->
@@ -32,11 +37,23 @@
 		 WHERE todo_item_no = #{todo_item_no}
 	</delete>
 	
-	<!-- 할일의 항목 조회 -->
-	<select id="getTodoItemList" parameterType="int" resultType="todoItemDTO">
-		SELECT ti.* FROM todo_item ti
-		 WHERE todo_no = #{todo_no}
-		 ORDER BY todo_item_date
+	<!-- 할일의 항목 조회--> 
+	<select id="getTiList" parameterType="INTEGER" resultType="todoItemDTO">
+		select * from todo t,todo_item ti  
+		where t.todo_no = ti.todo_no 
+		and t.todo_no = #{todo_no}
+	</select>	
+	
+	<!-- 할일항목 담당자 조회 -->
+	<select id="selectTodoPiByNo" parameterType="Integer" resultType="projectUserDTO">
+	select 
+	mm.mem_name,
+	pt.mem_no
+	from member mm,participants pt
+	where 1=1
+	and pt.mem_no=mm.mem_no
+	and pt.cont_kind='todo'
+	and pt.cont_no=#{todo_no}
 	</select>	
 	
 </mapper>

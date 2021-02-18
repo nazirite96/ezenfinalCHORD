@@ -1,6 +1,10 @@
 package com.ezen.chord.todo.dto;
 
 import java.sql.Date;
+import java.util.List;
+
+import com.ezen.chord.project_user.dto.ProjectUserDTO;
+import com.ezen.chord.todo_item.dto.TodoItemDTO;
 
 public class TodoDTO {
 
@@ -18,6 +22,8 @@ public class TodoDTO {
 	private String mem_email;			//멤버이메일
 	private String mem_name;			//멤버이름
 	private String pro_name;			//프로젝트명
+	private List<TodoItemDTO> tiList;
+	private List<ProjectUserDTO> partic;	
 	
 	public TodoDTO() {
 		super();
@@ -117,8 +123,25 @@ public class TodoDTO {
 		this.pro_name = pro_name;
 	}
 
+	public List<TodoItemDTO> getTiList() {
+		return tiList;
+	}
+
+	public void setTiList(List<TodoItemDTO> tiList) {
+		this.tiList = tiList;
+	}
+
+	public List<ProjectUserDTO> getPartic() {
+		return partic;
+	}
+
+	public void setPartic(List<ProjectUserDTO> partic) {
+		this.partic = partic;
+	}
+
 	public TodoDTO(int todo_no, String todo_title, int mem_no, int cont_no, String cont_kind, int tim_no,
-			String tim_cont, Date tim_date, int pro_no, String mem_email, String mem_name, String pro_name) {
+			String tim_cont, Date tim_date, int pro_no, String mem_email, String mem_name, String pro_name,
+			List<TodoItemDTO> tiList, List<ProjectUserDTO> partic) {
 		super();
 		this.todo_no = todo_no;
 		this.todo_title = todo_title;
@@ -132,8 +155,12 @@ public class TodoDTO {
 		this.mem_email = mem_email;
 		this.mem_name = mem_name;
 		this.pro_name = pro_name;
+		this.tiList = tiList;
+		this.partic = partic;
 	}
 
+
+	
 	
 	
 

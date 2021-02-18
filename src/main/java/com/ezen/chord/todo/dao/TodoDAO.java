@@ -9,4 +9,6 @@ public interface TodoDAO {
 	public int insertTodoDAO(TodoDTO todoDTO);
 	public int insertTodoTimDAO(TodoDTO todoDTO);
 	
+	public TodoDTO getTodoDetail(int todo_no);
+	
 }

@@ -1,5 +1,9 @@
 package com.ezen.chord.todo_item.dto;
 
+import java.util.List;
+
+import com.ezen.chord.project_user.dto.ProjectUserDTO;
+
 public class TodoItemDTO {
 	
 	private int todo_item_no;				//할일항목번호
@@ -9,6 +13,9 @@ public class TodoItemDTO {
 	private int ti_mem_no;					//담당자테이블 mem_no 번호
 	private int todo_no;					//할일번호
 	private int ti_mem_id;					//담당자테이블 mem_no 번호
+	
+	private String mem_name;
+		
 	
 	
 	public TodoItemDTO() {
@@ -73,8 +80,19 @@ public class TodoItemDTO {
 		this.ti_mem_id = ti_mem_id;
 	}
 
+
+	public String getMem_name() {
+		return mem_name;
+	}
+
+	public void setMem_name(String mem_name) {
+		this.mem_name = mem_name;
+	}
+
+	
+
 	public TodoItemDTO(int todo_item_no, String todo_item_content, String todo_item_chk, String todo_item_date,
-			int ti_mem_no, int todo_no, int ti_mem_id) {
+			int ti_mem_no, int todo_no, int ti_mem_id, String mem_name) {
 		super();
 		this.todo_item_no = todo_item_no;
 		this.todo_item_content = todo_item_content;
@@ -83,7 +101,11 @@ public class TodoItemDTO {
 		this.ti_mem_no = ti_mem_no;
 		this.todo_no = todo_no;
 		this.ti_mem_id = ti_mem_id;
+		this.mem_name = mem_name;
 	}
+
+	
+
 
 
 

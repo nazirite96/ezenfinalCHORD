@@ -8,4 +8,6 @@ public interface TodoService {
 	
 	public int insertTodoService(TodoDTO todoDTO);
 	public int insertTodoTimService(TodoDTO todoDTO);
+	
+	public TodoDTO getTodoDetail(int todo_no);
 }
