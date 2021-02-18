@@ -64,9 +64,10 @@ public class SchdController {
 	}
 	
 	@RequestMapping("/schdUpdate.do")
-	public ModelAndView schdUpdate (@RequestParam(value = "schd_no",defaultValue = "1")int schd_no,
+	public String schdUpdate (@RequestParam(value = "schd_no",defaultValue = "1")int schd_no,
+			@RequestParam(value = "mem_no",defaultValue = "1")int mem_no,
 			@RequestParam(value = "pro_no",defaultValue = "1") int pro_no,
-			@RequestParam(value = "tu_mem_no",defaultValue = "1")int tu_mem_no,
+			@RequestParam(value = "tu_mem_list",defaultValue = "1")List<Integer> tu_mem_list,
 			@RequestParam(value = "tim_cont",defaultValue = "")String tim_cont,
 			@RequestParam(value = "datetime",defaultValue = "")String datetime,
 			@RequestParam(value = "schd_loc",defaultValue = "")String schd_loc,
@@ -85,13 +86,13 @@ public class SchdController {
 		}
 		
 	
-		schdService.updateTitle(schd_no, tim_cont);
-		schdService.updateLocMemo(schd_no, schd_loc, schd_memo);
-		schdService.updateTime(schd_no, start, end);
+//		schdService.updateTitle(schd_no, tim_cont);
+//		schdService.updateLocMemo(schd_no, schd_loc, schd_memo);
+//		schdService.updateTime(schd_no, start, end);
 		
-		ModelAndView mav=new ModelAndView();
-		mav.setViewName("schedule/listCal");
-		return mav;
+		
+		
+		return "redirect:/timeLine.do?pro_no="+pro_no+"&mem_no="+mem_no;
 	}
 	
 	@RequestMapping("/listCal.do")

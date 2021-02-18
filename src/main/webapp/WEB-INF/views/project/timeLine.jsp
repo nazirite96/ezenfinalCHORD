@@ -1648,7 +1648,9 @@ function submitgogo(){
 													class="article-edit-form" method="get">
 													<input type="hidden" name="schd_no"
 														value="${dto.schdDTO.schd_no }"> <input
-														type="hidden" name="pro_no" value="${proVo.pro_no }">
+														type="hidden" name="pro_no" value="${proUserDTO.pro_no }">
+														<input
+														type="hidden" name="mem_no" value="${proUserDTO.mem_no }">
 													<!-- article edit box:s -->
 													<div class="article-edit-box">
 
@@ -1681,31 +1683,48 @@ function submitgogo(){
 																</dd>
 															</dl>
 														</div>
-														<!-- 일정 시간 설정:f -->
-														<!-- 위치 검색:s -->
-														<div class="input-box martop-15" style="height:inherit">
-															<dl>
-																<dt class="maright-20"><i class="fas fa-user-plus"></i></dt>
-																<dd class="posi-re">
-																	<input type="text" id="taskUser" placeholder="담당자 추가" onfocus="fn_taskManagerFocus(this)">
-																	
-																	<!-- 담당자 리스트 -->
-																	<div class="task-user-list">
-																		<c:forEach items="${dto.schdDTO.partic }" var="tu_mem">
-																			<div class="name-tag">
-																				<img src="/chord/resources/img/sample.png" width="24"
-												                                                                				  class="cursor-point">
-																				<strong class="marleft-10">${tu_mem.mem_name}</strong>
-																				<i class="fas fa-times-circle marleft-15" data-no="${tu_mem.mem_no }" onclick="fn_taskUserDelete(this)"></i>
-																			</div>
-																		</c:forEach>
+														<!-- 담당자 -->
+														<div class="input-box martop-15" style="height: inherit">
+														<dl>
+															<dt class="maright-20">
+																<i class="fas fa-user-plus"></i>
+															</dt>
+															<dd class="posi-re">
+																<input type="text" id="tu_mem_id" placeholder="담당자 추가"
+																	onfocus="fn_taskManagerFocus(this)">
+
+																<!-- 담당자 리스트 -->
+																<div class="task-user-list">
+																<c:forEach items="${dto.schdDTO.partic }" var="tu_mem" >
+																	<div class="name-tag">
+																		<img src="/chord/resources/img/sample.png" width="24"
+                                                                				  class="cursor-point">
+																		<strong class="marleft-10">${tu_mem.mem_name }</strong>
+																		<i class="fas fa-times-circle marleft-15" data-no="${tu_mem.mem_no }" onclick="fn_taskUserDelete(this)"></i>
+																		<input type="hidden" name="tu_mem_list" value="${tu_mem.mem_no }">
 																	</div>
-																</dd>
-															</dl>
-														</div>
-														
-														
-														
+																</c:forEach>
+																</div>
+
+																<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
+																<div class="pro-user-list">
+																	<c:forEach items="${notInvitedProUserList }" var="mbs">
+																		<div class="pro-user-info"
+																			onclick="fn_taskManagerSelect(this)">
+																			<div class="pro-user-photo maright-10">
+																				<i class="icon-circle circle-s"></i> <img
+																					src="/chord/resources/img/user-pic-sample.png"
+																					style="width: 40px">
+																			</div>
+																			<span class="user-no" data-no="${mbs.mem_no }">${mbs.mem_no }번
+																				이름</span>
+																		</div>
+																	</c:forEach>
+																</div>
+																<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):f -->
+															</dd>
+														</dl>
+													</div>
 														
 														<!-- 위치 검색:f -->
 														<div class="input-box martop-15">
