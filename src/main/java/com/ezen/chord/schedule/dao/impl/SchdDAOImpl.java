@@ -38,6 +38,15 @@ public class SchdDAOImpl implements SchdDAO {
 		return result;
 	}
 	@Override
+	public int insertPartic(int cont_no, int partic_no) {
+		// TODO Auto-generated method stub
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("cont_no", cont_no);
+		map.put("partic_no", partic_no);
+		int result = sqlMap.insert("insertPartic",map);
+		return result;
+	}
+	@Override
 	public int insertTime(SchdDTO dto) {
 		// TODO Auto-generated method stub
 		int result = sqlMap.insert("insertSchdulDate",dto);
@@ -106,5 +115,23 @@ public class SchdDAOImpl implements SchdDAO {
 		int updateTimeSE=sqlMap.update("updateTimeS", map);
 		updateTimeSE=sqlMap.update("updateTimeE", map2);
 		return updateTimeSE;
+	}
+	@Override
+	public int delpartic(int cont_no) {
+		// TODO Auto-generated method stub
+		int result=sqlMap.delete("delpartic", cont_no);
+		return result;
+	}
+	@Override
+	public int delschd(int cont_no) {
+		// TODO Auto-generated method stub
+		int result=sqlMap.delete("delschd", cont_no);
+		return result;
+	}
+	@Override
+	public int deltime(int cont_no) {
+		// TODO Auto-generated method stub
+		int result=sqlMap.delete("deltime", cont_no);
+		return result;
 	}
 }

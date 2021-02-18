@@ -1645,7 +1645,7 @@ function submitgogo(){
 
 												<!-- 일정 수정:s -->
 												<form action="schdUpdate.do"
-													class="article-edit-form" method="get">
+													class="article-edit-form" method="post">
 													<input type="hidden" name="schd_no"
 														value="${dto.schdDTO.schd_no }"> <input
 														type="hidden" name="pro_no" value="${proUserDTO.pro_no }">

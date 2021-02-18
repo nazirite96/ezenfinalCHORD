@@ -9,6 +9,7 @@ import com.ezen.chord.project.dao.ProjectDAO;
 import com.ezen.chord.project_user.dao.ProjectUserDAO;
 import com.ezen.chord.project_user.dto.ProjectUserDTO;
 import com.ezen.chord.reply.dao.ReplyDAO;
+import com.ezen.chord.schedule.dao.SchdDAO;
 import com.ezen.chord.task.dao.TaskDAO;
 import com.ezen.chord.task.dto.TaskDTO;
 import com.ezen.chord.timeline.dao.TimelineDAO;
@@ -28,7 +29,9 @@ public class TimelineServiceImpl implements TimelineService {
 	private ProjectUserDAO proUserDAO;
 	@Autowired
 	private TaskDAO taskDAO;
-
+	@Autowired
+	private SchdDAO schdDAO;
+	
 	@Override
 	public int insertTim(TimelineDTO timDTO) {
 		// TODO Auto-generated method stub
@@ -72,7 +75,11 @@ public class TimelineServiceImpl implements TimelineService {
 		case "task":
 			result = timDAO.deleteTim(timDTO.getTim_no());
 			break;
-		case "sch":
+		case "schd":
+			result = timDAO.deleteTim(timDTO.getTim_no());
+			schdDAO.delpartic(timDTO.getCont_no());
+			schdDAO.delschd(timDTO.getCont_no());
+			schdDAO.deltime(timDTO.getCont_no());
 			break;
 		default:
 			break;

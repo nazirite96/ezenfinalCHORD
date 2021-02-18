@@ -41,6 +41,11 @@ public class SchdServiceImpl implements SchdService {
 		return dao.insertParti(dto);
 	}
 	@Override
+	public int insertPartic(int cont_no, int partic_no) {
+		// TODO Auto-generated method stub
+		return dao.insertPartic(cont_no, partic_no);
+	}
+	@Override
 	public int insertTimeLine(SchdDTO dto) {
 		// TODO Auto-generated method stub
 		return dao.insertTimeLine(dto);
@@ -89,5 +94,10 @@ public class SchdServiceImpl implements SchdService {
 	public int updateTime(int cont_no, String start, String end) {
 		// TODO Auto-generated method stub
 		return dao.updateTime(cont_no, start, end);
+	}
+	@Override
+	public int delpartic(int cont_no) {
+		// TODO Auto-generated method stub
+		return dao.delpartic(cont_no);
 	}
 }

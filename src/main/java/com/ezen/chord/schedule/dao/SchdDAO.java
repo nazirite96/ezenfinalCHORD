@@ -13,6 +13,7 @@ public interface SchdDAO {
 	int insertSchd(SchdDTO dto);
 	// 참가자 등록하기
 	int insertParti(SchdDTO dto);
+	int insertPartic(int cont_no,int partic_no);
 	// 시간텡리블 등록하기
 	int insertTime(SchdDTO dto);
 	// 타임라인테이블 등록
@@ -31,4 +32,8 @@ public interface SchdDAO {
 	int updateLocMemo(int schd_no,String schd_loc,String schd_memo);
 	//시간
 	int updateTime(int cont_no,String start,String end);
+	//타임랑인 삭제시 죄다삭제 
+	int deltime(int cont_no);
+	int delschd(int cont_no);
+	int delpartic(int cont_no);
 }

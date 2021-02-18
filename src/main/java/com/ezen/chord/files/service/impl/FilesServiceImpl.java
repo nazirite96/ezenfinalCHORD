@@ -129,6 +129,11 @@ public class FilesServiceImpl implements FilesService {
 		// TODO Auto-generated method stub
 		return filedao.pathList();
 	}
+	@Override
+	public int proDBPath(String original_name, String rename, String whereinfo) {
+		// TODO Auto-generated method stub
+		return filedao.proDBPath(original_name, rename, whereinfo);
+	}
 	
 	@Override
 	public String checkName(MultipartFile files) {
@@ -290,12 +295,14 @@ public class FilesServiceImpl implements FilesService {
 		
 	}
 	//폴더명 바꾸기 
-//	public void reProfor(String rename,String realpath) {
-//		File file = new File("D:\\Test.java");
-//		File file2 = new File("D:\\Testaaa.java");
-//	//변경
-//	if(file.exists()) {
-//		file.renameTo(file2); //변경 
-//		} 
-//	}
+	public void reProfor(String original_name, String rename,String realpath) {
+		File file = new File(realpath+PATH+File.separator+original_name);
+		File file2 = new File(realpath+PATH+File.separator+rename);
+		String whereinfo=PATH+File.separator+original_name;
+		
+	if(file.exists()) {
+		file.renameTo(file2); //변경 
+		proDBPath(original_name, rename, whereinfo);
+		} 
+	}
 }

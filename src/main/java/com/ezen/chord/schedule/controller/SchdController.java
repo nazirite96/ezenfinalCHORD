@@ -64,7 +64,8 @@ public class SchdController {
 	}
 	
 	@RequestMapping("/schdUpdate.do")
-	public String schdUpdate (@RequestParam(value = "schd_no",defaultValue = "1")int schd_no,
+	public String schdUpdate (
+			@RequestParam(value = "schd_no",defaultValue = "1")int schd_no,
 			@RequestParam(value = "mem_no",defaultValue = "1")int mem_no,
 			@RequestParam(value = "pro_no",defaultValue = "1") int pro_no,
 			@RequestParam(value = "tu_mem_list",defaultValue = "1")List<Integer> tu_mem_list,
@@ -85,10 +86,17 @@ public class SchdController {
 			 end=defaultDate.substring(28,44);
 		}
 		
-	
-//		schdService.updateTitle(schd_no, tim_cont);
-//		schdService.updateLocMemo(schd_no, schd_loc, schd_memo);
-//		schdService.updateTime(schd_no, start, end);
+			if(tu_mem_list.get(0)==1) {
+				System.out.println("2팀 모두 취업 잘되길 희망합니다.");
+			}else {
+				schdService.delpartic(schd_no);
+				for(int i=0;i<tu_mem_list.size();i++) {
+					schdService.insertPartic(schd_no, tu_mem_list.get(i));
+				}
+			}
+		schdService.updateTitle(schd_no, tim_cont);
+		schdService.updateLocMemo(schd_no, schd_loc, schd_memo);
+		schdService.updateTime(schd_no, start, end);
 		
 		
 		

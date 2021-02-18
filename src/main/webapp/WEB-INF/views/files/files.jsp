@@ -17,11 +17,18 @@
 </head>
 
     <style>
+    #atag01{
+    	color: #ec072f;
+    }
+    #atag01:hover{
+    	    text-decoration: none;
+   			font-size: 15px;
+    }
     
     input[type='checkbox']  {
 		display: inline-block;
 		width: 53px;
-    height: 25px;;
+    	height: 25px;;
 		border: 2px solid #bcbcbc;
 		cursor: pointer;
 	}
@@ -211,7 +218,7 @@
 	    	dataType: "text",
 	    		success : function() {
 	    			history.replaceState({}, null, location.pathname);
-	    			location.href='index.do';
+	    			location.href='proList.do?mem_no='+'${sessionScope.memNo}';
 	    	    },
 	    	    error : function(xhr, status, error) {     
 	    	    	alert(xhr,status,error);
@@ -303,8 +310,8 @@
 <c:set var="f" value="${foldername }"></c:set>
       <c:set var="path" value="${crpath }"></c:set>
       <c:if test="${!empty path}">
-      		<div>
-       			경로 : ${crpath } <a href="javascript:goback()">뒤로가기</a>
+      		<div style="color: gray;">
+       			경로 : ${crpath } &nbsp;&nbsp;&nbsp;<a id="atag01" href="javascript:goback()">◀&nbsp;뒤로가기</a>
      		</div>
        </c:if>
 

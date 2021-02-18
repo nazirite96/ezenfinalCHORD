@@ -25,6 +25,9 @@
     	<update id="updateFatch" parameterType="map">
     		update files set file_path=#{pathRoot} where file_name=#{filename}
     	</update>
+    	<update id="proDBPath" parameterType="map">
+    		update files set file_path=replace(file_path, #{original_name}, #{rename}) where file_path LIKE #{whereinfo} || '%';
+    	</update>
     	<select id="getAllFiles" resultType="FilesDTO">
     		select * from files
     	</select>
