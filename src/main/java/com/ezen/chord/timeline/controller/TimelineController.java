@@ -71,15 +71,11 @@ public class TimelineController {
 		for(int i = 0 ; i < list.size() ; i++) {
 			switch (list.get(i).getCont_kind()) {
 			case "post":
-				
+				list.get(i).setFilesList(timService.getFiles(list.get(i).getTim_no()));
 				break;
 			case "task":
 				list.get(i).setTaskDTO(timService.getTask(list.get(i).getCont_no()));
-				
-				
-				
 				break;
-				
 			case "schd":
 				list.get(i).setSchdDTO(schdService.getSchdOne(list.get(i).getCont_no()));
 				System.out.println(list.get(i).getSchdDTO().partic.size());
@@ -100,10 +96,6 @@ public class TimelineController {
 		
 		return mav;
 	}
-	
-	
-	
-	
 	
 	
 	@RequestMapping("/insertTim.do")
@@ -302,7 +294,7 @@ public class TimelineController {
 		for(int i = 0 ; i < list.size() ; i++) {
 			switch (list.get(i).getCont_kind()) {
 			case "post":
-				
+				//list.get(i).set
 				break;
 			case "task":
 				list.get(i).setTaskDTO(timService.getTask(list.get(i).getCont_no()));
@@ -325,7 +317,42 @@ public class TimelineController {
 		
 		return mav;
 	}
-	
+	@RequestMapping("/myTimeline.do")
+	public ModelAndView myTimeline(HttpSession sess) {
+		ModelAndView mav = new ModelAndView();
+		int mem_no = (int)(sess.getAttribute("memNo"));
+		//업로드 폴더 변경
+		List<BoxDTO> boxList = boxService.getBoxList(mem_no);
+		mav.addObject("boxList", boxList);
+		//프로젝트 정보를 받기
+		List<TimelineDTO> list = timService.getMyTimeline(mem_no);
+		
+		for(int i = 0 ; i < list.size() ; i++) {
+			switch (list.get(i).getCont_kind()) {
+			case "post":
+				
+				break;
+			case "task":
+				list.get(i).setTaskDTO(timService.getTask(list.get(i).getCont_no()));
+				break;
+				
+			case "schd":
+				list.get(i).setSchdDTO(schdService.getSchdOne(list.get(i).getCont_no()));
+				break;
+			case "todo":
+				//list.get(i).setTodoDTO(null);
+			default:
+				break;
+			}
+		}
+		
+		mav.addObject("list", list);
+		mav.setViewName("project/myTimeline");
+		
+		
+		
+		return mav;
+	}
 	
 	
 	

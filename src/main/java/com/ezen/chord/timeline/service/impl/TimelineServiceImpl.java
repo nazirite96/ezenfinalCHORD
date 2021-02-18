@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ezen.chord.files.dto.FilesDTO;
 import com.ezen.chord.project.dao.ProjectDAO;
 import com.ezen.chord.project_user.dao.ProjectUserDAO;
 import com.ezen.chord.project_user.dto.ProjectUserDTO;
@@ -57,6 +58,16 @@ public class TimelineServiceImpl implements TimelineService {
 	}
 	
 	@Override
+	public List<TimelineDTO> getMyTimeline(int mem_no) {
+		// TODO Auto-generated method stub
+		List<TimelineDTO> list = timDAO.getMyTimeline(mem_no);
+		for(int i = 0 ; i < list.size() ; i++) {
+			list.get(i).setRepList(repDAO.selcetRepByTim_no(list.get(i).getTim_no()));
+		}
+		return list;
+	}
+	
+	@Override
 	public int updateTim(TimelineDTO timDTO) {
 		// TODO Auto-generated method stub
 		return timDAO.updateTim(timDTO);
@@ -72,7 +83,7 @@ public class TimelineServiceImpl implements TimelineService {
 		case "task":
 			result = timDAO.deleteTim(timDTO.getTim_no());
 			break;
-		case "sch":
+		case "schd":
 			break;
 		default:
 			break;
@@ -81,6 +92,12 @@ public class TimelineServiceImpl implements TimelineService {
 		
 		
 		return result;
+	}
+	
+	@Override
+	public List<FilesDTO> getFiles(int tim_no) {
+		// TODO Auto-generated method stub
+		return timDAO.getFiles(tim_no);
 	}
 	
 	@Override

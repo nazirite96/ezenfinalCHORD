@@ -2,6 +2,7 @@ package com.ezen.chord.timeline.dto;
 
 import java.util.List;
 
+import com.ezen.chord.files.dto.FilesDTO;
 import com.ezen.chord.reply.dto.ReplyDTO;
 import com.ezen.chord.schedule.dto.SchdDTO;
 import com.ezen.chord.task.dto.TaskDTO;
@@ -21,6 +22,16 @@ public class TimelineDTO {
 	private int fix_chk;			//고정글
 	private List<ReplyDTO> repList; //리플
 	private int coll_chk;			//담아두기
+	
+	private List<FilesDTO> filesList;
+	
+	
+	public List<FilesDTO> getFilesList() {
+		return filesList;
+	}
+	public void setFilesList(List<FilesDTO> fileList) {
+		this.filesList = fileList;
+	}
 	public int getColl_chk() {
 		return coll_chk;
 	}
