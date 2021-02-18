@@ -25,6 +25,7 @@ import com.ezen.chord.task.service.TaskService;
 import com.ezen.chord.timeline.dto.TimelineDTO;
 import com.ezen.chord.timeline.service.TimelineService;
 import com.ezen.chord.todo.service.TodoService;
+import com.ezen.chord.todo_item.service.TodoItemService;
 
 @Controller
 public class TimelineController {
@@ -41,6 +42,8 @@ public class TimelineController {
 	private BoxService boxService;
 	@Autowired
 	private TodoService todoService;
+	@Autowired
+	private TodoItemService tiService;
 	
 	@RequestMapping("/timeLine.do")
 	@ResponseBody
@@ -82,7 +85,7 @@ public class TimelineController {
 				System.out.println(list.get(i).getSchdDTO().partic.size());
 				break;
 			case "todo":
-				list.get(i).setTodoDTO(null);
+				list.get(i).setTodoDTO(todoService.getTodoDetail(list.get(i).getCont_no()));
 			default:
 				break;
 			}

@@ -1878,7 +1878,118 @@ function submitgogo(){
 											</c:when>
 											<c:when test="${dto.cont_kind eq 'todo' }">
 												<!-- 할일글 : start -->
+											<div class="timeline-article con-todo">
+												<div class="container">
+												
+													<input type="hidden" id="todo_no" name="todo_no" value="${dto.todoDTO.todo_no }">
+												
+													<!-- 할일제목:s -->
+													<div class="todo-title input-box">
+														<strong class="size-20 color-black">${dto.tim_cont }</strong>
+													</div>
+													<!-- 할일제목:f -->
+												
+													<!-- 할일 정보 -->
+													<div class="todo-info float-left color-gray">
+														<div class="float-right">
+															완료<span class="todo-finish-cnt marleft-10"></span>&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;
+															전체<span class="todo-all-cnt marleft-10"></span>건
+														</div>
+														<span class="todo-percent-cnt float-right maright-30"></span>
+													</div>
+													
+													<!-- 할일 진행률 -->
+													<div class="todo-progress-bar float-left martop-20">
+														<div class="todo-range"></div>
+													</div>
+													
+													<!-- 할일 내용:s(하는중) -->
+													<div class="todo-content float-left martop-20">
+														<c:forEach items="${dto.todoDTO.tiList }" var="tiList" varStatus="status">
+														<c:choose>
+															<c:when test="${tiList.todo_item_chk == 'y' }">
+																<dl data-chk="y">
+																	<dt class="maright-10">
+																		<label onchange="fn_checkBoxLabel(this)" data-no="${tiList.todo_item_no }">
+																			<i class="far fa-check-circle size-20 default-color back-color-white cursor-point" style="border-radius:50%"></i>
+																			<input type="checkbox" class="dis-none" checked="checked">
+																			<span class="dis-none todo-percent-txt"></span>
+																		</label>
+																	</dt>
+																<dd>
+																	<span class="color-gray todo-success">${tiList.todo_item_content }</span>
 
+																	<div class="posi-re float-right cursor-point" onclick="fn_openPopup(this)" 
+																	data-no="${tiList.ti_mem_no }" data-name="${tiList.mem_name }" data-my="" 
+																	data-toggle="tooltip" data-placement="bottom" title="${tiList.mem_name }">
+																		<i class="icon-circle circle-xs-re"></i>
+																		<img src="/mem/pic?mem_id=${tiList.ti_mem_no }" class="cursor-point" width="24">
+																	</div>
+			
+																	<c:set var="now" value="<%=new java.util.Date()%>" />
+																	<c:set var="sysYear"><fmt:formatDate value="${now}" pattern="MM/dd" /></c:set> 
+																	
+																	<c:choose>
+																		<c:when test="${tiList.todo_item_date < sysYear}">
+																		<div class="ti-date float-right maright-15 todo-success">
+																			${tiList.todo_item_date }
+																		</div>
+																		</c:when>
+																		<c:otherwise>
+																		<div class="ti-date float-right maright-15 color-black todo-success">
+																			${tiList.todo_item_date }
+																		</div>
+																		</c:otherwise>
+																	</c:choose>
+																	</dd>
+																</dl>
+															</c:when>
+															<c:when test="${tiList.todo_item_chk == 'n' }">					
+																<dl data-chk="n">
+																	<dt class="maright-10">
+																		<label onchange="fn_checkBoxLabel(this)" data-no="${tiList.todo_item_no }">
+																			<i class="far fa-check-circle size-20 color-gray-l back-color-white cursor-point" style="border-radius:50%"></i>
+																			<input type="checkbox" class="dis-none">
+																			<span class="dis-none todo-percent-txt"></span>
+																		</label>
+																	</dt>
+																	<dd>
+																		<span class="color-gray">${tiList.todo_item_content }</span>
+																		
+																	<div class="posi-re float-right cursor-point" onclick="fn_openPopup(this)" 
+																	data-no="${tiList.ti_mem_no }" data-name="${tiList.mem_name }" data-my="" 
+																	data-toggle="tooltip" data-placement="bottom" title="${tiList.mem_name }">
+																		<i class="icon-circle circle-xs-re"></i>
+																		<img src="/mem/pic?mem_id=${tiList.ti_mem_no }" class="cursor-point" width="24">
+																	</div>
+
+																		
+																		<c:set var="now" value="<%=new java.util.Date()%>" />
+																		<c:set var="sysYear"><fmt:formatDate value="${now}" pattern="MM/dd" /></c:set> 
+																		
+																		<c:choose>
+																			<c:when test="${tiList.todo_item_date < sysYear}">
+																			<div class="ti-date float-right maright-15 color-red">
+																				${tiList.todo_item_date }
+																			</div>
+																			</c:when>
+																			<c:otherwise>
+																			<div class="ti-date float-right maright-15 color-black">
+																				${tiList.todo_item_date }
+																			</div>
+																			</c:otherwise>
+																		</c:choose>
+																	</dd>
+																</dl>
+															</c:when>
+														</c:choose>			
+															
+														</c:forEach>
+													</div>
+													<!-- 할일 내용:f -->
+													
+												</div>
+											</div>
 
 												<!-- 할일글 : finsh -->
 											</c:when>

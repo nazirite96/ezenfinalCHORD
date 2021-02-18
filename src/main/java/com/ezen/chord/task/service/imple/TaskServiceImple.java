@@ -156,10 +156,13 @@ public class TaskServiceImple implements TaskService {
 			if(task_start_date.equals("1990-01-01")) {
 				taskDTO.setTask_start_date("");
 				taskDTO.setTask_end_date(task_end_date);
-			}else if(task_end_date.equals("1990-01-01")) {
+			}
+			if(task_end_date.equals("1990-01-01")) {
 				taskDTO.setTask_start_date(task_start_date);
 				taskDTO.setTask_end_date("");
-			}else {
+			}
+			
+			if(!task_start_date.equals("1990-01-01") && !task_end_date.equals("1990-01-01")){
 				taskDTO.setTask_start_date(task_start_date);
 				taskDTO.setTask_end_date(task_end_date);
 			}

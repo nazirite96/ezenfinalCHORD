@@ -6,6 +6,8 @@ import com.ezen.chord.reply.dto.ReplyDTO;
 import com.ezen.chord.schedule.dto.SchdDTO;
 import com.ezen.chord.task.dto.TaskDTO;
 import com.ezen.chord.todo.dto.TodoDTO;
+import com.ezen.chord.todo_item.dto.TodoItemDTO;
+
 
 public class TimelineDTO {
 	
@@ -28,7 +30,8 @@ public class TimelineDTO {
 	private TaskDTO taskDTO;		//task
 	private SchdDTO schdDTO;
 	public  TodoDTO todoDTO;
-	
+	private TodoItemDTO todoItemDTO;
+	private List<TodoItemDTO> tiList;
 	
 	
 	public int getFix_chk() {
@@ -104,6 +107,18 @@ public class TimelineDTO {
 	}
 	public void setRepList(List<ReplyDTO> repList) {
 		this.repList = repList;
+	}
+	public TodoItemDTO getTodoItemDTO() {
+		return todoItemDTO;
+	}
+	public void setTodoItemDTO(TodoItemDTO todoItemDTO) {
+		this.todoItemDTO = todoItemDTO;
+	}
+	public List<TodoItemDTO> getTiList() {
+		return tiList;
+	}
+	public void setTiList(List<TodoItemDTO> tiList) {
+		this.tiList = tiList;
 	}
 	
 	

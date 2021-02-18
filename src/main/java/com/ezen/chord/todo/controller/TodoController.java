@@ -42,7 +42,9 @@ public class TodoController {
 		int mem_no = (Integer) session.getAttribute("memNo");
 		
 		int todo_no = todoService.getTodoSeq();
+		
 		int tim_no = timService.getTimSeq();
+		
 		
 		todoDTO.setCont_kind("todo");
 		todoDTO.setTodo_no(todo_no);
@@ -57,12 +59,14 @@ public class TodoController {
 		List<TodoItemDTO> tiList = multiTodo.getTiList();
 		
 		for(TodoItemDTO tiDTO : tiList) {
+			int ti_no = todoItemService.getTiSeq();
 			System.out.println(todo_no+"컨트롤러");
 			tiDTO.setTodo_no(todo_no);
+			tiDTO.setTodo_item_no(ti_no);
 			System.out.println(tiDTO.getTodo_item_content());
-			
 			todoItemService.insertTodoItemService(tiDTO);
 			todoItemService.insertTodoItemPiService(tiDTO);
+			System.out.println(tiDTO.getTodo_item_no()+"컨트롤러 값테스트");
 			System.out.println(tiDTO.getTi_mem_no()+"컨트롤러 값테스트");
 			
 		}

@@ -28,7 +28,13 @@ public class TodoItemServiceImple implements TodoItemService {
 	}
 	
 	@Override
-	public List<TodoItemDTO> getTodoItemListService(int todo_no) {
-		return tiDAO.getTodoItemListDAO(todo_no);
+	public List<TodoItemDTO> getTiList(int todo_no) {
+		return tiDAO.getTiList(todo_no);
+	}
+	
+	@Override
+	public int getTiSeq() {
+		// TODO Auto-generated method stub
+		return tiDAO.getTiSeq();
 	}
 }

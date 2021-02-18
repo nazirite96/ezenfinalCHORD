@@ -136,6 +136,7 @@ public class TaskDAOImple implements TaskDAO {
 		
 		result.setPartic(partic);
 		
+		
 		return result;
 	}
 	

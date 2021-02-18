@@ -33,8 +33,13 @@ public class TodoItemDAOImple implements TodoItemDAO {
 	}
 	
 	@Override
-	public List<TodoItemDTO> getTodoItemListDAO(int todo_no) {
-		
-		return sqlMap.selectList("getTodoItemList", todo_no);
+	public List<TodoItemDTO> getTiList(int todo_no) {
+		List<TodoItemDTO> getTiList = sqlMap.selectList("getTiList", todo_no);
+		return getTiList;
+	}
+	
+	@Override
+	public int getTiSeq() {
+		return sqlMap.selectOne("getTiSeq");
 	}
 }

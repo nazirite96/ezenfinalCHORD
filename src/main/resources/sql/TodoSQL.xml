@@ -22,8 +22,15 @@
 		values
 		(timeline_seq.nextval,#{cont_kind},#{todo_no},#{todo_title},sysdate,#{pro_no},#{mem_no})
 	</insert>
-
+	
+	<!-- 할일 상세조회 -->
+	<select id="getTodoDetail" parameterType="int" resultType="todoDTO">
+		SELECT *
+		  FROM todo
+		 WHERE todo_no = #{todo_no}
+	</select>	
 	<!-- 할일 수정 -->
+	
 	<update id="updateTodoTim" parameterType="todoDTO">
 		update timeline 
 			set tim_no = timeline_seq.nextval
