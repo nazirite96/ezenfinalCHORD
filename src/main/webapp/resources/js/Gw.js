@@ -300,13 +300,21 @@ function fn_editTaskState(el) {
 	var item = $(el);
 	var stateList = item.parent('.task-state-list');
 	var layerPopCon = $("#editTaskState");
-
+	
 	// task_no & task_state
 	var task_no = stateList.siblings(".edit-confirm").data("taskno");
-	var task_state = item.children().val();
+	var pro_no = stateList.siblings(".edit-confirm").data("prono");
+	
+	window.alert(pro_no)
+	
+	
+	$("#editTaskState .pro_no").val(pro_no);
 
+	var task_state = item.children().val();
+	
 	// 값 이동
 	layerPopCon.children('form').children("input[name=task_no]").val(task_no);
+	layerPopCon.children('form').children("input[name=test]").val(pro_no);
 	layerPopCon.children('form').children("input[name=task_state]").val(task_state);
 
 	layer_popup(layerPopCon);
