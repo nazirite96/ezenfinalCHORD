@@ -65,7 +65,8 @@
 
 /* title:close */
 .close-nav .navbar-con h1 {display:none}
-
+.nav-link{color:#6c8bbc}
+#deleteFolder {color:#6c8bbc !important}
 /* list:open */
 .navbar-con ul.nav-list {width:100%;margin-bottom:30px;padding-bottom:30px;border-bottom:1px solid #727e8e}
 .navbar-con ul.nav-list > li {position:relative;width:100%;height:34px}
@@ -104,7 +105,7 @@
 li.nav-folder-close .edit-btn {top:10px;right:15px}
 
 /* aside footer */
-.navbar-con .aside-footer {width:100%;font-style:italic;font-size:11px;color:#999;letter-spacing:0}
+.navbar-con .aside-footer {width:100%;font-style:italic;font-size:11px;color:#7b9acc;letter-spacing:0}
 .close-nav .navbar-con .aside-footer {display:none}
 
 
@@ -185,7 +186,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 .user-info-box ul li:hover {background-color:transparent}
 .user-info-box ul.user-info-nav li {margin-top:5px}
 .user-info-box ul.user-info-nav li:first-child {margin-top:0}
-.user-info-box ul.user-info-nav li a {display:block;height:20px;font-size:12px;color:#999;line-height:20px}
+.user-info-box ul.user-info-nav li a {display:block;height:20px;font-size:12px;color:#7b9acc;line-height:20px}
 .user-info-box ul.user-info-nav li a:hover {color:#333}
 .head-top .top-icon-nav .top-icon.icon-gear {width:14px;height:20px;background-position:0 -296px}
 .head-top .top-icon-nav .top-icon.icon-out {width:14px;height:20px;background-position:-100px -296px}
@@ -391,7 +392,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 - (글쓰기 탭 메뉴 스타일)
 ------------------------------------------*/
 .tabs-box ul.tabs {height:70px;padding:20px 20px 0 20px}
-.tabs-box ul.tabs li {position:relative;width:25%;height:40px;font-size:1.5rem;color:#8d8e90;line-height:40px;border-left:1px solid #ccc;text-align:center;cursor:pointer}
+.tabs-box ul.tabs li {position:relative;width:25%;height:40px;font-size:1.5rem;color:#7b9acc;line-height:40px;border-left:1px solid #ccc;text-align:center;cursor:pointer}
 .tabs-box ul.tabs li:first-child {border-left:0}
 .tabs-box ul.tabs li::after {content:'';position:absolute;left:0;bottom:-10px;width:100%;height:1px;background-color:#ccc}
 .tabs-box ul.tabs li:first-child.active {color:#45aaf2}
@@ -416,7 +417,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 .tabs-box .tabs-container .tabs-content .tab-con-box {float:left;width:100%;padding:20px}
 .tabs-box .tabs-container .tabs-content .tab-con-box textarea {overflow-y:hidden;width:100%;height:120px;border:0}
 .tabs-box .tabs-container .tabs-content .tab-con-box .input-box {float:left;width:100%;min-height:40px;padding:0 5px 10px;border-bottom:1px solid #efefef}
-.tabs-box .tabs-container .tabs-content .tab-con-box .input-box dl {width:100%;min-height:30px;margin:0;color:#999} 
+.tabs-box .tabs-container .tabs-content .tab-con-box .input-box dl {width:100%;min-height:30px;margin:0;color:#7b9acc} 
 .tabs-box .tabs-container .tabs-content .tab-con-box .input-box dl dt,
 .tabs-box .tabs-container .tabs-content .tab-con-box .input-box dl dd {float:left;min-height:30px;line-height:30px}
 .tabs-box .tabs-container .tabs-content .tab-con-box .input-box dl dt {width:20px}
@@ -432,7 +433,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 
 /* tab dn box */
 .tabs-box .tabs-container .tabs-content .tab-dn-box {float:left;width:100%;height:60px;padding:10px 20px;border-top:1px solid #ccc}
-.tabs-box .tabs-container .tabs-content .tab-dn-box label {height:40px;color:#999;line-height:40px;cursor:pointer}
+.tabs-box .tabs-container .tabs-content .tab-dn-box label {height:40px;color:#7b9acc;line-height:40px;cursor:pointer}
 .tabs-box .tabs-container .tabs-content .tab-dn-box .article-submit-btn {float:right;width:100px;height:40px;line-height:40px;border-radius:5px}
 
 
@@ -456,7 +457,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 .upload-file-info i.file-close-btn {top:33px;right:20px}
 
 /* 이미지 정보 */
-.upload-img-info {position:relative;display:inline-block;width:18%;height:120px;margin-left:2%;border:1px solid #999}
+.upload-img-info {position:relative;display:inline-block;width:18%;height:120px;margin-left:2%;border:1px solid #7b9acc}
 .upload-img-info:first-child {margin-left:0}
 .upload-img-info .upload-img {overflow:hidden;width:100%;height:118px;background-repeat:no-repeat;background-size:cover;background-position:center}
 .upload-img-info i.img-close-btn {top:-10px;right:-10px}
@@ -513,7 +514,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 .pro-user-list .pro-user-info .pro-user-photo img {vertical-align:top}
 
 /* 추가 항목 입력 버튼 */
-.con-task button.add-item-btn {margin-top:15px;padding:5px 15px;color:#999;border:1px solid #999;border-radius:20px}
+.con-task button.add-item-btn {margin-top:15px;padding:5px 15px;color:#7b9acc;border:1px solid #7b9acc;border-radius:20px}
 .con-task button.add-item-btn:hover {color:#333;border-color:#333}
 
 /* 추가 항목 박스 */
@@ -669,10 +670,10 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 .timeline-header > ul.article-top-icon {position:absolute;height:40px;top:20px;right:20px;margin:0}
 .timeline-header > ul.article-top-icon > li {float:left;height:40px;margin-left:20px;line-height:44px}
 .timeline-header > ul.article-top-icon > li:first-child {margin:0}
-.timeline-header > ul.article-top-icon > li > a.pick-check-btn i.fa-map-pin {color:#999}
+.timeline-header > ul.article-top-icon > li > a.pick-check-btn i.fa-map-pin {color:#7b9acc}
 .timeline-header > ul.article-top-icon > li > a.pick-check-btn i.fa-map-pin:hover {color:#2b3991}
 .timeline-header > ul.article-top-icon > li > a.pick-check-btn i.pick-active {color:#2b3991}
-.timeline-header > ul.article-top-icon > li > a.pick-check-btn i.pick-active:hover {color:#999}
+.timeline-header > ul.article-top-icon > li > a.pick-check-btn i.pick-active:hover {color:#7b9acc}
 
 .timeline-header > ul.article-top-icon > li > .dropdown-menu {
 	width:100px;
@@ -718,7 +719,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 .article-img .img-con {display:block;width:100%;height:340px;border:1px solid #ccc;background-size:cover}
 
 .timeline-content .input-box {float:left;width:100%;min-height:40px;padding:0 5px 10px;border-bottom:1px solid #efefef}
-.timeline-content .input-box dl {width:100%;min-height:30px;margin:0;color:#999} 
+.timeline-content .input-box dl {width:100%;min-height:30px;margin:0;color:#7b9acc} 
 .timeline-content .input-box dl dt,
 .timeline-content .input-box dl dd {float:left;min-height:30px;line-height:30px}
 .timeline-content .input-box dl dt {width:20px}
@@ -734,7 +735,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 
 /* timline schedule */
 .timeline-article.con-schedule {padding:20px}
-.con-schedule .container {padding:20px;background-color:#f1f2f3;border:1px solid #ccc}
+.con-schedule .container {padding:20px;background-color:#FCF6F5;border:1px solid #ccc;display:table;}
 .con-schedule .schedule-header dl,
 .con-schedule .schedule-header dl dt,
 .con-schedule .schedule-header dl dd {float:left}
@@ -769,13 +770,13 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 	width:calc(100% - 30px);
 }
 .todo-percent-cnt::after {content:'%'}
-.todo-success {font-style:italic;color:#999 !important;text-decoration:line-through}
+.todo-success {font-style:italic;color:#7b9acc !important;text-decoration:line-through}
 
 /* timeline vote */
 .time-vote-con {position:relative;display:block;float:left;width:100%;padding:10px 20px;background-color:#fff;border:1px solid #ccc}
 .time-vote-con label {width:100%;margin-bottom:0}
 .vote-progress-bar {display:block;width:100%;height:20px;background-color:#ccc}
-.vote-progress-bar .vote-range {display:block;width:0;min-width:0;max-width:100%;height:20px;background-color:#999}
+.vote-progress-bar .vote-range {display:block;width:0;min-width:0;max-width:100%;height:20px;background-color:#7b9acc}
 .vote-count {position:absolute;top:10px;right:20px}
 
 .con-vote input[type=submit],
@@ -817,7 +818,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 
 /* 좋아요, 댓글달기, 담아두기 */
 .article-etc-info > ul.article-etc-menu {display:block;float:left;width:100%;height:40px;border-top:1px solid #ccc}
-.article-etc-info > ul.article-etc-menu > li {float:left;height:40px;margin-left:30px;font-size:14px;color:#999;line-height:40px}
+.article-etc-info > ul.article-etc-menu > li {float:left;height:40px;margin-left:30px;font-size:14px;color:#7b9acc;line-height:40px}
 .article-etc-info > ul.article-etc-menu > li:first-child {margin-left:0}
 
 /* 이모티콘 박스 */
@@ -833,7 +834,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 	border-radius:5px;
 	box-shadow:2px 2px 2px 2px rgba(0,0,0,.3);
 }
-.emoticon-box > ul > li {float:left;width:40px;height:60px;margin-left:20px;font-size:11px;color:#999;text-align:center}
+.emoticon-box > ul > li {float:left;width:40px;height:60px;margin-left:20px;font-size:11px;color:#7b9acc;text-align:center}
 .emoticon-box > ul > li:first-child {margin-left:0}
 .emoticon-box > ul > li > img,
 .emoticon-box > ul > li > span {position:absolute}
@@ -845,7 +846,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 .dropdown-menu.emoticon-box li:hover {background-color:transparent}
 
 /* 댓글 wrap 박스 */
-.timeline-comment-wrap {float:left;width:100%;padding:10px 20px;background-color:#f1f2f3;border:1px solid #ccc;border-width:1px 0 1px}
+.timeline-comment-wrap {float:left;width:100%;padding:10px 20px;background-color:#FCF6F5;border:1px solid #ccc;border-width:1px 0 1px}
 .timeline-comment-wrap dl,
 .timeline-comment-wrap dl dt,
 .timeline-comment-wrap dl dd {float:left}
@@ -883,7 +884,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 .comment-list-box .comment-user-info {display:block;float:left;width:100%}
 
 .comment-list-box ul.comment-edit-btn {position:absolute;top:0;right:0px}
-.comment-list-box ul.comment-edit-btn li {float:left;font-size:13px;color:#999}
+.comment-list-box ul.comment-edit-btn li {float:left;font-size:13px;color:#7b9acc}
 .comment-list-box ul.comment-edit-btn li:first-child::after {content:'|';margin:0 10px;color:#ccc}
 
 .comment-list-box .comment-edit-box {display:none}
@@ -907,7 +908,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 .timeline-comment-wrap dl dd .upload-file-info i.file-close-btn {top:-10px;right:-10px}
 
 /* 댓글 이미지 정보 */
-.timeline-comment-wrap .upload-img-info {position:relative;display:inline-block;width:18%;height:120px;margin-left:2.5%;border:1px solid #999}
+.timeline-comment-wrap .upload-img-info {position:relative;display:inline-block;width:18%;height:120px;margin-left:2.5%;border:1px solid #7b9acc}
 .timeline-comment-wrap .upload-img-info:first-child {margin-left:0}
 .timeline-comment-wrap .upload-img-info .upload-img {overflow:hidden;width:100%;height:118px;background-repeat:no-repeat;background-size:cover;background-position:center}
 .timeline-comment-wrap .upload-img-info i.img-close-btn {top:-10px;right:-10px}
@@ -933,7 +934,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 .article-edit-box textarea {overflow-y:hidden;width:100%;height:120px;border:0}
 
 .article-edit-dn {display:block;float:left;width:100%;height:60px;padding:10px 20px;border-top:1px solid #ccc}
-.article-edit-dn label {height:40px;color:#999;line-height:40px;cursor:pointer}
+.article-edit-dn label {height:40px;color:#7b9acc;line-height:40px;cursor:pointer}
 .article-edit-dn .article-submit-btn {float:right;width:100px;height:36px;line-height:36px;border-radius:5px}
 
 
@@ -944,7 +945,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 *
 *******************************************/
 /* common */
-.pro-right-box {float:left;display:block;width:100%;background-color:#fff}
+.pro-right-box {float:left;display:block;width:100%;background-color:#fff;border:solid 1px #cccccc}
 
 /* back(prev) button(이전화면 버튼) */
 .pro-prev-btn {display:block;width:100%;height:50px;padding-left:30px;line-height:50px;border:1px solid transparent}
@@ -1034,7 +1035,7 @@ ul.pro-gather-nav li a:hover {background-color:#f1f2f3}
 /* pop sub con */
 .pop-con-sub {display:block;float:left;width:100%}
 .pop-con-sub .select-user-list {display:none;position:relative;padding:15px 0;border-bottom:1px solid #ccc}
-.pop-con-sub .select-user-list .user-all-del {position:absolute;right:0;bottom:15px;color:#999;cursor:pointer}
+.pop-con-sub .select-user-list .user-all-del {position:absolute;right:0;bottom:15px;color:#7b9acc;cursor:pointer}
 .pop-con-sub .select-user-list .user-all-del:hover {color:#2b3991;text-decoration:underline}
 .pop-con-sub .select-user-list .select-user-box {
 	display:inline-block;
@@ -1097,7 +1098,7 @@ ul.pro-gather-nav li a:hover {background-color:#f1f2f3}
 
 /* member edit title */
 .mem-edit-tit {display:block;float:left;width:100%;margin-bottom:30px;font-size:24px;color:#333}
-.mem-edit-tit span {display:inline-block;margin-left:10px;font-weight:500;font-size:15px;color:#999}
+.mem-edit-tit span {display:inline-block;margin-left:10px;font-weight:500;font-size:15px;color:#7b9acc}
 
 .mem-edit-wrap .col-md-6:nth-child(1),
 .mem-edit-wrap .col-md-6:nth-child(3) {padding-left:0}
@@ -1108,8 +1109,8 @@ ul.pro-gather-nav li a:hover {background-color:#f1f2f3}
 .mem-box > i {position:absolute;left:30px;top:55px;font-size:80px}
 .mem-box:last-child > i {font-size:60px}
 .mem-box .mem-box-info {padding-left:100px}
-.mem-box .mem-box-info a {float:left;padding:5px 15px;color:#999;border:1px solid #ddd}
-.mem-box .mem-box-info a:hover {color:#333;border-color:#999}
+.mem-box .mem-box-info a {float:left;padding:5px 15px;color:#7b9acc;border:1px solid #ddd}
+.mem-box .mem-box-info a:hover {color:#333;border-color:#7b9acc}
 
 /* member edit - alim(coming soon) */
 .coming-soon-bg {position:absolute;top:0;right:0;bottom:0;left:0;z-index:9;background-color:rgba(0, 0, 0, .7)}
@@ -1146,7 +1147,7 @@ ul.pro-gather-nav li a:hover {background-color:#f1f2f3}
 .mem-profile-img .file-btn-box {position:absolute;top:120px;right:10px;transition:all .3s;z-index:9999}
 .mem-profile-img .file-btn-box:hover {transition:all .3s cubic-bezier(.175, .885, .32, 1.275)}
 .mem-profile-img .file-btn-box .upload-btn {font-size:26px;color:#666;cursor:pointer}
-.mem-profile-img .file-btn-box .upload-btn:hover {color:#999;transition:all .3s}
+.mem-profile-img .file-btn-box .upload-btn:hover {color:#7b9acc;transition:all .3s}
 .mem-profile-img .file-btn-box .photo-upload {display:none}
 
 /* member profile info */
@@ -1204,6 +1205,9 @@ ul.pro-gather-nav li a:hover {background-color:#f1f2f3}
 *******************************************/
 
 /* reset */
+.bg-light{
+	background-color : #FCF6F5 !important;
+}
 * {margin:0;padding:0}
 *:not(.rep_cont) {
 	-webkit-box-sizing:border-box;
@@ -1215,7 +1219,7 @@ body {
 	position:relative;
 	height:100%;
 	font-family:'Noto Sans KR','Malgun Gothic', 'Nanum Gothic', dotum, sans-serif, Apple Gothic;
-	background-color:#e4e6e9
+	background-color:#fffbfa
 }
 ul, ul li {list-style-type:none}
 a, a:hover {text-decoration:none}
@@ -1353,7 +1357,7 @@ textarea::placeholder {color:#a0a0a0}
 /* disabled checkbox */
 .custom-check-input:disabled:not(:checked) + label:before,
 .custom-check-input:disabled:checked + label:before {box-shadow:none;border-color:#bbb;background-color:#ddd}
-.custom-check-input:disabled:checked + label:after {color:#999}
+.custom-check-input:disabled:checked + label:after {color:#7b9acc}
 .custom-check-input:disabled + label {color:#aaa}
 
 /* accessibility(check해제 했을 시)
@@ -1409,7 +1413,7 @@ label:hover:before {border:1px solid #4778d9!important}
 }
 
 .custom-radio-input:disabled + label:after{
-	background-color:#999
+	background-color:#7b9acc
 }
 .custom-radio-input:not(:checked) + label:after {
     opacity: 0;
@@ -1421,7 +1425,6 @@ label:hover:before {border:1px solid #4778d9!important}
     -webkit-transform: scale(1);
     transform: scale(1);
 }
-
 /*******************************************
 * Note : file icon class
 *******************************************/
@@ -1545,8 +1548,8 @@ label:hover:before {border:1px solid #4778d9!important}
 * 작성자 : UA(Kim ji su)
 *******************************************/
 
-.default-color {color:#2b3991 !important}
-.default-back-color {background-color:#2b3991 !important}
+.default-color {color:#7b9acc !important}
+.default-back-color {background-color:#7b9acc !important}
 
 .color-white {color:#fff !important}
 .back-color-white {background-color:#fff !important}
