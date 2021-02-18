@@ -33,28 +33,28 @@
 		crossorigin="anonymous"></script>
 <style type="text/css">
 	.body{
-		background-color:#FCF6F5;
+		
 	}	
 	td{
 		padding-bottom:12px;
 	}
 	/*테이블*/
 	.login_css{
-		margin-top: 130px;
+		margin-top: 170px;
     	margin-left: auto;
     	margin-right:auto;
     	font-size: 12pt;	
 	}
 	/*모든 텍스트 창*/
 	.alltxt_css{
-		width:300px;
-		height:37px;
+		width:330px;
+		height:50px;
 		border: 1px solid #ccc;
 	}
 	/*로그인 버튼*/
 	.btCss{
-	    width: 100px;
-	    height: 40px;
+	    width: 130px;
+	    height: 52px;
 	    font-size: 12pt;
 	    background-color: #7b9acc;
 	    border: 1px solid #7b9acc;
@@ -64,7 +64,7 @@
 	
 </style>		
 </head>
-<body class="body">
+<body class="text-center" style="background-color:#FCF6F5;">
 <jsp:include page="/WEB-INF/views/header.jsp"/>
 <section>
 	<form name="login" action="login.do" method="post">
@@ -84,6 +84,8 @@
 			</tr>
 		</table>
 	</form>
+	<br>
+	<div><a href="memJoinForm.do">아직 회원이 아니신가요?</a></div>
 </section>
 
 </body>

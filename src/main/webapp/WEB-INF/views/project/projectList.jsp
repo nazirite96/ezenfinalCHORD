@@ -188,10 +188,11 @@ function submitgogo(){
 					<div class="pro-tit-box ${dto.pro_user_color }">
 						<c:choose>
 							<c:when test="${dto.imp_chk eq dto.pro_no}">
-							<div class="check-import" data-prono="${dto.pro_no }" data-boxno="${imp_no }"><i class="fas fa-star size-20 color-yellow cursor-point"></i></div>	
+							<div class="check-import" data-prono="${dto.pro_no }" data-boxno="${imp_no }" data-proname="${dto.pro_name }"><i class="fas fa-star size-20 color-yellow cursor-point"></i></div>	
 							</c:when>
 							<c:otherwise>
-							<div class="check-import" data-prono="${dto.pro_no }" data-boxno="${imp_no }"><i class="fas fa-star size-20 color-gray-l cursor-point"></i></div>
+							<div class="check-import" data-prono="${dto.pro_no }" data-boxno="${imp_no }" data-proname="${dto.pro_name }"><i class="fas fa-star size-20 color-gray-l cursor-point"></i></div>
+							
 							</c:otherwise>
 						</c:choose>
 						<span class="dis-block size-24 color-white text-center cursor-point pro-click">${dto.pro_name }</span>

@@ -26,6 +26,7 @@ import com.ezen.chord.task.service.TaskService;
 import com.ezen.chord.timeline.dto.TimelineDTO;
 import com.ezen.chord.timeline.service.TimelineService;
 
+
 @Controller
 public class TaskController {
 	
@@ -185,7 +186,7 @@ public class TaskController {
 	public String updateTimWithTask(TimelineDTO timDTO ,
 							FilesDTO filesDTO ,
 							TaskDTO editDTO,
-							@RequestParam("tu_mem_list")List<Integer> tu_mem_list,
+							@RequestParam(value="tu_mem_list", defaultValue = "1")List<Integer> tu_mem_list,
 							@RequestParam("articleFile")List<MultipartFile> files,
 							@RequestParam(value="del_task_user_no", required=false)List<Integer> delTuList,
 							HttpServletRequest request) {
@@ -195,7 +196,8 @@ public class TaskController {
 		
 		TaskDTO taskDTO = taskDAO.getTaskDTO(editDTO.getTask_no());
 		
-		taskDTO.setTask_title(editDTO.getTask_title());
+		taskDTO.setCont_kind("task");
+		
 		
 		// 업무 담당자 삭제
 //		if (delTuList != null) {
@@ -204,26 +206,38 @@ public class TaskController {
 //			}			
 //		}
 		
+		System.out.println(editDTO.getTim_cont()+"수정된 제목");
+		System.out.println(editDTO.getTask_state()+"수정된 진행상황");
+		System.out.println(editDTO.getTask_start_date()+"수정된 시작일");
+		System.out.println(editDTO.getTask_end_date()+"수정된 마감일");
+		System.out.println(editDTO.getTu_mem_list()+"담당자 들어온거");
+		System.out.println(editDTO.getTask_priority()+"우선순위 들어온거");
+		System.out.println(editDTO.getTask_content()+"글내용 들어온거");
+		
+		
 		if(editDTO.getTask_state() != null ) {
 			taskDTO.setTask_state(editDTO.getTask_state());
 		}
 		
+		
+		
 		/*시작일 수정*/
-		if(!editDTO.getTask_start_date().equals("") && editDTO.getTask_start_date() != null) {
+		if(!editDTO.getTask_start_date().equals("") || editDTO.getTask_start_date() != null) {
 			
 			if(editDTO.getTask_start_date() == null || editDTO.getTask_start_date().equals("")) {
-				taskDTO.setTask_start_date("1990-01-01");
+				editDTO.setTask_start_date("1990-01-01");
 			}
+			
 			taskDTO.setTask_start_date(editDTO.getTask_start_date());
 			
 			int result = taskDAO.updateTaskStartDateDAO(taskDTO);
 		}
 		
 		/*마감일 수정*/
-		if(!editDTO.getTask_end_date().equals("") && editDTO.getTask_end_date() != null) {
+		if(!editDTO.getTask_end_date().equals("") || editDTO.getTask_end_date() != null) {
 			
 			if(editDTO.getTask_end_date() == null || editDTO.getTask_end_date().equals("")) {
-				taskDTO.setTask_end_date("1990-01-01");
+				editDTO.setTask_end_date("1990-01-01");
 			}
 			taskDTO.setTask_end_date(editDTO.getTask_end_date());
 			
@@ -264,23 +278,69 @@ public class TaskController {
 				}
 			}
 		}
-		//int result = timService.insertTim(timDTO);
-		int result2 = taskService.updateTaskTimService(taskDTO);
+		timDTO.setTim_cont(editDTO.getTim_cont());
+		timDTO.setTim_no(editDTO.getTim_no());
+		int result2 = timService.updateTim(timDTO);
 		
-		taskDTO.setTask_title(timDTO.getTim_cont());
 		
 		int resultCnt = taskService.updateTaskService(taskDTO);
-		if(resultCnt == 1) {
-			
-			for(int i = 0 ; i < tu_mem_list.size() ; i++) {
-				System.out.println(tu_mem_list.get(i));
-				taskDTO.setTu_mem_list(tu_mem_list.get(i));
-				/*parti테이블관련(담당자)*/
-				taskService.insertTaskPiService(taskDTO);
-				
-			}
-		}
-	
+//
+//		if(resultCnt == 1) {
+//			
+//			for(int i = 0 ; i < tu_mem_list.size() ; i++) {
+//				System.out.println(tu_mem_list.get(i));
+//				taskDTO.setTu_mem_list(tu_mem_list.get(i));
+//				/*parti테이블관련(담당자)*/
+//				taskService.insertTaskPiService(taskDTO);
+//				
+//			}
+//		}
+//	
 		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no()+"&mem_no="+mem_no;
 }
+	
+	@RequestMapping("/updateTaskState.do")
+	public String taskStateUpdate(@RequestParam("task_no")int task_no
+							 , @RequestParam("task_state")String task_state
+							 , @RequestParam("pro_no")int pro_no
+							 , TimelineDTO timDTO
+							 , HttpSession session
+							 , HttpServletRequest request){
+		
+		HttpSession sess=request.getSession();
+		int mem_no = (Integer) sess.getAttribute("memNo");
+		
+		
+		// 업무글 상세조회
+		TaskDTO taskDTO = taskDAO.getTaskDTO(task_no);
+		taskDTO.setTask_state(task_state);	// 업무상태
+		
+		if (taskDTO.getTask_start_date() == null) {
+			taskDTO.setTask_start_date("");
+		}
+		if (taskDTO.getTask_end_date() == null) {
+			taskDTO.setTask_end_date("");
+		}
+		if (taskDTO.getTask_priority() == null) {
+			taskDTO.setTask_priority("");
+		}
+		if (taskDTO.getTask_content() == null) {
+			taskDTO.setTask_content("");
+		}
+		
+		// 업무글 수정
+		int resultCnt = taskService.updateTaskService(taskDTO);
+		
+		if (resultCnt == 1) {
+			
+			session.setAttribute("msg", "상태값이 변경되었습니다.");
+			session.setAttribute("className", "alert-warning");
+		}
+		
+		return "redirect:/timeLine.do?pro_no="+pro_no+"&mem_no="+mem_no;
+	}	
+	
+	
+	
+	
 }

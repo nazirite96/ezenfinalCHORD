@@ -121,7 +121,7 @@ public class AdminDAOImple implements AdminDAO {
 		
 		int result = 0;
 		try {
-			result = sqlMap.insert("chord.member.myPage_memInfo_insert",mdto);
+			result = sqlMap.insert("chord.admin.admin_memInfoInsert",mdto);
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
 		}
@@ -135,7 +135,7 @@ public class AdminDAOImple implements AdminDAO {
 		
 		int result = 0;
 		try {
-			result = sqlMap.update("chord.member.myPage_memInfo_update",mdto);
+			result = sqlMap.update("chord.admin.admin_memInfoUpdate",mdto);
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
 		}

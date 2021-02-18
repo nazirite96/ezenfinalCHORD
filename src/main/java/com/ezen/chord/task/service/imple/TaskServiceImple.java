@@ -16,7 +16,6 @@ import com.ezen.chord.project_user.dto.ProjectUserDTO;
 import com.ezen.chord.task.dao.TaskDAO;
 import com.ezen.chord.task.dto.TaskDTO;
 import com.ezen.chord.task.service.TaskService;
-import com.ezen.chord.task_user.dao.TaskUserDAO;
 
 
 @Service
@@ -26,7 +25,6 @@ public class TaskServiceImple implements TaskService {
 	private TaskDAO taskDAO;
 	
 	@Inject
-	private TaskUserDAO taskUserDAO;
 	
 
 	/*업무 시퀀스 조회*/

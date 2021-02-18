@@ -70,9 +70,7 @@
 	</insert>
 	<update id="myPage_memInfo_update" parameterType="MemberDTO">
 		update member_info set 
-			mem_info_phone=#{mem_info_phone},
-			mem_info_position=#{mem_info_position},
-			mem_info_dept=#{mem_info_dept}
+			mem_info_phone=#{mem_info_phone}
 			where mem_no=#{mem_no}
 	</update>
 </mapper>

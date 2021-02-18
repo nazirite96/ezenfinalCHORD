@@ -12,5 +12,6 @@ public interface BoxDAO {
 	public int insertBox(BoxDTO boxDTO);
 	public int insertBoxWhenMemJoin(int mem_no);
 	public int deleteBox(int box_no);
+	
 
 }

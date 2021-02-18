@@ -121,7 +121,7 @@
 			set cont_kind = #{cont_kind}
 			,cont_no = #{task_no}
 			,time_kind = 's'
-			,time_datea = TO_DATE(#{task_start_date},'YYYY/MM/DD HH24:MI')
+			,time_date = TO_DATE(#{task_start_date},'YYYY/MM/DD HH24:MI')
 		where cont_no = #{task_no} and time_kind ='s' and cont_kind = #{cont_kind}
 	</update>
 
@@ -131,7 +131,7 @@
 			set cont_kind = #{cont_kind}
 			,cont_no = #{task_no}
 			,time_kind = 'e'
-			,time_datea = TO_DATE(#{task_end_date},'YYYY/MM/DD HH24:MI')
+			,time_date = TO_DATE(#{task_end_date},'YYYY/MM/DD HH24:MI')
 		where cont_no = #{task_no} and time_kind ='e' and cont_kind = #{cont_kind}
 	</update>	
 	
@@ -140,8 +140,8 @@
 	<update id="updateTaskTim" parameterType="taskDTO">
 		update timeline
 		set 
-		tim_cont = #{task_title}
-		where tim_no = #{tim_no}
+		tim_cont = #{tim_cont}
+		where tim_no = #{tim_no} AND cont_kind = 'task'
 	</update>	
 	
 	<!-- 업무 삭제 -->
