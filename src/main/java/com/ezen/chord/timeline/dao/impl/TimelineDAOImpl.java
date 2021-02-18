@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ezen.chord.files.dto.FilesDTO;
 import com.ezen.chord.timeline.dao.TimelineDAO;
 import com.ezen.chord.timeline.dto.TimelineDTO;
 
@@ -39,6 +40,17 @@ public class TimelineDAOImpl implements TimelineDAO{
 		// TODO Auto-generated method stub
 		return sqlmap.selectList("getCollection", mem_no);
 	}
+	@Override
+	public List<TimelineDTO> getMyTimeline(int mem_no) {
+		// TODO Auto-generated method stub
+		return sqlmap.selectList("getMyTimeline", mem_no);
+	}
+	@Override
+	public List<FilesDTO> getFiles(int tim_no) {
+		// TODO Auto-generated method stub
+		return sqlmap.selectList("getFiles", tim_no);
+	}
+	
 	@Override
 	public int updateTim(TimelineDTO timDTO) {
 		// TODO Auto-generated method stub

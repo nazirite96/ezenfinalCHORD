@@ -31,7 +31,7 @@
           <li class="nav-item"><a class="nav-link" href="#"><span data-feather="bar-chart-2"></span>전체일정</a></li>
           <li class="nav-item"><a class="nav-link" href="#"><span data-feather="layers"></span>전체파일</a></li>
           <li class="nav-item"><a class="nav-link" href="collection.do"><span data-feather="layers"></span>담아둔글</a></li>
-          <li class="nav-item"><a class="nav-link" href="#"><span data-feather="layers"></span>내 게시글</a></li>
+          <li class="nav-item"><a class="nav-link" href="myTimeline.do"><span data-feather="layers"></span>내 게시글</a></li>
         </ul>
 
         <h1 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"><span>BOX</span>

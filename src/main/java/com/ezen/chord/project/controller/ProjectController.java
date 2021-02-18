@@ -77,7 +77,7 @@ public class ProjectController {
 	public String insertPro(ProjectDTO proDTO) {
 		java.sql.Date date = new java.sql.Date(12);
 		proDTO.setPro_date(date);
-		filesSerivce.addFolder(proDTO.getPro_name());
+		filesSerivce.createProfolder(proDTO.getPro_name());
 		proService.insertPro(proDTO);
 		return "project/projectList";
 	}

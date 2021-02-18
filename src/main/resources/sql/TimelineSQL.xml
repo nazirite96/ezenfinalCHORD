@@ -55,5 +55,14 @@
     		delete collection
     		where tim_no=#{tim_no} and mem_no = #{mem_no}
     	</delete>
+    	<select id="getMyTimeline" resultType="timelineDTO">
+    		select a.*,(b.tim_no) as coll_chk from timeline A
+			left join (select * from collection where mem_no = 2) B on a.tim_no = b.tim_no
+			where a.mem_no = #{mem_no}
+    	</select>
+    	<select id="getFiles" resultType="filesDTO">
+    		select * from files 
+    		where cont_kind = 'tim' and cont_no = #{tim_no}
+    	</select>
     	
     </mapper>

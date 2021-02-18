@@ -2,6 +2,7 @@ package com.ezen.chord.timeline.dao;
 
 import java.util.List;
 
+import com.ezen.chord.files.dto.FilesDTO;
 import com.ezen.chord.timeline.dto.TimelineDTO;
 
 public interface TimelineDAO {
@@ -11,12 +12,15 @@ public interface TimelineDAO {
 	
 	public List<TimelineDTO> getTimelineByProNo(int pro_no,int page,int mem_no);
 	public List<TimelineDTO> getCollection(int mem_no);
+	public List<TimelineDTO> getMyTimeline(int mem_no);
 	
 	public int updateTim(TimelineDTO timDTO);
 	
 	public int deleteTim(int tim_no);
 	
 	public int getTimSeq();
+	
+	public List<FilesDTO> getFiles(int tim_no);
 	
 	public int insertFix(int mem_no,int tim_no,int pro_no);
 	

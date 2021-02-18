@@ -265,7 +265,10 @@ function submitgogo(){
 														required="required"></textarea>
 
 													<!-- 이미지 목록이 나올부분 -->
-													<div id="uploadImgForm" class="upload-img-list"></div>
+													<div id="uploadImgForm" class="upload-img-list">
+													
+													
+													</div>
 
 													<!-- 첨부파일 목록이 나올부분 -->
 													<div id="uploadFileForm" class="upload-file-list"></div>
@@ -948,13 +951,14 @@ function submitgogo(){
 
 														<div class="swiper-container-img">
 															<div class="swiper-wrapper">
-																<!-- 
-																<c:forEach items="${timeLine.filesList }" var="filesVo">
-																<c:if test="${filesVo.files_kind == 'img' }">
-														<div class="swiper-slide img-con"
-															style="background-image:url('/files/view?files_no=${filesVo.files_no}')"></div>
-														 	</c:if>
-															</c:forEach>-->
+															<c:if test="${not empty dto.filesList }">
+																<c:forEach items="${dto.filesList }" var="filesDTO">
+																	${filesDTO.file_name }
+																	${filesDTO.file_path }
+																	${filesDTO.file_upload }
+																		<img src="resources/files\ㅌ\155341403174238.jpg" height="300px">
+																</c:forEach>
+															</c:if>
 															</div>
 															Add Arrows
 															<div class="swiper-button-next"></div>
