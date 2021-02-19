@@ -12,7 +12,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- 떠다니는 메뉴 -->
-
+<script src="<%=request.getContextPath() %>/resources/js/utils.js"></script>
 <script type="text/javascript">
 var stmnLEFT = 10; // 오른쪽 여백 
 var stmnGAP1 = 0; // 위쪽 여백 
@@ -2486,7 +2486,7 @@ function fn_collCancel(){
 							<div class="pro-right-box martop-15">
 								<a class="right-link-btn back-color-green-l color-white"
 									id="proChat" style="cursor: pointer;"> <i
-									class="fas fa-comments maright-10"></i>프로젝트 참여자
+									class="fas fa-user maright-10"></i>프로젝트 참여자
 								</a>
 							</div>
 							<!-- 프로젝트 채팅 button : f -->
