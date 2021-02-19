@@ -767,9 +767,7 @@ function submitgogo(){
 								</div>
 							</div>
 
-							<div class="table-responsive"></div>
-
-
+							<div class="table-responsive">
 							<!-- top pick article(상단고정글):s -->
 							<div class="top-fixed-article martop-20">
 								<h5 class="marbtm-10">상단고정글</h5>
@@ -832,22 +830,22 @@ function submitgogo(){
 													<!-- timeline content:s -->
 													<div class="timeline-content">
 														<%-- <c:choose>
-				<c:when test="${timeLine.basicVo != null }">
-					<%@include file="/include/timeline_article.jsp" %>
-				</c:when>
-				<c:when test="${timeLine.taskVo != null }">
-					<%@include file="/include/timeline_task.jsp" %>
-				</c:when>
-				<c:when test="${timeLine.todoVo != null }">
-					<%@include file="/include/timeline_todo.jsp" %>
-				</c:when>
-				<c:when test="${timeLine.voteVo != null }">
-					<%@include file="/include/timeline_vote.jsp" %>
-				</c:when>
-				<c:otherwise>
-					<%@include file="/include/timeline_schedule.jsp" %>
-				</c:otherwise>
-			</c:choose> --%>
+													<c:when test="${timeLine.basicVo != null }">
+														<%@include file="/include/timeline_article.jsp" %>
+													</c:when>
+													<c:when test="${timeLine.taskVo != null }">
+														<%@include file="/include/timeline_task.jsp" %>
+													</c:when>
+													<c:when test="${timeLine.todoVo != null }">
+														<%@include file="/include/timeline_todo.jsp" %>
+													</c:when>
+													<c:when test="${timeLine.voteVo != null }">
+														<%@include file="/include/timeline_vote.jsp" %>
+													</c:when>
+													<c:otherwise>
+														<%@include file="/include/timeline_schedule.jsp" %>
+													</c:otherwise>
+												</c:choose> --%>
 													</div>
 													<!-- timeline content:f -->
 
@@ -859,7 +857,7 @@ function submitgogo(){
 								</div>
 							</div>
 
-
+							</div>
 
 
 
