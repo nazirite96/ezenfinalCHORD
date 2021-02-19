@@ -238,6 +238,14 @@ function submitgogo(){
 							</div>
 
 							<!-- project title(프로젝트 제목):f -->
+							
+							<!-- project task report(업무리포트):s -->
+							<div class="pro-detail-box pro-task-report martop-20" style="display:none">
+							<h3 class="size-16 marbtm-20"><i class="fas fa-chart-pie maright-10 size-20 color-green-l"></i> 업무리포트(전체 <span></span>건)</h3>
+							<%@include file="../task/task_report.jsp" %>		
+							</div>
+							<!-- project task report(업무리포트):f -->
+							
 							<div class="pro-detail-box pro-tab-box martop-20">
 								<div class="tabs-box">
 									<ul class="tabs">
@@ -1097,7 +1105,6 @@ function submitgogo(){
 															</dt>
 															<dd>
 																<input type="hidden" class="edit-confirm" data-taskno="${dto.taskDTO.task_no }" data-prono="${dto.pro_no }">
-																<input type="hidden" class="edit-confirm" >
 																
 																<div class="task-state-list">
 
@@ -1175,7 +1182,7 @@ function submitgogo(){
 				                                                               name="tu_mem_id" value="${tu_mem.mem_no}">
 				                                                         </div>
 																	</c:forEach>
-																</c:if>
+																	</c:if>
 																</div>
 															</dd>
 														</dl>
@@ -1370,23 +1377,24 @@ function submitgogo(){
 																</dt>
 																<dd class="posi-re">
 																	<input type="text" id="taskUser" placeholder="담당자 추가"
-																		onfocus="fn_taskManagerFocus(this)">
+																		onfocus="fn_taskManagerFocus(this)" readonly>
 
 																	<!-- 담당자 리스트 -->
 																	<div class="task-user-list">
-																	<c:forEach items="${dto.taskDTO.partic }" var="tu_mem">
+																	<c:forEach items="${dto.taskDTO.partic }" var="tu_mem" >
 																		<div class="name-tag">
-																			<img src="/chord/resources/img/sample.png" width="24" class="cursor-point">
+																			<img src="/chord/resources/img/sample.png" width="24"
+	                                                                				  class="cursor-point">
 																			<strong class="marleft-10">${tu_mem.mem_name }</strong>
 																			<i class="fas fa-times-circle marleft-15" data-no="${tu_mem.mem_no }" onclick="fn_taskUserDelete(this)"></i>
 																			<input type="hidden" name="tu_mem_list" value="${tu_mem.mem_no }">
 																		</div>
 																	</c:forEach>
 																	</div>
-																	
+	
 																	<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
 																	<div class="pro-user-list">
-																		<c:forEach items="${notInvitedProUserList }" var="mbs">
+																		<c:forEach items="${invitedProUserList }" var="mbs">
 																			<div class="pro-user-info"
 																				onclick="fn_taskManagerSelect(this)">
 																				<div class="pro-user-photo maright-10">
@@ -1472,16 +1480,13 @@ function submitgogo(){
 																<dd class="posi-re">
 																	<c:choose>
 																		<c:when test="${dto.taskDTO.task_priority == null }">
-																			<input type="text" name="task_priority"
-																				class="task-rank-input" placeholder="우선순위 선택"
+																			<input type="text" name="task_priority"	class="task-rank-input" placeholder="우선순위 선택"
 																				onfocus="fn_taskRankFocus(this)" readonly>
-																			<span class="task-rank"
-																				onclick="fn_taskRankClick(this)"> </span>
+																			<span class="task-rank"	onclick="fn_taskRankClick(this)"> </span>
 																		</c:when>
 																		<c:otherwise>
-																			<input type="text" name="task_priority"
-																				class="task-rank-input" style="display: none"
-																				placeholder="우선순위 선택"	onfocus="fn_taskRankFocus(this)" readonly>
+																			<input type="text" name="task_priority" class="task-rank-input" style="display: none"
+																				placeholder="우선순위 선택"	onfocus="fn_taskRankFocus(this)" value="${dto.taskDTO.task_priority }" readonly>
 																			<span class="task-rank"	onclick="fn_taskRankClick(this)">
 																			<c:if test="${dto.taskDTO.task_priority == '낮음'}">
 																				<i class="flow-icon rank-icon icon-low"></i>${dto.taskDTO.task_priority }
@@ -1883,6 +1888,7 @@ function submitgogo(){
 												<div class="container">
 												
 													<input type="hidden" id="todo_no" name="todo_no" value="${dto.todoDTO.todo_no }">
+													<input type="hidden" id="todo_item_no" name="todo_item_no" value="${dto.todoItemDTO.todo_item_no }">
 												
 													<!-- 할일제목:s -->
 													<div class="todo-title input-box">
@@ -1920,11 +1926,11 @@ function submitgogo(){
 																<dd>
 																	<span class="color-gray todo-success">${tiList.todo_item_content }</span>
 
-																	<div class="posi-re float-right cursor-point" onclick="fn_openPopup(this)" 
-																	data-no="${tiList.ti_mem_no }" data-name="${tiList.mem_name }" data-my="" 
-																	data-toggle="tooltip" data-placement="bottom" title="${tiList.mem_name }">
-																		<i class="icon-circle circle-xs-re"></i>
-																		<img src="/mem/pic?mem_id=${tiList.ti_mem_no }" class="cursor-point" width="24">
+																	 <div class="posi-re float-right cursor-point" 
+																			data-no="${tiList.mem_no }" data-nick="${tiList.mem_name }" data-my="" 
+																			data-toggle="tooltip" data-placement="bottom" title="${tiList.mem_name }">
+																			<img src="/chord/resources/img/sample.png" width="24" class="cursor-point">
+																			<strong class="marleft-10">${tiList.mem_name}</strong>
 																	</div>
 			
 																	<c:set var="now" value="<%=new java.util.Date()%>" />
@@ -1957,12 +1963,12 @@ function submitgogo(){
 																	<dd>
 																		<span class="color-gray">${tiList.todo_item_content }</span>
 																		
-																	<div class="posi-re float-right cursor-point" onclick="fn_openPopup(this)" 
-																	data-no="${tiList.ti_mem_no }" data-name="${tiList.mem_name }" data-my="" 
-																	data-toggle="tooltip" data-placement="bottom" title="${tiList.mem_name }">
-																		<i class="icon-circle circle-xs-re"></i>
-																		<img src="/mem/pic?mem_id=${tiList.ti_mem_no }" class="cursor-point" width="24">
-																	</div>
+				                                                         <div class="posi-re float-right cursor-point"  
+																			data-no="${tiList.mem_no }" data-nick="${tiList.mem_name }" data-my="" 
+																			data-toggle="tooltip" data-placement="bottom" title="${tiList.mem_name }">
+																			<img src="/chord/resources/img/sample.png" width="24" class="cursor-point">
+																			<strong class="marleft-10">${tiList.mem_name}</strong>
+																		</div>
 																		
 																		<c:set var="now" value="<%=new java.util.Date()%>" />
 																		<c:set var="sysYear"><fmt:formatDate value="${now}" pattern="MM/dd" /></c:set> 
@@ -1979,6 +1985,7 @@ function submitgogo(){
 																			</div>
 																			</c:otherwise>
 																		</c:choose>
+				                                                         
 																	</dd>
 																</dl>
 															</c:when>
@@ -1990,9 +1997,125 @@ function submitgogo(){
 													
 												</div>
 											</div>
-
+											<!-- 할일 수정:s(하는중3) -->
+											<form action="todoUpdate.do" method="get" class="article-edit-form con-todo">
+												<input type="hidden" name="tim_no" value="${dto.tim_no }">
+ 												<input type="hidden" name="pro_no" value="${proUserDTO.pro_no }">
+												<input type="hidden" name="mem_no" value="${proUserDTO.mem_no }">													
+												<input type="hidden" id="todo_no" name="todo_no" value="${dto.todoDTO.todo_no }">
+											
+												<!-- article edit box:s -->
+												<div class="article-edit-box">
+												
+													<!-- 할일제목:s -->
+													<div class="input-box">
+														<input type="text" name="tim_cont" class="font-bold size-18" placeholder="할일 제목을 입력하세요.(선택)" value="${dto.tim_cont }">
+													</div>
+													<!-- 할일제목:f -->
+													
+													<!-- 할일 내용:s -->
+													<div class="input-box todo-box">
+														<c:forEach items="${dto.todoDTO.tiList }" var="tiList" varStatus="status">
+														<dl>
+															<dt class="maright-20"><i class="fas fa-minus-circle color-red cursor-point" data-no="${tiList.todo_item_no }" onclick="removeTodoItem(this)"></i></dt>
+															<dd class="posi-re">
+																<!-- 할일 내용 입력 input -->
+																<input type="hidden" name="tiUpdateList[${status.index }].ti_no" value="${tiList.todo_item_no }">
+																<input type="text" name="tiUpdateList[${status.index }].ti_cont" class="todo-input" value="${tiList.todo_item_content }" placeholder="할일 입력(Enter or Tab 입력시 아래에 할일 입력 추가됨)" onkeydown="fn_keyDown(event, this)" required="required">
+																<input type="hidden" name="tiUpdateList[${status.index }].ti_chk" class="todo-chk" value="${tiList.todo_item_chk }">
+																
+																<!-- 날짜, 담당자 아이콘박스 -->
+																<div class="todo-icon-box">
+																	
+																	<!-- todo date : 날짜추가 : s -->
+																	<div class="posi-re dis-inblock float-left maright-15">
+																		<!-- date icon button -->
+																		<c:set var="now" value="<%=new java.util.Date()%>" />
+																		<c:set var="sysDate"><fmt:formatDate value="${now}" pattern="MM/dd" /></c:set> 
+																		<c:choose>
+																			<c:when test="${tiList.todo_item_date != null }">
+																				<c:choose>
+																					<c:when test="${tiList.todo_item_date < sysDate}">
+																						<i id="dateResult" class="cursor-point todo-date-icon color-red"
+																						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="datePick(this)">${tiList.todo_item_date }</i>
+																					</c:when>
+																					<c:otherwise>
+																						<i id="dateResult" class="cursor-point todo-date-icon color-gray" 
+																						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="datePick(this)">${tiList.todo_item_date }</i>
+																					</c:otherwise>
+																				</c:choose>
+																			</c:when>
+																			<c:when test="${tiList.todo_item_date == null }">
+																				<i id="dateResult" class="flow-icon todo-icon icon-calendar-plus cursor-point todo-date-icon" 
+																				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="datePick(this)"></i>
+																			</c:when>
+																		</c:choose>
+																		<input type="hidden" name="tiList[${status.index }].ti_date" class="todo-date">
+																			
+																		 
+																		<!-- date-picker box -->
+																		<div class="dropdown-menu datepicker-here" aria-labelledby="dateResult"></div>
+																	</div>
+																	<!-- todo date : 날짜추가 : f -->
+																	
+																	
+																	<!-- todo add manager : 담당자추가 : s -->
+																	<div class="posi-re dis-inblock float-left todo-add-manager">
+																	
+																		<!-- 담당자 추가 버튼 -->
+																		<div id="todoManager" class="user-add-btn posi-re cursor-point" 
+																		data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																			<i class="icon-circle circle-xs dis-none"></i>
+																			<i class="flow-icon todo-icon icon-user-plus"></i>
+																			<input type="hidden" name="tiList[${status.index }].ti_mem_no" class="todo-mem" value="${tiList.ti_mem_no }">
+																		</div>
+																
+																		<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
+																		<div class="dropdown-menu todo-pro-user-list" role="menu" aria-labelledby="todoManager">
+																			<c:forEach items="${invitedProUserList }" var="proUserVo" end="2">
+																			<div class="pro-user-info" onclick="userSelect(this)">
+																				<div class="pro-user-photo maright-10">
+																					<i class="icon-circle circle-s"></i>
+																					<img
+																					src="/chord/resources/img/user-pic-sample.png"
+																					style="width: 40px">
+																				</div>
+																				<span class="user-no" data-no=${proUserVo.mem_no }>${proUserVo.mem_no }</span>
+																			</div>
+																			</c:forEach>
+																		</div>
+																		
+																
+																	</div>
+																	<!-- todo add manager : 담당자추가 : f -->
+																</div>
+															</dd>
+														</dl>
+														</c:forEach>
+													</div>
+													<!-- 할일 내용:f -->
+													
+													<div class="input-box martop-15">
+														<a href="#addTodo" class="color-black" onclick="fn_addTodo(this)"><i class="fas fa-plus maright-15 default-color"></i>할일 추가</a>
+													</div>
+												</div>
+												<!-- article edit box:f -->
+												
+												<!-- article edit dn:s -->
+												<div class="article-edit-dn">		
+													<!-- submit & cancel 버튼 -->
+													<input type="submit" value="수정하기" class="article-submit-btn font-bold size-16 color-white text-center default-back-color">
+													<input type="button" value="취소" onclick="fn_editCancel(this)" 
+													class="article-submit-btn maright-10 font-bold size-16 color-gray text-center back-color-white"
+													style="border:1px solid #ddd">
+												</div>
+												<!-- article edit dn:f -->
+											</form>
+											<!-- 할일 수정:f -->					
 												<!-- 할일글 : finsh -->
 											</c:when>
+											
+																	
 											
 										</c:choose>
 									</div>

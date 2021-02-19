@@ -14,6 +14,7 @@ public interface TaskDAO {
 	public int insertTaskDAO(TaskDTO taskDTO);
 	/*업무글 등록(담당자)*/
 	public int insertTaskPiDAO(TaskDTO taskDTO);
+	public int insertTaskPic(int cont_no,int partic_no);
 	/*업무글 등록(시작일)*/
 	public int insertTaskStartDateDAO(TaskDTO taskDTO);
 	/*업무글 등록(마감일)*/
@@ -43,7 +44,9 @@ public interface TaskDAO {
 	public int updateTask(TaskDTO taskDTO);
 	
 	/*업무글 삭제*/
-	public int deleteTask(TaskDTO taskDTO);
+	public int deleteTask(int cont_no);
+	
+	public int deleteTaskTime(int cont_no);
 	
 	/*업무 지정자 삭제*/
 	public int deleteTaskUserDAO(int cont_no);

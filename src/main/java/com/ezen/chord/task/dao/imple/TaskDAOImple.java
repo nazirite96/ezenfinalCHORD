@@ -45,6 +45,15 @@ public class TaskDAOImple implements TaskDAO {
 		return result;
 	}
 	
+	@Override
+	public int insertTaskPic(int cont_no, int partic_no) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("cont_no", cont_no);
+		map.put("partic_no", partic_no);
+		int result = sqlMap.insert("insertTaskPic", map);
+		return result;
+	}
+	
 	/*업무글 등록(시작일)*/
 	@Override
 	public int insertTaskStartDateDAO(TaskDTO taskDTO) {
@@ -121,8 +130,8 @@ public class TaskDAOImple implements TaskDAO {
 	
 	
 	@Override
-	public int deleteTask(TaskDTO taskDTO) {
-		return sqlMap.delete("deleteTask", taskDTO);
+	public int deleteTask(int cont_no) {
+		return sqlMap.delete("deleteTask", cont_no);
 	}
 	
 
@@ -152,6 +161,12 @@ public class TaskDAOImple implements TaskDAO {
 	public List<ProjectUserDTO> tu_mem_list(int task_no) {
 		List<ProjectUserDTO> partic = sqlMap.selectList("selectTaskPiByNo", task_no);
 		return partic;
+	}
+	/*업무시간 삭제*/
+	@Override
+	public int deleteTaskTime(int cont_no) {
+		int result = sqlMap.delete("deleteTaskTime", cont_no);
+		return result;
 	}
 
 }

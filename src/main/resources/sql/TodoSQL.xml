@@ -43,9 +43,9 @@
 	</update>
 
 	<!-- 할일 삭제 -->	
-	<delete id="deleteTodo" parameterType="taskDTO">
+	<delete id="deleteTodo" parameterType="integer">
 		delete from todo 
-		where todo_no = #{todo_no}
+		where todo_no = #{cont_no}
 	</delete>
 	
 </mapper>

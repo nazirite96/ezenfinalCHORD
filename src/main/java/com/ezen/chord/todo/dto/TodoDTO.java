@@ -22,6 +22,7 @@ public class TodoDTO {
 	private String mem_email;			//멤버이메일
 	private String mem_name;			//멤버이름
 	private String pro_name;			//프로젝트명
+	private int todo_item_no;
 	private List<TodoItemDTO> tiList;
 	private List<ProjectUserDTO> partic;	
 	
@@ -138,10 +139,20 @@ public class TodoDTO {
 	public void setPartic(List<ProjectUserDTO> partic) {
 		this.partic = partic;
 	}
+	
+	
+
+	public int getTodo_item_no() {
+		return todo_item_no;
+	}
+
+	public void setTodo_item_no(int todo_item_no) {
+		this.todo_item_no = todo_item_no;
+	}
 
 	public TodoDTO(int todo_no, String todo_title, int mem_no, int cont_no, String cont_kind, int tim_no,
 			String tim_cont, Date tim_date, int pro_no, String mem_email, String mem_name, String pro_name,
-			List<TodoItemDTO> tiList, List<ProjectUserDTO> partic) {
+			int todo_item_no, List<TodoItemDTO> tiList, List<ProjectUserDTO> partic) {
 		super();
 		this.todo_no = todo_no;
 		this.todo_title = todo_title;
@@ -155,9 +166,11 @@ public class TodoDTO {
 		this.mem_email = mem_email;
 		this.mem_name = mem_name;
 		this.pro_name = pro_name;
+		this.todo_item_no = todo_item_no;
 		this.tiList = tiList;
 		this.partic = partic;
 	}
+
 
 
 	

@@ -98,13 +98,13 @@ textarea::placeholder {color:#a0a0a0}
 * Note : flow icon
 *******************************************/
 
-.flow-icon {background:url('/resources/img/design_basic.png') no-repeat}
+.flow-icon {background:url('../img/design_basic.png') no-repeat}
 
 
 /*******************************************
 * Note : photo circle
 *******************************************/
-.icon-circle {position:absolute;overflow:hidden;left:0;top:0;z-index:99;background:url('/resources/img/design_basic.png') no-repeat}
+.icon-circle {position:absolute;overflow:hidden;left:0;top:0;z-index:99;background:url('../img/design_basic.png') no-repeat}
 .circle-b {width:150px;height:150px;background-position:0 -50px}
 .circle-m {width:60px;height:60px;background-position:-200px -50px}
 .circle-s {width:40px;height:40px;background-position:-300px -50px}
@@ -279,7 +279,7 @@ label:hover:before {border:1px solid #4778d9!important}
 
 /* pop top */
 .pop-layer header.pop-top {position:relative;width:100%;height:40px;padding:0 15px;font-size:14px;line-height:40px;background-color:#ddd;border-radius:10px 10px 0 0}
-.pop-layer header.pop-top .icon-close {top:12px;right:15px;width:16px;height:16px;background:url('/resources/img/design_basic.png') no-repeat;background-position:-500px -300px;text-indent:-5000px}
+.pop-layer header.pop-top .icon-close {top:12px;right:15px;width:16px;height:16px;background:url('../img/design_basic.png') no-repeat;background-position:-500px -300px;text-indent:-5000px}
 
 /* pop con */
 .pop-layer section.pop-con {width:100%;padding:15px}
@@ -398,10 +398,10 @@ a.task-all-collapse[aria-expanded=true] {color:#fff;background-color:#45aaf2}
 
 /* 우선수위 */
 .task-all-rank {display:block;width:100%;height:34px;padding-left:20px;line-height:34px}
-.task-all-rank.icon-low {background-position:30% -16%}
-.task-all-rank.icon-basic {background-position:30% 22%}
-.task-all-rank.icon-high {background-position:30% 60%}
-.task-all-rank.icon-emer {background-position:30% 94%}
+.task-all-rank.icon-low {background-position:-61px -339px}
+.task-all-rank.icon-basic {background-position:-159px -337px}
+.task-all-rank.icon-high {background-position:-260px -339px}
+.task-all-rank.icon-emer {background-position:-360px -339px}
 
 /* 진척도 */
 .task-pcnt-bar {
@@ -2014,7 +2014,7 @@ li.nav-folder-close .edit-btn {top:10px;right:15px}
 	background-position:right -82px
 }
 .search-box .search-input {height:40px;font-size:16px;color:#333;padding:0 15px;border:0}
-.search-box button {position:absolute;overflow:hidden;top:0;right:0;width:24px;height:40px;background:transparent url('/resources/img/design_basic.png');text-indent:-5000px}
+.search-box button {position:absolute;overflow:hidden;top:0;right:0;width:24px;height:40px;background:transparent url('../img/design_basic.png');text-indent:-5000px}
 .search-box button.search-icon {right:39px;background-position:0 -242px}
 .search-box button.close-icon {background-position:-500px -240px}
 

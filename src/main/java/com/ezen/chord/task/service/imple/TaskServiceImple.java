@@ -49,6 +49,12 @@ public class TaskServiceImple implements TaskService {
 		return result;
 	}
 	
+	@Override
+	public int insertTaskPic(int cont_no, int partic_no) {
+		int result = taskDAO.insertTaskPic(cont_no, partic_no);
+		return result;
+	}
+	
 	/*업무글 등록(시작일)*/
 	@Override
 	public int insertTaskStartDateService(TaskDTO taskDTO) {
@@ -137,39 +143,43 @@ public class TaskServiceImple implements TaskService {
 		return result;
 	}
 	
-	/*전체업무 조회*/
 	@Override
-	public List<TaskDTO> selectAllTask() {
-		
-		// 반환값
-		List<TaskDTO> resultList = new ArrayList<TaskDTO>();
-		
-		// 업무글
-		List<TaskDTO> taskList = taskDAO.selectAllTask();
-		
-		for (TaskDTO taskDTO : taskList) {
-			String task_start_date = taskDTO.getTask_start_date().substring(0, 10);
-			String task_end_date = taskDTO.getTask_end_date().substring(0, 10);
-			
-			if(task_start_date.equals("1990-01-01")) {
-				taskDTO.setTask_start_date("");
-				taskDTO.setTask_end_date(task_end_date);
-			}
-			if(task_end_date.equals("1990-01-01")) {
-				taskDTO.setTask_start_date(task_start_date);
-				taskDTO.setTask_end_date("");
-			}
-			
-			if(!task_start_date.equals("1990-01-01") && !task_end_date.equals("1990-01-01")){
-				taskDTO.setTask_start_date(task_start_date);
-				taskDTO.setTask_end_date(task_end_date);
-			}
-			
-			resultList.add(taskDTO);
-		}
-		
+	public List<Map<String, Object>> selectAllTask() {
+			// 반환값
+				List<Map<String, Object>> resultList = new ArrayList<Map<String,Object>>();
+				
+				// 업무글
+				List<TaskDTO> taskList = taskDAO.selectAllTask();
+				
+				for (TaskDTO taskDTO : taskList) {
+					String task_start_date = taskDTO.getTask_start_date().substring(0, 10);
+					String task_end_date = taskDTO.getTask_end_date().substring(0, 10);
+					
+					if(task_start_date.equals("1990-01-01")) {
+						taskDTO.setTask_start_date("");
+						taskDTO.setTask_end_date(task_end_date);
+					}
+					if(task_end_date.equals("1990-01-01")) {
+						taskDTO.setTask_start_date(task_start_date);
+						taskDTO.setTask_end_date("");
+					}
+					
+					if(!task_start_date.equals("1990-01-01") && !task_end_date.equals("1990-01-01")){
+						taskDTO.setTask_start_date(task_start_date);
+						taskDTO.setTask_end_date(task_end_date);
+					}
+					Map<String, Object> map = new HashMap<String, Object>();
+					
+					map.put("taskDTO", taskDTO);
+					map.put("taskUserList", taskDAO.tu_mem_list(taskDTO.getTask_no()));
+					
+					
+					resultList.add(map);
+				}
 		return resultList;
 	}
+	
+	
 	
 	@Override
 	public int deleteTaskUserService(int cont_no) {
@@ -185,7 +195,7 @@ public class TaskServiceImple implements TaskService {
 	
 	/*업무글 삭제*/
 	@Override
-	public int deleteTask(TaskDTO taskDTO) {
-		return taskDAO.deleteTask(taskDTO);
+	public int deleteTask(int cont_no) {
+		return taskDAO.deleteTask(cont_no);
 	}
 }

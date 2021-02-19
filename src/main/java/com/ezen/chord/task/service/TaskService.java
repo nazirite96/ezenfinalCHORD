@@ -15,6 +15,7 @@ public interface TaskService {
 	public int insertTaskService(TaskDTO taskDTO);
 	/*업무글 등록(담당자)*/
 	public int insertTaskPiService(TaskDTO taskDTO);
+	public int insertTaskPic(int cont_no,int partic_no);
 	/*업무글 등록(시작일)*/
 	public int insertTaskStartDateService(TaskDTO taskDTO);
 	/*업무글 등록(마감일)*/
@@ -40,13 +41,13 @@ public interface TaskService {
 	
 	
 	/*전체업무 조회*/
-	public List<TaskDTO> selectAllTask();
+	List<Map<String, Object>> selectAllTask();
 	
 	/*지정 담당자 삭제*/
 	public int deleteTaskUserService(int cont_no);
 	
 	/*업무글 삭제*/
-	public int deleteTask(TaskDTO taskDTO);
+	public int deleteTask(int cont_no);
 	
 	public List<ProjectUserDTO> tu_mem_list(int task_no);
 	

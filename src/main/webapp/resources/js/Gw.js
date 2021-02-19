@@ -305,8 +305,6 @@ function fn_editTaskState(el) {
 	var task_no = stateList.siblings(".edit-confirm").data("taskno");
 	var pro_no = stateList.siblings(".edit-confirm").data("prono");
 	
-	window.alert(pro_no)
-	
 	
 	$("#editTaskState .pro_no").val(pro_no);
 
@@ -1343,12 +1341,11 @@ function fn_checkBoxLabel(el) {
 		var ti_chk = 'y';
 		var todo_item_content = todoItem.text();
 		var todo_no = todoNo.val();
-		var todo_rate = resultPcnt;
 
 		$.ajax({
-			url: "/flowolf/todoItem/update",
-			method: "post",
-			data: { ti_no: ti_no, ti_chk: ti_chk, todo_item_content: todo_item_content, todo_no: todo_no, todo_rate: todo_rate },
+			url: "tiChkUpdate.do",
+			method: "get",
+			data: { todo_item_no: ti_no, todo_item_chk: ti_chk, todo_item_content: todo_item_content, todo_no: todo_no },
 			dataType: "json",					// server로 부터 받을 data type
 			success: function(data) {
 				if (data == 1) {
@@ -1380,14 +1377,12 @@ function fn_checkBoxLabel(el) {
 		var ti_chk = 'n';
 		var todo_item_content = todoItem.text();
 		var todo_no = todoNo.val();
-		var todo_title = todoTitle.text();
-		var todo_rate = resultPcnt;
-		var todo_fix_chk = 'n';
+		var tim_cont = todoTitle.text();
 
 		$.ajax({
-			url: "/flowolf/todoItem/update",
-			method: "post",
-			data: { ti_no: ti_no, ti_chk: ti_chk, todo_item_content: todo_item_content, todo_no: todo_no, todo_title: todo_title, todo_rate: todo_rate, todo_fix_chk: todo_fix_chk },
+			url: "tiChkUpdate.do",
+			method: "get",
+			data: { todo_item_no: ti_no, todo_item_chk: ti_chk, todo_item_content: todo_item_content, todo_no: todo_no, tim_cont: tim_cont },
 			dataType: "json",					// server로 부터 받을 data type
 			success: function(data) {
 				if (data == 1) {

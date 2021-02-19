@@ -16,6 +16,8 @@ import com.ezen.chord.task.dto.TaskDTO;
 import com.ezen.chord.timeline.dao.TimelineDAO;
 import com.ezen.chord.timeline.dto.TimelineDTO;
 import com.ezen.chord.timeline.service.TimelineService;
+import com.ezen.chord.todo.dao.TodoDAO;
+import com.ezen.chord.todo_item.dao.TodoItemDAO;
 
 @Service
 public class TimelineServiceImpl implements TimelineService {
@@ -32,6 +34,10 @@ public class TimelineServiceImpl implements TimelineService {
 	private TaskDAO taskDAO;
 	@Autowired
 	private SchdDAO schdDAO;
+	@Autowired
+	private TodoDAO todoDAO;
+	@Autowired
+	private TodoItemDAO tiDAO;
 	
 	@Override
 	public int insertTim(TimelineDTO timDTO) {
@@ -85,6 +91,9 @@ public class TimelineServiceImpl implements TimelineService {
 			break;
 		case "task":
 			result = timDAO.deleteTim(timDTO.getTim_no());
+			taskDAO.deleteTaskUserDAO(timDTO.getCont_no());
+			taskDAO.deleteTaskTime(timDTO.getCont_no());
+			taskDAO.deleteTask(timDTO.getCont_no());
 			break;
 		case "schd":
 			result = timDAO.deleteTim(timDTO.getTim_no());
@@ -92,6 +101,11 @@ public class TimelineServiceImpl implements TimelineService {
 			schdDAO.delschd(timDTO.getCont_no());
 			schdDAO.deltime(timDTO.getCont_no());
 			break;
+		case "todo":
+			result = timDAO.deleteTim(timDTO.getTim_no());
+			todoDAO.deleteTodo(timDTO.getCont_no());
+			tiDAO.deleteTodoItem(timDTO.getCont_no());
+			tiDAO.deleteTodoItemPartic(timDTO.getCont_no());
 		default:
 			break;
 		}
