@@ -11,4 +11,6 @@ public interface TodoDAO {
 	
 	public TodoDTO getTodoDetail(int todo_no);
 	
+	public int deleteTodo(int cont_no);
+	
 }

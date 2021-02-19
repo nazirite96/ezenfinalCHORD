@@ -2,6 +2,8 @@ package com.ezen.chord.task.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -45,71 +47,11 @@ public class TaskController {
 	@Autowired
 	private TaskDAO taskDAO; 
 	
-
-	@RequestMapping("/taskTest.do")
-	public ModelAndView getProList(int mem_no,HttpSession session) {
-		
-		
-		ModelAndView mav = new ModelAndView();
-		List<ProjectUserDTO> proList = proService.getProAllList(mem_no);
-		mav.addObject("mem_no", mem_no);
-		
-		mav.addObject("proList", proList);
-		mav.setViewName("task/taskTest");
-		
-		return mav;
-	}
-
-	
-	@RequestMapping("/taskTest_1.do")
-	public ModelAndView getTimeline(int pro_no,HttpSession sess) {
-		ModelAndView mav = new ModelAndView();
-		int mem_no = (int)(sess.getAttribute("memNo"));
-		int com_no = (int)(sess.getAttribute("comNo"));
-		ProjectUserDTO proUserDTO = timService.getPro(pro_no,mem_no);
-		List<ProjectUserDTO> invitedProUserList = timService.invitedProUserList(pro_no);
-		List<ProjectUserDTO> notInvitedProUserList = timService.notInvitedProUserList(pro_no, com_no);
-		mav.addObject("notInvitedProUserList", notInvitedProUserList);
-		mav.addObject("invitedProUserList", invitedProUserList);
-		mav.addObject("proUserDTO", proUserDTO);
-		//프로젝트 정보를 받기
-		int page = 0; 
-		// 전체 업무 리스트 조회
-		List<TaskDTO> taskList = taskService.selectAllTask();
-		mav.addObject("taskList", taskList);
-		
-		List<TimelineDTO> list = timService.getTimelineByProNo(pro_no, page,mem_no);
-		mav.addObject("list", list);
-		mav.addObject("mem_no", mem_no);
-		mav.setViewName("task/taskTest_1");
-		
-		
-		
-		return mav;
-	}
-	
-	
-	@RequestMapping("/taskTest2.do")
-	public String TaskTest2() {
-		
-		return "task/taskTest2";
-	}
-	
-	@RequestMapping("/taskTest3.do")
-	public String TaskTest3() {
-		
-		return "task/taskTest3";
-	}
-	
-	@RequestMapping("/taskView.do")
-	public String TaskView() {
-		return "task/taskView";
-	}
 	@RequestMapping("/taskBasic.do")
 	public String taskBasic(Model model) {
 		
 		// 전체 업무 리스트 조회
-		List<TaskDTO> taskList = taskService.selectAllTask();
+		List<Map<String, Object>> taskList = taskService.selectAllTask();
 		model.addAttribute("taskList", taskList);
 		
 		return "task/taskBasic";
@@ -188,7 +130,6 @@ public class TaskController {
 							TaskDTO editDTO,
 							@RequestParam(value="tu_mem_list", defaultValue = "1")List<Integer> tu_mem_list,
 							@RequestParam("articleFile")List<MultipartFile> files,
-							@RequestParam(value="del_task_user_no", required=false)List<Integer> delTuList,
 							HttpServletRequest request) {
 		
 		HttpSession sess=request.getSession();
@@ -199,12 +140,15 @@ public class TaskController {
 		taskDTO.setCont_kind("task");
 		
 		
-		// 업무 담당자 삭제
-//		if (delTuList != null) {
-//			for (Integer task_user_no : delTuList) {
-//				taskService.deleteTaskUserService(task_user_no);
-//			}			
-//		}
+		if(tu_mem_list.get(0) == 1) {
+			
+		}else {
+			taskService.deleteTaskUserService(editDTO.getTask_no());
+			for(int i=0;i<tu_mem_list.size();i++) {
+				
+				taskService.insertTaskPic(editDTO.getTask_no(), tu_mem_list.get(i));
+			}
+		}
 		
 		System.out.println(editDTO.getTim_cont()+"수정된 제목");
 		System.out.println(editDTO.getTask_state()+"수정된 진행상황");
@@ -258,6 +202,7 @@ public class TaskController {
 			taskDTO.setTask_content("");			
 		}		
 		
+	
 		
 		
 		String serv =request.getSession().getServletContext().getRealPath("/");
@@ -284,18 +229,7 @@ public class TaskController {
 		
 		
 		int resultCnt = taskService.updateTaskService(taskDTO);
-//
-//		if(resultCnt == 1) {
-//			
-//			for(int i = 0 ; i < tu_mem_list.size() ; i++) {
-//				System.out.println(tu_mem_list.get(i));
-//				taskDTO.setTu_mem_list(tu_mem_list.get(i));
-//				/*parti테이블관련(담당자)*/
-//				taskService.insertTaskPiService(taskDTO);
-//				
-//			}
-//		}
-//	
+
 		return "redirect:/timeLine.do?pro_no="+timDTO.getPro_no()+"&mem_no="+mem_no;
 }
 	

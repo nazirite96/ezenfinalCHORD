@@ -27,6 +27,12 @@
 		#{cont_kind},#{task_no},#{tu_mem_list}
 		)
 	</insert>
+	
+	<insert id="insertTaskPic" parameterType="map">
+	    insert into participants values(
+	    'task',#{cont_no},#{partic_no}
+	    )
+	</insert>	
 
 	<!-- 업무 등록(시작일) -->
 	<insert id="insertTaskStartDate" parameterType="taskDTO">
@@ -74,7 +80,7 @@
 	</insert>
 
 	<select id="selectAllTask" parameterType="String" resultType="taskDTO">
-		select A.*,timeline.*,member.mem_name
+		select A.*,timeline.*,member.mem_name,project.pro_name
 		from (select
 		A.task_no,A.task_state,A.task_content,A.task_priority,(A.time_date) as
 		task_start_date,(time.time_date) as task_end_date
@@ -90,6 +96,7 @@
 		='e') A left join timeline on timeline.cont_no =
 		A.task_no left join
 		member on timeline.mem_no = member.mem_no
+		left join project on project.pro_no = timeline.pro_no
 		where timeline.cont_kind =
 		'task'
 		order by task_no desc
@@ -145,15 +152,19 @@
 	</update>	
 	
 	<!-- 업무 삭제 -->
-	<delete id="deleteTask" parameterType="taskDTO">
+	<delete id="deleteTask" parameterType="integer">
 		delete from task where
-		task_no = #{task_no}
+		task_no = #{cont_no}
 	</delete>
+	
+	<!-- 업무 시간 삭제 -->
+	<delete id="deleteTaskTime" parameterType="integer">
+		delete from time where cont_kind='task' and cont_no=#{cont_no}
+	</delete>	
 	
 	<!-- 업무 지정자 삭제 -->
 	<delete id="deleteTaskUserR" parameterType="int">
-		DELETE FROM participants
-		WHERE cont_no = #{cont_no}
+		DELETE FROM participants WHERE cont_no = #{cont_no} and cont_kind= 'task'
 	</delete>
 	
 	<!-- 기웅 수정 -->

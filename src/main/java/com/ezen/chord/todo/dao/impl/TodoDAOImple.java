@@ -50,4 +50,9 @@ public class TodoDAOImple implements TodoDAO {
 		
 		return result;
 	}
+	
+	@Override
+	public int deleteTodo(int cont_no) {
+		return sqlMap.delete("deleteTodo", cont_no);
+	}
 }
