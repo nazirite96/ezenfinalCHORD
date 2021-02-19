@@ -5,7 +5,7 @@ public class Chatroom {
 	private int chatroom_no;
 	private String chatroom_pwd;
 	private String chatroom_notice;
-	private int chatroom_type; // 1:1 or 1:N
+	private int chatroom_type; 
 
 	public int getChatroom_no() {
 		return chatroom_no;

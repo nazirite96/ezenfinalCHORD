@@ -1,7 +1,6 @@
 package com.ezen.chord.chat.service.impl;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +20,13 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 	@Override
 	public List<ChatMessage> getPrivateChatList(MemberDTO input) throws Exception {
 		return chatMessageDAO.getPrivateChatListInfo(input);
+	}
+
+	// ** [temporary code- Additional part] ***//
+	// 단체 채팅방 불러오기
+	@Override
+	public List<ChatMessage> getPubChatroomList(int input) throws Exception {
+		return chatMessageDAO.getPubChatroomList(input);
 	}
 
 	// 해당 채팅방의 메세지 가져오기 in chatroom.jsp

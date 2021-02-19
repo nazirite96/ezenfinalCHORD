@@ -34,8 +34,8 @@
    </insert>
 
    <!-- 변경  -->
-   <select id="selectMyChatInfo" parameterType="ChatInfo"
-      resultType="ChatInfo">
+   <select id="selectMyChatInfo" parameterType="chatInfo"
+      resultType="chatInfo">
       SELECT *
       FROM chatinfo
       WHERE mem_no = #{mem_no}
