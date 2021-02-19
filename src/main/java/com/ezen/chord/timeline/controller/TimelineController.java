@@ -78,7 +78,6 @@ public class TimelineController {
 				break;
 			case "schd":
 				list.get(i).setSchdDTO(schdService.getSchdOne(list.get(i).getCont_no()));
-				System.out.println(list.get(i).getSchdDTO().partic.size());
 				break;
 			case "todo":
 				list.get(i).setTodoDTO(todoService.getTodoDetail(list.get(i).getCont_no()));
