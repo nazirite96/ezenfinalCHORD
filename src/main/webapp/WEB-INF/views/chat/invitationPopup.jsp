@@ -33,7 +33,7 @@
 									    </tr>
 									</c:when>
 									<c:otherwise>
-										<input type="hidden" value="${member.mem_no}" name="memberList" checked>
+										<input type="hidden" value="${memNo}" name="memberList" class="invite-member" checked>
 										<c:forEach var="memberList" items="${invitationMemberList}">
 			                                <tr>
 			                                    <td>
@@ -69,7 +69,7 @@
 <script type="text/javascript">
 	  $('#createBtn').on('click', function() {
 		  var checkSize = $('.invite-member:checked').length;
-			if (checkSize < 3) {
+			if (checkSize < 2) {
 		      alert('채팅방 회원은 3명 이상이어야 합니다.');
 		      return;
 		    } 

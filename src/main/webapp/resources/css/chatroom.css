@@ -82,6 +82,11 @@ body {
    height: 98px;
 }
 
+.allDeleteBtn {
+   margin: 0 40px;
+   font-size: 20px;
+}
+
 .modal .modal-dialog-aside {
    width: 280px;
    max-width: 80%;
@@ -116,54 +121,83 @@ body {
 }
 
 .mymsg {
-   clear: both;
+   width: 45%;
    float: right;
+   margin-bottom: 40px;
 }
 
-.mymsg>.mymsg-name {
+.mymsg-name {
    display: none;
+   margin-bottom: 8px;
 }
 
 .mymsg-box {
-   text-align: right;
+   font-size: 20px;
+   max-width: 100%;
+   float: right;
    background-color: yellow;
-   padding: 10px 12px;
-   border-radius: 20px;
-   box-shadow: 1px 3px 2px 1px #adacac;
-   font-family: 'Gamja Flower', cursive;
+   padding: 5px 15px;
+   border-radius: 10px;
+   margin-bottom: 5px;
+   box-shadow: 1px 2px 5px -1px grey;
+   word-break: break-all;
+   font-family: 'Gaegu', cursive;
 }
 
 .mymsg-date {
-   margin: 3px 8px;
+   font-size: 12px;
    float: right;
-}
-
-.yourmsg-date {
-   margin: 3px 8px;
-   float: left;
-}
-
-.deleteBtn {
-   margin: 4px 0;
-   float: right;
-   cursor: pointer;
-}
-
-.allDeleteBtn {
-   margin: 0 40px;
-   font-size: 20px;
 }
 
 .yourmsg {
-   clear: both;
+   width: 45%;
    float: left;
+   margin-bottom: 50px;
 }
 
 .yourmsg-box {
-   text-align: left;
+   font-size: 20px;
+   max-width: 100%;
+   float: left;
    background-color: white;
-   padding: 10px 12px;
-   border-radius: 20px;
-   box-shadow: 1px 3px 2px 1px #adacac;
-   font-family: 'Gamja Flower', cursive;
+   padding: 5px 15px;
+   border-radius: 10px;
+   margin-bottom: 5px;
+   box-shadow: 1px 2px 5px -1px grey;
+   float: left;
+   word-break: break-all;
+   font-family: 'Gaegu', cursive;
+}
+
+.yourmsg-name {
+   float: left;
+   margin-bottom: 8px;
+}
+
+.yourmsg-date {
+   font-size: 12px;
+   float: left;
+}
+
+.mymsg .deleteBtn {
+   margin-right: 10px;
+   cursor: pointer;
+}
+
+.yourmsg .deleteBtn {
+   display: none;
+}
+
+.clear {
+   clear: both;
+}
+
+.welcomeMessage {
+   background-color: #fff8dc7d;
+   border-radius: 23%;
+   font-size: 12px;
+   text-align: center;
+   font-weight: bold;
+   padding: 10px 0;
+   color: gray;
 }

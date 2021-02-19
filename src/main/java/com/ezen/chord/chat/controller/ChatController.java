@@ -39,30 +39,27 @@ public class ChatController {
 	@Autowired
 	HttpSession session;
 
-	// getChatList to madal in header.jsp
 	@RequestMapping(value = "getChatList.do", method = RequestMethod.POST)
 	public @ResponseBody Map<String, List<ChatMessage>> getChatList() {
-		System.out.println("== getChatList 컨트롤러 ==");
 
-		// 1. DTO Field에 DB Select를 위한 값을 할당
 		MemberDTO member = new MemberDTO();
 		int mem_no = (Integer) session.getAttribute("memNo");
 		String mem_name = (String) session.getAttribute("name");
 		int com_no = (Integer) session.getAttribute("comNo");
-		
+
 		member.setMem_name(mem_name);
 		member.setMem_no(mem_no);
 		member.setCom_no(com_no);
 
 		List<ChatMessage> privateChatList = new ArrayList<ChatMessage>(); // 개인 채팅방 목록을 담을 List 생성
+		List<ChatMessage> publicChatList = new ArrayList<ChatMessage>(); // 단체 채팅방 목록을 담을 List 생성
 
 		try {
 			privateChatList = chatMessageService.getPrivateChatList(member);
+			publicChatList = chatMessageService.getPubChatroomList(member.getMem_no());
 		} catch (Exception e) {
 			System.out.println(e.getLocalizedMessage());
 		}
-
-		List<ChatMessage> publicChatList = new ArrayList<ChatMessage>();
 
 		// DB 조회 결과값을 chatListMap에 Put
 		Map<String, List<ChatMessage>> chatListMap = new HashMap<String, List<ChatMessage>>();
@@ -76,32 +73,29 @@ public class ChatController {
 	// 채팅방 생성
 	@RequestMapping(value = "createChatroom.do", method = RequestMethod.POST)
 	public @ResponseBody int createChatroom(ChatInfo chatinfo) {
-		System.out.println("== createChatroom 컨트롤러 ==");
-
 
 		int myMem_no = (Integer) session.getAttribute("memNo"); // 내 mem_no
 		String myMem_name = (String) session.getAttribute("name"); // 내 mem_name = chatInfo_roomname
 		int yourMem_no = chatinfo.getMem_no(); // 상대방 mem_no
 		String yourMem_name = chatinfo.getMem_name(); // 상대방 mem_name = chatInfo_roomname
 
-
-		List<ChatInfo> memberList = new ArrayList<ChatInfo>(); 
+		List<ChatInfo> memberList = new ArrayList<ChatInfo>();
 		int chatroom_no = 0;
 
 		Chatroom chatroom = new Chatroom();
-		
+
 		try {
 
 			if (chatinfo.getMemberList().size() >= 3) {
 				chatroom.setChatroom_type(1);
 				chatroom_no = chatroomService.createChatroom(chatroom);
-				for(Integer mem_no:chatinfo.getMemberList()) {
+				for (Integer mem_no : chatinfo.getMemberList()) {
 					memberList.add(new ChatInfo(mem_no, chatroom_no, chatinfo.getChatInfo_roomname()));
 				}
-				webSocketHelper.setNewChatroomList(chatroom_no); // stomp컨트롤러에서 사용 : 채팅방의 상태에 따른 분기처리 
-			// 개인방 생성
-			}else {
-				// 개인방 생성시에만 채팅방 존재여부를 확인
+				webSocketHelper.setNewChatroomList(chatroom_no); // stomp컨트롤러에서 사용 : 채팅방의 상태에 따른 분기처리
+				// 개인방 생성
+			} else {
+
 				chatroom_no = chatInfoService.checkChatroom(myMem_no, yourMem_no);
 				if (chatroom_no != 0) {
 					return chatroom_no;
@@ -111,7 +105,7 @@ public class ChatController {
 
 				memberList.add(new ChatInfo(myMem_no, chatroom_no, yourMem_name));
 				memberList.add(new ChatInfo(yourMem_no, chatroom_no, myMem_name));
-				
+
 			}
 			chatInfoService.setChatInfo(memberList);
 		} catch (Exception e) {
@@ -123,8 +117,6 @@ public class ChatController {
 	// 채팅방 진입
 	@RequestMapping(value = "chatroom.do", method = RequestMethod.POST)
 	public String chatroom(@RequestParam("chatroom_no") int chatroom_no, Model model) {
-		System.out.println("== chatroom 컨트롤러 ==");
-
 
 		int myMem_no = (Integer) session.getAttribute("memNo"); // 내 mem_no
 
@@ -151,21 +143,20 @@ public class ChatController {
 		return "chat/chatroom";
 	}
 
-
+	// ** [temporary code- Additional part] ***//
+	// invitationPopup.jsp Member List
 	@RequestMapping(value = "invitationPopup.do", method = RequestMethod.GET)
 	public String invitationPopUp(Model model) {
-		System.out.println("invitationPopup 컨트롤러 ");
-		/**
-		 * 단체 채팅방 생성
-		 */
+
 		MemberDTO member = new MemberDTO();
 		int mem_no = (Integer) session.getAttribute("memNo");
 		String mem_name = (String) session.getAttribute("name");
 		int com_no = (Integer) session.getAttribute("comNo");
-		
+
 		member.setMem_name(mem_name);
 		member.setMem_no(mem_no);
 		member.setCom_no(com_no);
+
 		List<MemberDTO> invitationMemberList = new ArrayList<MemberDTO>();
 		try {
 			invitationMemberList = chatInfoService.getInvitationMemberList(member);
@@ -175,18 +166,4 @@ public class ChatController {
 		model.addAttribute("invitationMemberList", invitationMemberList);
 		return "chat/invitationPopup";
 	}
-	
-	// getChatList to madal in header.jsp
-	@RequestMapping(value = "getPubChatList.do", method = RequestMethod.POST)
-	public @ResponseBody List<Map<String, Object>> getPubChatroomList() {
-		MemberDTO member = (MemberDTO) session.getAttribute("member");
-		List<Map<String, Object>> pubChatroomList = new ArrayList<Map<String, Object>>();
-		try {
-			pubChatroomList = chatroomService.getPubChatroomList(member.getMem_no());
-		} catch (Exception e) {
-			System.out.println(e.getLocalizedMessage());
-		}
-		return pubChatroomList;
-	}
-	//
 }

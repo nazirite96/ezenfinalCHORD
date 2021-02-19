@@ -4,23 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatMessage {
-	private int chatmessage_no;             // 작성 번호
-	private String chatmessage_content;     // 작성 메세지
-	private String chatmessage_writedate;   // 작성일
-	private int mem_no;                     // 작성자
-	private int chatroom_no;                // 채팅빙 번호
+	private int chatmessage_no;
+	private String chatmessage_content;
+	private String chatmessage_writedate;
+	private int mem_no;
+	private int chatroom_no;
 
-	// vo 에서만 사용
-	private String mem_name;                // [header.jsp] 회원 이름 (modal list 데이터)
-	private int chatmessage_count;          // [header.jsp] 안읽은 메세지 수   
-	private String chatroomName ;           // [header.jsp] 채팅방 이름 :단체방일때만 사용
-	private int reciver;                    // [header.jsp] 메시지 수신자      
-	private String chatroom_type;              // [header.jsp] 단체방, 개인방 구분
-	private String messageWriter;           // [chatroom.jsp] 메시지 작성자       
-	private String messageType;             // Talk, Remove(삭제), Enter, New(새로운 단체방)
-	
-	List<Integer> nowChatList = new ArrayList<Integer>(); // 채팅방에 실시간으로 참여중인 회원 list
-	
+	private String mem_name;
+	private int member_count;
+	private int chatmessage_count;
+	private String chatroomName;
+	private int reciver;
+	private String chatroom_type;
+	private String messageWriter;
+	private String messageType;
+
+	List<Integer> nowChatList = new ArrayList<Integer>();
+
 	public int getChatmessage_no() {
 		return chatmessage_no;
 	}
@@ -125,13 +125,21 @@ public class ChatMessage {
 		this.chatroom_type = chatroom_type;
 	}
 
-	
+	public int getMember_count() {
+		return member_count;
+	}
+
+	public void setMember_count(int member_count) {
+		this.member_count = member_count;
+	}
+
 	@Override
 	public String toString() {
 		return "ChatMessage [chatmessage_no=" + chatmessage_no + ", chatmessage_content=" + chatmessage_content
 				+ ", chatmessage_writedate=" + chatmessage_writedate + ", mem_no=" + mem_no + ", chatroom_no="
 				+ chatroom_no + ", mem_name=" + mem_name + ", chatmessage_count=" + chatmessage_count
-				+ ", messageWriter=" + messageWriter + ", messageType=" + messageType + "]";
+				+ ", messageWriter=" + messageWriter + ", messageType=" + messageType + "," + "chatroom_type="
+				+ chatroom_type + "]";
 	}
 
 }
