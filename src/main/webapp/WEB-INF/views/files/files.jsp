@@ -337,6 +337,13 @@
 							<table>
 							<tbody class="allList">
 							<c:if test="${empty clickproject}">
+							<c:if test="${empty allFileList }">
+									<tr class="row100 body">
+										<td colspan="5" class="cell100 column2" style="color:red; text-align: center;">
+											헤당 파일들이 존재하지 않습니다 ^-^
+										</td>
+									</tr>
+								</c:if>
 								<c:forEach var="allFiles" items="${allFileList }">
 										<tr class="row100 body">
 											<td class="cell100 column1"><img src="resources/img/fileicon.png" width="45"></td>
@@ -348,6 +355,13 @@
 								</c:forEach>
 							</c:if>
 							<c:if test="${!empty clickproject}">
+								<c:if test="${empty partFileList }">
+									<tr class="row100 body">
+										<td colspan="5" class="cell100 column2" style="color:red; text-align: center;">
+											헤당 파일들이 존재하지 않습니다 ^-^
+										</td>
+									</tr>
+								</c:if>
 								<c:forEach var="files" items="${partFileList }">
 										<tr class="row100 body">
 											<td class="cell100 column1">

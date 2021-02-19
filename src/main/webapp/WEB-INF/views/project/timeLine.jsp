@@ -1375,7 +1375,7 @@ function submitgogo(){
 																	<!-- 담당자 리스트 -->
 																	<div class="task-user-list">
 																	<c:forEach items="${dto.taskDTO.partic }" var="tu_mem">
-																		<div class="name-tag">
+																		<div class="name-tag" data-no="${tu_mem.mem_name }">
 																			<img src="/chord/resources/img/sample.png" width="24" class="cursor-point">
 																			<strong class="marleft-10">${tu_mem.mem_name }</strong>
 																			<i class="fas fa-times-circle marleft-15" data-no="${tu_mem.mem_no }" onclick="fn_taskUserDelete(this)"></i>
@@ -1386,7 +1386,7 @@ function submitgogo(){
 																	
 																	<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
 																	<div class="pro-user-list">
-																		<c:forEach items="${notInvitedProUserList }" var="mbs">
+																		<c:forEach items="${invitedProUserList }" var="mbs">
 																			<div class="pro-user-info"
 																				onclick="fn_taskManagerSelect(this)">
 																				<div class="pro-user-photo maright-10">
@@ -1750,7 +1750,7 @@ function submitgogo(){
 																<!-- 담당자 리스트 -->
 																<div class="task-user-list">
 																<c:forEach items="${dto.schdDTO.partic }" var="tu_mem" >
-																	<div class="name-tag">
+																	<div class="name-tag" data-no="${tu_mem.mem_no }">
 																		<img src="/chord/resources/img/sample.png" width="24"
                                                                 				  class="cursor-point">
 																		<strong class="marleft-10">${tu_mem.mem_name }</strong>
@@ -1762,7 +1762,7 @@ function submitgogo(){
 
 																<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
 																<div class="pro-user-list">
-																	<c:forEach items="${notInvitedProUserList }" var="mbs">
+																	<c:forEach items="${invitedProUserList }" var="mbs">
 																		<div class="pro-user-info"
 																			onclick="fn_taskManagerSelect(this)">
 																			<div class="pro-user-photo maright-10">
