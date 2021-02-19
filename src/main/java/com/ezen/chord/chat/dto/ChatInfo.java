@@ -15,12 +15,9 @@ public class ChatInfo {
    private int mem_no;
    private int chatroom_no;
 
-   // vo
-   private String mem_name; // 채팅방 생성 상대방 이름 
-   //** 수정 여지 있는 필드 : dto 에는 왠만하면 table구성과 맞추는 편이 좋을 듯하여, 
-   //   컨트롤러에서 파라미터를 dto가 아닌 배열로 받는것이 좋을듯 하다. 
-   //**
-   private List<Integer> memberList = new ArrayList<Integer>(); // 단체방생성 
+
+   private String mem_name; 
+   private List<Integer> memberList = new ArrayList<Integer>(); 
 
    public ChatInfo() {
    }

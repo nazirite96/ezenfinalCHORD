@@ -8,9 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,8 +19,6 @@ import com.ezen.chord.project.dto.ProjectDTO;
 
 @Service
 public class FilesServiceImpl implements FilesService {
-	HttpServletRequest rs;
-	String realpath="";
 	public final String PATH="resources/files";
 	public String CRPATH="";	
 	public String PRONAME="";
@@ -31,7 +26,6 @@ public class FilesServiceImpl implements FilesService {
 	
 	@Autowired
 	private FilesDAO filedao;
-	private ProjectDTO proDTO;
 	
 	@Override
 	public List<FilesDTO> getAllFiles() {
@@ -259,16 +253,14 @@ public class FilesServiceImpl implements FilesService {
 		}
 	}
 	@Override
-	public void createProfolder(String pro_name) {
+	public void createProfolder(String pro_name,String realpath) {
 		// TODO Auto-generated method stub
-		realpath=rs.getSession().getServletContext().getRealPath("/");
 		File f= new File(realpath+PATH+File.separator+pro_name);
 			f.mkdir();
 	}
 	@Override
-	public void delProfolder(String pro_name) {
+	public void delProfolder(String pro_name,String realpath) {
 		// TODO Auto-generated method stub
-		realpath=rs.getSession().getServletContext().getRealPath("/");
 		File f = new File(realpath+PATH+File.separator+pro_name);
 		if(f.isFile()) {
 			f.delete();
@@ -279,7 +271,7 @@ public class FilesServiceImpl implements FilesService {
 					files[i].delete();
 				}else {
 					String test=pro_name+File.separator+files[i].getName();
-					delProfolder(test);
+					delProfolder(test,realpath);
 				}
 			}
 			f.delete();

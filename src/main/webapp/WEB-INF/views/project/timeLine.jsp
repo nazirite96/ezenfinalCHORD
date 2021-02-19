@@ -775,9 +775,7 @@ function submitgogo(){
 								</div>
 							</div>
 
-							<div class="table-responsive"></div>
-
-
+							<div class="table-responsive">
 							<!-- top pick article(상단고정글):s -->
 							<div class="top-fixed-article martop-20">
 								<h5 class="marbtm-10">상단고정글</h5>
@@ -840,22 +838,22 @@ function submitgogo(){
 													<!-- timeline content:s -->
 													<div class="timeline-content">
 														<%-- <c:choose>
-				<c:when test="${timeLine.basicVo != null }">
-					<%@include file="/include/timeline_article.jsp" %>
-				</c:when>
-				<c:when test="${timeLine.taskVo != null }">
-					<%@include file="/include/timeline_task.jsp" %>
-				</c:when>
-				<c:when test="${timeLine.todoVo != null }">
-					<%@include file="/include/timeline_todo.jsp" %>
-				</c:when>
-				<c:when test="${timeLine.voteVo != null }">
-					<%@include file="/include/timeline_vote.jsp" %>
-				</c:when>
-				<c:otherwise>
-					<%@include file="/include/timeline_schedule.jsp" %>
-				</c:otherwise>
-			</c:choose> --%>
+													<c:when test="${timeLine.basicVo != null }">
+														<%@include file="/include/timeline_article.jsp" %>
+													</c:when>
+													<c:when test="${timeLine.taskVo != null }">
+														<%@include file="/include/timeline_task.jsp" %>
+													</c:when>
+													<c:when test="${timeLine.todoVo != null }">
+														<%@include file="/include/timeline_todo.jsp" %>
+													</c:when>
+													<c:when test="${timeLine.voteVo != null }">
+														<%@include file="/include/timeline_vote.jsp" %>
+													</c:when>
+													<c:otherwise>
+														<%@include file="/include/timeline_schedule.jsp" %>
+													</c:otherwise>
+												</c:choose> --%>
 													</div>
 													<!-- timeline content:f -->
 
@@ -867,7 +865,7 @@ function submitgogo(){
 								</div>
 							</div>
 
-
+							</div>
 
 
 
@@ -1381,10 +1379,12 @@ function submitgogo(){
 
 																	<!-- 담당자 리스트 -->
 																	<div class="task-user-list">
+
 																	<c:forEach items="${dto.taskDTO.partic }" var="tu_mem" >
 																		<div class="name-tag">
 																			<img src="/chord/resources/img/sample.png" width="24"
 	                                                                				  class="cursor-point">
+
 																			<strong class="marleft-10">${tu_mem.mem_name }</strong>
 																			<i class="fas fa-times-circle marleft-15" data-no="${tu_mem.mem_no }" onclick="fn_taskUserDelete(this)"></i>
 																			<input type="hidden" name="tu_mem_list" value="${tu_mem.mem_no }">
@@ -1755,7 +1755,7 @@ function submitgogo(){
 																<!-- 담당자 리스트 -->
 																<div class="task-user-list">
 																<c:forEach items="${dto.schdDTO.partic }" var="tu_mem" >
-																	<div class="name-tag">
+																	<div class="name-tag" data-no="${tu_mem.mem_no }">
 																		<img src="/chord/resources/img/sample.png" width="24"
                                                                 				  class="cursor-point">
 																		<strong class="marleft-10">${tu_mem.mem_name }</strong>
@@ -1767,7 +1767,7 @@ function submitgogo(){
 
 																<!-- 프로젝트 참여자 리스트(담당자 설정 리스트):s -->
 																<div class="pro-user-list">
-																	<c:forEach items="${notInvitedProUserList }" var="mbs">
+																	<c:forEach items="${invitedProUserList }" var="mbs">
 																		<div class="pro-user-info"
 																			onclick="fn_taskManagerSelect(this)">
 																			<div class="pro-user-photo maright-10">

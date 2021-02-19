@@ -39,7 +39,6 @@ public class ProjectController {
 	@Autowired
 	private BoxService boxService;
 	//중요한 정보
-	
 	@Autowired
 	private FilesService filesSerivce;
 	
@@ -77,8 +76,12 @@ public class ProjectController {
 	public String insertPro(ProjectDTO proDTO) {
 		java.sql.Date date = new java.sql.Date(12);
 		proDTO.setPro_date(date);
-		filesSerivce.createProfolder(proDTO.getPro_name());
+		//filesSerivce.createProfolder(proDTO.getPro_name());
+		ModelAndView mav = new ModelAndView();
 		proService.insertPro(proDTO);
+		List<ProjectUserDTO> proList = proService.getProAllList(proDTO.getMem_no());
+		mav.addObject("mem_no", proDTO.getMem_no());
+		List<BoxDTO> boxList = boxService.getBoxList(proDTO.getMem_no());
 		return "project/projectList";
 	}
 	

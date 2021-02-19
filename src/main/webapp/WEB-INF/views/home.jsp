@@ -60,7 +60,7 @@ span{
 				<a href="taskTest.do?mem_no=11">제진</a>
 			</div>
 			<div>
-				<a href="files.do">성탁</a><a href="insertFiles.do">(파일 업로드)</a>
+				<a href="files.do">성탁</a>
 			</div>
 			<div>
 				<a href="fullCalender.do">성탁(일정 등록)</a>

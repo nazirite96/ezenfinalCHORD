@@ -3,7 +3,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chatMessageSql">
 		<!-- 변경 -->
-	   <select id="selectPrivateChatList" parameterType="memberDTO" resultType="ChatMessage">
+	   <select id="selectPrivateChatList" parameterType="memberDTO" resultType="chatMessage">
       SELECT a.mem_no, a.mem_name, a.chatroom_no,
       CASE WHEN a.chatmessage_writedate <![CDATA[<]]> (SELECT chatinfo_intime FROM chatinfo WHERE mem_no = #{mem_no} AND chatroom_no = a.chatroom_no) AND (SELECT chatinfo_deleted FROM chatinfo WHERE mem_no = #{mem_no} AND chatroom_no = a.chatroom_no) ='y' THEN ''
            WHEN a.chatmessage_writedate <![CDATA[<]]> (SELECT chatinfo_intime FROM chatinfo WHERE mem_no = #{mem_no} AND chatroom_no = a.chatroom_no) AND (SELECT chatinfo_deleted FROM chatinfo WHERE mem_no = #{mem_no} AND chatroom_no = a.chatroom_no) ='n' THEN '대화내용이 없습니다.' ELSE a.chatmessage_content END AS chatmessage_content,
@@ -42,7 +42,7 @@
       b.mem_no = #{mem_no} AND a.chatroom_type = 0)
       AND b.mem_no != #{mem_no}
       AND a.mem_no = #{mem_no}
-      AND b.chatmessage_writedate <![CDATA[>]]>
+      AND b.chatmessage_writedate <![CDATA[>=]]>
       a.chatinfo_outtime
       GROUP BY a.chatroom_no) b ON a.chatroom_no =
       b.chatroom_no
@@ -88,4 +88,43 @@
 		WHERE
 		chatmessage_no = ${value}
 	</update>
+	
+	<!-- 단체방 불러오기-->
+		
+	<!-- 단체 채팅방 불러오기 -->
+	<select id="selectPubChatroomList" parameterType="int" resultType="chatMessage">
+ 	SELECT a.chatroom_no, chatinfo_roomname as chatroomName, chatmessage_count,chatmessage_writedate, member_count, 
+    CASE WHEN a.chatmessage_writedate <![CDATA[<]]> (SELECT chatinfo_intime FROM chatinfo WHERE mem_no = ${value} AND chatroom_no = a.chatroom_no) AND (SELECT chatinfo_deleted FROM chatinfo WHERE mem_no = ${value} AND chatroom_no = a.chatroom_no) ='n' THEN '대화내용이 없습니다.' ELSE a.chatmessage_content END AS chatmessage_content
+    FROM
+        (SELECT a.chatroom_no, chatmessage_count, chatmessage_content, chatmessage_writedate 
+            FROM
+	            (SELECT a.chatroom_no, NVL(count(b.chatmessage_count),0) as chatmessage_count
+	                FROM 
+	                    (SELECT a.chatroom_no FROM chatroom a, chatinfo b WHERE a.chatroom_no = b.chatroom_no AND b.mem_no =${value} AND a.chatroom_type = 1) 
+	                     a LEFT OUTER JOIN
+	                     (SELECT a.chatroom_no, count(chatmessage_no) as chatmessage_count
+		                 FROM chatmessage a, chatinfo b
+		                 WHERE a.chatroom_no = b.chatroom_no
+		                 AND a.chatroom_no in (SELECT a.chatroom_no FROM chatroom a, chatinfo b WHERE a.chatroom_no = b.chatroom_no AND b.mem_no = ${value} AND a.chatroom_type = 1)
+		                 AND b.mem_no = ${value}
+	                     AND a.mem_no != ${value}
+	                     AND a.chatmessage_writedate <![CDATA[>]]> b.chatinfo_outtime
+		                 GROUP BY a.chatroom_no) b 
+	                	 ON a.chatroom_no = b.chatroom_no
+	                GROUP BY a.chatroom_no
+	            ) a LEFT JOIN
+	            (SELECT chatroom_no,
+	            MAX(chatmessage_content) KEEP(DENSE_RANK LAST ORDER BY chatmessage_writedate) AS chatmessage_content,
+	            MAX(chatmessage_writedate) AS chatmessage_writedate
+	            FROM chatmessage
+	            WHERE chatroom_no in (SELECT a.chatroom_no FROM chatroom a, chatinfo b WHERE a.chatroom_no = b.chatroom_no AND b.mem_no = ${value} AND a.chatroom_type = 1)
+	            GROUP BY chatroom_no) b 
+	            ON a.chatroom_no = b.chatroom_no
+        )a LEFT JOIN
+	   (SELECT chatroom_no, chatinfo_roomname, count(mem_no) as member_count
+	    FROM chatinfo
+        WHERE chatroom_no in (SELECT a.chatroom_no FROM chatroom a, chatinfo b WHERE a.chatroom_no = b.chatroom_no AND b.mem_no = ${value} AND a.chatroom_type = 1)
+	    GROUP BY chatroom_no, chatinfo_roomname) b 
+     	ON a.chatroom_no = b.chatroom_no
+	</select>
 </mapper>

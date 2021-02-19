@@ -80,7 +80,6 @@ public class FilesController {
 			fileSerImp.CRPATH=lastpath;
 		}
 		String dbpath=fileSerImp.PATH+File.separator+fileSerImp.PRONAME+File.separator+fileSerImp.CRPATH;
-		System.out.println(serv+dbpath);
 		partFileList=fileSerImp.getDBPath(dbpath);
 		f = new File(serv+dbpath);
 		File files[] = f.listFiles();
@@ -93,7 +92,6 @@ public class FilesController {
 				}
 			}
 			
-			fileSerImp.reProfor("ㅌ", "주구장창",serv);
 			session.setAttribute("pathList", pathList);
 			
 			
@@ -174,7 +172,7 @@ public class FilesController {
 		switch (state) {
 		case 1:fileSerImp.STATE=""; break; // 전체리스트
 		case 2:fileSerImp.STATE=".txt"; break; // 텍스트보여줄 화면
-		case 3:fileSerImp.STATE=".xlsx"; break; // 엑셀형식
+		case 3:fileSerImp.STATE=".xls"; break; // 엑셀형식
 		case 4:fileSerImp.STATE=".docx"; break; // 문서형식
 		default : fileSerImp.STATE=".pptx";//파워포인트
 			break;
@@ -182,7 +180,7 @@ public class FilesController {
 		switch (fileSerImp.STATE) {
 		case "": allFileList=fileSerImp.getAllFiles(); break; // 전체리스트
 		case ".txt":allFileList=fileSerImp.etcList(fileSerImp.STATE); break; // 텍스트보여줄 화면
-		case ".xlsx":allFileList=fileSerImp.etcList(fileSerImp.STATE); break; // 엑셀형식
+		case ".xls":allFileList=fileSerImp.etcList(fileSerImp.STATE); break; // 엑셀형식
 		case ".docx":allFileList=fileSerImp.etcList(fileSerImp.STATE); break; // 문서형식
 		default : allFileList=fileSerImp.etcList(fileSerImp.STATE);//파워포인트
 			break;
@@ -283,26 +281,26 @@ public class FilesController {
 	/**
 	 * 다운로드 뷰 
 	 * */
-//	@RequestMapping("/filedownload")
-//	public ModelAndView filedwnload(
-//			@RequestParam("filename")String filename,
-//			HttpServletRequest request) {
-//		HttpSession session=request.getSession();
-//		int mem_no = (Integer) session.getAttribute("memNo");
-//		String serv =request.getSession().getServletContext().getRealPath("/");
-//		File f = new File(serv+fileSerImp.getPath(filename)+filename);
-//		ModelAndView mav = new ModelAndView();
-//		if(f.isDirectory()){
-//			mav.addObject("foldername", filename);
-//			mav.setViewName("redirect:files.do");
-//			return mav;
-//		}else {
-//		int fileNo=fileSerImp.fileNo(filename);
-//		fileSerImp.log_fileInsert(fileNo, mem_no);
-//		mav.addObject("downloadFile", f);
-//		mav.setViewName("chordDownload");
-//		}
-//		
-//		return mav;
-//	}
+	@RequestMapping("/filedownload")
+	public ModelAndView filedwnload(
+			@RequestParam("filename")String filename,
+			HttpServletRequest request) {
+		HttpSession session=request.getSession();
+		int mem_no = (Integer) session.getAttribute("memNo");
+		String serv =request.getSession().getServletContext().getRealPath("/");
+		File f = new File(serv+fileSerImp.getPath(filename)+filename);
+		ModelAndView mav = new ModelAndView();
+		if(f.isDirectory()){
+			mav.addObject("foldername", filename);
+			mav.setViewName("redirect:files.do");
+			return mav;
+		}else {
+		int fileNo=fileSerImp.fileNo(filename);
+		fileSerImp.log_fileInsert(fileNo, mem_no);
+		mav.addObject("downloadFile", f);
+		mav.setViewName("chordDownload");
+		}
+		
+		return mav;
+	}
 }
