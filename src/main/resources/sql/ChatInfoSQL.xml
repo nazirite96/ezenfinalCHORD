@@ -3,7 +3,6 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chatInfoSql">
 
-   <!-- 채팅방 info insert -->
    <select id="selectChatroom" parameterType="java.util.Map" resultType="int">
       SELECT b.chatroom_no FROM chatinfo a, chatroom b
       WHERE a.chatroom_no = b.chatroom_no
@@ -33,7 +32,6 @@
       ) A
    </insert>
 
-   <!-- 변경  -->
    <select id="selectMyChatInfo" parameterType="chatInfo"
       resultType="chatInfo">
       SELECT *
@@ -50,9 +48,7 @@
       a.mem_no = b.mem_no
       AND b.chatroom_no = ${value}
    </select>
-   
-   <!-- 변경 -->
-   <!-- 채팅방 chatinfo_intime 변경 -->
+
    <update id="updateIntime">
       UPDATE
       chatinfo
@@ -67,7 +63,6 @@
       mem_no = #{mem_no}
    </update>
 
-   <!-- 채팅방 chatinfo_outtime 변경 -->
    <update id="updateOuttime">
       UPDATE
       chatinfo
@@ -77,9 +72,7 @@
       chatroom_no = #{chatroom_no}
       AND mem_no = #{mem_no}
    </update>
-   
-   <!-- [temporary code- Additional part] -->
-   <!-- 채팅방 생성을 위한 멤버리스트 출력 -->
+
    <select id="selectInvitationMemberList" resultType="memberDTO">
       SELECT *
       FROM member

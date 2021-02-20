@@ -60,7 +60,6 @@
       </div>
    </div>
 
-   <!-- sidebar modal -->
    <div id="modal_aside_left" class="modal fixed-left fade" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-dialog-aside" role="document">
          <div class="modal-content">
@@ -120,12 +119,7 @@
 			stompClient.send('/pub/request/chat/'+chatroom_no, {}, JSON.stringify(chatMessage));
 			$('#chatMessage_content').val('');
 		}
-		
-		/**
-		 * 채팅방 기능 : 메세지 삭제, 전체삭제
-		 */
-		 
-		// 메세지 삭제
+
 		$(document).on('click', '.deleteBtn', function() {
 			var chatmessage_no = $(this).data('chatmessage_no');
 			$.post('deleteChatMessage.do', {'chatMessage_no' : chatmessage_no}, function(data) {

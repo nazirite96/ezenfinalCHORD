@@ -61,7 +61,6 @@ public class ChatController {
 			System.out.println(e.getLocalizedMessage());
 		}
 
-		// DB 조회 결과값을 chatListMap에 Put
 		Map<String, List<ChatMessage>> chatListMap = new HashMap<String, List<ChatMessage>>();
 		chatListMap.put("privateChatList", privateChatList);
 		chatListMap.put("publicChatList", publicChatList);
@@ -69,8 +68,6 @@ public class ChatController {
 		return chatListMap;
 	}
 
-	// ** 변경 ***//
-	// 채팅방 생성
 	@RequestMapping(value = "createChatroom.do", method = RequestMethod.POST)
 	public @ResponseBody int createChatroom(ChatInfo chatinfo) {
 
@@ -114,7 +111,6 @@ public class ChatController {
 		return chatroom_no;
 	}
 
-	// 채팅방 진입
 	@RequestMapping(value = "chatroom.do", method = RequestMethod.POST)
 	public String chatroom(@RequestParam("chatroom_no") int chatroom_no, Model model) {
 
@@ -143,8 +139,6 @@ public class ChatController {
 		return "chat/chatroom";
 	}
 
-	// ** [temporary code- Additional part] ***//
-	// invitationPopup.jsp Member List
 	@RequestMapping(value = "invitationPopup.do", method = RequestMethod.GET)
 	public String invitationPopUp(Model model) {
 
