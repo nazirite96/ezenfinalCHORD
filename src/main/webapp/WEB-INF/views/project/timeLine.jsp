@@ -14,6 +14,35 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+<!-- 떠다니는 메뉴 -->
+<script src="<%=request.getContextPath() %>/resources/js/utils.js"></script>
+<script type="text/javascript">
+var stmnLEFT = 10; // 오른쪽 여백 
+var stmnGAP1 = 0; // 위쪽 여백 
+var stmnGAP2 = 50; // 스크롤시 브라우저 위쪽과 떨어지는 거리 
+var stmnBASE = 50; // 스크롤 시작위치 
+var stmnActivateSpeed = 35; //스크롤을 인식하는 딜레이 (숫자가 클수록 느리게 인식)
+var stmnScrollSpeed = 20; //스크롤 속도 (클수록 느림)
+var stmnTimer; 
+
+function RefreshStaticMenu() { 
+ var stmnStartPoint, stmnEndPoint; 
+ stmnStartPoint = parseInt(document.getElementById('STATICMENU').style.top, 10); 
+ stmnEndPoint = Math.max(document.documentElement.scrollTop, document.body.scrollTop) + stmnGAP2; 
+ if (stmnEndPoint < stmnGAP1) stmnEndPoint = stmnGAP1; 
+ if (stmnStartPoint != stmnEndPoint) { 
+  stmnScrollAmount = Math.round( Math.abs( stmnEndPoint - stmnStartPoint ) / 15 ); 
+  document.getElementById('STATICMENU').style.top = parseInt(document.getElementById('STATICMENU').style.top, 10) + ( ( stmnEndPoint<stmnStartPoint ) ? -stmnScrollAmount : stmnScrollAmount ) + 'px'; 
+  stmnRefreshTimer = stmnScrollSpeed; 
+  }
+ stmnTimer = setTimeout("RefreshStaticMenu();", stmnActivateSpeed); 
+ } 
+function InitializeStaticMenu() {
+ document.getElementById('STATICMENU').style.right = stmnLEFT + 'px';  //처음에 오른쪽에 위치. left로 바꿔도.
+ document.getElementById('STATICMENU').style.top = document.body.scrollTop + stmnBASE + 'px'; 
+ RefreshStaticMenu();
+ }
+</script>
 
 <style type="text/css">
 #STATICMENU {
@@ -2488,7 +2517,7 @@ function fn_collCancel(){
 							<div class="pro-right-box martop-15">
 								<a class="right-link-btn back-color-green-l color-white"
 									id="proChat" style="cursor: pointer;"> <i
-									class="fas fa-comments maright-10"></i>프로젝트 참여자
+									class="fas fa-user maright-10"></i>프로젝트 참여자
 								</a>
 							</div>
 							<!-- 프로젝트 채팅 button : f -->
@@ -2792,33 +2821,6 @@ $(function(){
 		<script>
 			feather.replace()
 		</script>
-		<!-- 떠다니는 메뉴 -->
-<script type="text/javascript">
-var stmnLEFT = 10; // 오른쪽 여백 
-var stmnGAP1 = 0; // 위쪽 여백 
-var stmnGAP2 = 50; // 스크롤시 브라우저 위쪽과 떨어지는 거리 
-var stmnBASE = 50; // 스크롤 시작위치 
-var stmnActivateSpeed = 35; //스크롤을 인식하는 딜레이 (숫자가 클수록 느리게 인식)
-var stmnScrollSpeed = 20; //스크롤 속도 (클수록 느림)
-var stmnTimer; 
-
-function RefreshStaticMenu() { 
- var stmnStartPoint, stmnEndPoint; 
- stmnStartPoint = parseInt(document.getElementById('STATICMENU').style.top, 10); 
- stmnEndPoint = Math.max(document.documentElement.scrollTop, document.body.scrollTop) + stmnGAP2; 
- if (stmnEndPoint < stmnGAP1) stmnEndPoint = stmnGAP1; 
- if (stmnStartPoint != stmnEndPoint) { 
-  stmnScrollAmount = Math.round( Math.abs( stmnEndPoint - stmnStartPoint ) / 15 ); 
-  document.getElementById('STATICMENU').style.top = parseInt(document.getElementById('STATICMENU').style.top, 10) + ( ( stmnEndPoint<stmnStartPoint ) ? -stmnScrollAmount : stmnScrollAmount ) + 'px'; 
-  stmnRefreshTimer = stmnScrollSpeed; 
-  }
- stmnTimer = setTimeout("RefreshStaticMenu();", stmnActivateSpeed); 
- } 
-function InitializeStaticMenu() {
- document.getElementById('STATICMENU').style.right = stmnLEFT + 'px';  //처음에 오른쪽에 위치. left로 바꿔도.
- document.getElementById('STATICMENU').style.top = document.body.scrollTop + stmnBASE + 'px'; 
- RefreshStaticMenu();
- }
-</script>
+		
 </body>
 </html>
