@@ -121,7 +121,7 @@ $(function(){
 	};
 
 	var colorNames = Object.keys(window.chartColors);
-	document.getElementById('addDataset').addEventListener('click', function() {
+	/* document.getElementById('addDataset').addEventListener('click', function() {
 		var newDataset = {
 			backgroundColor: [],
 			data: [],
@@ -138,7 +138,7 @@ $(function(){
 
 		config.data.datasets.push(newDataset);
 		window.myDoughnut.update();
-	});
+	}); */
 	
 });
 </script>

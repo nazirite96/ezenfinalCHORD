@@ -276,6 +276,7 @@
 		<form class="editPro-form" action="updatePro.do" method="get">
 			<input type="hidden" id="pro_no" name="pro_no" value="${proUserDTO.pro_no }">
 			
+			
     		<!-- pop header -->
     		<header class="pop-top border-box">
     			프로젝트 수정하기
@@ -289,6 +290,7 @@
    				<div class="dis-block">
 		   			<h3>프로젝트명</h3>
 		   			<input type="text" id="pro_name" name="pro_name" class="pop-input input-line" value="${proUserDTO.pro_name }" placeholder="프로젝트명 입력(최대 50자)" required="required">
+	   				<input type="hidden" name="Original_name"  value="${proUserDTO.pro_name }"><!-- 변경전 -->
 	   				<input type="hidden" name="mem_no" value="${memNo }">
 	   			</div>
 	   			
@@ -366,7 +368,7 @@
 	
     <div id="deletePro" class="pop-layer">
 		<form action="deleteProject.do" method="get" class="timeline-del-form">
-		
+			<input type="hidden" name="pro_name" value="${proUserDTO.pro_name }">
 			<input type="hidden" name="pro_no" value="${proUserDTO.pro_no }">
     		
     		<!-- pop con -->
