@@ -4,13 +4,16 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
+<c:set var="png" value=".png"></c:set>
+<c:set var="jpg" value=".jpg"></c:set>
+<c:set var="PNG" value=".PNG"></c:set>
 <html>
 <head>
 <meta charset="UTF-8">
 <!-- Required meta tags -->
-<meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 <!-- 떠다니는 메뉴 -->
 <script src="<%=request.getContextPath() %>/resources/js/utils.js"></script>
 <script type="text/javascript">
@@ -465,14 +468,7 @@ function submitgogo(){
 
 												<!-- file icon, img icon, 올리기 버튼 있는 부분 -->
 												<div class="tab-dn-box">
-													<!-- 파일첨부 -->
-													<label class="articleFileTask"
-														class="float-left maright-20 marbtm-0 font-thin size-18">
-														<i class="fas fa-paperclip maright-10"></i>파일첨부
-													</label> <input type="file" id="articleFileTask" name="articleFile"
-														class="dis-none">
-
-													<!-- 올리기 버튼 -->
+												s													<!-- 올리기 버튼 -->
 													<input type="submit" value="올리기"
 														class="article-submit-btn float-right font-bold size-18 color-white text-center default-back-color">
 												</div>
@@ -864,7 +860,6 @@ function submitgogo(){
 									</c:forEach>
 								</div>
 							</div>
-
 							</div>
 
 
@@ -957,18 +952,24 @@ function submitgogo(){
 
 														<div class="swiper-container-img">
 															<div class="swiper-wrapper">
+															
 															<c:if test="${not empty dto.filesList }">
 																<c:forEach items="${dto.filesList }" var="filesDTO">
-																	${filesDTO.file_name }
-																	${filesDTO.file_path }
-																	${filesDTO.file_upload }
-																		<img src="resources/files\ㅌ\155341403174238.jpg" height="300px">
+																
+																<c:choose>
+																	<c:when test="${(filesDTO.file_kind == png) or (filesDTO.file_kind == jpg) or (filesDTO.file_kind == PNG)}">
+																	<img src="/chord/${filesDTO.file_path }/${filesDTO.file_upload }" width="160px" height="150px">
+																	</c:when>
+																	<c:otherwise>
+																	<div style="margin-bottom: 10px;border: 1px solid gray;padding-left: 3%;color: gray;font-size: 16px;padding-bottom: 8px;padding-top: 8px;">
+																	<img src="resources/img/fileicon.png" width="40" height="40">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       																<a href="filedownload?filename=${filesDTO.file_name } " style="color: red">${ filesDTO.file_name}</a> &nbsp;&nbsp;&nbsp;&nbsp; 크기(${filesDTO.file_size })</div>	
+																	</c:otherwise>
+																</c:choose>
+																	
 																</c:forEach>
 															</c:if>
 															</div>
-															Add Arrows
-															<div class="swiper-button-next"></div>
-															<div class="swiper-button-prev"></div>
 														</div>
 
 													</div>
@@ -1272,46 +1273,76 @@ function submitgogo(){
 													</div>
 													<!-- 내용:f -->
 
-													<!-- 이미지:s -->
 													<div class="article-img martop-20">
+
 														<div class="swiper-container-img">
 															<div class="swiper-wrapper">
-																<%-- <c:forEach items="${dto.filesList }" var="filesVo"> 
-					<c:if test="${filesVo.files_kind == 'img' }">
-						<div class="swiper-slide img-con" style="background-image:url('/files/view?files_no=${filesVo.files_no}')"></div>
-					</c:if>
-				</c:forEach>
-				--%>
+															
+															<c:if test="${not empty dto.filesList }">
+																<c:forEach items="${dto.filesList }" var="filesDTO">
+																
+																<c:choose>
+																	<c:when test="${(filesDTO.file_kind == png) or (filesDTO.file_kind == jpg) or (filesDTO.file_kind == PNG)}">
+																	<img src="/chord/${filesDTO.file_path }/${filesDTO.file_upload }" width="160px" height="150px">
+																	</c:when>
+																	<c:otherwise>
+																	<div style="margin-bottom: 10px;border: 1px solid gray;padding-left: 3%;color: gray;font-size: 16px;padding-bottom: 8px;padding-top: 8px;">
+																	<img src="resources/img/fileicon.png" width="40" height="40">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       																<a href="filedownload?filename=${filesDTO.file_name } " style="color: red">${ filesDTO.file_name}</a> &nbsp;&nbsp;&nbsp;&nbsp; 크기(${filesDTO.file_size })</div>	
+																	</c:otherwise>
+																</c:choose>
+																	
+																</c:forEach>
+															</c:if>
 															</div>
-															<!-- Add Arrows -->
-															<div class="swiper-button-next"></div>
-															<div class="swiper-button-prev"></div>
 														</div>
+
 													</div>
 													<!-- 이미지:f -->
 
 													<!-- 파일리스트:s -->
-													<div class="article-file martop-20">
-														<%-- <c:forEach items="${dto.filesList }" var="filesVo">
-			<c:if test="${filesVo.files_kind == 'fil' }">
-				<div class="upload-file-info float-left martop-20">
-					<dl>
-						<dt>
-							<i class="dis-inblock file-icon" data-name="${filesVo.files_name }"></i>
-						</dt>
-						<dd>
-							<span class="dis-block size-18 color-black">${filesVo.files_name }</span>
-							<span class="dis-block martop-5 size-14 color-gray">${filesVo.files_size }</span>
-						</dd>
-					</dl>
-					<a href="/files/download?files_no=${filesVo.files_no }" class="file-down-btn"><i class="fas fa-download maright-10"></i> 다운로드</a>
-				</div>
-			</c:if>
-		</c:forEach> --%>
+													<div class="article-file float-left" style="width: 100%;">
+														<!-- 
+													<c:forEach items="${timeLine.filesList }" var="filesVo">
+														<c:if test="${filesVo.files_kind == 'fil' }">-->
+														<div class="upload-file-info float-left martop-20">
+															<dl>
+																<dt>
+																	<i class="dis-inblock file-icon"
+																		data-name="${filesVo.files_name }"></i>
+																</dt>
+																<dd>
+																	<span class="dis-block size-18 color-black">${filesVo.files_name }</span>
+																	<span class="dis-block martop-5 size-14 color-gray">${filesVo.files_size }</span>
+																</dd>
+															</dl>
+															<a href="/files/download?files_no=${filesVo.files_no }"
+																class="file-down-btn"><i
+																class="fas fa-download maright-10"></i> 다운로드</a>
+														</div>
+														
+														<div class="article-edit-dn">
+														<!-- 파일첨부 -->
+														<label for="articleEditFile_b${dto.tim_no }"
+															class="float-left maright-20 marbtm-0 font-thin size-18">
+															<i class="fas fa-paperclip maright-10"></i>파일첨부
+														</label> <input type="file" name="articleFile"
+															id="articleEditFile_b${dto.tim_no }" class="dis-none">
+
+														<!-- 이미지첨부 -->
+														<label for="articleEditImg_b${dto.tim_no }"
+															class="float-left marbtm-0 font-thin size-18"> <i
+															class="fas fa-camera maright-10"></i>이미지첨부
+														</label> <input type="file" name="imageFile"
+															id="articleEditImg_b${dto.tim_no }" class="dis-none"
+															accept="image/*">
+														<!-- </c:if>
+													</c:forEach>-->
+
 													</div>
 													<!-- 파일리스트:f -->
-
 												</div>
+
 
 												<!-- 업무 수정:s -->
 												<form action="taskUpdate.do" method="post"
@@ -2790,5 +2821,6 @@ $(function(){
 		<script>
 			feather.replace()
 		</script>
+		
 </body>
 </html>

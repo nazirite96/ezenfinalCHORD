@@ -277,6 +277,9 @@ public class FilesServiceImpl implements FilesService {
 			f.delete();
 		}
 		delDBPath(PATH+File.separator+pro_name+File.separator);	
+		CRPATH="";
+		STATE="";
+		PRONAME="";
 	}
 	@Override
 	public void changePro(String pro_name) {
@@ -287,7 +290,9 @@ public class FilesServiceImpl implements FilesService {
 		
 	}
 	//폴더명 바꾸기 
-	public void reProfor(String original_name, String rename,String realpath) {
+	@Override
+	public void reProfor(String original_name, String rename, String realpath) {
+		// TODO Auto-generated method stub
 		File file = new File(realpath+PATH+File.separator+original_name);
 		File file2 = new File(realpath+PATH+File.separator+rename);
 		String whereinfo=PATH+File.separator+original_name;
