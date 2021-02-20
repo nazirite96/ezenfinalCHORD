@@ -61,17 +61,19 @@ public class CompanyController {
 			if(com_pwd_result>0) { // 번호+패스워드 모두 맞음
 
 				csvc.exComNoUpdateService(mdto);// com_no 업데이트해주기
+				MemberDTO userINFO = csvc.comGetNameService(mdto.getMem_email()); // 해당 회원 정보 가져오기
 				
-				//boxDao.insertBoxWhenMemJoin(mdto.getMem_no());
+				System.out.println("controller: 회원정보: "+userINFO.getMem_no() + "/" +userINFO.getMem_name());
+				
+				boxDao.insertBoxWhenMemJoin(userINFO.getMem_no());
 
 				mav.addObject("msg","입사 성공~");
-				mav.addObject("gopage","testForm.do");
+				mav.addObject("gopage","proList.do?mem_no="+userINFO.getMem_no());
 				
-				/*자동 로그인 기능*/
-				String userName = csvc.comGetNameService(mdto.getMem_email()); // 해당 회원 이름 가져오기
 				/*세션 생성*/
-				session.setAttribute("name",userName);
-				session.setAttribute("email", mdto.getMem_email());	
+				session.setAttribute("name",userINFO.getMem_name());
+				//session.setAttribute("email", mdto.getMem_email());	
+				session.setAttribute("memNo", userINFO.getMem_no());
 
 
 			}else { // 번호는 맞지만, 패스워드 틀림
@@ -137,16 +139,13 @@ public class CompanyController {
 		csvc.exComNoUpdateService(mdto); //해당 멤버에 com_no 업데이트해주기
 		
 		int getMemNo_result = csvc.findMemNoService(mem_email);// 해당멤버position 업데이트해주기 위해 해당 멤버no찾기
-		//boxDao.insertBoxWhenMemJoin(getMemNo_result);
 		
-		
+		boxDao.insertBoxWhenMemJoin(getMemNo_result);
+	
 		Map<String,Integer> map = new HashMap<String,Integer>();
 		map.put("kind_no", getComNo_result);
 		map.put("mem_no", getMemNo_result);
 		csvc.newPositionInsertService(map); // position 업데이트해주기 grade update
-
-		
-		//String userName = csvc.comGetNameService(mdto.getMem_email()); // 해당 회원 이름 가져오기
 
 		return "member/loginForm";
 
