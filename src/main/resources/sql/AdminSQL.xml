@@ -11,6 +11,12 @@
 	group by email,name,comno
 	order by cnt desc
 </select>
+<select id="admin_searchUserInfo" resultType="MemberDTO">
+	select * from member 
+	left join member_info 
+	on member.mem_no=member_info.mem_no 
+	where member.mem_name = #{mem_name}
+</select>
 <select id="admin_companycontents" resultType="CompanyDTO" parameterType="Integer">
 	select * from company where com_no=#{comNo}
 </select>

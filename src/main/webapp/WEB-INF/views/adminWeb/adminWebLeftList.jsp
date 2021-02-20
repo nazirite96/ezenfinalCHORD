@@ -31,10 +31,10 @@
 			<ul class="mt-4 ml-3 nav flex-column">
 				<li class="nav-item">
 				<a class="nav-link active" href="adminWebForm.do"> 
-				<span data-feather="home"></span>MEMBER LOG</a></li>
+				MEMBER LOG</a></li>
 				
 				<li class="nav-item"><a class="nav-link" href="adminFileForm.do"> 
-				<span data-feather="file"></span>FILE DOWN LOG</a></li>
+				FILE DOWN LOG</a></li>
 			</ul>
 		</div>
 	</nav>

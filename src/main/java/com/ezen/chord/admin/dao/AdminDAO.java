@@ -11,6 +11,7 @@ public interface AdminDAO {
 	/* 웹 사이트 운영자_회원로그인기록 list */
 	public List<Map<String, Object>> adminLogDataDAO(); 
 	public List<Map<String, Object>> adminFileListDAO();
+	public MemberDTO adminFindingMemDAO(String mem_name);
 	
 	/*회사 관리자_회사정보 조회 및 수정*/
 	public CompanyDTO adminComUpdateFormDAO(int comNo);

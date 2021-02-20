@@ -48,6 +48,16 @@ public class AdminDAOImple implements AdminDAO {
 		return result;
 	}
 	
+	/*사이트 운영자_이용자 검색*/
+	@Override
+	public MemberDTO adminFindingMemDAO(String mem_name) {
+		
+		MemberDTO mdto = sqlMap.selectOne("chord.admin.admin_searchUserInfo",mem_name);
+		return mdto;
+	}
+	
+	
+	
 	/*회사 관리자_회사정보 조회 및 수정*/
 	@Override
 	public CompanyDTO  adminComUpdateFormDAO(int com_no) {

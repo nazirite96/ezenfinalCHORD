@@ -20,7 +20,6 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public int exComNoChkService(int num) {
 		int result = cdao.comNoCheckDAO(num);
-		System.out.println("com_service_1: "+num +"/"+result);
 		return result;
 	}
 
@@ -28,7 +27,6 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public int exComPwdChkService(CompanyDTO cdto) {
 		int result = cdao.comPwdCheckDAO(cdto);
-		System.out.println("com_service_2: "+cdto.getCom_no()+"/"+cdto.getCom_pwd() +"/"+result);
 		return result;
 	}
 	
@@ -74,8 +72,8 @@ public class CompanyServiceImpl implements CompanyService {
 	
 	/*자동 로그인*/
 	@Override
-	public String comGetNameService(String mem_email) {
-		String result = cdao.comGetNameDAO(mem_email);
+	public MemberDTO comGetNameService(String mem_email) {
+		MemberDTO result = cdao.comGetNameDAO(mem_email);
 		System.out.println("com_service:(자동로그인): "+result);
 		return result;
 	}

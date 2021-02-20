@@ -22,8 +22,11 @@ public class CompanyDAOImple implements CompanyDAO {
 	
 	/*기존회사 넘버 확인 */
 	@Override
-	public int comNoCheckDAO(int num) {
-		int result=0;
+	public Integer comNoCheckDAO(int num) {
+		Integer result=0;
+		if(result==null || result.equals("")) {
+			result = 0;
+		}
 		try {
 			result = sqlMap.selectOne("comNoChkSQL",num);
 		} catch (Exception e) {
@@ -81,8 +84,9 @@ public class CompanyDAOImple implements CompanyDAO {
 	
 	/*자동 로그인*/
 	@Override
-	public String comGetNameDAO(String mem_email) {
-		String result = sqlMap.selectOne("autoLogin_getName",mem_email);
+	public MemberDTO comGetNameDAO(String mem_email) {
+		System.out.println(mem_email);
+		MemberDTO result = sqlMap.selectOne("chord.company.autoLogin_getName",mem_email);
 		return result;
 	}
 

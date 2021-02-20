@@ -10,8 +10,8 @@ public interface AdminService {
 
 	/* 웹 사이트 운영자_회원로그인기록 list */
 	public List<Map<String, Object>> adminLogDataService();
-	/* 웹 사이트 운영자_파일 다운이력 list*/
 	public List<Map<String, Object>> adminFileListService();
+	public MemberDTO adminFindingMemService(String mem_name);
 	
 	/*회사 관리자_회사 */
 	public CompanyDTO adminComUpdateFormService(int comNo);

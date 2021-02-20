@@ -8,7 +8,7 @@ import com.ezen.chord.member.dto.MemberDTO;
 public interface CompanyDAO {
 
 	/*기존회사*/
-	public int comNoCheckDAO(int num);
+	public Integer comNoCheckDAO(int num);
 	public int comPwdCheckDAO(CompanyDTO cdto);
 	public int comNoUpdateDAO(MemberDTO mdto);
 	
@@ -19,5 +19,5 @@ public interface CompanyDAO {
 	public int findMemNoDAO(String mem_email);
 	
 	/*자동로그인*/
-	public String comGetNameDAO(String mem_email);
+	public MemberDTO comGetNameDAO(String mem_email);
 }

@@ -41,9 +41,7 @@ public class AdminController {
 	@RequestMapping("/adminWebForm.do")
 	public ModelAndView adminWebForm() {
 
-    
 		List<Map<String, Object>> userLogList = asvc.adminLogDataService();
-		
 		
 		//결과가져오기
 		String result = null;
@@ -78,6 +76,27 @@ public class AdminController {
 		
 		return mav;
 		
+	}
+	
+	/*이용자 정보 검색*/
+	@RequestMapping("/adminSearchMem.do")
+	public ModelAndView adminSearchMem(String mem_name) {
+	
+		MemberDTO mdto = asvc.adminFindingMemService(mem_name);
+			
+		String msg = "{dto:{mem_no:'"+mdto.getMem_no()+
+				"',mem_name:'"+mdto.getMem_name()+
+				"',mem_email:'"+mdto.getMem_email()+
+				"',mem_phone:'"+mdto.getMem_info_phone()+
+				"',mem_position:'"+mdto.getMem_info_position()+
+				"',mem_dept:'"+mdto.getMem_info_dept()+"'}}";
+
+		
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("msg",msg);
+		mav.setViewName("adminWeb/ajaxMsg");
+		
+		return mav;
 	}
 	
 	

@@ -12,6 +12,7 @@ public interface CompanyService {
 	public int exComPwdChkService(CompanyDTO dto);
 	public int exComNoUpdateService(MemberDTO mdto);
 	
+	
 	/*새 회사*/
 	public int buildCompanyService(CompanyDTO cdto);
 	public int findComNoService(String email); 
@@ -19,5 +20,7 @@ public interface CompanyService {
 	public int findMemNoService(String mem_email);
 	
 	/*자동로그인*/
-	public String comGetNameService(String mem_email);
+	public MemberDTO comGetNameService(String mem_email);
+	
+	
 }

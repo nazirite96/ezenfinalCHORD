@@ -36,8 +36,8 @@
   	<select id="findMemNoSQL" parameterType="String" resultType="Integer">
   		select mem_no from member where mem_email=#{mem_emai}
   	</select>
-  	<select id="autoLogin_getName" parameterType="string" resultType="String">
-  		select mem_name from member 
+  	<select id="autoLogin_getName" parameterType="string" resultType="MemberDTO">
+  		select * from member 
   			where mem_email=#{mem_email}
   	</select>
 </mapper>
