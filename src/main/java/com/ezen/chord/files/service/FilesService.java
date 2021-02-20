@@ -65,5 +65,7 @@ public interface FilesService {
 	void delProfolder(String pro_name,String realpath);
 	//메서드 : 프로젝트가 변경될시 (기웅아 이거 가져다 써라)
 	void changePro(String pro_name);
+	//메서드 : 프로젝트 이름이 변경될시 (기우아 이거 가져다 써라)
+	void reProfor(String original_name, String rename,String realpath);
 	
 }

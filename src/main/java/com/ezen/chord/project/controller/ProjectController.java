@@ -40,7 +40,7 @@ public class ProjectController {
 	private BoxService boxService;
 	//중요한 정보
 	@Autowired
-	private FilesService filesSerivce;
+	private FilesService filesService;
 	
 	
 	@RequestMapping("/proList.do")
@@ -73,10 +73,11 @@ public class ProjectController {
 	
 	
 	@RequestMapping("/insertPro.do")
-	public String insertPro(ProjectDTO proDTO) {
+	public String insertPro(ProjectDTO proDTO,HttpServletRequest rs) {
 		java.sql.Date date = new java.sql.Date(12);
 		proDTO.setPro_date(date);
-		//filesSerivce.createProfolder(proDTO.getPro_name());
+		String realpath = rs.getSession().getServletContext().getRealPath("/");
+		filesService.createProfolder(proDTO.getPro_name(),realpath);
 		ModelAndView mav = new ModelAndView();
 		proService.insertPro(proDTO);
 		List<ProjectUserDTO> proList = proService.getProAllList(proDTO.getMem_no());
@@ -130,16 +131,22 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("/deleteProject.do")
-	public String deleteProject(int pro_no,String pro_name,HttpSession sess) {
+	public String deleteProject(int pro_no,String pro_name,HttpSession sess,HttpServletRequest rs) {
 		int mem_no = (int)sess.getAttribute("memNo");	
 		int result = proService.deletePro(pro_no);
+		String realpath = rs.getSession().getServletContext().getRealPath("/");
+		
 		//폴더 삭제
-		//filesSerivce.delProfolder(pro_name);
+		filesService.delProfolder(pro_name,realpath);
 		return "redirect:/proList.do?mem_no="+mem_no;
 	}
 	
 	@RequestMapping("/updatePro.do")
-	public String updatePro(ProjectDTO proDTO) {
+	public String updatePro(ProjectDTO proDTO, HttpServletRequest rs,
+							String Original_name) {
+		String realpath=rs.getSession().getServletContext().getRealPath("/");
+		System.out.println(realpath);
+		filesService.reProfor(Original_name, proDTO.getPro_name(), realpath);
 		int result = proService.updatePro(proDTO);
 		return "redirect:/timeLine.do?pro_no="+proDTO.getPro_no()+"&mem_no="+proDTO.getMem_no();
 	}

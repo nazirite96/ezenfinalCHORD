@@ -187,7 +187,7 @@ public class FilesController {
 		}
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("etclist",allFileList);
-		mav.setViewName("chordView");
+		mav.setViewName("jsonView");
 		return mav;
 	}
 	
@@ -281,10 +281,12 @@ public class FilesController {
 	/**
 	 * 다운로드 뷰 
 	 * */
+	
 	@RequestMapping("/filedownload")
 	public ModelAndView filedwnload(
 			@RequestParam("filename")String filename,
 			HttpServletRequest request) {
+		
 		HttpSession session=request.getSession();
 		int mem_no = (Integer) session.getAttribute("memNo");
 		String serv =request.getSession().getServletContext().getRealPath("/");
