@@ -82,7 +82,6 @@
 	        	type : 'post',
 	        	data : $('#invitationMemberForm').serialize(),
 	        	success : function(data) {
-	        		// 채팅방 생성 후, chatroom.jsp로 이동
 	        		opener.parent.formSubmit(data); 
 	        		self.close();
 	        	},

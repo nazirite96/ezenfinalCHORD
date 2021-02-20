@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chatroomSql">
-	<!-- 채팅방 생성 -->
+
 	<insert id="insertChatroom">
 		<selectKey keyProperty="chatroom_no" resultType="int"
 			order="AFTER">

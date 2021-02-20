@@ -9,7 +9,6 @@ public class ChatMessage {
 	private String chatmessage_writedate;
 	private int mem_no;
 	private int chatroom_no;
-
 	private String mem_name;
 	private int member_count;
 	private int chatmessage_count;

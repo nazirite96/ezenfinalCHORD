@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="chatMessageSql">
-		<!-- 변경 -->
+
 	   <select id="selectPrivateChatList" parameterType="memberDTO" resultType="chatMessage">
       SELECT a.mem_no, a.mem_name, a.chatroom_no,
       CASE WHEN a.chatmessage_writedate <![CDATA[<]]> (SELECT chatinfo_intime FROM chatinfo WHERE mem_no = #{mem_no} AND chatroom_no = a.chatroom_no) AND (SELECT chatinfo_deleted FROM chatinfo WHERE mem_no = #{mem_no} AND chatroom_no = a.chatroom_no) ='y' THEN ''
@@ -49,7 +49,6 @@
       ORDER BY a.mem_no, a.chatmessage_writedate DESC
    </select>
 
-	<!-- 해당 채팅방의 채팅 메세지를 가져온다. -->
 	<select id="selectChatroomMessage" resultType="chatMessage">
 		SELECT distinct cm.*, m.mem_name as messagewriter
 		FROM chatmessage cm,
@@ -63,7 +62,6 @@
 		ORDER BY cm.chatmessage_writedate
 	</select>
 
-	<!-- 해당 채팅방의 채팅 메세지를 DB 에 넣는다. -->
 	<insert id="insertChatMessage">
 		<selectKey keyProperty="chatmessage_no" resultType="int"
 			order="AFTER">
@@ -79,7 +77,6 @@
 		)
 	</insert>
 
-	<!-- 메세지 단일 삭제 -->
 	<update id="updateChatMessage" parameterType="int">
 		UPDATE
 		chatmessage
@@ -88,10 +85,7 @@
 		WHERE
 		chatmessage_no = ${value}
 	</update>
-	
-	<!-- 단체방 불러오기-->
-		
-	<!-- 단체 채팅방 불러오기 -->
+
 	<select id="selectPubChatroomList" parameterType="int" resultType="chatMessage">
  	SELECT a.chatroom_no, chatinfo_roomname as chatroomName, chatmessage_count,chatmessage_writedate, member_count, 
     CASE WHEN a.chatmessage_writedate <![CDATA[<]]> (SELECT chatinfo_intime FROM chatinfo WHERE mem_no = ${value} AND chatroom_no = a.chatroom_no) AND (SELECT chatinfo_deleted FROM chatinfo WHERE mem_no = ${value} AND chatroom_no = a.chatroom_no) ='n' THEN '대화내용이 없습니다.' ELSE a.chatmessage_content END AS chatmessage_content

@@ -514,7 +514,7 @@
             for (var i=0; i<chatroomPopupList.length; i++) {
               try {
                 if(chatroomPopupList[i] == 'chatroom' + String(chatroom_no)){
-                	check = true;//이미 같은 이름으로 팝업이 띄워저 있는 경우         	
+                	check = true;   	
                 }
        		  }catch (e) {
                 chatroomPopupList[i] = null;

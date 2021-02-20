@@ -12,7 +12,6 @@ public class ChatroomServiceImpl implements ChatroomService {
    @Autowired
    ChatroomDAO chatroomDAO;
 
-   // 채팅방 생성
    @Override
    public int createChatroom(Chatroom input) throws Exception {
       return chatroomDAO.createChatroom(input);

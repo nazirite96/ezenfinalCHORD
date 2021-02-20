@@ -17,7 +17,6 @@ public class ChatInfoServiceImpl implements ChatInfoService {
 	@Autowired
 	ChatInfoDAO chatInfoDAO;
 
-	// 채팅방 존재 여부 확인
 	@Override
 	public int checkChatroom(int input1, int input2) throws Exception {
 		Map<String, Integer> map = new HashMap<String, Integer>();
@@ -26,38 +25,31 @@ public class ChatInfoServiceImpl implements ChatInfoService {
 		return chatInfoDAO.checkChatroom(map);
 	}
 
-	// 채팅방 생성 후 chatInfo Insert
 	@Override
 	public void setChatInfo(List<ChatInfo> input) throws Exception {
 		chatInfoDAO.setChatInfo(input);
 	}
 
-	// 채팅방 참여 회원 리스트 in chatroom.jsp
 	@Override
 	public List<MemberDTO> getChatMemberList(int input) throws Exception {
 		return chatInfoDAO.getChatMemberList(input);
 	}
 
-	// 채팅방 정보 불러오기
 	@Override
 	public ChatInfo getChatInfo(ChatInfo input) throws Exception {
 		return chatInfoDAO.getChatInfo(input);
 	}
 
-	// 나의 채팅방 메시지 전체 삭제(intime update) in chatroom.jsp
 	@Override
 	public int allDeleteChatMessage(ChatInfo input) throws Exception {
 		return chatInfoDAO.allDeleteChatMessage(input);
 	}
 
-	// 채팅방 종료시간 변경 in chatroom.jsp
 	@Override
 	public void setChatInfo_outtime(ChatInfo input) throws Exception {
 		chatInfoDAO.setChatInfo_outtime(input);
 	}
 
-	// ** [temporary code- Additional part] ***//
-	// 채팅방 생성을 위한 같은 회사 멤버 조회
 	@Override
 	public List<MemberDTO> getInvitationMemberList(MemberDTO input) throws Exception {
 		return chatInfoDAO.getInvitationMemberList(input);

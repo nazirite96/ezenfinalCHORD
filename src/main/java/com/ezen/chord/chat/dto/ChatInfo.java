@@ -14,8 +14,6 @@ public class ChatInfo {
    private String chatInfo_deleted;
    private int mem_no;
    private int chatroom_no;
-
-
    private String mem_name; 
    private List<Integer> memberList = new ArrayList<Integer>(); 
 
