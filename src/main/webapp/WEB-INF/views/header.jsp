@@ -127,7 +127,9 @@
 					<!-- ***********************사이트 운영자*********************** -->
 					<nav class="navbar navbar-default navbar-expand-lg">
 						<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
-							href="index.do"><b>[ CHORD ]</b></a>
+							href="index.do"><img src="/chord/resources/img/chordLogo.png" style="opacity: 0.8;filter: invert(1);height: 36px;">
+							
+							</a>
 						<button class="navbar-toggler" 
 						  type="button" 
 						  data-toggle="collapse" 
@@ -153,7 +155,7 @@
 				<c:when test="${whatGrade=='com_ses'}">
 				<!-- *************************** 회사 관리자 **************************** -->
 					<nav class="navbar navbar-default navbar-expand-lg">
-						<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="proList.do?mem_no=${sessionScope.memNo }">[ CHORD ]</a>
+						<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="proList.do?mem_no=${sessionScope.memNo }"><img src="/chord/resources/img/chordLogo.png" style="opacity: 0.8;filter: invert(1);height: 36px;"></a>
 						  <button class="navbar-toggler" 
 						  type="button" 
 						  data-toggle="collapse" 
@@ -198,7 +200,7 @@
 				<c:otherwise>
 				<!-- **************************** 일반회원 ********************************* -->
 				<nav class="navbar navbar-default navbar-expand-lg">
-					<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="proList.do?mem_no=${sessionScope.memNo }">[ CHORD ]</a>
+					<a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="proList.do?mem_no=${sessionScope.memNo }"><img src="/chord/resources/img/chordLogo.png" style="opacity: 0.8;filter: invert(1);height: 36px;"></a>
 						  <button class="navbar-toggler" 
 						  type="button" 
 						  data-toggle="collapse" 

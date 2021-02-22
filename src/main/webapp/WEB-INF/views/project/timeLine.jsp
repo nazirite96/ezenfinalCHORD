@@ -15,8 +15,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- 떠다니는 메뉴 -->
-<script src="<%=request.getContextPath() %>/resources/js/utils.js"></script>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 var stmnLEFT = 10; // 오른쪽 여백 
 var stmnGAP1 = 0; // 위쪽 여백 
 var stmnGAP2 = 50; // 스크롤시 브라우저 위쪽과 떨어지는 거리 
@@ -42,7 +41,7 @@ function InitializeStaticMenu() {
  document.getElementById('STATICMENU').style.top = document.body.scrollTop + stmnBASE + 'px'; 
  RefreshStaticMenu();
  }
-</script>
+</script> -->
 
 <style type="text/css">
 #STATICMENU {
@@ -50,7 +49,7 @@ function InitializeStaticMenu() {
 	padding: 0pt;
 	position: absolute;
 	right: 0px;
-	top: 0px;
+	top: 50px;
 }
 </style>
 
@@ -87,7 +86,7 @@ function InitializeStaticMenu() {
 	
 
 </head>
-<body id="contentBody" onload="InitializeStaticMenu();">
+<body id="contentBody">
 	<jsp:include page="/WEB-INF/views/header.jsp" />
 	<link rel="stylesheet" href="/chord/resources/css/GwCss.css">
 	<script type="text/javascript">
@@ -374,8 +373,8 @@ function submitgogo(){
 																					src="/chord/resources/img/user-pic-sample.png"
 																					width="40">
 																			</div>
-																			<span class="user-no" data-no="${proUserDTO.mem_no }">${proUserDTO.mem_no }번호
-																				이름</span>
+																			<span class="user-no" data-no="${proUserDTO.mem_no }">${proUserDTO.mem_name }님
+																		</span>
 																		</div>
 																	</c:forEach>
 																</div>
@@ -468,7 +467,7 @@ function submitgogo(){
 
 												<!-- file icon, img icon, 올리기 버튼 있는 부분 -->
 												<div class="tab-dn-box">
-												s													<!-- 올리기 버튼 -->
+												<!-- 올리기 버튼 -->
 													<input type="submit" value="올리기"
 														class="article-submit-btn float-right font-bold size-18 color-white text-center default-back-color">
 												</div>
@@ -536,8 +535,8 @@ function submitgogo(){
 																					src="/chord/resources/img/user-pic-sample.png"
 																					style="width: 40px">
 																			</div>
-																			<span class="user-no" data-no="${mbs.mem_no }">${mbs.mem_no }번
-																				이름</span>
+																			<span class="user-no" data-no="${mbs.mem_no }">${mbs.mem_name }
+																				</span>
 																		</div>
 																	</c:forEach>
 																</div>
@@ -730,7 +729,7 @@ function submitgogo(){
 																							style="width: 40px">
 																					</div>
 																					<span class="user-no"
-																						data-memno="${proUserVo.mem_no }">${proUserVo.mem_no }</span>
+																						data-memno="${proUserVo.mem_no }">${proUserVo.mem_name }</span>
 																				</div>
 																			</c:forEach>
 																		</div>
@@ -779,13 +778,14 @@ function submitgogo(){
 								<div class="fix-article-box panel-group" id="accordion"
 									role="tablist" aria-multiselectable="true">
 									<c:forEach items="${list }" var="timeLine" varStatus="fixStart">
+									
 										<c:if test="${timeLine.fix_chk == timeLine.tim_no }">
+									
 											<div class="panel panel-default">
-
+											
 												<!-- accordion title : s -->
 												<div class="article-fix-top" role="tab" id="fixedTop_${fixStart.index }">
-													<a href="#fixedCon_${fixStart.index }"class="collasped size-18 color-black" data-toggle="collapse" data-parent="#accordion" aria-expanded="false"
-														aria-controls="fixedCon_${fixStart.index }" onchange="fn_fixedIconChange(this)"> 
+													<a href="#tim_no=${timeLine.tim_no }" class="collasped size-18 color-black"	> 
 														<c:set var="articleKind" value="${timeLine.cont_kind }" /> 
 														<c:set var="articleTitle" value="${timeLine.tim_cont }" /> 
 														<input type="hidden" class="col-no" data-col="${articleKind }" data-no="${timeLine.cont_no }"> 
@@ -833,6 +833,9 @@ function submitgogo(){
 
 													<!-- timeline content:s -->
 													<div class="timeline-content">
+														<div class="timeline-article con-article">
+														ㄴㄴㄴ
+														</div>
 														<%-- <c:choose>
 													<c:when test="${timeLine.basicVo != null }">
 														<%@include file="/include/timeline_article.jsp" %>
@@ -856,6 +859,7 @@ function submitgogo(){
 												</div>
 												<!-- accordion content : f -->
 											</div>
+											
 										</c:if>
 									</c:forEach>
 								</div>
@@ -867,7 +871,7 @@ function submitgogo(){
 							<!-- 타임라인 : start -->
 							<c:forEach var="dto" items="${list }">
 								<!-- 타임라인 : start -->
-								<div class="timeline-box martop-20">
+								<div id="tim_no=${dto.tim_no }" class="timeline-box martop-20">
 
 									<input type="hidden" class="col-no" data-no="${dto.tim_no }">
 									<input type="hidden" class="col-kind"
@@ -889,7 +893,7 @@ function submitgogo(){
 												</dt>
 												<dd>
 													<strong class="dis-block size-18 color-black">작성자
-														: ${dto.mem_no }</strong> <span
+														: ${dto.mem_name }</strong> <span
 														class="dis-block size-14 color-gray-l"> 작성시간
 														${dto.tim_date } </span>
 												</dd>
@@ -1433,8 +1437,7 @@ function submitgogo(){
 																						src="/chord/resources/img/user-pic-sample.png"
 																						style="width: 40px">
 																				</div>
-																				<span class="user-no" data-no="${mbs.mem_no }">${mbs.mem_no }번
-																					이름</span>
+																				<span class="user-no" data-no="${mbs.mem_no }">${mbs.mem_name }님</span>
 																			</div>
 																		</c:forEach>
 																	</div>
@@ -1806,8 +1809,7 @@ function submitgogo(){
 																					src="/chord/resources/img/user-pic-sample.png"
 																					style="width: 40px">
 																			</div>
-																			<span class="user-no" data-no="${mbs.mem_no }">${mbs.mem_no }번
-																				이름</span>
+																			<span class="user-no" data-no="${mbs.mem_no }">${mbs.mem_name }님</span>
 																		</div>
 																	</c:forEach>
 																</div>
@@ -2111,7 +2113,7 @@ function submitgogo(){
 																					src="/chord/resources/img/user-pic-sample.png"
 																					style="width: 40px">
 																				</div>
-																				<span class="user-no" data-no=${proUserVo.mem_no }>${proUserVo.mem_no }</span>
+																				<span class="user-no" data-no=${proUserVo.mem_no }>${proUserVo.mem_name }</span>
 																			</div>
 																			</c:forEach>
 																		</div>
@@ -2204,7 +2206,7 @@ function submitgogo(){
 															<!-- 댓글 작성자 정보 -->
 															<div class="comment-user-info">
 																<div
-																	class="dis-inblock font-bold size-15 color-black maright-10">${repDTO.mem_no }</div>
+																	class="dis-inblock font-bold size-15 color-black maright-10">${repDTO.mem_name }님</div>
 																<div class="dis-inblock size-15 color-gray maright-20"></div>
 																<!-- 												<div class="dis-inblock size-15 color-gray cursor-point" onclick="fn_likeChange(this)"> -->
 																<!-- 													<i class="fas fa-thumbs-up maright-10"></i><span>좋아요</span> -->
@@ -2369,11 +2371,6 @@ function submitgogo(){
 															</div>
 
 															<!-- 파일첨부 -->
-															<label for="commentFile_${start.count }" class="marbtm-0">
-																<i
-																class="fas fa-paperclip martop-10 size-24 color-gray cursor-point"></i>
-															</label> <input type="file" id="commentFile_${start.count }"
-																class="dis-none" onchange="commentFileUpload(this)">
 
 															<!-- 이미지 목록이 나올부분 -->
 															<div class="comment-upload-img-list"></div>
@@ -2426,7 +2423,7 @@ function submitgogo(){
 											class="fas fa-download color-blue-l"></i> <span
 											class="dis-block size-17 color-gray">파일함</span>
 									</a></li>
-									<li><a href="#"> <i class="fas fa-laptop colo-green-l"></i>
+									<li><a href="taskBasic.do"> <i class="fas fa-laptop colo-green-l"></i>
 											<span class="dis-block size-17 color-gray">업무</span>
 									</a></li>
 									<li><a href="#"> <i
@@ -2513,7 +2510,7 @@ function fn_collCancel(){
 
 
 
-							<!-- 프로젝트 채팅 button : s -->
+							<!-- 프로젝트 참여자button : s -->
 							<div class="pro-right-box martop-15">
 								<a class="right-link-btn back-color-green-l color-white"
 									id="proChat" style="cursor: pointer;"> <i
@@ -2541,8 +2538,7 @@ function fn_collCancel(){
 															class="cursor-point">
 													</dt>
 													<dd>
-														<span class="size-18 color-gray">${manager.mem_no }번
-															이름</span>
+														<span class="size-18 color-gray">${manager.mem_name }님</span>
 														<!-- <i class="far fa-comment size-18 cursor-point"></i> -->
 													</dd>
 												</dl>
@@ -2567,8 +2563,7 @@ function fn_collCancel(){
 															class="cursor-point">
 													</dt>
 													<dd>
-														<span class="size-18 color-gray">${invitedUser.mem_no }번
-															이름</span>
+														<span class="size-18 color-gray">${invitedUser.mem_name }님</span>
 														<!-- <i class="far fa-comment size-18 cursor-point"></i> -->
 													</dd>
 												</dl>
@@ -2663,8 +2658,8 @@ function fn_collCancel(){
 																src="/chord/resources/img/sample.png" width="40">
 														</dt>
 														<dd>
-															<strong class="dis-block size-20 color-black">${notInvitedUser.mem_no }</strong>
-															<span class="dis-block size-14 color-gray-l">${notIinvitedUser.mem_no }</span>
+															<strong class="dis-block size-20 color-black">${notInvitedUser.mem_name}</strong>
+															<span class="dis-block size-14 color-gray-l">${notIinvitedUser.mem_name }</span>
 															<button type="button" class="invite-add-btn">
 																<i class="fas fa-plus maright-15"></i> <span>추가</span>
 															</button>

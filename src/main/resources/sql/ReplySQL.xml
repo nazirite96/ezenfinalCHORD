@@ -10,7 +10,9 @@
     	</insert>
     	
     	<select id="selcetRepByTim_no" resultType="replyDTO">
-    		select * from reply where tim_no = #{tim_no}
+		select A.*,B.mem_name from
+			(select * from reply where tim_no = #{tim_no}) A
+			left Join member B on a.mem_no = b.mem_no
     	</select>
     	
     	<update id="updateRep" parameterType="replyDTO">

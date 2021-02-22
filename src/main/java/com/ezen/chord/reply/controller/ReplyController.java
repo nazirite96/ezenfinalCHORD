@@ -19,6 +19,8 @@ public class ReplyController {
 	@RequestMapping("/insertRep.do")
 	public String insertRep(ReplyDTO repDTO,int pro_no,HttpSession sess) {
 		int result = repService.insertRep(repDTO);
+		
+		System.out.println(result);
 		int mem_no = (int)sess.getAttribute("memNo");
 		return "redirect:/timeLine.do?pro_no="+pro_no+"&mem_no="+mem_no;
 	}

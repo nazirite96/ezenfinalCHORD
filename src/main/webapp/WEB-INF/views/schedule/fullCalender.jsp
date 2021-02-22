@@ -361,7 +361,7 @@ $.ajax({
 		function rendering(r){
 			$('#successModal').modal('show');
 			$('#pno').attr('href', '#');
-			$('#rwriter').html('&nbsp  &nbsp'+r.writer);
+			$('#rwriter').html('&nbsp  &nbsp ${name} ');
 			$('#rtitle').html(r.title);
 			$('#rmonth').html(r.st.substr(5,2)+'월');
 			$('#rday').html(r.st.substr(8,2));
@@ -408,7 +408,7 @@ $.ajax({
 
 
 		function view(loc){
-			alert(loc);
+			alert(loc+'로 모녀주세요 :>');
 			var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 			
 			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 

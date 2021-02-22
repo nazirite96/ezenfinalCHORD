@@ -44,7 +44,7 @@ public class ProjectController {
 	
 	
 	@RequestMapping("/proList.do")
-	public ModelAndView getProList(int mem_no,HttpSession session) {
+	public ModelAndView getProList(int mem_no) {
 		
 		ModelAndView mav = new ModelAndView();
 		List<ProjectUserDTO> proList = proService.getProAllList(mem_no);
@@ -78,12 +78,8 @@ public class ProjectController {
 		proDTO.setPro_date(date);
 		String realpath = rs.getSession().getServletContext().getRealPath("/");
 		filesService.createProfolder(proDTO.getPro_name(),realpath);
-		ModelAndView mav = new ModelAndView();
 		proService.insertPro(proDTO);
-		List<ProjectUserDTO> proList = proService.getProAllList(proDTO.getMem_no());
-		mav.addObject("mem_no", proDTO.getMem_no());
-		List<BoxDTO> boxList = boxService.getBoxList(proDTO.getMem_no());
-		return "project/projectList";
+		return "redirect:/proList.do?mem_no="+proDTO.getMem_no();
 	}
 	
 	@RequestMapping("/updateProUserColor.do")

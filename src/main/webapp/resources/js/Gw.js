@@ -350,7 +350,6 @@ $(function() {
 		window.alert(timeline_col);
 		// 고정되어있는 글
 		if (item.hasClass('fixed')) {
-			alert("있다~");
 			var fixedCon = item.parent().parent().parent().parent();
 			var fixedTop = fixedCon.siblings(".article-fix-top");
 			var colNo = fixedTop.children().children(".col-no");
@@ -370,125 +369,7 @@ $(function() {
 		}
 	});
 
-	// 좋아요 클릭 이벤트
-	$(".emoticon-box li").click(function() {
-		var item = $(this);
-		var emo_no = $(this).data("emono");
-		var timeline_col = $(this).parents(".timeline-box").children(".col-no").data("col");
-		var timeline_no = $(this).parents(".timeline-box").children(".col-no").data("no");
-
-		var emoticonAfterBtn = $(this).parents(".dropdown-menu").siblings(".emoticon-after-btn");
-		var likeResult = item.parents(".article-etc-menu").siblings(".like-result");
-		var likeImg = likeResult.children("img");
-		var likeMem = likeResult.children(".like-mem");
-		var size = likeMem.data("size");
-
-		var emoUserListPop = likeResult.siblings(".dim-layer");
-		var popCon = emoUserListPop.children(".pop-layer").children(".pop-con");
-		var emoUserCntSpan = popCon.children("ul").find("span");
-		var emoUserCnt = Number(popCon.children("ul").find("span").text());
-
-		var likeCountList = popCon.children(".like-count-list");
-		var simplebarCon = likeCountList.children(".simplebar-scroll-content").children(".simplebar-content");
-
-		$.ajax({
-			url: "/emoUser/insert",
-			method: "get",
-			data: { emo_no: emo_no, timeline_col: timeline_col, timeline_no: timeline_no },
-			dataType: "json",
-			success: function(data) {
-				fn_emoticon(item);
-				emoticonAfterBtn.data("emouser", data);
-
-				// 이모티콘 이미지
-				if (likeImg.length < 3) {
-					likeResult.prepend("<img src=\"/emo/view?emo_no=" + emo_no + "\" data-no=" + data + " width=\"20\" class=\"maright-10\">");
-				}
-
-				// 좋아요 누른 회원
-				if (size > 0) {
-					likeMem.html("<strong>${memVo.mem_nick }</strong> 님  외" + size + "명");
-				} else {
-					likeMem.html("<strong class=\"me\">${memVo.mem_nick }</strong> 님");
-				}
-
-				// data-size : +1
-				likeMem.data("size", size + 1);
-
-				// append 내용
-				var str = "<dl data-id=\"${memVo.mem_id }\">"
-					+ "<dt class=\"posi-re\">"
-					+ "<i class=\"icon-circle circle-s\"></i>"
-					+ "</dt>"
-					+ "<dd>"
-					+ "<div class=\"like-user-name\">${memVo.mem_nick }</div>"
-					+ "<div class=\"like-user-emoticon\"><img src=\"/emo/view?emo_no=" + emo_no + "\" width=\"40\"></div>"
-					+ "</dd>"
-					+ "</dl>";
-
-				emoUserCntSpan.html(emoUserCnt + 1);	// 인원수 추가
-				simplebarCon.append(str);			// 리스트 추가
-
-			}
-		});
-	});
-
-	// 이모티콘 취소 이벤트
-	$(".emoticon-after-btn").click(function() {
-		var item = $(this);
-		var emo_user_no = item.data("emouser");
-
-		var likeResult = item.parents(".article-etc-menu").siblings(".like-result");
-		var likeImg = likeResult.children("img");
-		var likeMem = likeResult.children(".like-mem");
-		var size = likeMem.data("size");
-
-		var emoUserListPop = likeResult.siblings(".dim-layer");
-		var popCon = emoUserListPop.children(".pop-layer").children(".pop-con");
-		var emoUserCntSpan = popCon.children("ul").find("span");
-		var emoUserCnt = Number(popCon.children("ul").find("span").text());
-
-		var likeCountList = popCon.children(".like-count-list");
-		var simplebarCon = likeCountList.children(".simplebar-scroll-content").children(".simplebar-content");
-		var emoUserOne = simplebarCon.children("dl");
-
-		$.ajax({
-			url: "/emoUser/delete",
-			method: "get",
-			data: { emo_user_no: emo_user_no },
-			dataType: "json",
-			success: function(data) {
-				fn_emoResultBtn(item);
-				item.data("emouser", "");
-
-				// 이모티콘 이미지
-				likeImg.each(function(i, e) {
-					if (likeImg.eq(i).data("no") == emo_user_no) {
-						likeImg.eq(i).remove();
-					}
-				});
-
-				// 좋아요 누른 회원
-				if (size == 1 && likeMem.children("strong").hasClass("me")) {
-					likeMem.html("");
-				} else if (size > 0) {
-					likeMem.html(size - 1 + "명");
-				} else {
-					likeMem.html("");
-				}
-
-				// data-size : -1
-				likeMem.data("size", size - 1);
-
-				emoUserCntSpan.html(emoUserCnt - 1);	// 인원수 감소
-				emoUserOne.each(function(i, e) {		// 리스트 삭제
-					if (emoUserOne.eq(i).data("id") == '${memVo.mem_id }') {
-						emoUserOne.eq(i).remove();
-					}
-				});
-			}
-		});
-	});
+	
 
 	// 담아두기 버튼 이벤트
 	$(".coll-btn").click(function() {

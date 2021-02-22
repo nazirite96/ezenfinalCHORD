@@ -17,14 +17,16 @@
 			on a.tim_no = b.tim_no
     	</select>
     	<select id="getTimelinByProNo" parameterType="hashMap" resultType="timelineDTO">
-			select A.*,(b.tim_no) as coll_chk from
-				(select A.*,(B.tim_no) as fix_chk from
-						    (select * from timeline
-						                where pro_no = #{pro_no}
-						                order by tim_no desc) A
-							left join topfixture B on A.tim_no = B.tim_no) A
-				left join (select * from collection where mem_no =#{mem_no}) B
-			on a.tim_no = b.tim_no
+    		select A.*,B.mem_name from 
+				(select A.*,(b.tim_no) as coll_chk from
+					(select A.*,(B.tim_no) as fix_chk from
+							    (select * from timeline
+							                where pro_no = #{pro_no}
+							                order by tim_no desc) A
+								left join topfixture B on A.tim_no = B.tim_no) A
+					left join (select * from collection where mem_no =#{mem_no}) B
+				on a.tim_no = b.tim_no) A
+			left join member B on A.mem_no = B.mem_no
 
     	</select>
     	<update id="updateTim" parameterType="timelineDTO">

@@ -22,7 +22,14 @@ public class TimelineDTO {
 	private int fix_chk;			//고정글
 	private List<ReplyDTO> repList; //리플
 	private int coll_chk;			//담아두기
+	private String mem_name;
 	
+	public String getMem_name() {
+		return mem_name;
+	}
+	public void setMem_name(String mem_name) {
+		this.mem_name = mem_name;
+	}
 	private List<FilesDTO> filesList;
 	
 	

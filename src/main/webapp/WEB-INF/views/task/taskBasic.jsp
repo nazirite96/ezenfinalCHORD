@@ -348,7 +348,7 @@ function submitgogo(){
 		</div>
 	
 		<!-- collection content wrap : s -->
-		<div class="collection-con-wrap" style="font-size:0.89rem;">
+		<div class="collection-con-wrap" style="font-size:0.7rem;">
 			
 			<table class="table marbtm-0 text-center">
 				<colgroup>

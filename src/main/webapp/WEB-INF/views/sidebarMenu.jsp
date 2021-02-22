@@ -15,10 +15,6 @@
       <div class="sidebar-sticky pt-3" style="font-size: 15px">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" href="#">
-              <span data-feather="home"></span>
-              	목록보기<span class="sr-only">(current)</span>
-            </a>
             <h1 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
           <span>project</span>
         </h1>
