@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="projectMapper">
+    
+    	<select id="getProSeq" resultType="int">
+    		SELECT project_seq.nextval
+		  FROM dual
+    	</select>
+    	
+    	<insert id="insertPro" parameterType="projectDTO">
+    	insert all
+    		into project (PRO_NO, PRO_NAME, PRO_CONT, PRO_DATE, KIND_NO, MEM_NO)
+    		VALUES(#{pro_no},#{pro_name},#{pro_cont},sysdate,#{kind_no},#{mem_no})
+    		into company_project(com_no ,com_pro_date,pro_no )
+    		VALUES(#{com_no},sysdate,#{pro_no})
+    	select * from dual
+    	</insert>
+    	
+    	<select id="getPro" resultType="projectDTO">
+    		select * from project
+    		where pro_no = #{pro_no}
+    	</select>
+    	
+    	<delete id="deletePro">
+    		delete project
+    		where pro_no = #{pro_no}
+    	</delete>
+    	
+    	<update id="updatePro" parameterType="projectDTO">
+    		update project
+    		set pro_name = #{pro_name},
+    		pro_cont = #{pro_cont}
+    		where pro_no = #{pro_no}
+    	</update>
+    	<insert id="insertBoxPro" parameterType="boxDTO">
+    		insert into box_project
+    		values(#{box_no},sysdate,#{pro_no})
+    	</insert>
+    	<delete id="deleteBoxPro" parameterType="boxDTO">
+    		delete box_project
+    		where box_no = #{box_no} and pro_no =#{pro_no}
+    	</delete>
+    	<select id="selectSepBoxPro" parameterType="hashMap" resultType="projectUserDTO">
+    	select A.*,(B.pro_no) as imp_chk from
+		    (select B.* 
+		    from box_project A
+		    left join (SELECT A.pro_no,pro_name,pro_cont,pro_date,kind_no,A.mem_no,A.pro_user_color,a.pro_user_man_chk FROM project_user A
+		                LEFT JOIN project B ON
+		                    A.pro_no = B.pro_no
+		                    where A.mem_no = #{mem_no}) B
+		                    on A.pro_no = B.pro_no
+		    where box_no = #{box_no}) A
+			left join (select * from box 
+			            left join box_project on box.box_no = box_project.box_no 
+			            where mem_no = #{mem_no} and box_name='중요') B on A.pro_no =B.pro_no
+    	</select>
+    </mapper>

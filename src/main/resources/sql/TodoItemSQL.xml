@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="todoItemMapper">
+
+	<!-- 업무 시퀀스 조회 -->
+	<select id="getTiSeq" resultType="int">
+		select todo_item_SEQ.nextval from dual
+	</select>
+
+	<!-- 할일 항목 등록 -->
+	<insert id="insertTodoItem" parameterType="todoItemDTO">
+		insert into todo_item(todo_item_no,todo_item_content,todo_item_chk,todo_no,todo_item_date) 
+		values(#{todo_item_no}, #{todo_item_content}, 'n', #{todo_no},#{todo_item_date})
+	</insert> 
+	
+	<!-- 할일 등록(담당자)--> 
+	<insert id="insertTodoItemPi" parameterType="todoItemDTO">
+		insert into participants(cont_kind,cont_no,mem_no)
+		values('todo',#{todo_item_no},#{ti_mem_no})
+	</insert>
+
+	<!-- 할일 항목 수정 -->
+	<update id="updateTodoItem" parameterType="todoItemDTO">
+		UPDATE todo_item
+		   SET todo_item_content = #{todo_item_content}
+		   	 , todo_item_chk = #{todo_item_chk}
+		 WHERE todo_item_no = #{todo_item_no}
+	</update>	
+
+	<!-- 할일 항목 삭제 -->
+	<delete id="deleteTodoItem" parameterType="int">
+		DELETE FROM todo_item
+		 WHERE todo_item_no = #{cont_no}
+	</delete>
+	
+	<!-- 할일 항목 담당자 삭제 -->
+	<delete id="deleteTodoItemPartic" parameterType="integer">
+		delete from participants where cont_kind='todo' and cont_no=#{cont_no}
+	</delete>
+	<!-- 할일의 항목 조회--> 
+	<select id="getTiList" parameterType="INTEGER" resultType="todoItemDTO">
+		select t.*,ti.*,mem_name,mem_no,cont_no from todo t,todo_item ti,(select m.mem_name,m.mem_no,p.cont_no from member m,participants p,todo_item ti where m.mem_no = p.mem_no 
+		and p.cont_kind = 'todo' and ti.todo_item_no = p.cont_no and ti.todo_no = #{todo_no} and p.cont_no = ti.todo_item_no)
+		where t.todo_no = ti.todo_no 
+		and t.todo_no = #{todo_no} 
+		and ti.todo_item_no = cont_no
+	</select>	
+	
+	<!-- 할일항목 담당자 조회 -->
+	<select id="selectTodoPiByNo" parameterType="Integer" resultType="projectUserDTO">
+	select 
+	mm.mem_name,
+	pt.mem_no
+	from member mm,participants pt
+	where 1=1
+	and pt.mem_no=mm.mem_no
+	and pt.cont_kind='todo'
+	and pt.cont_no=#{todo_item_no}
+	</select>	
+	
+</mapper>

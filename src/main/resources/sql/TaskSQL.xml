@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="taskMapper">
+
+	<!-- 업무 시퀀스 조회 -->
+	<select id="getTaskSeq" resultType="int">
+		select task_SEQ.nextval from dual
+	</select>
+
+	<!-- 업무 등록 -->
+	<insert id="insertTask" parameterType="taskDTO">
+		insert into
+		task(task_no,task_state,task_content,task_priority)
+		values(
+		#{task_no},#{task_state},#{task_content},#{task_priority}
+		)
+	</insert>
+	
+	<!-- 업무 등록(담당자) -->
+	<insert id="insertTaskPi" parameterType="projectUserDTO">
+		insert into
+		participants(cont_kind,cont_no,mem_no)
+		values(
+		#{cont_kind},#{task_no},#{tu_mem_list}
+		)
+	</insert>
+	
+	<insert id="insertTaskPic" parameterType="map">
+	    insert into participants values(
+	    'task',#{cont_no},#{partic_no}
+	    )
+	</insert>	
+
+	<!-- 업무 등록(시작일) -->
+	<insert id="insertTaskStartDate" parameterType="taskDTO">
+		insert into
+		time(cont_kind,cont_no,time_kind,time_date)
+		values(
+		#{cont_kind},#{cont_no},'s',TO_DATE(#{task_start_date},'YYYY/MM/DD
+		HH24:MI')
+		)
+	</insert>
+
+	<!-- 업무 등록(마감일) -->
+	<insert id="insertTaskEndDate" parameterType="taskDTO">
+		insert into
+		time(cont_kind,cont_no,time_kind,time_date)
+		values(
+		#{cont_kind},#{cont_no},'e',TO_DATE(#{task_end_date},'YYYY/MM/DD
+		HH24:MI')
+		)
+	</insert>
+
+	<!-- 업무 등록(시작일,마감일) -->
+	<insert id="insertTaskDate" parameterType="taskDTO">
+		insert all
+		into
+		time(cont_kind,cont_no,time_kind,time_date)
+		values(
+		#{cont_kind},#{task_no},'s',TO_DATE(#{task_start_date},'YYYY/MM/DD
+		HH24:MI')
+		)
+		into time(cont_kind,cont_no,time_kind,time_date)
+		values(
+		#{cont_kind},#{task_no},'e',TO_DATE(#{task_end_date},'YYYY/MM/DD
+		HH24:MI')
+		)
+		select * from dual
+	</insert>
+
+	<!-- 업무 등록에 쓰는거 TIM_NO, CONT_KIND, CONT_NO, TIM_CONT, TIM_DATE, PRO_NO, 
+		MEM_NO -->
+	<insert id="insertTaskTim" parameterType="taskDTO">
+		insert into timeline
+		values
+		(timeline_seq.nextval,#{cont_kind},#{task_no},#{task_title},sysdate,#{pro_no},#{mem_no})
+	</insert>
+
+	<select id="selectAllTask" parameterType="String" resultType="taskDTO">
+		select A.*,timeline.*,member.mem_name,project.pro_name
+		from (select
+		A.task_no,A.task_state,A.task_content,A.task_priority,(A.time_date) as
+		task_start_date,(time.time_date) as task_end_date
+		from ( select *
+		from
+		task t
+		left join time ti
+		on t.task_no = ti.cont_no
+		where ti.time_kind =
+		's') A
+		left join time on A.task_no = time.cont_no
+		where time.time_kind
+		='e') A left join timeline on timeline.cont_no =
+		A.task_no left join
+		member on timeline.mem_no = member.mem_no
+		left join project on project.pro_no = timeline.pro_no
+		where timeline.cont_kind =
+		'task'
+		order by task_no desc
+	</select>
+
+	<!-- 업무 수정 -->
+	<update id="updateTask" parameterType="taskDTO">
+		update task 
+			set task_no = #{task_no}
+			,task_state = #{task_state}
+			,task_content = #{task_content}
+			,task_priority = #{task_priority}
+		where task_no = #{task_no}	
+	</update>
+
+	<!-- 업무 수정(담당자)--> 
+	<update id="updateTaskPi" parameterType="taskDTO">
+		update participants
+			set cont_kind = #{cont_kind}
+			,cont_no = #{task_no}
+			,mem_no = #{tu_mem_list}
+		where cont_no = #{task_no}	and cont_kind = #{cont_kind}
+	</update>
+
+	
+	<!-- 업무 수정(시작일) -->
+	<update id="updateTaskStartDate" parameterType="taskDTO">
+		update time
+			set cont_kind = #{cont_kind}
+			,cont_no = #{task_no}
+			,time_kind = 's'
+			,time_date = TO_DATE(#{task_start_date},'YYYY/MM/DD HH24:MI')
+		where cont_no = #{task_no} and time_kind ='s' and cont_kind = #{cont_kind}
+	</update>
+
+	<!-- 업무 수정(마감일) -->
+	<update id="updateTaskEndDate" parameterType="taskDTO">
+		update time
+			set cont_kind = #{cont_kind}
+			,cont_no = #{task_no}
+			,time_kind = 'e'
+			,time_date = TO_DATE(#{task_end_date},'YYYY/MM/DD HH24:MI')
+		where cont_no = #{task_no} and time_kind ='e' and cont_kind = #{cont_kind}
+	</update>	
+	
+	<!-- 업무 등록에 쓰는거 TIM_NO, CONT_KIND, CONT_NO, TIM_CONT, TIM_DATE, PRO_NO, 
+		MEM_NO -->
+	<update id="updateTaskTim" parameterType="taskDTO">
+		update timeline
+		set 
+		tim_cont = #{tim_cont}
+		where tim_no = #{tim_no} AND cont_kind = 'task'
+	</update>	
+	
+	<!-- 업무 삭제 -->
+	<delete id="deleteTask" parameterType="integer">
+		delete from task where
+		task_no = #{cont_no}
+	</delete>
+	
+	<!-- 업무 시간 삭제 -->
+	<delete id="deleteTaskTime" parameterType="integer">
+		delete from time where cont_kind='task' and cont_no=#{cont_no}
+	</delete>	
+	
+	<!-- 업무 지정자 삭제 -->
+	<delete id="deleteTaskUserR" parameterType="int">
+		DELETE FROM participants WHERE cont_no = #{cont_no} and cont_kind= 'task'
+	</delete>
+	
+	<!-- 기웅 수정 -->
+	<select id="selectTaskByNo" parameterType="int" resultType="taskDTO">
+	select t.*,c.task_start_date,c.task_end_date from task t left join 
+	(select * from 
+		(select (A.time_date) as task_end_date,(B.time_date) as task_start_date,(a.cont_no) as s_cont_no,(b.cont_no) as e_cont_no from
+	(select * 
+	from time
+	where cont_kind = 'task' and cont_no = #{task_no} and time_kind = 's') B left join 
+	(select * from time where cont_kind = 'task' and cont_no = #{task_no} and time_kind = 'e') A on
+	A.cont_no = B.cont_no) A ) C on t.task_no = c.s_cont_no or t.task_no = c.e_cont_no
+	where task_no = #{task_no}
+	</select>
+	
+	<select id="selectTaskPiByNo" parameterType="Integer" resultType="projectUserDTO">
+	select 
+	mm.mem_name,
+	pt.mem_no
+	from member mm,participants pt
+	where 1=1
+	and pt.mem_no=mm.mem_no
+	and pt.cont_kind='task'
+	and pt.cont_no=#{task_no}
+	</select>
+</mapper>

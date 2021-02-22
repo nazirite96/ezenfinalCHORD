@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="timelineMapper">
+    	<!-- TIM_NO, CONT_KIND, CONT_NO, TIM_CONT, TIM_DATE, PRO_NO, MEM_NO -->
+    	<insert id="insertTim" parameterType="timelineDTO">
+    		insert into timeline
+			values (#{tim_no},#{cont_kind},#{cont_no},#{tim_cont},sysdate,#{pro_no},#{mem_no})
+    	</insert>
+    	<select id="getCollection" resultType="timelineDTO">
+			select A.*,(b.tim_no) as coll_chk from
+			    (select timeline.* from collection left join timeline on collection.tim_no = timeline.tim_no
+			    where collection.mem_no = #{mem_no}) A
+			left join (select * from collection where mem_no = #{mem_no}) B
+			on a.tim_no = b.tim_no
+    	</select>
+    	<select id="getTimelinByProNo" parameterType="hashMap" resultType="timelineDTO">
+    		select A.*,B.mem_name from 
+				(select A.*,(b.tim_no) as coll_chk from
+					(select A.*,(B.tim_no) as fix_chk from
+							    (select * from timeline
+							                where pro_no = #{pro_no}
+							                order by tim_no desc) A
+								left join topfixture B on A.tim_no = B.tim_no) A
+					left join (select * from collection where mem_no =#{mem_no}) B
+				on a.tim_no = b.tim_no) A
+			left join member B on A.mem_no = B.mem_no
+
+    	</select>
+    	<update id="updateTim" parameterType="timelineDTO">
+    		update timeline
+			set
+			tim_cont = #{tim_cont}
+			where tim_no = #{tim_no}
+    	</update>
+    	<delete id="deleteTim">
+    		delete timeline where tim_no = #{tim_no}
+    	</delete>
+    	<select id="getTimSeq" resultType="int">
+    		select timeline_SEQ.nextval from dual
+    	</select>
+    	<insert id="insertFix">
+    		insert into topfixture
+    		values(0,#{tim_no})
+    	</insert>
+    	<delete id="deleteFix">
+    		delete topfixture
+    		where tim_no = #{tim_no}
+    	</delete>
+    	<insert id="insertColl" parameterType="hashMap">
+    		insert into collection
+    		values(collection_seq.nextval,#{mem_no},#{tim_no})
+    	</insert>
+    	<delete id="deleteColl">
+    		delete collection
+    		where tim_no=#{tim_no} and mem_no = #{mem_no}
+    	</delete>
+    	<select id="getMyTimeline" resultType="timelineDTO">
+    		select a.*,(b.tim_no) as coll_chk from timeline A
+			left join (select * from collection where mem_no = 2) B on a.tim_no = b.tim_no
+			where a.mem_no = #{mem_no}
+    	</select>
+    	<select id="getFiles" resultType="filesDTO">
+    		select * from files 
+    		where cont_kind = 'tim' and cont_no = #{tim_no}
+    	</select>
+    	
+    </mapper>

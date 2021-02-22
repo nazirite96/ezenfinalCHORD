@@ -1,0 +1,144 @@
+@charset "UTF-8";
+
+.container {
+   padding: 0;
+}
+
+.btn-link i {
+   font-size: 1.5rem;
+   color: black;
+}
+
+.nav-link {
+   color: black;
+}
+
+.nav-tabs .nav-link.active, .nav-link:hover, .modal-footer i:hover {
+   color: #7b9acc;
+}
+
+.chatroom_ing:hover {
+   cursor: pointer;
+   border-radius: 24px;
+   color: #4478cc;
+   background-color: #e4ebf5;
+}
+
+.chatroom_ing .create-chat {
+   display: none;
+}
+
+.private-content, .public-content {
+   font-size: 14px;
+   padding-left: 12px;
+   width: 215px;
+   overflow: hidden;
+   display: block;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+}
+
+.private-box, .public-box {
+   width: 100%;
+   height: 85px;
+   border-bottom: 1px solid #eaeaea;
+   clear: both;
+}
+
+.private-img, .public-img{
+   width: 74px;
+   height: 100%;
+   float: left;
+}
+
+.private-img img, .public-img img{
+   display: block;
+   width: 74%;
+   height: 65%;
+   margin: 16px 0 0 10px;
+   border: 1px solid #c9d6ec;
+   border-radius: 28px;
+   box-shadow: 1px 1px 2px #909090;
+}
+
+.chatroom_default .private-name {
+   padding: 30px;
+   float: left;
+}
+
+.chatroom_ing .private-name, .public-name {
+   font-weight: bold;
+   padding: 8px 30px 5px 30px;
+   float: left;
+}
+
+.create-chat {
+   color: #9db4da;
+   padding: 18px;
+   font-size: 2em;
+}
+
+.create-chat i:hover {
+   cursor: pointer;
+   color: #4478cc;
+}
+
+.chatroom_default .private-content, .chatroom_default .private-writedate,
+   .chatroom_default .private-unread {
+   display: none;
+}
+
+.private-writedate, .public-writedate{
+   color: #949494;
+   font-size: 12px;
+   float: right;
+   padding-right: 14px;
+}
+
+.private-unread, .public-unread {
+   color: white;
+   font-weight: bold;
+   float: right;
+   margin: -19px;
+   background-color: red;
+   display: block;
+   width: 19px;
+   text-align: center;
+   border-radius: 9px;
+   font-size: 10px;
+}
+
+.modal-dialog-aside {
+   width: 420px;
+   max-width: 100%;
+   height: 100%;
+   margin: 0;
+   transform: translate(0);
+   transition: transform .2s;
+}
+
+.modal-dialog-aside .modal-content {
+   height: 100%;
+   border: 0;
+   border-radius: 0;
+   border: 0;
+}
+
+.modal.fixed-left .modal-dialog-aside {
+   margin-left: auto;
+   transform: translateX(100%);
+}
+
+.modal.show .modal-dialog-aside {
+   transform: translateX(0);
+}
+
+.modal-body {
+   overflow: auto;
+}
+
+.modal-footer i {
+   margin-right: 25px;
+   font-size: 25px;
+   cursor: pointer;
+}

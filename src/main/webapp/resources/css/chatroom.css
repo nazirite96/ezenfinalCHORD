@@ -1,0 +1,203 @@
+@charset "UTF-8";
+
+ul {
+   padding: 0;
+}
+
+li {
+   list-style: none;
+   padding: 8px;
+   margin: 12px 0;
+}
+
+body {
+   overflow: hidden;
+}
+
+.custom-container {
+   height: 100vh;
+   display: flex;
+   flex-direction: column;
+}
+
+.header {
+   position: fixed;
+   top: 0;
+   width: 100%;
+   height: 68px;
+   background: linear-gradient(to left, #b0ceff, #7b9acc);
+}
+
+.room-title {
+   font-size: 24px;
+   margin: 15px 35px;
+   float: left;
+   color: white;
+   font-weight: bold;
+}
+
+.button-menu {
+   margin: 8px 10px;
+   padding: 0 8px 6px 8px;
+   float: right;
+   font-size: 30px;
+}
+
+.content {
+   margin-top: 68px;
+   padding: 10px 30px;
+   background-color: #f7fbff;
+   width: 100%;
+   overflow: auto;
+   height: 100%;
+}
+
+.footer {
+   background-color: #7b9acc;
+}
+
+.input-wrapper {
+   float: left;
+   width: 100%;
+   margin: 10px -130px 5px 10px;
+   padding-right: 140px;
+   box-sizing: border-box;
+}
+
+.content-input {
+   width: 100%;
+   height: 98px;
+   border-color: #e6e6e6;
+   resize: none;
+}
+
+.button-wrapper {
+   float: right;
+   margin: 10px 10px 0 0;
+   width: 110px;
+}
+
+.button-input {
+   width: 100%;
+   height: 98px;
+}
+
+.allDeleteBtn {
+   margin: 0 40px;
+   font-size: 20px;
+}
+
+.modal .modal-dialog-aside {
+   width: 280px;
+   max-width: 80%;
+   height: 100%;
+   margin: 0;
+   transform: translate(0);
+   transition: transform .2s;
+}
+
+.modal .modal-dialog-aside .modal-content {
+   height: inherit;
+   border: 0;
+   border-radius: 0;
+}
+
+.modal .modal-dialog-aside .modal-content .modal-body {
+   overflow-y: auto
+}
+
+.modal.fixed-left .modal-dialog-aside {
+   margin-left: auto;
+   transform: translateX(100%);
+}
+
+.modal.fixed-right .modal-dialog-aside {
+   margin-right: auto;
+   transform: translateX(-100%);
+}
+
+.modal.show .modal-dialog-aside {
+   transform: translateX(0);
+}
+
+.mymsg {
+   width: 45%;
+   float: right;
+   margin-bottom: 40px;
+}
+
+.mymsg-name {
+   display: none;
+   margin-bottom: 8px;
+}
+
+.mymsg-box {
+   font-size: 20px;
+   max-width: 100%;
+   float: right;
+   background-color: yellow;
+   padding: 5px 15px;
+   border-radius: 10px;
+   margin-bottom: 5px;
+   box-shadow: 1px 2px 5px -1px grey;
+   word-break: break-all;
+   font-family: 'Gaegu', cursive;
+}
+
+.mymsg-date {
+   font-size: 12px;
+   float: right;
+}
+
+.yourmsg {
+   width: 45%;
+   float: left;
+   margin-bottom: 50px;
+}
+
+.yourmsg-box {
+   font-size: 20px;
+   max-width: 100%;
+   float: left;
+   background-color: white;
+   padding: 5px 15px;
+   border-radius: 10px;
+   margin-bottom: 5px;
+   box-shadow: 1px 2px 5px -1px grey;
+   float: left;
+   word-break: break-all;
+   font-family: 'Gaegu', cursive;
+}
+
+.yourmsg-name {
+   float: left;
+   margin-bottom: 8px;
+}
+
+.yourmsg-date {
+   font-size: 12px;
+   float: left;
+}
+
+.mymsg .deleteBtn {
+   margin-right: 10px;
+   cursor: pointer;
+}
+
+.yourmsg .deleteBtn {
+   display: none;
+}
+
+.clear {
+   clear: both;
+}
+
+.welcomeMessage {
+   background-color: #fff8dc7d;
+   border-radius: 23%;
+   font-size: 12px;
+   text-align: center;
+   font-weight: bold;
+   padding: 10px 0;
+   color: gray;
+}

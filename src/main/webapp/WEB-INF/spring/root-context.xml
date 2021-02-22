@@ -2,7 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
@@ -10,29 +12,52 @@
 <!-- 1.dateSource -->
    <bean id="dataSource"
       class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-      <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-      <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-      <property name="username" value="scott" />
-      <property name="password" value="1234" />
+      <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@javayong.tplinkdns.com:9001:orcl"></property>
+		<property name="username" value="project02"></property>
+		<property name="password" value="1234"></property>
    </bean>
 <!-- 2.transaction -->
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
-   <!-- SQLSessionFactory 객체 생성 -->
+<!-- SQLSessionFactory -->
    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
       <property name="dataSource" ref="dataSource" />
-      <!-- mapper 파일들은 여기서 읽습니다 -->
+      <!-- mapper -->
       <property name="configLocation" value="classpath:/myBatis-config.xml" />
-      <property name="mapperLocations" value="classpath:sql/*SQL.xml" />
+      <property name="mapperLocations" value="classpath:/sql/*SQL.xml" />
    </bean>
+   
+   
+	<!-- mailSender -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"></property>
+		<property name="port" value="587"></property>
+		<property name="username" value="choongyeon0101@gmail.com"></property>
+		<property name="password" value="cnd$ehsqjfwk$"></property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>   
 
-   <!-- SQLSession 객체 생성. 이 객체가 Service 패턴에 주입된다. -->
+<!-- SQLSession inject to service. -->
    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
       <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean" />
    </bean>
    
-   <context:component-scan base-package="com.ezen.chord.service.impl" />
-   <context:component-scan base-package="com.ezen.chord.dao.impl" />
    <context:component-scan base-package="com.ezen.chord.helper" />
+
+   
+   <!-- Autowried -->
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"></bean>
+   <!-- mutltipartResolver -->
+   <bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+			<property name="maxUploadSize" value="104867600"></property>
+	</bean>
+   
 </beans>

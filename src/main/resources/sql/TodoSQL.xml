@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="todoMapper">
+
+	<!-- 할일 시퀀스 조회 -->
+	<select id="getTodoSeq" resultType="int">
+		select todo_SEQ.nextval from dual
+	</select>
+
+	<!-- 할일 등록 -->
+	<insert id="insertTodo" parameterType="todoDTO">
+		insert into todo values(#{todo_no})
+	</insert>
+
+	<!-- 할일 등록에 쓰는거 TIM_NO, CONT_KIND, CONT_NO, TIM_CONT, TIM_DATE, PRO_NO, 
+		MEM_NO -->
+	<insert id="insertTodoTim" parameterType="todoDTO">
+		insert into timeline
+		values
+		(timeline_seq.nextval,#{cont_kind},#{todo_no},#{todo_title},sysdate,#{pro_no},#{mem_no})
+	</insert>
+	
+	<!-- 할일 상세조회 -->
+	<select id="getTodoDetail" parameterType="int" resultType="todoDTO">
+		SELECT *
+		  FROM todo
+		 WHERE todo_no = #{todo_no}
+	</select>	
+	<!-- 할일 수정 -->
+	
+	<update id="updateTodoTim" parameterType="todoDTO">
+		update timeline 
+			set tim_no = timeline_seq.nextval
+			,cont_kind = #{cont_kind}
+			,cont_no = #{todo_no}
+			,time_date = sysdate
+			,pro_no = #{pro_no}
+			,mem_no = #{mem_no}
+		where cont_no = #{todo_no} and cont_kind = 'todo'
+	</update>
+
+	<!-- 할일 삭제 -->	
+	<delete id="deleteTodo" parameterType="integer">
+		delete from todo 
+		where todo_no = #{cont_no}
+	</delete>
+	
+</mapper>
